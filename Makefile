@@ -3,73 +3,74 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+         #
+#    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/02/25 10:52:42 by lde-batz          #+#    #+#              #
-#    Updated: 2019/03/15 12:44:14 by lde-batz         ###   ########.fr        #
+#    Created: 2018/12/13 22:39:07 by cababou           #+#    #+#              #
+#    Updated: 2019/03/19 15:54:54 by cababou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = doom
+CLEAR_LINE	:= \033[2K
+BEGIN_LINE	:= \033[A
+COL_END		:= \033[0m
+COL_RED		:= \033[1;31m
+COL_GREEN	:= \033[1;32m
+COL_YELLOW	:= \033[1;33m
+COL_BLUE	:= \033[1;34m
+COL_VIOLET	:= \033[1;35m
+COL_CYAN	:= \033[1;36m
+COL_WHITE	:= \033[1;37m
 
-SRC = 	main.c\
-		doom.c\
-		quit.c\
-		read_map.c\
-		read_vertices.c\
-		read_sectors.c\
-		raycasting.c\
-		fct.c\
-		event.c\
-		move.c\
-		mouse.c\
-		falling.c\
-		cp_main.c
+NAME :=	doom
 
-SRC_DIR = srcs/
+SRC := main.c doom.c quit.c read_map.c read_vertices.c read_sectors.c \
+	raycasting.c fct.c event.c move.c mouse.c falling.c cp_main.c
 
-OBJ_DIR = objects/
+OBJ := $(SRC:.c=.o)
 
-OBJ := $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
+PWD := $(shell pwd)
+FRAMEWORKSDIR = /Library/Frameworks
 
-SRC := $(addprefix $(SRC_DIR), $(SRC))
+SRCDIR := srcs
+OBJDIR := obj
 
-INC = -I includes
+SRCP :=		$(addprefix $(SRCDIR)/, $(SRC))
+OBJP :=		$(addprefix $(OBJDIR)/, $(SRC:.c=.o))
+ONLYDIR :=	$(foreach dir, $(OBJP), $(shell dirname $(dir)))
 
-LIB = -L libft/ -lft
+LIB := -L libft/ -lft
 
-GCC = gcc -Wall -Wextra -Werror -o -o1 -o2 -o3
+INC := -I includes
 
-SDL_FLAG = -framework SDL2
+FLAG := -Wall -Wextra -Werror -g
 
-.SILENT:
+SDL := -framework SDL2
 
-all: lib $(NAME)
+TOTAL_FILES := $(shell echo $(SRC) | wc -w | sed -e 's/ //g')
+CURRENT_FILES = $(shell ls $(PWD)/obj/ 2> /dev/null | wc -l | sed -e 's/ //g')
 
-$(NAME): $(OBJ)
-	$(GCC) -o $(NAME) $(SRC) $(LIB) $(SDL_FLAG)
-	printf '\033[32m[ ✔ ] %s\n\033[0m' "Create Wolf3D"
+all : libft_comp $(NAME)
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	mkdir -p $(OBJ_DIR)
-	$(GCC) -c $< -o $@ $(INC)
-	printf '\033[0m[ ✔ ] %s\n\033[0m' "$<"
+$(NAME) : $(OBJP)
+			@gcc $(FLAG) $(OBJP) $(SDL) $(LIB) -o $(NAME)
+			@echo "$(CLEAR_LINE)$(COL_BLUE)[$(NAME)] $(COL_YELLOW)Finished compilation. Output file : $(COL_VIOLET)$(PWD)/$(NAME)$(COL_END)"
 
-lib:
-	make -C libft
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+			@mkdir -p $(ONLYDIR)
+			@gcc -c $(FLAG) $(INC) $< -o $@
+			@echo "$(CLEAR_LINE)$(COL_BLUE)[$(NAME)] $(COL_YELLOW)Compiling file [$(COL_VIOLET)$<$(COL_YELLOW)]. ($(CURRENT_FILES) / $(TOTAL_FILES))$(COL_END)$(BEGIN_LINE)"
 
-clean:
-	make -C libft clean
-	rm -f $(OBJ)
-	rm -Rf $(OBJ_DIR)
-	printf '\033[31m[ ✔ ] %s\n\033[0m' "Clean Wolf3D"
+libft_comp:
+			@make -C libft
 
-fclean: clean
-	make -C libft fclean
-	rm -f $(NAME)
-	printf '\033[31m[ ✔ ] %s\n\033[0m' "Fclean Wolf3D"
+clean :
+			@rm -rf $(OBJDIR)
+			@make clean -C libft
+			@echo "$(COL_BLUE)[$(NAME)] $(COL_YELLOW)Removed $(COL_VIOLET)compiled objects.$(COL_END)"
 
-re: fclean all
+fclean :	clean
+			@rm -rf $(NAME)
+			@make fclean -C libft
+			@echo "$(COL_BLUE)[$(NAME)] $(COL_YELLOW)Removed $(COL_VIOLET)$(NAME)$(COL_END)"
 
-.PHONY: all clean fclean re
-
+re :		fclean all
