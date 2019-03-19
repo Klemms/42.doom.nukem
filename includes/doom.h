@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 11:12:03 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/03/19 15:52:01 by cababou          ###   ########.fr       */
+/*   Updated: 2019/03/19 17:49:50 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ typedef struct	s_move
 	double		eye_h;
 	double		speed;
 	double		gravity;
+	int			duck_up;
 }				t_move;
 
 typedef struct	s_doom
@@ -125,9 +126,10 @@ int				ft_intersect_box(t_xy p1, t_xy p2, t_xy p3, t_xy p4);
 double			ft_point_side(t_xy p, t_xy p1, t_xy p2);
 void			ft_event(t_doom *doom);
 void			ft_move_player(t_doom *doom, double dx, double dy);
-void			ft_move_wsad(t_move *move, t_player *player);
+void			ft_move_wsad(t_doom *doom, t_move *move, t_player *player);
 void			ft_move_mouse(t_doom *doom);
 void			ft_moving(t_doom *doom, t_player *player);
 void			ft_falling(t_doom *doom);
+void			ft_check_duck_up(t_doom *doom);
 
 #endif

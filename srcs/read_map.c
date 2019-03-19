@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 16:57:55 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/03/12 13:50:07 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/03/19 16:06:30 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	ft_read_map(int fd, t_doom *doom)
 			ft_read_player(doom, &read);
 		free(read.line);
 	}
-	free(read.line);
 	free(read.vertices);
 	close(fd);
 }

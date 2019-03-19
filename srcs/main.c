@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 11:17:14 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/03/19 12:06:19 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/03/19 17:49:12 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,6 @@ int		main(void)
 	t_doom	doom;
 	int		frame_limit;
 
-
-//	printf("%f\n", ft_atof("-0.5"));
-//	while (1);
 	ft_init_doom(&doom);
 	SDL_ShowCursor(SDL_DISABLE);
 	while (doom.bool_prog)
@@ -55,7 +52,7 @@ int		main(void)
 		while (SDL_PollEvent(&doom.event))
 			ft_event(&doom);
 		ft_move_player(&doom, 0, 0);
-		ft_move_wsad(&doom.move, &doom.player);
+		ft_move_wsad(&doom, &doom.move, &doom.player);
 	}
 	SDL_DestroyRenderer(doom.rend);
 	SDL_DestroyWindow(doom.win);

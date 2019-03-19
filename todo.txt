@@ -34,7 +34,6 @@ bonus
 
 moi
 - free struct
-- bug quand on se releve dans un plafond
 - changement de secteur
 - bug tranverser les coins
 - textures
