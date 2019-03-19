@@ -3,59 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 11:17:14 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/03/19 12:06:19 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/03/19 18:21:33 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/doom.h"
 
-void	ft_limit_fps(unsigned int limit)
-{
-	unsigned int	ticks;
-
-	ticks = SDL_GetTicks();
-	if (ticks > limit)
-		return ;
-	else if (ticks + 16 < limit)
-		SDL_Delay(FPS_LIMIT);
-	else
-		SDL_Delay(limit - ticks);
-}
-
-int		main(void)
+int		main(int argc, char **argv)
 {
 	t_doom	doom;
-	int		frame_limit;
-
 
 //	printf("%f\n", ft_atof("-0.5"));
 //	while (1);
 	ft_init_doom(&doom);
+	doom.game_mode = 
+		argc == 2 && ft_strcmp(argv[1], "editor") == 0 ? M_EDITOR : M_GAME;
 	SDL_ShowCursor(SDL_DISABLE);
 	while (doom.bool_prog)
 	{
-		SDL_RenderClear(doom.rend);
-		doom.surface = SDL_GetWindowSurface(doom.win);
-		ft_print_screen(&doom);
-		SDL_UpdateWindowSurface(doom.win);
-		frame_limit = SDL_GetTicks() + FPS_LIMIT;
-		ft_limit_fps(frame_limit);
-		frame_limit = SDL_GetTicks() + FPS_LIMIT;
-        /* Vertical collision detection */
-		doom.move.eye_h = (doom.move.ducking) ? DUCK_CAM_H : CAM_H;
-		doom.move.ground = !doom.move.falling;
-		if (doom.move.falling)
-			ft_falling(&doom);
-        /* Horizontal collision detection */
-		if (doom.move.moving)
-			ft_moving(&doom, &doom.player);
-		while (SDL_PollEvent(&doom.event))
-			ft_event(&doom);
-		ft_move_player(&doom, 0, 0);
-		ft_move_wsad(&doom.move, &doom.player);
+		if (doom.game_mode == M_EDITOR)
+		{
+
+		}
+		else if (doom.game_mode == M_GAME)
+		{
+			render_game(&doom);
+		}
 	}
 	SDL_DestroyRenderer(doom.rend);
 	SDL_DestroyWindow(doom.win);

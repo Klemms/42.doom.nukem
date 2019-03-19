@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 11:12:03 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/03/19 15:52:01 by cababou          ###   ########.fr       */
+/*   Updated: 2019/03/19 18:21:18 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@
 # define STEP_H 2
 # define COLLISION_HEAD 1
 # define PI_X_2 M_PI * 2
+
+# define M_GAME 42
+# define M_EDITOR 69
 
 typedef struct	s_raycasting
 {
@@ -113,6 +116,7 @@ typedef struct	s_doom
 	SDL_Surface		*surface;
 	t_player		player;
 	t_move			move;
+	int				game_mode;
 }				t_doom;
 
 void			ft_init_doom(t_doom *doom);
@@ -129,5 +133,9 @@ void			ft_move_wsad(t_move *move, t_player *player);
 void			ft_move_mouse(t_doom *doom);
 void			ft_moving(t_doom *doom, t_player *player);
 void			ft_falling(t_doom *doom);
+
+void			render_game(t_doom *doom);
+
+void			ft_limit_fps(unsigned int limit);
 
 #endif
