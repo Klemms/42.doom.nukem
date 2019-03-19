@@ -1,0 +1,40 @@
+- norme
+- fichier auteur
+- textures sur les murs
+- sol et plafond inclines
+- murs transparents
+- elements de decor sur les murs(tableaux, traces de sang)
+- sprites (objets, personnages)
+- sprites selon plusieurs orientation
+- luminosite en fonction des pieces
+- des messages texte pendant le jeu
+- HUD
+- voler ou nager
+- objets bloquent le passage en fct de leur taille
+- inventaire (ramasser ou non un objet)
+- interactions avec le decor (sans et avec contact)
+- actions ou series d'actions amenants a des evenements
+- animations (ouvertures de porte, ascenseur...)
+- personnages et objets peuvent avoir leurs propres actions
+- projectiles
+- histoire (missions, objectifs)
+- debut et fin de niveau
+- bruitages, musiques
+- editeur de niveau
+
+bonus
+- menu (choix niveau, options difficulte)
+- esthetique, amiance, decors soignes et detailles
+- histoires, scenariot complexes et recherche
+- animations useless
+- jouer a plusieurs
+- thread
+
+
+
+moi
+- free struct
+- bug quand on se releve dans un plafond
+- changement de secteur
+- bug tranverser les coins
+- textures
