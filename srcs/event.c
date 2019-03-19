@@ -6,11 +6,35 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 10:14:58 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/03/19 15:17:39 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/03/19 17:56:50 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/doom.h"
+
+void	ft_check_duck_up(t_doom *doom)
+{
+	if (doom->move.duck_up == 1
+		&& CAM_H + COLLISION_HEAD < doom->sectors[doom->player.sector].ceil
+		- doom->sectors[doom->player.sector].floor)
+	{
+		doom->move.ducking = 0;
+		doom->move.speed = 1;
+		doom->move.falling = 1;
+		doom->move.duck_up = 0;
+	}
+}
+
+void	ft_check_duck(t_doom *doom)
+{
+	if (doom->event.type == SDL_KEYUP
+		&& CAM_H + COLLISION_HEAD > doom->sectors[doom->player.sector].ceil
+		- doom->sectors[doom->player.sector].floor)
+	{
+		doom->move.duck_up = 1;
+		doom->event.type = SDL_KEYDOWN;
+	}
+}
 
 void	ft_event(t_doom *doom)
 {
@@ -30,13 +54,14 @@ void	ft_event(t_doom *doom)
 		{
 			if (doom->move.ground)
 			{
-				printf("jump\n");
 				doom->player.velocity.z += 0.5;
 				doom->move.falling = 1;
 			}
 		}
 		else if (doom->event.key.keysym.sym == SDLK_LSHIFT)
 		{
+			printf("OUI\n");
+			ft_check_duck(doom);
 			doom->move.ducking = (doom->event.type == SDL_KEYDOWN) ? 1 : 0;
 			doom->move.speed = (doom->event.type == SDL_KEYDOWN) ? 0.3 : 1;
 			doom->move.falling = 1;

@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 10:20:51 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/03/19 13:31:45 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/03/19 17:54:50 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,13 @@ void	ft_move_wsad2(t_move *move, t_player *player, t_xy *move_vec)
 		move->moving = 1;
 }
 
-void	ft_move_wsad(t_move *move, t_player *player)
+void	ft_move_wsad(t_doom *doom, t_move *move, t_player *player)
 {
 	t_xy	move_vec;
 
+	if (doom)
+		;
+	ft_check_duck_up(doom);
 	move_vec.x = 0.0;
 	move_vec.y = 0.0;
 	if (move->wsad[0])
@@ -94,15 +97,14 @@ void	ft_moving_check(t_doom *doom, t_moving *m)
 		? m->sect->floor : doom->sectors[m->sect->neighbors[m->s]].floor;
 	min_ceil = (m->sect->ceil < doom->sectors[m->sect->neighbors[m->s]].ceil)
 		? m->sect->ceil : doom->sectors[m->sect->neighbors[m->s]].ceil;
-	/* Check where the hole is. */
+	/* Vérifiez où se trouve le trou. */
 	m->hole_low = (m->sect->neighbors[m->s] < 0) ? 9e9 : max_floor;
 	m->hole_high = (m->sect->neighbors[m->s] < 0) ? -9e9 : min_ceil;
-	/* Check whether we're bumping into a wall. */
+	/* Vérifiez si nous heurtons un mur. */
 	if (m->hole_high < doom->player.where.z + COLLISION_HEAD
 			|| m->hole_low > doom->player.where.z - doom->move.eye_h + STEP_H)
 	{
-		/* Bumps into a wall! Slide along the wall. */
-		/* This formula is from Wikipedia article "vector projection". */
+		/* Des bosses dans un mur! Glissez le long du mur. */
 		m->xd = m->vert[m->s + 1].x - m->vert[m->s].x;
 		m->yd = m->vert[m->s + 1].y - m->vert[m->s].y;
 		m->d.x = m->xd * (m->d.x * m->xd + m->yd * m->d.y) /
