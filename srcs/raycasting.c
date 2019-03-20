@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/doom.h"
+#include "doom.h"
 
 t_xy	ft_intersect_lines(t_xy p1, t_xy p2, t_xy p3, t_xy p4)
 {

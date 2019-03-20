@@ -17,7 +17,7 @@
 #define hfov (0.73f*H)  // Affecte le champ de vision horizontal
 #define vfov (.2f*H)   
 
-#include "../includes/doom.h"
+#include "doom.h"
 
 #define min(a,b)             (((a) < (b)) ? (a) : (b)) // min: Choose smaller of two scalars.
 #define max(a,b)             (((a) > (b)) ? (a) : (b)) // max: Choose greater of two scalars.

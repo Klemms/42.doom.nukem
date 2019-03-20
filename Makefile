@@ -39,13 +39,13 @@ SRCP :=		$(addprefix $(SRCDIR)/, $(SRC))
 OBJP :=		$(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 ONLYDIR :=	$(foreach dir, $(OBJP), $(shell dirname $(dir)))
 
-LIB := -L libft/ -lft
+LIB := -Llibft/ -lft 
 
-INC := -I includes
+INC := -Iincludes -Ilibft -ISDL/includes
 
 FLAG := -Wall -Wextra -Werror -g
 
-SDL := -framework SDL2
+SDL := -LSDL/lib -lSDL2 
 
 TOTAL_FILES := $(shell echo $(SRC) | wc -w | sed -e 's/ //g')
 CURRENT_FILES = $(shell ls $(PWD)/obj/ 2> /dev/null | wc -l | sed -e 's/ //g')

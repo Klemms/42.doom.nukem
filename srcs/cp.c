@@ -13,7 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "../includes/SDL.h"
+#include <SDL.h>
 
 /* Define window size */
 #define W 608

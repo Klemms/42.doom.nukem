@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/doom.h"
+#include "doom.h"
 
 void	ft_quit(t_doom *doom, const char *message, int error)
 {
