@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/doom.h"
+#include "doom.h"
 
 void	ft_move_player(t_doom *doom, double dx, double dy)
 {

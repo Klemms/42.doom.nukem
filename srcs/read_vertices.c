@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/doom.h"
+#include "doom.h"
 
 t_xy	*ft_new_vertex(t_xy *vert, char *y, char *x)
 {

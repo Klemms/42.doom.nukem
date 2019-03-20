@@ -16,9 +16,9 @@
 # include <math.h>
 # include <stdlib.h>
 # include <fcntl.h>
-# include <SDL2/SDL.h>
+# include <SDL.h>
 
-# include "../libft/libft.h"
+# include "libft.h"
 # include "map.h"
 # include "raycasting.h"
 
