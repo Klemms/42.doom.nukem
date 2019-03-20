@@ -6,7 +6,7 @@
 #    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 22:39:07 by cababou           #+#    #+#              #
-#    Updated: 2019/03/19 18:21:50 by cababou          ###   ########.fr        #
+#    Updated: 2019/03/20 13:03:30 by hdussert         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ SRC := main.c doom.c quit.c read_map.c read_vertices.c read_sectors.c \
 OBJ := $(SRC:.c=.o)
 
 PWD := $(shell pwd)
-FRAMEWORKSDIR = /Library/Frameworks
+FRAMEWORKSDIR = ./
 
 SRCDIR := srcs
 OBJDIR := obj
