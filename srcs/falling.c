@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "doom.h"
+#include "../includes/doom.h"
 
 void	ft_falling(t_doom *doom)
 {

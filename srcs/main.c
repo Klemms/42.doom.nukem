@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "doom.h"
+#include "../includes/doom.h"
 
 int		main(int argc, char **argv)
 {

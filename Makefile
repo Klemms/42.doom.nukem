@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+         #
+#    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 22:39:07 by cababou           #+#    #+#              #
-#    Updated: 2019/03/20 11:27:22 by lde-batz         ###   ########.fr        #
+#    Updated: 2019/03/19 18:21:50 by cababou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ COL_WHITE	:= \033[1;37m
 NAME :=	doom
 
 SRC := main.c doom.c quit.c read_map.c read_vertices.c read_sectors.c \
-	raycasting.c fct.c event.c move.c mouse.c falling.c \
+	raycasting.c fct.c event.c move.c mouse.c falling.c cp_main.c \
 	game/draw.c draw_utils.c
 
 OBJ := $(SRC:.c=.o)
@@ -39,13 +39,13 @@ SRCP :=		$(addprefix $(SRCDIR)/, $(SRC))
 OBJP :=		$(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 ONLYDIR :=	$(foreach dir, $(OBJP), $(shell dirname $(dir)))
 
-LIB := -Llibft/ -lft 
+LIB := -L libft/ -lft
 
-INC := -Iincludes -Ilibft -ISDL/includes
+INC := -I includes
 
 FLAG := -Wall -Wextra -Werror -g
 
-SDL := -LSDL/lib -lSDL2 
+SDL := -framework SDL2
 
 TOTAL_FILES := $(shell echo $(SRC) | wc -w | sed -e 's/ //g')
 CURRENT_FILES = $(shell ls $(PWD)/obj/ 2> /dev/null | wc -l | sed -e 's/ //g')

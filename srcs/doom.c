@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "doom.h"
+#include "../includes/doom.h"
 
 void	ft_init_doom(t_doom *d)
 {

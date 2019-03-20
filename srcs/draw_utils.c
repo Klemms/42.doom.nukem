@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "doom.h"
+#include "../includes/doom.h"
 
 void	ft_limit_fps(unsigned int limit)
 {

@@ -6,11 +6,11 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 10:14:58 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/03/19 19:34:36 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/03/19 17:56:50 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "doom.h"
+#include "../includes/doom.h"
 
 void	ft_check_duck_up(t_doom *doom)
 {
@@ -60,6 +60,7 @@ void	ft_event(t_doom *doom)
 		}
 		else if (doom->event.key.keysym.sym == SDLK_LSHIFT)
 		{
+			printf("OUI\n");
 			ft_check_duck(doom);
 			doom->move.ducking = (doom->event.type == SDL_KEYDOWN) ? 1 : 0;
 			doom->move.speed = (doom->event.type == SDL_KEYDOWN) ? 0.3 : 1;

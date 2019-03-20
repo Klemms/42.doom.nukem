@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "doom.h"
+#include "../../includes/doom.h"
 
 void	render_game(t_doom *doom)
 {

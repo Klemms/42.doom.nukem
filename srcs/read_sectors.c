@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "doom.h"
+#include "../includes/doom.h"
 
 t_sector	*ft_new_sector(t_sector *sect, char *ground, char *ceil)
 {
