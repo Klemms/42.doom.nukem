@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 11:28:56 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/03/19 17:54:20 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/03/19 19:34:52 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,7 +241,7 @@ void	ft_print_screen(t_doom *doom)
 	*r.head = (t_window) {doom->player.sector, 0, WIN_W - 1};
     if (++r.head == r.wait + MAX_WAIT)
 		r.head = r.wait;
-//	printf("%d\n", doom->player.sector);
+	printf("%d\n", doom->player.sector);
 	// rendre tous les autres secteurs en file d'attente
     while (r.head != r.tail)
 	{
