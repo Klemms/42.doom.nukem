@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 02:04:58 by cababou           #+#    #+#             */
-/*   Updated: 2019/03/22 03:52:40 by cababou          ###   ########.fr       */
+/*   Updated: 2019/03/22 06:32:15 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,5 @@ typedef struct	s_button_element
 	int			background_color_disabled;
 	char		*text;
 }				t_el_button;
-
 
 #endif

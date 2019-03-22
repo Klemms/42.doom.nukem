@@ -6,16 +6,17 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 02:04:31 by cababou           #+#    #+#             */
-/*   Updated: 2019/03/22 04:32:23 by cababou          ###   ########.fr       */
+/*   Updated: 2019/03/22 06:34:38 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/doom.h"
 
-t_el_button	*create_button()
+t_el_button	*create_button(t_doom *doom)
 {
-	t_el_button	*butt;
+	t_el_button	*but;
 
-	if (butt = malloc(sizeof(t_el_button)))
-		exit_program
+	if (!(but = malloc(sizeof(t_el_button))))
+		exit_program(doom, QUIT_MEMERR_AFTER_SDLINIT);
+	return (but);
 }
