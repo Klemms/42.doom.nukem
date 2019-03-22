@@ -6,7 +6,7 @@
 #    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 22:39:07 by cababou           #+#    #+#              #
-#    Updated: 2019/03/20 13:03:30 by hdussert         ###   ########.fr        #
+#    Updated: 2019/03/22 01:39:18 by cababou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ FLAG := -Wall -Wextra -Werror -g
 SDL := -framework SDL2
 
 TOTAL_FILES := $(shell echo $(SRC) | wc -w | sed -e 's/ //g')
-CURRENT_FILES = $(shell ls $(PWD)/obj/ 2> /dev/null | wc -l | sed -e 's/ //g')
+CURRENT_FILES = $(shell find $(PWD)/obj/ -type f 2> /dev/null | wc -l | sed -e 's/ //g')
 
 all : libft_comp $(NAME)
 
