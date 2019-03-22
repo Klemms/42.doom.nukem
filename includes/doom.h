@@ -21,6 +21,7 @@
 # include "../libft/libft.h"
 # include "map.h"
 # include "raycasting.h"
+# include "ui.h"
 # include "errors.h"
 
 # define WIN_W 1600
