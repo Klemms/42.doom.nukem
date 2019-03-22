@@ -3,28 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   quit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 16:54:21 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/03/07 17:30:04 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/03/22 06:13:25 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/doom.h"
 
-void	ft_quit(t_doom *doom, const char *message, int error)
+void	quit_it(t_doom *doom, int code, char *message)
 {
-	if (error >= 2)
-	{
-		SDL_DestroyRenderer(doom->rend);
-		SDL_DestroyWindow(doom->win);
-	}
-	if (error >= 1)
-	{
-		SDL_Log("Error: %s > %s\n", message, SDL_GetError());
-		SDL_Quit();
-	}
-	if (error == 0)
-		ft_putendl(message);
-	exit(EXIT_FAILURE);
+	// TODO: Free doom for REAL
+	if (doom)
+		free(doom);
+	ft_putendl(message);
+	SDL_Quit();
+	exit(code);
+}
+
+void	exit_program(t_doom *d, int err_code)
+{
+	SDL_ShowCursor(SDL_ENABLE);
+	if (d)
+		SDL_SetWindowGrab(d->win, SDL_TRUE);
+	if (err_code >= 0)
+		SDL_DestroyRenderer(d->rend);
+	if (err_code >= 0)
+		SDL_DestroyWindow(d->win);
+	if (err_code == QUIT_CANT_FIND_MAP)
+		quit_it(d, err_code, "Cannot find map.");
+	if (err_code == QUIT_CANT_INIT_SDL)
+		quit_it(d, err_code, "SDL initialization failed.");
+	if (err_code == QUIT_CANT_INIT_WINDOW)
+		quit_it(d, err_code, "Window initialization failed.");
+	if (err_code == QUIT_CANT_INIT_RENDERER)
+		quit_it(d, err_code, "Renderer initialization failed.");
+	if (err_code == QUIT_MEMERR_BEFORE_SDLINIT
+		|| err_code == QUIT_MEMERR_AFTER_SDLINIT)
+		quit_it(d, err_code, "Memory error.");
+	quit_it(d, 0, "Exiting Doom Nukem");
 }

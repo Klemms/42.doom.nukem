@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cp_main.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:45:40 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/03/15 11:39:53 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/03/22 05:41:51 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ int main2()
 					printf("nonon\n");
                     switch(ev.key.keysym.sym)
                     {
-						case SDLK_ESCAPE: ft_quit(&doom, "quit", 3);
+						case SDLK_ESCAPE: exit_program(&doom, QUIT_GENERIC);
                         case 'w': wsad[0] = ev.type==SDL_KEYDOWN; break;
                         case 's': wsad[1] = ev.type==SDL_KEYDOWN; break;
                         case 'a': wsad[2] = ev.type==SDL_KEYDOWN; break;
@@ -161,6 +161,8 @@ int main2()
         /* mouse aiming */
         int x,y;
         SDL_GetRelativeMouseState(&x,&y);
+		printf("x: %d  ;; y: %d\n", x, y);
+		fflush(stdout);
         doom.player.angle += x * 0.03f;
         yaw          = clamp(yaw - y*0.05f, -5, 5);
         doom.player.yaw   = yaw - doom.player.velocity.z*0.5f;
@@ -181,8 +183,6 @@ int main2()
 
         SDL_Delay(10);
     }
-	SDL_DestroyRenderer(doom.rend);
-	SDL_DestroyWindow(doom.win);
-	SDL_Quit();
+	exit_program(&doom, QUIT_GENERIC);
 	return (EXIT_SUCCESS);
 }

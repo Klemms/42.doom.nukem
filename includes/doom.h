@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 11:12:03 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/03/19 18:21:18 by cababou          ###   ########.fr       */
+/*   Updated: 2019/03/22 05:27:16 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include "../libft/libft.h"
 # include "map.h"
 # include "raycasting.h"
+# include "errors.h"
 
 # define WIN_W 1600
 # define WIN_H 1200
@@ -120,8 +121,7 @@ typedef struct	s_doom
 	int				game_mode;
 }				t_doom;
 
-void			ft_init_doom(t_doom *doom);
-void			ft_quit(t_doom *doom, const char *message, int error);
+t_doom			*ft_init_doom();
 void			ft_read_map(int fd, t_doom *doom);
 void			ft_read_sectors(t_doom *doom, t_read *r);
 void			ft_tab_sectors(t_doom *doom, t_read *r);
@@ -136,7 +136,11 @@ void			ft_moving(t_doom *doom, t_player *player);
 void			ft_falling(t_doom *doom);
 void			ft_check_duck_up(t_doom *doom);
 
+void			exit_program(t_doom *doom, int err_code);
+
 void			render_game(t_doom *doom);
+
+void			render_editor(t_doom *doom);
 
 void			ft_limit_fps(unsigned int limit);
 

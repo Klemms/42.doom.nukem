@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_vertices.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:24:16 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/03/08 16:59:57 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/03/22 04:56:24 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_xy	*ft_new_vertex(t_xy *vert, char *y, char *x)
 	t_xy	*new;
 
 	if (!(new = (t_xy*)malloc(sizeof(t_xy))))
-		ft_quit(NULL, "Error: ft_new_vertex don't malloc", 0);
+		exit_program(NULL, QUIT_MEMERR_BEFORE_SDLINIT);
 	new->x = ft_atof(x);
 	new->y = ft_atof(y);
 	new->next = vert;
@@ -45,7 +45,7 @@ void	ft_tab_vertices(t_read *r)
 
 	i = r->num_vertices;
 	if (!(r->vertices = (t_xy*)malloc(sizeof(t_xy) * i)))
-		ft_quit(NULL, "Error: ft_tab_vertices don't malloc", 0);
+		exit_program(NULL, QUIT_MEMERR_BEFORE_SDLINIT);
 	while (--i >= 0)
 	{
 		v = r->vert;

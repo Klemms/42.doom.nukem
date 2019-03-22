@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_sectors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:23:05 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/03/19 12:07:31 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/03/22 04:56:16 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_sector	*ft_new_sector(t_sector *sect, char *ground, char *ceil)
 	t_sector	*new;
 
 	if (!(new = (t_sector*)malloc(sizeof(t_sector))))
-		ft_quit(NULL, "Error: ft_new_sector don't malloc", 0);
+		exit_program(NULL, QUIT_MEMERR_BEFORE_SDLINIT);
 	new->floor = ft_atof(ground);
 	new->ceil = ft_atof(ceil);
 	new->pts = 0;
@@ -49,10 +49,10 @@ void		ft_read_sectors(t_doom *doom, t_read *r)
 		tab[i - 3] = ft_atoi(r->split[i]);
 	r->sect->pts = (i - 3) / 2;
 	if (!(r->sect->vertex = (t_xy*)malloc(sizeof(t_xy) * (r->sect->pts + 1))))
-		ft_quit(NULL, "Error: ft_read_sector: vertex don't malloc", 0);
+		exit_program(NULL, QUIT_MEMERR_BEFORE_SDLINIT);
 	if (!(r->sect->neighbors = (signed char*)malloc(sizeof(signed char) *
 			r->sect->pts)))
-		ft_quit(NULL, "Error: ft_read_sector: neighbors don't malloc", 0);
+		exit_program(NULL, QUIT_MEMERR_BEFORE_SDLINIT);
 	i = -1;
 	while (++i < r->sect->pts)
 		r->sect->vertex[i + 1] = r->vertices[tab[i]];
@@ -70,7 +70,7 @@ void		ft_tab_sectors(t_doom *doom, t_read *r)
 
 	i = doom->num_sectors;
 	if (!(doom->sectors = (t_sector*)malloc(sizeof(t_sector) * i)))
-		ft_quit(NULL, "Error: ft_tab_sectors don't malloc", 0);
+		exit_program(NULL, QUIT_MEMERR_BEFORE_SDLINIT);
 	while (--i >= 0)
 	{
 		s = r->sect;
