@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/26 17:21:05 by cababou           #+#    #+#             */
-/*   Updated: 2019/03/19 15:57:40 by cababou          ###   ########.fr       */
+/*   Updated: 2019/03/23 02:28:51 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,5 +207,7 @@ double				ft_atof(const char *nptr);
 int					ft_atoi_base(char *str, char *base);
 
 void				ft_putnbr_base(int nbr, char *base);
+
+void				*mmalloc(size_t size);
 
 #endif
