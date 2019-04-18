@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 16:54:21 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/03/22 06:13:25 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/18 05:13:38 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	quit_it(t_doom *doom, int code, char *message)
 	if (doom)
 		free(doom);
 	ft_putendl(message);
+	destroy_fonts(doom);
 	SDL_Quit();
 	exit(code);
 }
@@ -26,7 +27,7 @@ void	exit_program(t_doom *d, int err_code)
 {
 	SDL_ShowCursor(SDL_ENABLE);
 	if (d)
-		SDL_SetWindowGrab(d->win, SDL_TRUE);
+		SDL_SetWindowGrab(d->win, SDL_FALSE);
 	if (err_code >= 0)
 		SDL_DestroyRenderer(d->rend);
 	if (err_code >= 0)

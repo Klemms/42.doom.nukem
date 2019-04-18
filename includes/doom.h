@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 11:12:03 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/03/22 05:27:16 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/18 06:29:58 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,12 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <SDL2/SDL.h>
-
+# include <SDL2_ttf/SDL_ttf.h>
 # include "../libft/libft.h"
 # include "map.h"
 # include "raycasting.h"
-# include "ui.h"
 # include "errors.h"
 
-# define WIN_W 1600
-# define WIN_H 1200
-# define FPS_LIMIT 16
 # define CAM_H 6
 # define DUCK_CAM_H 2.5
 # define STEP_H 2
@@ -43,8 +39,8 @@ typedef struct	s_raycasting
 	t_window	*head;
 	t_window	*tail;
 	t_window	now;
-	int			y_top[WIN_W];
-	int			y_bot[WIN_W];
+	int			*y_top;
+	int			*y_bot;
 	t_sector	*sect;
 	t_xy		v1;
 	t_xy		v2;
@@ -108,18 +104,66 @@ typedef struct	s_move
 	int			duck_up;
 }				t_move;
 
+typedef struct	s_settings
+{
+	int			window_width;
+	int			window_height;
+	float		framerate;
+	float		angle_h;
+	float		angle_v;
+}				t_settings;
+
+typedef struct	s_ui_element
+{
+	int			id;
+	int			el_state;
+	int			pos_x;
+	int			pos_y;
+	int			width;
+	int			height;
+}				t_el_ui;
+
+typedef struct	s_button_element
+{
+	t_el_ui		*ui_element;
+	int			(*ui_callback)(int click_type, int x_pos, int y_pos);
+	int			background_color;
+	int			background_color_disabled;
+	char		*text;
+}				t_el_button;
+
+typedef struct	s_text_element
+{
+	t_el_ui		*ui_element;
+	SDL_Texture	*texture;
+	SDL_Rect	rect;
+	TTF_Font	*font;
+	SDL_Color	text_color;
+	int			list_id;
+	int			size;
+	char		*text;
+}				t_el_text;
+
 typedef struct	s_doom
 {
 	SDL_Window		*win;
 	SDL_Renderer	*rend;
-	SDL_bool		bool_prog;
 	SDL_Event		event;
 	t_sector		*sectors;
 	int				num_sectors;
 	SDL_Surface		*surface;
 	t_player		player;
 	t_move			move;
+	t_lstcontainer	*events;
+	Uint32			last_frame;
+	t_settings		*settings;
 	int				game_mode;
+	Uint32 			framecount;
+	t_lstcontainer	*fonts;
+	t_lstcontainer	*texts;
+	int				ui_ids;
+	t_el_text		*fps_counter;
+	int				average_fps;
 }				t_doom;
 
 t_doom			*ft_init_doom();
@@ -137,12 +181,28 @@ void			ft_moving(t_doom *doom, t_player *player);
 void			ft_falling(t_doom *doom);
 void			ft_check_duck_up(t_doom *doom);
 
+void			init_fonts(t_doom *doom);
+void			destroy_fonts(t_doom *doom);
+
 void			exit_program(t_doom *doom, int err_code);
 
 void			render_game(t_doom *doom);
 
-void			render_editor(t_doom *doom);
+void			init_game(t_doom *doom);
+void			loop_game(t_doom *doom);
+
+void			init_editor(t_doom *doom);
+void			loop_editor(t_doom *doom);
 
 void			ft_limit_fps(unsigned int limit);
+
+void			init_ids(t_doom *doom);
+int				next_id(t_doom *doom);
+
+t_el_ui			*create_ui_element(t_doom *doom);
+
+t_el_text		*create_text(t_doom *doom, t_el_ui *ui, char *string);
+void			text_prepare(t_doom *doom, t_el_text *text);
+void			text_render(t_doom *doom, t_el_text *text);
 
 #endif

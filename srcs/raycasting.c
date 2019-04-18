@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 11:28:56 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/03/19 18:51:25 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/18 03:26:18 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,17 @@ void	ft_print_x_wall(t_doom *doom, int x, int y1, int y2, int top, int middle, i
 	Uint32	*data;
 
 	data = doom->surface->pixels;
-    y1 = ft_clamp(y1, 0, WIN_H-1);
-    y2 = ft_clamp(y2, 0, WIN_H-1);
+    y1 = ft_clamp(y1, 0, doom->settings->window_height-1);
+    y2 = ft_clamp(y2, 0, doom->settings->window_height-1);
     if(y2 == y1)
-        data[y1 * WIN_W + x] = middle;
+        data[y1 * doom->settings->window_width + x] = middle;
     else if(y2 > y1)
     {
-        data[y1 * WIN_W + x] = top;
+        data[y1 * doom->settings->window_width + x] = top;
 		y = y1;
 		while (++y < y2)
-			data[y * WIN_W + x] = middle;
-        data[y2 * WIN_W + x] = bottom;
+			data[y * doom->settings->window_width + x] = middle;
+        data[y2 * doom->settings->window_width + x] = bottom;
     }
 }
 
@@ -86,7 +86,7 @@ void	ft_position_wall2(t_raycasting *r)
 	}
 }
 
-void	ft_position_wall(t_raycasting *r)
+void	ft_position_wall(t_doom *doom, t_raycasting *r)
 {
 	/* Le mur est-il au moins partiellement devant le joueur? */
 	if(r->t1.y <= 0 || r->t2.y <= 0)
@@ -107,12 +107,12 @@ void	ft_position_wall(t_raycasting *r)
 		}
 	}
 	/* Faire la transformation de perspective */
-	r->scale1.x = ANGLE_H / r->t1.y;
-	r->scale1.y = ANGLE_V / r->t1.y;
-	r->scale2.x = ANGLE_H / r->t2.y;
-	r->scale2.y = ANGLE_V / r->t2.y;
-	r->lim_x.x = (WIN_W / 2) - (int)(r->t1.x * r->scale1.x);
-	r->lim_x.y = (WIN_W / 2) - (int)(r->t2.x * r->scale2.x);
+	r->scale1.x = doom->settings->angle_h / r->t1.y;
+	r->scale1.y = doom->settings->angle_v / r->t1.y;
+	r->scale2.x = doom->settings->angle_h / r->t2.y;
+	r->scale2.y = doom->settings->angle_v / r->t2.y;
+	r->lim_x.x = (doom->settings->window_width / 2) - (int)(r->t1.x * r->scale1.x);
+	r->lim_x.y = (doom->settings->window_width / 2) - (int)(r->t2.x * r->scale2.x);
 }
 
 void	ft_coord_ceil_floor(t_doom *doom, t_raycasting *r)
@@ -131,22 +131,22 @@ void	ft_coord_ceil_floor(t_doom *doom, t_raycasting *r)
 		r->ny_floor = doom->sectors[r->neighbor].floor - doom->player.where.z;
 	}
 	/* Projeter nos hauteurs de plafond et de plancher en coordonnées d'écran (coordonnée en Y) */
-	r->y1.x = (WIN_H / 2) - (int)((doom->player.yaw * r->t1.y + r->y_ceil)
+	r->y1.x = (doom->settings->window_height / 2) - (int)((doom->player.yaw * r->t1.y + r->y_ceil)
 		* r->scale1.y);
-	r->y1.y = (WIN_H / 2) - (int)((doom->player.yaw * r->t1.y + r->y_floor)
+	r->y1.y = (doom->settings->window_height / 2) - (int)((doom->player.yaw * r->t1.y + r->y_floor)
 		* r->scale1.y);
-	r->y2.x = (WIN_H / 2) - (int)((doom->player.yaw * r->t2.y + r->y_ceil)
+	r->y2.x = (doom->settings->window_height / 2) - (int)((doom->player.yaw * r->t2.y + r->y_ceil)
 		* r->scale2.y);
-	r->y2.y = (WIN_H / 2) - (int)((doom->player.yaw * r->t2.y + r->y_floor)
+	r->y2.y = (doom->settings->window_height / 2) - (int)((doom->player.yaw * r->t2.y + r->y_floor)
 		* r->scale2.y);
 	/* Même chose pour le secteur voisin */
-	r->n_y1.x = (WIN_H / 2) - (int)((doom->player.yaw * r->t1.y + r->ny_ceil)
+	r->n_y1.x = (doom->settings->window_height / 2) - (int)((doom->player.yaw * r->t1.y + r->ny_ceil)
 		* r->scale1.y);
-	r->n_y1.y = (WIN_H / 2) - (int)((doom->player.yaw * r->t1.y + r->ny_floor)
+	r->n_y1.y = (doom->settings->window_height / 2) - (int)((doom->player.yaw * r->t1.y + r->ny_floor)
 		* r->scale1.y);
-	r->n_y2.x = (WIN_H / 2) - (int)((doom->player.yaw * r->t2.y + r->ny_ceil)
+	r->n_y2.x = (doom->settings->window_height / 2) - (int)((doom->player.yaw * r->t2.y + r->ny_ceil)
 		* r->scale2.y);
-	r->n_y2.y = (WIN_H / 2) - (int)((doom->player.yaw * r->t2.y + r->ny_floor)
+	r->n_y2.y = (doom->settings->window_height / 2) - (int)((doom->player.yaw * r->t2.y + r->ny_floor)
 		* r->scale2.y);
 }
 
@@ -168,7 +168,7 @@ void	ft_other_sector(t_doom *doom, t_raycasting *r)
 		// Réduire la fenêtre restante au-dessous de ces plafonds
 		if (r->c_y.x < r->c_n_y.x)
 			r->c_y.x = r->c_n_y.x;
-		r->y_top[r->x] = ft_clamp(r->c_y.x, r->y_top[r->x], WIN_H-1);
+		r->y_top[r->x] = ft_clamp(r->c_y.x, r->y_top[r->x], doom->settings->window_height-1);
 		/* Si notre sol est plus bas que le sol, rendez le mur du bas */
 		// Entre leur et notre sol
 		ft_print_x_wall(doom, r->x, r->c_n_y.y + 1, r->c_y.y, 0, r->color_floor, 0);
@@ -227,18 +227,22 @@ void	ft_print_screen(t_doom *doom)
 	t_raycasting	r;
 	int				render_sector[doom->num_sectors];
 
+	if (!(r.y_top = mmalloc(sizeof(int) * (doom->settings->window_width + 1))))
+		exit_program(doom, QUIT_MEMERR_AFTER_SDLINIT);
+	if (!(r.y_bot = mmalloc(sizeof(int) * (doom->settings->window_width + 1))))
+		exit_program(doom, QUIT_MEMERR_AFTER_SDLINIT);
 	r.head = r.wait;
 	r.tail = r.wait;
-	r.i = WIN_W;
+	r.i = doom->settings->window_width;
 	while (--r.i >= 0)
 	{
 		r.y_top[r.i] = 0;
-		r.y_bot[r.i] = WIN_H - 1;
+		r.y_bot[r.i] = doom->settings->window_height - 1;
 	}
 	while (++r.i < doom->num_sectors)
 		render_sector[r.i] = 0;
     /* Commencez le rendu sur tout l'écran à partir de l'endroit où se trouve le lecteur. */
-	*r.head = (t_window) {doom->player.sector, 0, WIN_W - 1};
+	*r.head = (t_window) {doom->player.sector, 0, doom->settings->window_width - 1};
     if (++r.head == r.wait + MAX_WAIT)
 		r.head = r.wait;
 //	printf("%d\n", doom->player.sector);
@@ -263,7 +267,7 @@ void	ft_print_screen(t_doom *doom)
 			/* Le mur est-il au moins partiellement devant le joueur? */
 			if (r.t1.y <= 0 && r.t2.y <= 0)
 				continue;
-			ft_position_wall(&r);
+			ft_position_wall(doom, &r);
 			// Rendre seulement si c'est visible
 			if (r.lim_x.x >= r.lim_x.y || r.lim_x.x > r.now.x2 || r.lim_x.y < r.now.x1)
 				continue;

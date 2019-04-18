@@ -6,7 +6,7 @@
 #    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 22:39:07 by cababou           #+#    #+#              #
-#    Updated: 2019/03/22 06:34:13 by cababou          ###   ########.fr        #
+#    Updated: 2019/04/18 06:05:24 by cababou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,8 @@ NAME :=	doom
 
 SRC := main.c doom.c quit.c read_map.c read_vertices.c read_sectors.c \
 	raycasting.c fct.c event.c move.c mouse.c falling.c cp_main.c \
-	game/draw.c draw_utils.c ui/button.c
+	game/draw.c ui/button/init_button.c editor/editor.c editor/events.c \
+	ui/init_fonts.c ui/text/text.c ui/ui_ids.c ui/ui_el/ui.c
 
 OBJ := $(SRC:.c=.o)
 
@@ -41,11 +42,12 @@ ONLYDIR :=	$(foreach dir, $(OBJP), $(shell dirname $(dir)))
 
 LIB := -L libft/ -lft
 
-INC := -I includes
+INC := -I includes -I $(FRAMEWORKSDIR)/SDL2
 
-FLAG := -Wall -Wextra -Werror -g
+FLAG := -g
 
-SDL := -framework SDL2
+FRAMEWORKSDIR := $(PWD)/frameworks
+SDL := -F $(FRAMEWORKSDIR) -framework SDL2 -framework SDL2_ttf -Wl,-rpath $(FRAMEWORKSDIR)
 
 TOTAL_FILES := $(shell echo $(SRC) | wc -w | sed -e 's/ //g')
 CURRENT_FILES = $(shell find $(PWD)/obj/ -type f 2> /dev/null | wc -l | sed -e 's/ //g')
@@ -53,12 +55,12 @@ CURRENT_FILES = $(shell find $(PWD)/obj/ -type f 2> /dev/null | wc -l | sed -e '
 all : libft_comp $(NAME)
 
 $(NAME) : $(OBJP)
-			@gcc $(FLAG) $(OBJP) $(SDL) $(LIB) -o $(NAME)
+			@gcc $(SDL) $(FLAG) $(OBJP) $(INC) $(LIB) -o $(NAME)
 			@echo "$(CLEAR_LINE)$(COL_BLUE)[$(NAME)] $(COL_YELLOW)Finished compilation. Output file : $(COL_VIOLET)$(PWD)/$(NAME)$(COL_END)"
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 			@mkdir -p $(ONLYDIR)
-			@gcc -c $(FLAG) $(INC) $< -o $@
+			@gcc -c $(FLAG) -F $(FRAMEWORKSDIR) $(INC) $< -o $@
 			@echo "$(CLEAR_LINE)$(COL_BLUE)[$(NAME)] $(COL_YELLOW)Compiling file [$(COL_VIOLET)$<$(COL_YELLOW)]. ($(CURRENT_FILES) / $(TOTAL_FILES))$(COL_END)$(BEGIN_LINE)"
 
 libft_comp:

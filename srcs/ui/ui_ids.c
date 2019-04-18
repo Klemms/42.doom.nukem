@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_utils.c                                       :+:      :+:    :+:   */
+/*   ui_ids.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/19 18:21:11 by cababou           #+#    #+#             */
-/*   Updated: 2019/03/19 18:22:38 by cababou          ###   ########.fr       */
+/*   Created: 2019/04/18 05:30:01 by cababou           #+#    #+#             */
+/*   Updated: 2019/04/18 05:31:50 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/doom.h"
+#include "doom.h"
 
-void	ft_limit_fps(unsigned int limit)
+void	init_ids(t_doom *doom)
 {
-	unsigned int	ticks;
+	doom->ui_ids = 1;
+}
 
-	ticks = SDL_GetTicks();
-	if (ticks > limit)
-		return ;
-	else if (ticks + 16 < limit)
-		SDL_Delay(FPS_LIMIT);
-	else
-		SDL_Delay(limit - ticks);
+int		next_id(t_doom *doom)
+{
+	return (doom->ui_ids++);
 }

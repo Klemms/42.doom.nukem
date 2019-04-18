@@ -1,38 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycasting.h                                       :+:      :+:    :+:   */
+/*   ui.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/11 11:38:00 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/04/18 02:58:40 by cababou          ###   ########.fr       */
+/*   Created: 2019/04/18 03:51:24 by cababou           #+#    #+#             */
+/*   Updated: 2019/04/18 06:30:29 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RAYCASTING_H
-# define RAYCASTING_H
+#include "doom.h"
 
-# define MAX_WAIT 32
-# define CLEIS 0xaaaaaa
-# define WALL 0x505050
-# define RED 0xff0000
-# define GREEN 0x00ff00
-# define BLUE 0x0000ff
-
-typedef struct	s_i_xy
+t_el_ui	*create_ui_element(t_doom *doom)
 {
-	int	x;
-	int	y;
-}				t_i_xy;
+	t_el_ui	*element;
 
-typedef struct	s_window
-{
-	int	sector;
-	int	x1;
-	int	x2;
-}				t_window;
-
-double			ft_clamp(double a, double min, double max);
-
-#endif
+	if (!(element = mmalloc(sizeof(t_el_ui))))
+		exit_program(doom, QUIT_MEMERR_AFTER_SDLINIT);
+	element->id = next_id(doom);
+	element->pos_x = 0;
+	element->pos_y = 0;
+	element->width = 100;
+	element->height = 100;
+	return (element);
+}

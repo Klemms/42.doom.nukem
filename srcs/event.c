@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 10:14:58 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/03/22 05:50:34 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/18 05:07:46 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void	ft_event(t_doom *doom)
 {
 	if (doom->event.type == SDL_KEYDOWN || doom->event.type == SDL_KEYUP)
 	{
-		if (doom->event.key.keysym.sym == SDLK_ESCAPE)
-			doom->bool_prog = SDL_FALSE;
+		if (doom->event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
+			exit_program(doom, QUIT_GENERIC);
 		else if (doom->event.key.keysym.sym == SDLK_w)
 			doom->move.wsad[0] = (doom->event.type == SDL_KEYDOWN) ? 1 : 0;
 		else if (doom->event.key.keysym.sym == SDLK_s)
@@ -70,7 +70,7 @@ void	ft_event(t_doom *doom)
 			doom->move.speed = (doom->event.type == SDL_KEYDOWN) ? 2 : 1;
 	}
 	else if (doom->event.type == SDL_QUIT)
-		doom->bool_prog = SDL_FALSE;
+		exit_program(doom, QUIT_MEMERR_AFTER_SDLINIT);
 	else if (doom->event.type == SDL_MOUSEMOTION)
 		ft_move_mouse(doom);
 }
