@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 16:43:09 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/03/13 16:19:09 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/03/24 16:49:34 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ double	ft_point_side(t_xy p, t_xy p1, t_xy p2)
 {
 	double	side;
 
-	side = (((p2.x - p1.x) * (p.y - p1.y)) - ((p.x - p1.x) * (p2.y - p1.y)));
+	side = (p2.x - p1.x) * (p.y - p1.y) - (p.x - p1.x) * (p2.y - p1.y);
 	return (side);
 }
 

@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 11:12:03 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/03/22 05:27:16 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/15 16:03:19 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define WIN_H 1200
 # define FPS_LIMIT 16
 # define CAM_H 6
-# define DUCK_CAM_H 2.5
+# define DUCK_CAM_H 3
 # define STEP_H 2
 # define COLLISION_HEAD 1
 # define PI_X_2 M_PI * 2
@@ -79,11 +79,10 @@ typedef struct	s_raycasting
 	int			color_wall;
 }				t_raycasting;
 
-typedef struct	s_moving
+typedef struct	s_sect_moving
 {
 	int			s;
-	t_xy		p;
-	t_xy		d;
+	int			i;
 	t_xy		p_d;
 	t_sector	*sect;
 	t_xy		*vert;
@@ -91,6 +90,14 @@ typedef struct	s_moving
 	double		hole_high;
 	double		xd;
 	double		yd;
+}				t_sect_moving;
+
+typedef struct	s_moving
+{
+	t_xy		p;
+	t_xy		d;
+	int			tmp_i;
+	int			new_sect;
 }				t_moving;
 
 typedef struct	s_move
@@ -129,12 +136,17 @@ void			ft_print_screen(t_doom *doom);
 int				ft_intersect_box(t_xy p1, t_xy p2, t_xy p3, t_xy p4);
 double			ft_point_side(t_xy p, t_xy p1, t_xy p2);
 void			ft_event(t_doom *doom);
-void			ft_move_player(t_doom *doom, double dx, double dy);
+void			ft_move_player(t_doom *doom, double dx, double dy, int new_sect);
+void			ft_moving_check(t_doom *doom, t_moving *constant, t_sect_moving *m, int sect);
 void			ft_move_wsad(t_doom *doom, t_move *move, t_player *player);
 void			ft_move_mouse(t_doom *doom);
 void			ft_moving(t_doom *doom, t_player *player);
 void			ft_falling(t_doom *doom);
 void			ft_check_duck_up(t_doom *doom);
+void			ft_wsad_0(t_player *player);
+void			ft_wsad_1(t_player *player);
+void			ft_wsad_2(t_player *player);
+void			ft_wsad_3(t_player *player);
 
 void			exit_program(t_doom *doom, int err_code);
 

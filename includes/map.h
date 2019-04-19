@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 16:59:01 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/03/12 11:37:50 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/03/26 10:54:12 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct	s_sector
 	double			floor;
 	double			ceil;
 	t_xy			*vertex;
+	t_xy			*move_vert;
 	signed char		*neighbors;
 	int				pts;
 	struct s_sector	*next;
@@ -46,6 +47,7 @@ typedef struct	s_player
 	double		anglecos;
 	double		yaw;
 	unsigned	sector;
+	unsigned	move_sect;
 }				t_player;
 
 typedef struct	s_read

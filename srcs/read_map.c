@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 16:57:55 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/03/19 18:23:11 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/10 12:48:02 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void	ft_read_player(t_doom *doom, t_read *r)
 	r->split = ft_strsplit(r->line, ' ');
 	doom->player = (t_player) {{ft_atof(r->split[1]),
 	ft_atof(r->split[2]), 0}, {0, 0, 0}, ft_atof(r->split[3]),
-		0, 0, 0, ft_atoi(r->split[4])};
+		0, 0, 0, ft_atoi(r->split[4]), 0};
+	doom->player.move_sect = doom->player.sector;
 	ft_free_split(r->split);
 	doom->player.where.z = doom->sectors[doom->player.sector].floor + CAM_H;
 }

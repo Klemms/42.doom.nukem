@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 10:14:58 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/03/22 05:50:34 by cababou          ###   ########.fr       */
+/*   Updated: 2019/03/20 17:46:28 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	ft_event(t_doom *doom)
 			doom->move.wsad[2] = (doom->event.type == SDL_KEYDOWN) ? 1 : 0;
 		else if (doom->event.key.keysym.sym == SDLK_d)
 			doom->move.wsad[3] = (doom->event.type == SDL_KEYDOWN) ? 1 : 0;
+		else if (doom->event.key.keysym.sym == SDLK_x)
+			doom->move.speed = (doom->event.type == SDL_KEYDOWN) ? 2 : 1;
 		else if (doom->event.key.keysym.sym == SDLK_SPACE)
 		{
 			if (doom->move.ground)
@@ -60,7 +62,6 @@ void	ft_event(t_doom *doom)
 		}
 		else if (doom->event.key.keysym.sym == SDLK_LSHIFT)
 		{
-			printf("OUI\n");
 			ft_check_duck(doom);
 			doom->move.ducking = (doom->event.type == SDL_KEYDOWN) ? 1 : 0;
 			doom->move.speed = (doom->event.type == SDL_KEYDOWN) ? 0.3 : 1;
