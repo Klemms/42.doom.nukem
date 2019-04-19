@@ -1,21 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   editor.h                                           :+:      :+:    :+:   */
+/*   rect.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/17 01:32:17 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/19 04:24:41 by cababou          ###   ########.fr       */
+/*   Created: 2019/04/19 03:38:40 by cababou           #+#    #+#             */
+/*   Updated: 2019/04/19 03:49:42 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EDITOR_H
-# define EDITOR_H
-
 #include "doom.h"
 
-int				quit_event(t_doom *doom, SDL_Event sdl_event);
-int				key_event(t_doom *doom, SDL_Event sdl_event);
+SDL_Rect	make_rect(int x, int y, int width, int height)
+{
+	SDL_Rect	rect;
 
-#endif
+	rect.x = x;
+	rect.y = y;
+	rect.w = width;
+	rect.h = height;
+	return (rect);
+}
+
+void	draw_rect(t_doom *doom, SDL_Rect rect, SDL_Color color)
+{
+	SDL_SetRenderDrawColor(doom->rend, color.r, color.g, color.b, color.a);
+	SDL_RenderFillRect(doom->rend, &rect);
+}

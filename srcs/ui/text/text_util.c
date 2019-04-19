@@ -1,21 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   editor.h                                           :+:      :+:    :+:   */
+/*   text_util.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/17 01:32:17 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/19 04:24:41 by cababou          ###   ########.fr       */
+/*   Created: 2019/04/19 01:30:31 by cababou           #+#    #+#             */
+/*   Updated: 2019/04/19 01:31:54 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EDITOR_H
-# define EDITOR_H
-
 #include "doom.h"
 
-int				quit_event(t_doom *doom, SDL_Event sdl_event);
-int				key_event(t_doom *doom, SDL_Event sdl_event);
-
-#endif
+int		text_size(t_el_text *text)
+{
+	return (TTF_SizeUTF8(text->font, text->text, &text->u_w, &text->u_h));
+}

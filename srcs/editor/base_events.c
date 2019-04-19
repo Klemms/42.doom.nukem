@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   editor.h                                           :+:      :+:    :+:   */
+/*   base_events.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/17 01:32:17 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/19 04:24:41 by cababou          ###   ########.fr       */
+/*   Created: 2019/04/19 04:16:03 by cababou           #+#    #+#             */
+/*   Updated: 2019/04/19 04:53:18 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EDITOR_H
-# define EDITOR_H
-
 #include "doom.h"
+#include "editor.h"
 
-int				quit_event(t_doom *doom, SDL_Event sdl_event);
-int				key_event(t_doom *doom, SDL_Event sdl_event);
+int		quit_event(t_doom *doom, SDL_Event sdl_event)
+{
+	exit_program(doom, QUIT_GENERIC);
 
-#endif
+	return (0);
+}
+
+int		key_event(t_doom *doom, SDL_Event sdl_event)
+{
+	if (sdl_event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
+		exit_program(doom, QUIT_GENERIC);
+
+	return (0);
+}

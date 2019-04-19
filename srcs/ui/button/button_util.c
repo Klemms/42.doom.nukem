@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_button.c                                      :+:      :+:    :+:   */
+/*   button_util.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/22 02:04:31 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/18 04:48:36 by cababou          ###   ########.fr       */
+/*   Created: 2019/04/19 04:45:58 by cababou           #+#    #+#             */
+/*   Updated: 2019/04/19 04:48:07 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-t_el_button	*create_button(t_doom *doom, t_el_ui *ui)
+int		button_coords_contained(t_el_button *button, int x, int y)
 {
-	t_el_button	*but;
-
-	if (!(but = mmalloc(sizeof(t_el_button))))
-		exit_program(doom, QUIT_MEMERR_AFTER_SDLINIT);
-	but->ui_element = ui;
-	return (but);
+	if (x >= button->rect.x && x <= (button->rect.x + button->rect.w))
+		if (y >= button->rect.y && y <= (button->rect.y + button->rect.h))
+			return (1);
+	return (0);
 }
