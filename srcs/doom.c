@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 16:49:20 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/04/19 16:56:06 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/04/19 16:57:10 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ t_doom	*ft_init_doom()
 {
 	t_doom	*doom;
 	int		fd;
-	
 
 	if (!(doom = malloc(sizeof(t_doom))))
 		exit_program(NULL, QUIT_MEMERR_BEFORE_SDLINIT);
