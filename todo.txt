@@ -35,5 +35,4 @@ bonus
 moi
 - free struct
 - changement de secteur
-- bug tranverser les coins
 - textures

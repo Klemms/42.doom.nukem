@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 16:49:20 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/03/22 05:27:39 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/19 15:37:34 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,15 @@ t_doom	*ft_init_doom()
 	if (!(doom = malloc(sizeof(t_doom))))
 		exit_program(NULL, QUIT_MEMERR_BEFORE_SDLINIT);
 	ft_bzero(doom, sizeof(t_doom));
-	doom->num_sectors = 0;
+	d->num_sectors = 0;
+//	if ((fd = open("maps/wtf.txt", O_RDONLY)) < 0)
+	if ((fd = open("maps/t2.txt", O_RDONLY)) < 0)
+//	if ((fd = open("maps/test.txt", O_RDONLY)) < 0)
+	ft_read_map(fd, d);
+	d->player.anglecos = cos(d->player.angle);
+	d->player.anglesin = sin(d->player.angle);
 	if ((fd = open("maps/map-clear.txt", O_RDONLY)) < 0)
 		exit_program(doom, QUIT_CANT_FIND_MAP);
-	ft_read_map(fd, doom);
-	doom->player.anglecos = cos(doom->player.angle);
-	doom->player.anglesin = sin(doom->player.angle);
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
 		exit_program(doom, QUIT_CANT_INIT_SDL);
 	doom->win = SDL_CreateWindow("Doom-Nukem", SDL_WINDOWPOS_CENTERED,

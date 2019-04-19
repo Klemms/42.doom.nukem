@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
+#    By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 22:39:07 by cababou           #+#    #+#              #
-#    Updated: 2019/03/22 01:39:18 by cababou          ###   ########.fr        #
+#    Updated: 2019/04/12 18:12:23 by lde-batz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ COL_WHITE	:= \033[1;37m
 NAME :=	doom
 
 SRC := main.c doom.c quit.c read_map.c read_vertices.c read_sectors.c \
-	raycasting.c fct.c event.c move.c mouse.c falling.c cp_main.c \
+	raycasting.c fct.c event.c move.c mouse.c falling.c \
 	game/draw.c draw_utils.c
 
 OBJ := $(SRC:.c=.o)
