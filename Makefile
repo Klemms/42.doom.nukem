@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+         #
+#    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 22:39:07 by cababou           #+#    #+#              #
-#    Updated: 2019/04/19 04:53:37 by cababou          ###   ########.fr        #
+#    Updated: 2019/04/19 17:00:09 by cababou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ COL_WHITE	:= \033[1;37m
 NAME :=	doom
 
 SRC := main.c doom.c quit.c read_map.c read_vertices.c read_sectors.c \
-	raycasting.c fct.c event.c move.c mouse.c falling.c cp_main.c \
+	raycasting.c fct.c event.c move.c mouse.c falling.c \
 	game/draw.c ui/button/button.c editor/editor.c event_system_v2.c \
 	ui/init_fonts.c ui/text/text.c ui/ui_ids.c ui/ui_el/ui.c \
 	ui/text/text_util.c shapes/rect.c easter_eggs/hypercam.c \
