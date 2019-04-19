@@ -6,11 +6,22 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 16:49:20 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/04/19 15:37:34 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/04/18 05:06:22 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/doom.h"
+
+void	setup_settings(t_doom *doom)
+{
+	if (!(doom->settings = mmalloc(sizeof(t_settings))))
+		exit_program(doom, QUIT_MEMERR_BEFORE_SDLINIT);
+	doom->settings->window_width = 1920;
+	doom->settings->window_height = 1080;
+	doom->settings->framerate = 1000.0f / 60;
+	doom->settings->angle_h = 0.73f * doom->settings->window_height;
+	doom->settings->angle_v = 0.2f * doom->settings->window_height;
+}
 
 t_doom	*ft_init_doom()
 {
@@ -20,19 +31,14 @@ t_doom	*ft_init_doom()
 	if (!(doom = malloc(sizeof(t_doom))))
 		exit_program(NULL, QUIT_MEMERR_BEFORE_SDLINIT);
 	ft_bzero(doom, sizeof(t_doom));
-	d->num_sectors = 0;
-//	if ((fd = open("maps/wtf.txt", O_RDONLY)) < 0)
-	if ((fd = open("maps/t2.txt", O_RDONLY)) < 0)
-//	if ((fd = open("maps/test.txt", O_RDONLY)) < 0)
-	ft_read_map(fd, d);
-	d->player.anglecos = cos(d->player.angle);
-	d->player.anglesin = sin(d->player.angle);
+	setup_settings(doom);
+	doom->num_sectors = 0;
 	if ((fd = open("maps/map-clear.txt", O_RDONLY)) < 0)
 		exit_program(doom, QUIT_CANT_FIND_MAP);
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
 		exit_program(doom, QUIT_CANT_INIT_SDL);
 	doom->win = SDL_CreateWindow("Doom-Nukem", SDL_WINDOWPOS_CENTERED,
-		SDL_WINDOWPOS_CENTERED, WIN_W, WIN_H, 0);
+		SDL_WINDOWPOS_CENTERED, doom->settings->window_width, doom->settings->window_height, 0);
 //	if ((d->win = SDL_CreateWindow("Doom-Nukem", SDL_WINDOWPOS_CENTERED,
 //			SDL_WINDOWPOS_CENTERED, WIN_W, WIN_H, 0)) != NULL)
 	if (doom->win == NULL)
@@ -42,7 +48,6 @@ t_doom	*ft_init_doom()
 		exit_program(doom, QUIT_CANT_INIT_RENDERER);
 //	if (SDL_CreateWindowAndRenderer(WIN_W, WIN_H, 0, &d->win, &d->rend) != 0)
 //		ft_quit(d, "Impossible to create the window and the renderer", 1);
-	doom->bool_prog = SDL_TRUE;
 	doom->move.wsad[0] = 0;
 	doom->move.wsad[1] = 0;
 	doom->move.wsad[2] = 0;

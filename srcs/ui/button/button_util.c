@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_utils.c                                       :+:      :+:    :+:   */
+/*   button_util.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/19 18:21:11 by cababou           #+#    #+#             */
-/*   Updated: 2019/03/19 18:22:38 by cababou          ###   ########.fr       */
+/*   Created: 2019/04/19 04:45:58 by cababou           #+#    #+#             */
+/*   Updated: 2019/04/19 04:48:07 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/doom.h"
+#include "doom.h"
 
-void	ft_limit_fps(unsigned int limit)
+int		button_coords_contained(t_el_button *button, int x, int y)
 {
-	unsigned int	ticks;
-
-	ticks = SDL_GetTicks();
-	if (ticks > limit)
-		return ;
-	else if (ticks + 16 < limit)
-		SDL_Delay(FPS_LIMIT);
-	else
-		SDL_Delay(limit - ticks);
+	if (x >= button->rect.x && x <= (button->rect.x + button->rect.w))
+		if (y >= button->rect.y && y <= (button->rect.y + button->rect.h))
+			return (1);
+	return (0);
 }
