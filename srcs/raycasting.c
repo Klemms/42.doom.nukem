@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 11:28:56 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/04/18 03:26:18 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/19 17:12:19 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,27 +271,14 @@ void	ft_print_screen(t_doom *doom)
 		// pour r.i dans les bords du secteur
 		while (++r.i < r.sect->pts)
 		{
-//			printf("r.i: %d\n", r.i);
 			ft_coord_wall(doom, &r);
 			/* Le mur est-il au moins partiellement devant le joueur? */
 			if (r.t1.y <= 0 && r.t2.y <= 0)
-			{
-//				printf("continue 1: %d\n", r.i);
 				continue;
 			ft_position_wall(doom, &r);
 			// Rendre seulement si c'est visible
-//			printf("val2: %d %d %d %d\n", r.lim_x.x, r.lim_x.y, r.now.x1, r.now.x2);
 			if (r.lim_x.x >= r.lim_x.y || r.lim_x.x > r.now.x2 || r.lim_x.y < r.now.x1)
-			{
-//				printf("continue 2: \n");
-//				if (r.lim_x.x >= r.lim_x.y)
-//					printf("pb 1\n");
-//				if (r.lim_x.x > r.now.x2)
-//					printf("pb 2\n");
-//				if (r.lim_x.y < r.now.x1)
-//					printf("pb 3\n");
 				continue;
-			}
 			ft_coord_ceil_floor(doom, &r);
 			/* Rendu du mur */
 			ft_render_wall(doom, &r);

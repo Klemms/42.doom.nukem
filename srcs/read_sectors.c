@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:23:05 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/04/10 13:17:29 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/04/19 17:08:38 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ void		ft_tab_sectors(t_doom *doom, t_read *r)
 	t_sector	*s;
 
 	i = doom->num_sectors;
-	if (!(doom->sectors = (t_sector*)malloc(sizeof(t_sector) * i)))
+	if (!(doom->sectors = mmalloc(sizeof(t_sector) * i)))
 		exit_program(NULL, QUIT_MEMERR_BEFORE_SDLINIT);
 	while (--i >= 0)
 	{

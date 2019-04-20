@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 10:20:51 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/04/17 17:39:05 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/04/19 16:59:52 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,7 @@ void	ft_moving(t_doom *doom, t_player *player)
 
 
 	if (!(m = (t_sect_moving*)malloc(sizeof(t_sect_moving) * doom->num_sectors)))
-		ft_quit(NULL, "Error: ft_moving: m don't malloc", 2);
+		exit_program(doom, QUIT_MEMERR_AFTER_SDLINIT);
 	sect = player->sector;
 	constant.p.x = player->where.x;
 	constant.p.y = player->where.y;
