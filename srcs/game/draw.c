@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 18:15:46 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/19 04:22:47 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/19 17:20:11 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	render_game(t_doom *doom)
         ft_moving(doom, &doom->player);
     while (SDL_PollEvent(&doom->event))
         ft_event(doom);
-    ft_move_player(doom, 0, 0);
+    //ft_move_player(doom, 0, 0);
     ft_move_wsad(doom, &doom->move, &doom->player);
 }
 

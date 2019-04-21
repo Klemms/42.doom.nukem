@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 12:35:09 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/03/19 15:11:29 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/04/19 11:41:12 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_falling(t_doom *doom)
 {
 	double	next_z;
 
-	doom->player.velocity.z -= 0.05f; /* Add gravity */
+	doom->player.velocity.z -= 0.02f; /* Add gravity */
 	next_z = doom->player.where.z + doom->player.velocity.z;
 	// When going down
 	if (doom->player.velocity.z < 0 && next_z

@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 11:38:00 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/04/18 02:58:40 by cababou          ###   ########.fr       */
+/*   Updated: 2019/03/22 18:32:42 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,8 @@
 # define RAYCASTING_H
 
 # define MAX_WAIT 32
-# define CLEIS 0xaaaaaa
-# define WALL 0x505050
-# define RED 0xff0000
-# define GREEN 0x00ff00
-# define BLUE 0x0000ff
+# define ANGLE_H 0.73f * WIN_H
+# define ANGLE_V 0.2f * WIN_H
 
 typedef struct	s_i_xy
 {
@@ -34,5 +31,6 @@ typedef struct	s_window
 }				t_window;
 
 double			ft_clamp(double a, double min, double max);
+t_xy			ft_intersect_lines(t_xy p1, t_xy p2, t_xy p3, t_xy p4);
 
 #endif

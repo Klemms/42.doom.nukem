@@ -6,24 +6,11 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 11:28:56 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/04/18 03:26:18 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/19 17:12:19 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/doom.h"
-
-t_xy	ft_intersect_lines(t_xy p1, t_xy p2, t_xy p3, t_xy p4)
-{
-	t_xy	intersect;
-
-	intersect.x = ((p1.x * p2.y - p2.x * p1.y) * (p3.x - p4.x) / ((p1.x - p2.x)
-		* (p3.y - p4.y) - (p3.x - p4.x) * (p1.y - p2.y))
-		- (p3.x * p4.y - p4.x * p3.y) * (p1.x - p2.x));
-	intersect.y = ((p1.x * p2.y - p2.x * p1.y) * (p3.y - p4.y) / ((p1.x - p2.x)
-		* (p3.y - p4.y) - (p3.x - p4.x) * (p1.y - p2.y))
-		- (p3.x * p4.y - p4.x * p3.y) * (p1.y - p2.y));
-	return (intersect);
-}
 
 void	ft_print_x_wall(t_doom *doom, int x, int y1, int y2, int top, int middle, int bottom)
 {
@@ -64,31 +51,51 @@ void	ft_coord_wall(t_doom *doom, t_raycasting *r)
 void	ft_position_wall2(t_raycasting *r)
 {
 	// Trouver une intersection entre le mur et les bords approximatifs de la vue du joueur
+//	r->t1.x = -1;
+//	r->t1.y = 2;
+//	r->t2.x = 1;
+//	r->t2.y = -1;
+	r->near.x = 2;
+	r->near.y = 1;
+	r->far.x = -2;
+	r->far.y = -2;
+	r->i1 = ft_intersect_lines(r->t1, r->t2, r->near, r->far);
+//	printf("test i1: %f %f\n", r->i1.x, r->i1.y);
+	
 	r->near.x = -0.00001;
 	r->near.y = 0.0001;
 	r->far.x = -20.0;
 	r->far.y = 5.0;
-	r->i1 = ft_intersect_lines(r->t1, r->t2, r->near, r->far);r->near.x *= -1;
+//	printf("t1: %f %f  t2: %f %f\n", r->t1.x, r->t1.y, r->t2.x, r->t2.y);
+	r->i1 = ft_intersect_lines(r->t1, r->t2, r->near, r->far);
+
+	r->near.x *= -1;
 	r->far.x *= -1;
 	r->i2 = ft_intersect_lines(r->t1, r->t2, r->near, r->far);
 	if (r->t1.y < r->near.y)
 	{
+//		printf("av OUI: %f %f\n", r->t1.x, r->t1.y);
+//		printf("i1: %f %f  i2: %f %f\n", r->i1.x, r->i1.y, r->i2.x, r->i2.y);
 		if (r->i1.y > 0)
 		{
+//			printf("1\n");
 			r->t1.x = r->i1.x;
 			r->t1.y = r->i1.y;
 		}
 		else
 		{
+//			printf("2\n");
 			r->t1.x = r->i2.x;
 			r->t1.y = r->i2.y;
 		}
+//		printf("ap OUI: %f %f\n", r->t1.x, r->t1.y);
 	}
 }
 
 void	ft_position_wall(t_doom *doom, t_raycasting *r)
 {
 	/* Le mur est-il au moins partiellement devant le joueur? */
+//	printf("avant OUI: %f\n", r->t1.y);
 	if(r->t1.y <= 0 || r->t2.y <= 0)
 	{
 		ft_position_wall2(r);
@@ -196,6 +203,7 @@ void	ft_render_wall(t_doom *doom, t_raycasting *r)
 		/* Calculez la coordonnée Z pour ce point. (Utilisé uniquement pour l'éclairage.) */
 		r->z = ((r->x - r->lim_x.x) * (r->t2.y - r->t1.y)
 			/ (r->lim_x.y - r->lim_x.x) + r->t1.y) * 8;
+		r->z = ft_clamp(r->z, 0, 255);
 		/* Acquérir les coordonnées Y pour notre plafond et le sol pour cette coordonnée X. Les pince. */
 		// top
 		r->y.x = (r->x - r->lim_x.x) * (r->y2.x - r->y1.x)
