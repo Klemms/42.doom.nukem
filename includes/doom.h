@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 11:12:03 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/04/22 04:55:28 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/22 05:08:10 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ typedef struct	s_settings
 	float		framerate;
 	float		angle_h;
 	float		angle_v;
+	int			azerty_mode;
 }				t_settings;
 
 typedef struct	s_font

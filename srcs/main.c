@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 11:17:14 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/04/19 04:37:38 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/22 05:08:44 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int		main(int argc, char **argv)
 	t_doom	*doom;
 
 	doom = ft_init_doom();
+	doom->settings->azerty_mode = 0;
 	init_ids(doom);
 	init_base(doom, argc, argv);
 	init_fonts(doom);

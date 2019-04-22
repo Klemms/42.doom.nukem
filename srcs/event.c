@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 10:14:58 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/04/18 05:07:46 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/22 05:10:09 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,29 @@ void	ft_event(t_doom *doom)
 	{
 		if (doom->event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
 			exit_program(doom, QUIT_GENERIC);
-		else if (doom->event.key.keysym.sym == SDLK_w)
-			doom->move.wsad[0] = (doom->event.type == SDL_KEYDOWN) ? 1 : 0;
-		else if (doom->event.key.keysym.sym == SDLK_s)
-			doom->move.wsad[1] = (doom->event.type == SDL_KEYDOWN) ? 1 : 0;
-		else if (doom->event.key.keysym.sym == SDLK_a)
-			doom->move.wsad[2] = (doom->event.type == SDL_KEYDOWN) ? 1 : 0;
-		else if (doom->event.key.keysym.sym == SDLK_d)
-			doom->move.wsad[3] = (doom->event.type == SDL_KEYDOWN) ? 1 : 0;
-		else if (doom->event.key.keysym.sym == SDLK_x)
+		if (doom->settings->azerty_mode)
+		{
+			if (doom->event.key.keysym.sym == SDLK_z)
+				doom->move.wsad[0] = (doom->event.type == SDL_KEYDOWN) ? 1 : 0;
+			else if (doom->event.key.keysym.sym == SDLK_s)
+				doom->move.wsad[1] = (doom->event.type == SDL_KEYDOWN) ? 1 : 0;
+			else if (doom->event.key.keysym.sym == SDLK_q)
+				doom->move.wsad[2] = (doom->event.type == SDL_KEYDOWN) ? 1 : 0;
+			else if (doom->event.key.keysym.sym == SDLK_d)
+				doom->move.wsad[3] = (doom->event.type == SDL_KEYDOWN) ? 1 : 0;
+		}
+		else
+		{
+			if (doom->event.key.keysym.sym == SDLK_w)
+				doom->move.wsad[0] = (doom->event.type == SDL_KEYDOWN) ? 1 : 0;
+			else if (doom->event.key.keysym.sym == SDLK_s)
+				doom->move.wsad[1] = (doom->event.type == SDL_KEYDOWN) ? 1 : 0;
+			else if (doom->event.key.keysym.sym == SDLK_a)
+				doom->move.wsad[2] = (doom->event.type == SDL_KEYDOWN) ? 1 : 0;
+			else if (doom->event.key.keysym.sym == SDLK_d)
+				doom->move.wsad[3] = (doom->event.type == SDL_KEYDOWN) ? 1 : 0;
+		}
+		if (doom->event.key.keysym.sym == SDLK_x)
 			doom->move.speed = (doom->event.type == SDL_KEYDOWN) ? 2 : 1;
 		else if (doom->event.key.keysym.sym == SDLK_SPACE)
 		{
