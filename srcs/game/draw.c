@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 18:15:46 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/19 17:20:11 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/22 05:01:15 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@ void	init_game(t_doom *doom)
 	// quand on la bouge trop vite, mais ca demande de rework les events de souris,
 	// je le ferais peut etre plus tard
 
-	doom->surface = SDL_GetWindowSurface(doom->win);
-	
+	doom->render_texture = SDL_CreateTexture(doom->rend, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, doom->settings->window_width, doom->settings->window_height);
+	if (!doom->render_texture)
+		exit_program(doom, QUIT_CANT_INIT_RENDERER);
 	doom->average_fps = 0;
 	doom->fps_counter = create_text(doom, "- fps", FONT_RIFFIC, 20);
 	doom->fps_counter->ui_element->pos_x = 8;
@@ -33,7 +34,10 @@ void	render_game(t_doom *doom)
 {
 	SDL_SetRenderDrawColor(doom->rend, 0x00, 0x00, 0x00, 0xFF );
     SDL_RenderClear(doom->rend);
+	SDL_LockTexture(doom->render_texture, NULL, (void **)&doom->render_pixels, &doom->render_pitch);
     ft_print_screen(doom);
+	SDL_UnlockTexture(doom->render_texture);
+	SDL_RenderCopy(doom->rend, doom->render_texture, NULL, NULL);
 	doom->fps_counter->text = ft_strjoin(ft_itoa(doom->average_fps), " fps", 1);
 	text_prepare(doom, doom->fps_counter, 1);
 	text_render(doom, doom->fps_counter);
@@ -62,7 +66,7 @@ void	loop_game(t_doom *doom)
 	{
 		doom->last_frame = SDL_GetTicks();
 		render_game(doom);
-		SDL_UpdateWindowSurface(doom->win);
+		SDL_RenderPresent(doom->rend);
 		time = (SDL_GetTicks() - doom->last_frame);
 		SDL_Delay(time > sett->framerate ? 0 : sett->framerate - time);
 		time = (SDL_GetTicks() - doom->last_frame);
