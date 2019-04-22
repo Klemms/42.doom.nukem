@@ -6,7 +6,7 @@
 #    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 22:39:07 by cababou           #+#    #+#              #
-#    Updated: 2019/04/19 17:00:09 by cababou          ###   ########.fr        #
+#    Updated: 2019/04/22 05:25:10 by cababou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,10 @@ SRC := main.c doom.c quit.c read_map.c read_vertices.c read_sectors.c \
 	game/draw.c ui/button/button.c editor/editor.c event_system_v2.c \
 	ui/init_fonts.c ui/text/text.c ui/ui_ids.c ui/ui_el/ui.c \
 	ui/text/text_util.c shapes/rect.c easter_eggs/hypercam.c \
-	editor/base_events.c ui/button/button_util.c ui/button/button_events.c
+	editor/base_events.c ui/button/button_util.c ui/button/button_events.c \
+	shapes/point.c
+
+HEADERS := doom.h editor.h errors.h map.h raycasting.h
 
 OBJ := $(SRC:.c=.o)
 
@@ -38,6 +41,7 @@ FRAMEWORKSDIR = ./
 SRCDIR := srcs
 OBJDIR := obj
 
+HEADERSP := $(addprefix includes/, $(HEADERS))
 SRCP :=		$(addprefix $(SRCDIR)/, $(SRC))
 OBJP :=		$(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 ONLYDIR :=	$(foreach dir, $(OBJP), $(shell dirname $(dir)))
@@ -60,7 +64,7 @@ $(NAME) : $(OBJP)
 			@gcc $(SDL) $(FLAG) $(OBJP) $(INC) $(LIB) -o $(NAME)
 			@echo "$(CLEAR_LINE)$(COL_BLUE)[$(NAME)] $(COL_YELLOW)Finished compilation. Output file : $(COL_VIOLET)$(PWD)/$(NAME)$(COL_END)"
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
+$(OBJDIR)/%.o: $(SRCDIR)/%.c $(HEADERSP)
 			@mkdir -p $(ONLYDIR)
 			@gcc -c $(FLAG) -F $(FRAMEWORKSDIR) $(INC) $< -o $@
 			@echo "$(CLEAR_LINE)$(COL_BLUE)[$(NAME)] $(COL_YELLOW)Compiling file [$(COL_VIOLET)$<$(COL_YELLOW)]. ($(CURRENT_FILES) / $(TOTAL_FILES))$(COL_END)$(BEGIN_LINE)"

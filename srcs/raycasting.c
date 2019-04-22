@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 11:28:56 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/04/19 17:12:19 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/22 05:21:29 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	ft_print_x_wall(t_doom *doom, int x, int y1, int y2, int top, int middle, i
 	int		y;
 	Uint32	*data;
 
-	data = doom->surface->pixels;
-    y1 = ft_clamp(y1, 0, doom->settings->window_height-1);
-    y2 = ft_clamp(y2, 0, doom->settings->window_height-1);
+	data = doom->render_pixels;
+    y1 = ft_clamp(y1, 0, doom->settings->window_height);
+    y2 = ft_clamp(y2, 0, doom->settings->window_height);
     if(y2 == y1)
         data[y1 * doom->settings->window_width + x] = middle;
     else if(y2 > y1)
