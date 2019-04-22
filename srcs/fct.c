@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fct.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 16:43:09 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/03/24 16:49:34 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/04/22 05:20:05 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 double	ft_clamp(double a, double min, double max)
 {
-	if (a > min)
+	if (a >= min)
 	{
 		if (a < max)
 			return (a);
