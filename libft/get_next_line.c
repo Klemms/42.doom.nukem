@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/04 13:50:57 by cababou           #+#    #+#             */
-/*   Updated: 2019/03/12 11:08:13 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/05 12:29:55 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_list	*get_element_by_fd(t_lstcontainer *files, int fd)
 			return (item);
 		item = item->next;
 	}
-	if ((file = malloc(sizeof(t_file *))) == NULL)
+	if ((file = mmalloc(sizeof(t_file *))) == NULL)
 		return (NULL);
 	file->content = ft_strnew(0);
 	file->file_descriptor = fd;
@@ -62,7 +62,7 @@ void	read_until_next_line(t_file *current_file)
 		buffer[read_size] = '\0';
 		current_file->content = ft_strjoin(current_file->content, buffer, 1);
 	}
-	free(buffer);
+	ffree(buffer);
 	if (read_size == 0)
 		current_file->end = 1;
 	if (read_size == -1)
@@ -108,7 +108,7 @@ int		get_next_line(const int fd, char **line)
 		if (((t_file *)current_element->content)->end == -1
 			|| ((t_file *)current_element->content)->end == 1)
 		{
-			free(((t_file *)current_element->content)->content);
+			ffree(((t_file *)current_element->content)->content);
 			files->remove(files, current_element);
 			return (((t_file *)current_element->content)->end == -1 ? -1 : 0);
 		}

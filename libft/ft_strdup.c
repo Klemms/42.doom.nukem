@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 16:34:05 by cababou           #+#    #+#             */
-/*   Updated: 2018/09/04 03:55:36 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/05 12:25:05 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_strdup(const char *s1)
 
 	if (s1 == NULL)
 		return (NULL);
-	scopy = (char *)malloc(sizeof(char) * (ft_strlen(s1) + 1));
+	scopy = mmalloc(sizeof(char) * (ft_strlen(s1) + 1));
 	if (scopy == NULL)
 		return (NULL);
 	i = 0;

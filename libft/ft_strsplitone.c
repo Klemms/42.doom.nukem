@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 02:27:58 by cababou           #+#    #+#             */
-/*   Updated: 2018/09/11 22:21:58 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/05 12:29:46 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ char	*ft_strsplitone(char *str, char c, int kp)
 		if ((k = ft_strdup(ft_lstget(kp, lst->firstelement)->content)) == NULL)
 		{
 			ft_lstdel(lst->firstelement, 1);
-			free(lst);
+			ffree(lst);
 			return (NULL);
 		}
 	}
 	ft_lstdel(lst->firstelement, 1);
-	free(lst);
+	ffree(lst);
 	return (k);
 }

@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 20:10:57 by cababou           #+#    #+#             */
-/*   Updated: 2018/08/11 04:37:32 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/05 12:24:37 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_list	*ft_lstnew(void const *content)
 {
 	t_list		*liste;
 
-	if ((liste = malloc(sizeof(t_list))) == NULL)
+	if ((liste = mmalloc(sizeof(t_list))) == NULL)
 		return (NULL);
 	liste->prev = NULL;
 	liste->next = NULL;

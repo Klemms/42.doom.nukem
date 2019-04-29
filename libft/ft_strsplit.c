@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 17:58:14 by cababou           #+#    #+#             */
-/*   Updated: 2018/09/16 22:10:08 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/05 12:29:41 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,10 @@ void			free_strsplit(char **array)
 	i = 0;
 	while (array[i] != NULL)
 	{
-		free(array[i]);
+		ffree(array[i]);
 		i++;
 	}
-	free(array);
+	ffree(array);
 }
 
 char			**ft_strsplit(char const *s, char c)
@@ -81,7 +81,7 @@ char			**ft_strsplit(char const *s, char c)
 	if (s == NULL)
 		return (NULL);
 	i = 0;
-	table = malloc(2 * (sizeof(char **) * (countwords(s, c) + 1)));
+	table = mmalloc(2 * (sizeof(char **) * (countwords(s, c) + 1)));
 	if (table == NULL)
 		return (NULL);
 	y = 0;

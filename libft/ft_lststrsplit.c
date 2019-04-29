@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/01 01:57:32 by cababou           #+#    #+#             */
-/*   Updated: 2019/03/12 11:04:15 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/05 12:29:24 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_lstcontainer	*ft_strsplit_lst(char *str, char c1, char c2, char c3)
 				return (NULL);
 		}
 		if (!str[i])
-			free(tmp);
+			ffree(tmp);
 		if (!str[i])
 			return (list);
 		i++;

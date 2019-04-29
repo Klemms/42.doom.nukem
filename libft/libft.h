@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/26 17:21:05 by cababou           #+#    #+#             */
-/*   Updated: 2019/03/23 02:28:51 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/05 14:32:52 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define LIBFT_H
 # include <string.h>
 # include <stdlib.h>
-# include <math.h>
 # include "get_next_line.h"
 
 void				*ft_memset(void *b, int c, size_t len);
@@ -202,12 +201,8 @@ int					rgba_to_int(int r, int g, int b, int a);
 
 int					get_next_line(const int fd, char **line);
 
-double				ft_atof(const char *nptr);
-
-int					ft_atoi_base(char *str, char *base);
-
-void				ft_putnbr_base(int nbr, char *base);
-
 void				*mmalloc(size_t size);
+
+void				ffree(void *ptr);
 
 #endif

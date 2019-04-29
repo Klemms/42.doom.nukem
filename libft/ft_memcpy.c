@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 16:03:57 by cababou           #+#    #+#             */
-/*   Updated: 2017/12/13 18:59:19 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/05 12:24:57 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 	size_t	i;
 	void	*returndst;
 
-	returndst = (void *)malloc(sizeof(char) * n);
+	returndst = mmalloc(sizeof(char) * n);
 	i = 0;
 	returndst = dst;
 	while (i < n)

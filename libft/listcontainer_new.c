@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 05:32:52 by cababou           #+#    #+#             */
-/*   Updated: 2018/08/18 15:23:14 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/05 12:25:55 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_lstcontainer	*lstcontainer_new(void)
 {
 	t_lstcontainer	*newcontainer;
 
-	if ((newcontainer = malloc(sizeof(t_lstcontainer))) == NULL)
+	if ((newcontainer = mmalloc(sizeof(t_lstcontainer))) == NULL)
 		return (NULL);
 	newcontainer->add = lstcontainer_add;
 	newcontainer->remove = lstcontainer_remove;

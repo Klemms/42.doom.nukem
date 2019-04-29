@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 19:08:52 by cababou           #+#    #+#             */
-/*   Updated: 2019/02/24 17:09:15 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/05 12:24:11 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char			*ft_itoa(int n)
 		return (ft_strdup("-2147483648"));
 	i = 0;
 	nsize = charsize(n);
-	str = (char *)malloc(sizeof(char) * (nsize + 1));
+	str = mmalloc(sizeof(char) * (nsize + 1));
 	if (str == NULL)
 		return (NULL);
 	str[nsize] = '\0';

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrev.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 19:20:19 by cababou           #+#    #+#             */
-/*   Updated: 2017/12/13 19:44:22 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/05 12:25:31 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_strrev(char const *s1)
 	size_t	i;
 	char	*nstring;
 
-	nstring = (char *)malloc(sizeof(char) * (ft_strlen(s1) + 1));
+	nstring = mmalloc(sizeof(char) * (ft_strlen(s1) + 1));
 	if (nstring == NULL)
 		return (NULL);
 	i = 0;

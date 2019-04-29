@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 02:56:09 by cababou           #+#    #+#             */
-/*   Updated: 2018/09/04 04:51:13 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/05 12:29:13 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ int		ft_hex_to_int(char *hex, int free_it)
 		i++;
 	}
 	if (free_it == 1)
-		free(hex);
+		ffree(hex);
 	return (nbr);
 }

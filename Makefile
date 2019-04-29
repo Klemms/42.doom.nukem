@@ -6,7 +6,7 @@
 #    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 22:39:07 by cababou           #+#    #+#              #
-#    Updated: 2019/04/19 17:00:09 by cababou          ###   ########.fr        #
+#    Updated: 2019/04/05 14:44:24 by cababou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,64 +21,61 @@ COL_VIOLET	:= \033[1;35m
 COL_CYAN	:= \033[1;36m
 COL_WHITE	:= \033[1;37m
 
-NAME :=	doom
+NAME :=	wolf3d
 
-SRC := main.c doom.c quit.c read_map.c read_vertices.c read_sectors.c \
-	raycasting.c fct.c event.c move.c mouse.c falling.c \
-	game/draw.c ui/button/button.c editor/editor.c event_system_v2.c \
-	ui/init_fonts.c ui/text/text.c ui/ui_ids.c ui/ui_el/ui.c \
-	ui/text/text_util.c shapes/rect.c easter_eggs/hypercam.c \
-	editor/base_events.c ui/button/button_util.c ui/button/button_events.c
-
-HEADERS := doom.h editor.h errors.h map.h raycasting.h
+SRC :=	wolf3d.c vectors.c parsing.c player.c lov/lov.c line.c init_sight.c \
+		events.c draw.c errors/errors.c mlx_context/inits.c \
+		map/texture_loading.c mlx_context/image_manip.c free_structs.c \
+		lov/walls.c parsing_norme.c
 
 OBJ := $(SRC:.c=.o)
 
-PWD := $(shell pwd)
-FRAMEWORKSDIR = ./
+PWD :=		$(shell pwd)
+FRAMEWORKSDIR = /Library/Frameworks
 
-SRCDIR := srcs
+SRCDIR := src
 OBJDIR := obj
 
-HEADERSP := $(addprefix includes/, $(HEADERS))
 SRCP :=		$(addprefix $(SRCDIR)/, $(SRC))
 OBJP :=		$(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 ONLYDIR :=	$(foreach dir, $(OBJP), $(shell dirname $(dir)))
 
-LIB := -L libft/ -lft
+LIB := ./libft
 
-INC := -I includes -I $(FRAMEWORKSDIR)/SDL2
+FLAG := -Wall -Wextra -Werror -g
 
-FLAG := -g
-
-FRAMEWORKSDIR := $(PWD)/frameworks
-SDL := -F $(FRAMEWORKSDIR) -framework SDL2 -framework SDL2_ttf -Wl,-rpath $(FRAMEWORKSDIR)
+MLX := -lmlx -framework OpenGL -framework AppKit
 
 TOTAL_FILES := $(shell echo $(SRC) | wc -w | sed -e 's/ //g')
-CURRENT_FILES = $(shell find $(PWD)/obj/ -type f 2> /dev/null | wc -l | sed -e 's/ //g')
+CURRENT_FILES = $(shell ls $(PWD)/obj/ 2> /dev/null | wc -l | sed -e 's/ //g')
 
-all : libft_comp $(NAME)
+all : mlx_comp libft_comp $(NAME)
 
 $(NAME) : $(OBJP)
-			@gcc $(SDL) $(FLAG) $(OBJP) $(INC) $(LIB) -o $(NAME)
+			@gcc $(FLAG) $(MLX) $(OBJP)  ./libft/libft.a -o $(NAME) -Lmlx_sierra -lmlx 
 			@echo "$(CLEAR_LINE)$(COL_BLUE)[$(NAME)] $(COL_YELLOW)Finished compilation. Output file : $(COL_VIOLET)$(PWD)/$(NAME)$(COL_END)"
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c $(HEADERSP)
+$(OBJDIR)/%.o: $(SRCDIR)/%.c  src/wolf3d.h libft/libft.a
 			@mkdir -p $(ONLYDIR)
-			@gcc -c $(FLAG) -F $(FRAMEWORKSDIR) $(INC) $< -o $@
+			@gcc -c $(FLAG) -I ./mlx_sierra/ $< -o $@
 			@echo "$(CLEAR_LINE)$(COL_BLUE)[$(NAME)] $(COL_YELLOW)Compiling file [$(COL_VIOLET)$<$(COL_YELLOW)]. ($(CURRENT_FILES) / $(TOTAL_FILES))$(COL_END)$(BEGIN_LINE)"
 
 libft_comp:
-			@make -C libft
+			@make -C $(LIB)
+
+mlx_comp:
+			@make -C ./mlx_sierra
 
 clean :
 			@rm -rf $(OBJDIR)
-			@make clean -C libft
+			@make clean -C $(LIB)
+			@make clean -C ./mlx_sierra
 			@echo "$(COL_BLUE)[$(NAME)] $(COL_YELLOW)Removed $(COL_VIOLET)compiled objects.$(COL_END)"
 
 fclean :	clean
 			@rm -rf $(NAME)
-			@make fclean -C libft
+			@make fclean -C $(LIB)
+			@make clean -C ./mlx_sierra
 			@echo "$(COL_BLUE)[$(NAME)] $(COL_YELLOW)Removed $(COL_VIOLET)$(NAME)$(COL_END)"
 
 re :		fclean all
