@@ -30,6 +30,8 @@ SRC := main.c doom.c quit.c read_map.c read_vertices.c read_sectors.c \
 	ui/text/text_util.c shapes/rect.c easter_eggs/hypercam.c \
 	editor/base_events.c ui/button/button_util.c ui/button/button_events.c
 
+HEADERS := doom.h editor.h errors.h map.h raycasting.h
+
 OBJ := $(SRC:.c=.o)
 
 PWD := $(shell pwd)
@@ -38,6 +40,7 @@ FRAMEWORKSDIR = ./
 SRCDIR := srcs
 OBJDIR := obj
 
+HEADERSP := $(addprefix includes/, $(HEADERS))
 SRCP :=		$(addprefix $(SRCDIR)/, $(SRC))
 OBJP :=		$(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 ONLYDIR :=	$(foreach dir, $(OBJP), $(shell dirname $(dir)))
@@ -60,7 +63,7 @@ $(NAME) : $(OBJP)
 			@gcc $(SDL) $(FLAG) $(OBJP) $(INC) $(LIB) -o $(NAME)
 			@echo "$(CLEAR_LINE)$(COL_BLUE)[$(NAME)] $(COL_YELLOW)Finished compilation. Output file : $(COL_VIOLET)$(PWD)/$(NAME)$(COL_END)"
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
+$(OBJDIR)/%.o: $(SRCDIR)/%.c $(HEADERSP)
 			@mkdir -p $(ONLYDIR)
 			@gcc -c $(FLAG) -F $(FRAMEWORKSDIR) $(INC) $< -o $@
 			@echo "$(CLEAR_LINE)$(COL_BLUE)[$(NAME)] $(COL_YELLOW)Compiling file [$(COL_VIOLET)$<$(COL_YELLOW)]. ($(CURRENT_FILES) / $(TOTAL_FILES))$(COL_END)$(BEGIN_LINE)"

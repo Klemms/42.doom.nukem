@@ -121,6 +121,7 @@ typedef struct	s_settings
 	float		framerate;
 	float		angle_h;
 	float		angle_v;
+	int			azerty_mode;
 }				t_settings;
 
 typedef struct	s_font
