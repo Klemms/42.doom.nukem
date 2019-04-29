@@ -29,7 +29,7 @@ void	ft_init_doom(t_doom *doom)
 
 	setup_settings(doom);
 	doom->num_sectors = 0;
-	if ((fd = open("maps/wtf.txt", O_RDONLY)) < 0)
+	if ((fd = open("maps/50_50.txt", O_RDONLY)) < 0)
 		exit_program(doom, QUIT_CANT_FIND_MAP);
 	ft_read_map(fd, doom);
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
