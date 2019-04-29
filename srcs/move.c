@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 10:20:51 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/04/19 16:59:52 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/20 16:23:19 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void	ft_move_wsad2(t_move *move, t_player *player, t_xy *move_vec)
 
 	if (move->wsad[3])
 	{
-		move_vec->x -= player->anglesin * 0.2f;
-		move_vec->y += player->anglecos * 0.2f;
+		move_vec->x -= player->anglesin * 0.1f;
+		move_vec->y += player->anglecos * 0.1f;
 	}
 	pushing = move->wsad[0] || move->wsad[1] || move->wsad[2] || move->wsad[3];
 	acceleration = (pushing) ? 0.4 : 0.2;
@@ -70,18 +70,18 @@ void	ft_move_wsad(t_doom *doom, t_move *move, t_player *player)
 	move_vec.y = 0.0;
 	if (move->wsad[0])
 	{
-		move_vec.x += player->anglecos * 0.2f;
-		move_vec.y += player->anglesin * 0.2f;
+		move_vec.x += player->anglecos * 0.1f;
+		move_vec.y += player->anglesin * 0.1f;
 	}
 	if (move->wsad[1])
 	{
-		move_vec.x -= player->anglecos * 0.2f;
-		move_vec.y -= player->anglesin * 0.2f;
+		move_vec.x -= player->anglecos * 0.1f;
+		move_vec.y -= player->anglesin * 0.1f;
 	}
 	if (move->wsad[2])
 	{
-		move_vec.x += player->anglesin * 0.2f;
-		move_vec.y -= player->anglecos * 0.2f;
+		move_vec.x += player->anglesin * 0.1f;
+		move_vec.y -= player->anglecos * 0.1f;
 	}
 	ft_move_wsad2(move, player, &move_vec);
 }
