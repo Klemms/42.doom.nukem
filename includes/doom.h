@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 11:12:03 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/04/22 05:08:10 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/19 05:12:00 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,9 +180,7 @@ typedef struct	s_doom
 	SDL_Event		event;
 	t_sector		*sectors;
 	int				num_sectors;
-	SDL_Texture		*render_texture;
-	Uint32*			render_pixels;
-	int				render_pitch;
+	SDL_Surface		*surface;
 	t_player		player;
 	t_move			move;
 	t_lstcontainer	*events;
@@ -262,7 +260,6 @@ int				button_click(t_doom *doom, SDL_Event sdl_event);
 
 SDL_Rect		make_rect(int x, int y, int width, int height);
 void			draw_rect(t_doom *doom, SDL_Rect rect, SDL_Color color);
-void			draw_point(t_doom *doom, int x, int y, SDL_Color color);
 
 void			v2_init_events(t_doom *doom);
 void			v2_register_event(t_doom *doom, Uint32 type,

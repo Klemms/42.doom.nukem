@@ -6,7 +6,7 @@
 #    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 22:39:07 by cababou           #+#    #+#              #
-#    Updated: 2019/04/22 05:25:10 by cababou          ###   ########.fr        #
+#    Updated: 2019/04/19 17:00:09 by cababou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,8 +28,7 @@ SRC := main.c doom.c quit.c read_map.c read_vertices.c read_sectors.c \
 	game/draw.c ui/button/button.c editor/editor.c event_system_v2.c \
 	ui/init_fonts.c ui/text/text.c ui/ui_ids.c ui/ui_el/ui.c \
 	ui/text/text_util.c shapes/rect.c easter_eggs/hypercam.c \
-	editor/base_events.c ui/button/button_util.c ui/button/button_events.c \
-	shapes/point.c
+	editor/base_events.c ui/button/button_util.c ui/button/button_events.c
 
 HEADERS := doom.h editor.h errors.h map.h raycasting.h
 

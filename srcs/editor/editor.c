@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 02:04:31 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/22 05:01:39 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/19 05:11:50 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,13 @@ void	init_editor(t_doom *doom)
 	if (!(doom->editor = mmalloc(sizeof(t_editor))))
 		exit_program(doom, QUIT_MEMERR_AFTER_SDLINIT);
 
-	doom->render_texture = SDL_CreateTexture(doom->rend, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, doom->settings->window_width, doom->settings->window_height);
-	if (!doom->render_texture)
-		exit_program(doom, QUIT_CANT_INIT_RENDERER);
-
 	v2_init_events(doom);
 
 	v2_register_event(doom, SDL_QUIT, quit_event);
 	v2_register_event(doom, SDL_KEYUP, key_event);
 	v2_register_event(doom, SDL_MOUSEBUTTONUP, button_click);
+
+	doom->surface = SDL_GetWindowSurface(doom->win);
 
 	doom->average_fps = 0;
 	doom->fps_counter = create_text(doom, "- fps", FONT_RIFFIC, 20);
@@ -75,7 +73,7 @@ void	loop_editor(t_doom *doom)
 			v2_distribute_events(doom, doom->event);
 		}
 		render_editor(doom);
-		SDL_RenderPresent(doom->rend);
+		SDL_UpdateWindowSurface(doom->win);
 		time = (SDL_GetTicks() - doom->last_frame);
 		SDL_Delay(time > sett->framerate ? 0 : sett->framerate - time);
 		time = (SDL_GetTicks() - doom->last_frame);
