@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 16:49:20 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/04/29 14:57:24 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/24 13:13:06 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_init_doom(t_doom *doom)
 
 	setup_settings(doom);
 	doom->num_sectors = 0;
-	if ((fd = open("maps/wtf.txt", O_RDONLY)) < 0)
+	if ((fd = open("maps/50_50.txt", O_RDONLY)) < 0)
 		exit_program(doom, QUIT_CANT_FIND_MAP);
 	ft_read_map(fd, doom);
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
