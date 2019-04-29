@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 11:12:03 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/04/29 14:50:50 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/29 15:30:08 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,13 @@ typedef struct	s_button_element
 typedef struct	s_editor
 {
 	t_el_button	*test_button;
+	int			in_x;
+	int			in_y;
+	int			in_width;
+	int			in_height;
+	int			sep_size;
+	int			square_width;
+	int			square_height;
 }				t_editor;
 
 typedef struct	s_doom

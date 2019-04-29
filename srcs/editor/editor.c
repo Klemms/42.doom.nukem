@@ -6,24 +6,36 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 02:04:31 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/19 05:11:50 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/29 15:35:26 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 #include "editor.h"
 
-void	button_callback_test(t_doom *doom, t_el_button *b, SDL_MouseButtonEvent event)
+void	button_callback_test(t_doom *d, t_el_button *b, SDL_MouseButtonEvent e)
 {
 	b->rect.x += 25;
-	button_prepare(doom, b);
+	button_prepare(d, b);
 	ft_putendl("ca marche");
+}
+
+void	init_editor_sizes(t_doom *doom)
+{
+	doom->editor->in_x = 95;
+	doom->editor->in_y = 95;
+	doom->editor->in_width = doom->settings->window_width - 95 - 300 - 15;
+	doom->editor->in_height = doom->settings->window_height - 95 - 300 - 15;
+	doom->editor->sep_size = 15;
+	doom->editor->square_width = doom->editor->in_width / 2 - doom->editor->sep_size / 2;
+	doom->editor->square_height = doom->editor->in_height / 2 - doom->editor->sep_size / 2;
 }
 
 void	init_editor(t_doom *doom)
 {
 	if (!(doom->editor = mmalloc(sizeof(t_editor))))
 		exit_program(doom, QUIT_MEMERR_AFTER_SDLINIT);
+	init_editor_sizes(doom);
 
 	v2_init_events(doom);
 
@@ -46,10 +58,25 @@ void	init_editor(t_doom *doom)
 
 void	render_editor(t_doom *doom)
 {
+	t_editor	*e;
+
+	e = doom->editor;
 	SDL_SetRenderDrawColor(doom->rend, 0xA1, 0xA4, 0xA8, 0xFF );
     SDL_RenderClear(doom->rend);
 
-	draw_rect(doom, make_rect(125, 125, 125, 125), make_rgb(255, 0, 0, 255));
+	//draw_rect(doom, make_rect(95, 95, doom->settings->window_width - 95 - 300 - 15, doom->settings->window_height - 95 - 300 - 15), make_rgb(255, 125, 0, 255));
+	draw_rect(doom, make_rect(e->in_x, e->in_y, e->square_width, e->square_height), make_rgb(255, 125, 0, 255));
+	draw_rect(doom, make_rect(e->in_x + e->square_width + e->sep_size, e->in_y, e->square_width, e->square_height), make_rgb(255, 125, 125, 255));
+	draw_rect(doom, make_rect(e->in_x, e->in_y + e->square_height + e->sep_size, e->square_width, e->square_height), make_rgb(255, 0, 255, 255));
+	draw_rect(doom, make_rect(e->in_x + e->square_width + e->sep_size, e->in_y + e->square_height + e->sep_size, e->square_width, e->square_height), make_rgb(0, 255, 125, 255));
+	/*draw_rect(doom, make_rect(125, 125, 125, 125), make_rgb(255, 0, 0, 255));
+	draw_rect(doom, make_rect(125, 125, 125, 125), make_rgb(255, 0, 0, 255));*/
+
+	// TOPBAR and SIDEBARS and BOTTOMBAR
+	draw_rect(doom, make_rect(0, 0, doom->settings->window_width, 80), make_rgb(255, 0, 0, 255));
+	draw_rect(doom, make_rect(0, 80, 80, doom->settings->window_height - 80 - 300), make_rgb(0, 255, 0, 255));
+	draw_rect(doom, make_rect(doom->settings->window_width - 300, 80, 300, doom->settings->window_height - 80), make_rgb(0, 255, 0, 255));
+	draw_rect(doom, make_rect(0, doom->settings->window_height - 300, doom->settings->window_width - 300, 300), make_rgb(0, 0, 255, 255));
 
 	button_render(doom, doom->editor->test_button);
 
