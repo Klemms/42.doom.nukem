@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 11:12:03 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/04/19 05:12:00 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/29 14:50:50 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,7 +203,7 @@ typedef struct			s_registered_event
 	int					(*handler)(t_doom *doom, SDL_Event ev);
 }						t_registered_event;
 
-t_doom			*ft_init_doom();
+void			ft_init_doom(t_doom *doom);
 void			ft_read_map(int fd, t_doom *doom);
 void			ft_read_sectors(t_doom *doom, t_read *r);
 void			ft_tab_sectors(t_doom *doom, t_read *r);
