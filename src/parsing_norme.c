@@ -44,7 +44,7 @@ int		is_valid(t_wolf *w, int fd)
 			break ;
 		}
 		while (line[++i] && line[i] != '\n')
-			if (line[i] != '#' && line[i] != '.')
+			if (line[i] != '#' && line[i] != '.' && line[i] != 'T')
 			{
 				ffree(line);
 				return (0);

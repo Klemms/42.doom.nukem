@@ -32,4 +32,9 @@ void	init_sight(t_wolf *w, double x, t_player *you)
 	p->side_dist.y = (p->ray_dir.y < 0 ?
 					(you->pos->y - (int)p->pos->y) * p->delta_dist.y :
 					((int)p->pos->y + 1.0 - you->pos->y) * p->delta_dist.y);
+	
+	int i;
+	i = -1;
+	while (++i < you->rov)
+		p->saw_that[i] = (t_wall_sight) { -1, -1, -1, -1, -1, -1, -1, -1 };
 }

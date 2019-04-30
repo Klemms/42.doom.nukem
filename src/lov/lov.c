@@ -12,37 +12,47 @@
 
 #include "../wolf3d.h"
 
-int					calc_column(t_sight *p, t_wolf *w, int tex)
+int					calc_column(t_sight *p, t_wolf *w, int num)
 {
 	double	col;
 
-	if (p->side == 1)
-		col = p->pos->x + p->perp_wall_dist * p->ray_dir.x;
+	if (p->saw_that[num].side == 1)
+		col = p->saw_that[num].x + p->saw_that[num].z * p->ray_dir.x;
 	else
-		col = p->pos->y + p->perp_wall_dist * p->ray_dir.y;
+		col = p->saw_that[num].y + p->saw_that[num].z * p->ray_dir.y;
 	col = col - floor(col);
-	col = round(col * (double)(w->texture[tex].width - 1));
-	if ((p->side == 0 && p->ray_dir.x > 0)
-	|| (p->side == 1 && p->ray_dir.y < 0))
-		col = w->texture[tex].width - col - 1;
+	col = round(col * (double)(w->texture[p->saw_that[num].tex].width - 1));
+	if ((p->saw_that[num].side == 0 && p->ray_dir.x > 0)
+	|| (p->saw_that[num].side == 1 && p->ray_dir.y < 0))
+		col = w->texture[p->saw_that[num].tex].width - col - 1;
 	return (col);
 }
 
-void				calc_perp_dist(t_sight *p, t_player *you)
+double				calc_perp_dist(t_sight *p, t_player *you, int num)
 {
-	if (p->side == 0)
-		p->perp_wall_dist = ((int)p->pos->x - you->pos->x
-			+ (1.0 - p->step.x) / 2.0) / p->ray_dir.x;
+	if (p->saw_that[num].side == 0)
+		return(((int)p->saw_that[num].x - you->pos->x
+			+ (1.0 - p->step.x) / 2.0) / p->ray_dir.x);
 	else
-		p->perp_wall_dist = ((int)p->pos->y - you->pos->y
-			+ (1.0 - p->step.y) / 2.0) / p->ray_dir.y;
+		return(((int)p->saw_that[num].y - you->pos->y
+			+ (1.0 - p->step.y) / 2.0) / p->ray_dir.y);
+}
+
+double				calc_perp_dist_next(t_sight *p, t_player *you, int num, int num2)
+{
+	if (num2 == 0)
+		return(((int)p->saw_that[num].next_x - you->pos->x
+			+ (1.0 - p->step.x) / 2.0) / p->ray_dir.x);
+	else
+		return(((int)p->saw_that[num].next_y - you->pos->y
+			+ (1.0 - p->step.y) / 2.0) / p->ray_dir.y);
 }
 
 void				calc_lov(t_wolf *w)
 {
 	int		x;
 	int		column;
-	int		tex;
+	int		cptest;
 
 	x = 0;
 	while (x < w->w_width)
@@ -50,12 +60,12 @@ void				calc_lov(t_wolf *w)
 		init_sight(w, x, w->you);
 		if (see_wall(w->sight, w))
 		{
-			if (w->sight->side == 1)
-				tex = w->sight->step.y < 0;
-			else
-				tex = (w->sight->step.x < 0 ? 2 : 3);
-			column = calc_column(w->sight, w, tex);
-			draw_wall(w, x, column, tex);
+			cptest = w->sight->queue_cpt;
+			while (--cptest >= 0)
+			{
+				column = calc_column(w->sight, w, cptest);
+				draw_wall(w, x, column, cptest);
+			}
 		}
 		x++;
 		ffree(w->sight->pos);

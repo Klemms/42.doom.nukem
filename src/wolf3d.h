@@ -86,20 +86,34 @@ typedef struct		s_texture
 	int			width;
 }					t_texture;
 
+typedef struct		s_wall_sight
+{
+	double				x;
+	double				y;
+	double				z;
+	double				side;
+	int					tex;
+	int					next_x;
+	int					next_y;
+	double				next_perp;
+}					t_wall_sight;
+
 typedef struct		s_sight
 {
-	double	camera_x;
-	t_vec	ray_dir;
-	t_vec	*pos;
-	t_vec	side_dist;
-	t_vec	delta_dist;
-	double	perp_wall_dist;
-	t_vec	step;
-	int		hit;
-	int		cpt;
-	int		rov;
-	int		side;
-	int		tex;
+	double			camera_x;
+	t_vec			ray_dir;
+	t_vec			*pos;
+	t_vec			side_dist;
+	t_vec			delta_dist;
+	double			perp_wall_dist;
+	t_vec			step;
+	int				hit;
+	int				cpt;
+	int				rov;
+	int				side;
+	int				tex;
+	t_wall_sight	saw_that[40]; // Must be sized[you->rov]
+	int				queue_cpt;
 }					t_sight;
 
 typedef struct		s_wolf
@@ -121,6 +135,9 @@ typedef struct		s_wolf
 	t_sight			*sight;
 }					t_wolf;
 
+
+
+
 t_wolf				*init_wolf(void);
 void				init_window(t_wolf *w);
 void				init_mlx(t_wolf *w);
@@ -129,9 +146,10 @@ int					is_valid(t_wolf *w, int fd);
 
 int					init_texture(t_wolf *w);
 
-void				calc_perp_dist(t_sight *p, t_player *you);
+double				calc_perp_dist(t_sight *p, t_player *you, int num);
+double				calc_perp_dist_next(t_sight *p, t_player *you, int num, int num2);
 int					see_wall(t_sight *p, t_wolf *w);
-void				draw_wall(t_wolf *w, double x, int column, int tex);
+void				draw_wall(t_wolf *w, double x, int column, int num);
 
 t_player			*new_player(t_wolf *w, t_map *map);
 int					draw(t_wolf *w);
