@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 23:38:15 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/30 16:12:52 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/30 20:53:08 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	quit(t_doom *doom, char *message, int code)
 {
-	ft_putendl(message);
+	ft_putendl_fd(message, code > 100 ? STDERR_FILENO : STDOUT_FILENO);
 	if (doom)
 		megafree_1(doom);
 	exit(code);
@@ -28,6 +28,11 @@ int		quit_window(t_doom *doom, SDL_Event ev)
 
 void	exit_program(t_doom *doom, int code)
 {
+	if (doom && doom->win)
+	{
+		SDL_SetRelativeMouseMode(SDL_FALSE);
+		SDL_WarpMouseInWindow(doom->win, doom->settings.window_width / 2, doom->settings.window_height / 2);
+	}
 	if (code == ERROR_GENERIC)
 		quit(doom, "An error occured.", code);
 	else if (code == ERROR_MEMORY)

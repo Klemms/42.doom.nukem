@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/02 14:51:35 by hdussert          #+#    #+#             */
-/*   Updated: 2019/04/30 20:46:07 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/30 23:11:01 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,10 @@ int				key_down(t_doom *doom, SDL_Event event)
 		doom->keys.left = 1;
 	if (keyb.keysym.scancode == doom->settings.key_right)
 		doom->keys.right = 1;
-	if (keyb.keysym.scancode == SDL_SCANCODE_S)
-		doom->keys.shadow = !doom->keys.shadow;
-	if (keyb.keysym.scancode == SDL_SCANCODE_J)
-		doom->you.rov += (doom->you.rov + 1 < 30);
-	if (keyb.keysym.scancode == SDL_SCANCODE_K)
-		doom->you.rov -= (doom->you.rov - 1 > 8);
+	if (keyb.keysym.scancode == doom->settings.key_sprint)
+		doom->you.is_sprinting = 1;
+	if (keyb.keysym.scancode == doom->settings.key_crouch)
+		doom->you.is_crouching = 1;
 	if (keyb.keysym.scancode == SDL_SCANCODE_ESCAPE)
 		exit_program(doom, 0);
 	return (1);
@@ -58,6 +56,10 @@ int				key_up(t_doom *doom, SDL_Event event)
 		doom->keys.left = 0;
 	if (keyb.keysym.scancode == doom->settings.key_right)
 		doom->keys.right = 0;
+	if (keyb.keysym.scancode == doom->settings.key_sprint)
+		doom->you.is_sprinting = 0;
+	if (keyb.keysym.scancode == doom->settings.key_crouch)
+		doom->you.is_crouching = 1;
 	return (1);
 }
 

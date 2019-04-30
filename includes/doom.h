@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/30 20:38:15 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/30 23:04:19 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ typedef struct	s_settings
 	int			key_backward;
 	int			key_left;
 	int			key_right;
+	int			key_sprint;
+	int			key_crouch;
 }				t_settings;
 
 typedef struct	s_font
@@ -131,6 +133,8 @@ typedef struct		s_player
 	double			speed;
 	double			rotspeed;
 	int				rov;
+	int				is_sprinting;
+	int				is_crouching;
 }					t_player;
 
 typedef struct		s_map

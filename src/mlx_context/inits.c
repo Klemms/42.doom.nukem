@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 23:44:05 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/30 20:38:52 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/30 20:55:08 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	setup_settings(t_doom *doom)
 	doom->settings.key_backward = SDL_SCANCODE_S;
 	doom->settings.key_left = SDL_SCANCODE_A;
 	doom->settings.key_right = SDL_SCANCODE_D;
+	doom->settings.key_sprint = SDL_SCANCODE_LSHIFT;
 }
 
 void	init_sdl(t_doom *doom)

@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 18:15:46 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/30 20:41:23 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/30 23:10:41 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ void	render_game(t_doom *doom)
 	text_prepare(doom, doom->fps_counter, 1);
 	text_render(doom, doom->fps_counter);
 	render_hypercam(doom);
-
-	
 }
 
 void	loop_game(t_doom *doom)
@@ -72,9 +70,9 @@ void	loop_game(t_doom *doom)
 		time = (SDL_GetTicks() - doom->last_frame);
 		SDL_Delay(time > sett->framerate ? 0 : sett->framerate - time);
 		time = (SDL_GetTicks() - doom->last_frame);
-		doom->you.speed = 0.1;
 		doom->you.rotspeed = 0.05;
 		doom->average_fps = (1000 / time);
+		doom->you.speed = 0.1 * (doom->you.is_sprinting ? 1.5 : 1.0);
 		if (doom->keys.right == 1)
 			turn(-doom->you.rotspeed, &doom->you);
 		if (doom->keys.left == 1)
@@ -83,7 +81,6 @@ void	loop_game(t_doom *doom)
 			moove(doom->you.speed, &doom->you, &doom->map, 0);
 		if (doom->keys.down == 1)
 			moove(-doom->you.speed, &doom->you, &doom->map, 0);
-		doom->you.speed = doom->settings.framerate * 5.0;
 		doom->you.rotspeed = doom->settings.framerate * 3.0;
 	}
 }
