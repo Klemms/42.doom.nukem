@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/30 20:24:33 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/30 20:38:15 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,11 @@ typedef struct	s_settings
 	float		angle_v;
 	int			azerty_mode;
 	int			default_wall_color;
+	float		mouse_sensitivity;
+	int			key_forward;
+	int			key_backward;
+	int			key_left;
+	int			key_right;
 }				t_settings;
 
 typedef struct	s_font
@@ -237,6 +242,8 @@ int					loop(t_doom *w);
 void				calc_lov(t_doom *w);
 void				init_sight(t_doom *doom, t_sight *p, double x, t_player *you);
 void				pixel_put(t_doom *w, int x, int y, int color);
+
+int					mouse_movement(t_doom *doom, SDL_Event event);
 
 void				exit_program(t_doom *w, int code);
 void				quit(t_doom *w, char *message, int code);

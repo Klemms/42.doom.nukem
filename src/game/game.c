@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 18:15:46 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/30 20:24:54 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/30 20:41:23 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,14 @@ void			pixel_put(t_doom *doom, int x, int y, int color)
 
 void	init_game(t_doom *doom)
 {
-	/*SDL_ShowCursor(SDL_DISABLE);
-	SDL_SetWindowGrab(doom->win, SDL_TRUE);*/
-	//SDL_SetRelativeMouseMode(SDL_TRUE); -- Comment fix tous les problemes de souris
-	// quand on la bouge trop vite, mais ca demande de rework les events de souris,
-	// je le ferais peut etre plus tard
+	SDL_SetRelativeMouseMode(SDL_TRUE);
 
 	init_events(doom);
 	init_textures(doom);
 	register_event(doom, SDL_KEYDOWN, key_down);
 	register_event(doom, SDL_KEYUP, key_up);
 	register_event(doom, SDL_QUIT, quit_window);
+	register_event(doom, SDL_MOUSEMOTION, mouse_movement);
 
 	new_player(doom, &doom->you, &doom->map);
 
