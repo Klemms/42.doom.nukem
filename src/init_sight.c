@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_sight.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 03:30:59 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/30 14:25:26 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/04/30 17:13:41 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	init_sight(t_doom *doom, t_sight *p, double x, t_player *you)
 {
-	p->camera_x = 2.0 * x / (double)(doom->w_width) - 1.0;
+	p->camera_x = 2.0 * x / (double)(doom->settings.window_width) - 1.0;
 	p->ray_dir.x = you->dir.x + you->plane.x * p->camera_x;
 	p->ray_dir.y = you->dir.y + you->plane.y * p->camera_x;
 	p->step.x = (p->ray_dir.x < 0 ? -1 : 1);

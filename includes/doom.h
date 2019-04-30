@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/30 16:28:00 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/30 17:20:26 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,12 +122,17 @@ typedef struct		s_line
 
 typedef struct		s_player
 {
-	t_vec		*pos;
-	t_vec		*dir;
-	t_vec		*plane;
-	double		speed;
-	double		rotspeed;
-	int			rov;
+	t_vec			pos;
+	t_vec			velocity;
+	t_vec			dir;
+	t_vec			plane;
+	double			angle;
+	double			anglecos;
+	double			anglesin;
+	double			pitch;
+	double			speed;
+	double			rotspeed;
+	int				rov;
 }					t_player;
 
 typedef struct		s_map
@@ -159,7 +164,7 @@ typedef struct		s_sight
 {
 	double	camera_x;
 	t_vec	ray_dir;
-	t_vec	*pos;
+	t_vec	pos;
 	t_vec	side_dist;
 	t_vec	delta_dist;
 	double	perp_wall_dist;
@@ -179,7 +184,7 @@ typedef struct		s_doom
 	SDL_Surface		*surface;
 	t_lstcontainer	*events;
 	Uint32			last_frame;
-	t_settings		*settings;
+	t_settings		settings;
 	int				game_mode;
 	t_lstcontainer	*fonts;
 	t_lstcontainer	*texts;
@@ -187,15 +192,15 @@ typedef struct		s_doom
 	t_el_text		*fps_counter;
 	t_el_text		*easter_egg;
 	int				average_fps;
-	t_editor		*editor;
+	t_editor		editor;
 	t_lstcontainer	*buttons;
-	t_map			*map;
-	t_player		*you;
-	t_key			*keys;
+	t_map			map;
+	t_player		you;
+	t_key			keys;
 	t_texture		texture[4];
 	int				temp_color;
 	t_lstcontainer	*textures;
-	t_sight			*sight;
+	t_sight			sight;
 }					t_doom;
 
 typedef struct			s_registered_event
@@ -204,7 +209,6 @@ typedef struct			s_registered_event
 	int					(*handler)(t_doom *doom, SDL_Event ev);
 }						t_registered_event;
 
-void				init_doom(t_doom *doom);
 void				init_window(t_doom *w);
 void				init_sdl(t_doom *w);
 t_image				*new_screen_image(t_doom *w);
@@ -216,16 +220,15 @@ void				calc_perp_dist(t_sight *p, t_player *you);
 int					see_wall(t_sight *p, t_doom *w);
 void				draw_wall(t_doom *w, double x, int column, int tex);
 
-t_player			*new_player(t_doom *w, t_map *map);
+void				new_player(t_doom *doom, t_player *player, t_map *map);
 int					draw(t_doom *w);
 int					parsing(t_doom *w, char *file);
 int					key_down(t_doom *doom, SDL_Event event);
 int					key_up(t_doom *doom, SDL_Event event);
 void				line(t_doom *w, t_vec *start, t_vec *end, int color);
-t_vec				*new_vec(double x, double y, double z);
 int					loop(t_doom *w);
 void				calc_lov(t_doom *w);
-void				init_sight(t_doom *w, double x, t_player *you);
+void				init_sight(t_doom *doom, t_sight *p, double x, t_player *you);
 void				pixel_put(t_doom *w, int x, int y, int color);
 
 void				exit_program(t_doom *w, int code);
@@ -276,6 +279,6 @@ SDL_Rect			make_rect(int x, int y, int width, int height);
 void				draw_rect(t_doom *doom, SDL_Rect rect, SDL_Color color);
 
 void				turn(double angle, t_player *you);
-void				moove(double dist, t_player *you, t_map *map);
+void				moove(double dist, t_player *you, t_map *map, int ang);
 
 #endif

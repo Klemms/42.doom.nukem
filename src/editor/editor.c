@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 02:04:31 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/29 21:45:05 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/30 17:05:44 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,17 @@ void	button_callback_test(t_doom *d, t_el_button *b, SDL_MouseButtonEvent e)
 
 void	init_editor_sizes(t_doom *doom)
 {
-	doom->editor->in_x = 95;
-	doom->editor->in_y = 95;
-	doom->editor->in_width = doom->settings->window_width - 95 - 300 - 15;
-	doom->editor->in_height = doom->settings->window_height - 95 - 300 - 15;
-	doom->editor->sep_size = 15;
-	doom->editor->square_width = doom->editor->in_width / 2 - doom->editor->sep_size / 2;
-	doom->editor->square_height = doom->editor->in_height / 2 - doom->editor->sep_size / 2;
+	doom->editor.in_x = 95;
+	doom->editor.in_y = 95;
+	doom->editor.in_width = doom->settings.window_width - 95 - 300 - 15;
+	doom->editor.in_height = doom->settings.window_height - 95 - 300 - 15;
+	doom->editor.sep_size = 15;
+	doom->editor.square_width = doom->editor.in_width / 2 - doom->editor.sep_size / 2;
+	doom->editor.square_height = doom->editor.in_height / 2 - doom->editor.sep_size / 2;
 }
 
 void	init_editor(t_doom *doom)
 {
-	if (!(doom->editor = mmalloc(sizeof(t_editor))))
-		exit_program(doom, ERROR_SDL_AFTER_INIT);
 	init_editor_sizes(doom);
 
 	init_events(doom);
@@ -50,17 +48,17 @@ void	init_editor(t_doom *doom)
 	doom->fps_counter->ui_element->pos_x = 8;
 	doom->fps_counter->ui_element->pos_y = 8;
 
-	doom->editor->test_button = create_button(doom, "Test Button",
+	doom->editor.test_button = create_button(doom, "Test Button",
 		make_rect(250, 80, 200, 50),
 		button_callback_test);
-	button_prepare(doom, doom->editor->test_button);
+	button_prepare(doom, doom->editor.test_button);
 }
 
 void	render_editor(t_doom *doom)
 {
 	t_editor	*e;
 
-	e = doom->editor;
+	e = &doom->editor;
 	SDL_SetRenderDrawColor(doom->rend, 0xA1, 0xA4, 0xA8, 0xFF );
     SDL_RenderClear(doom->rend);
 
@@ -73,12 +71,12 @@ void	render_editor(t_doom *doom)
 	draw_rect(doom, make_rect(125, 125, 125, 125), make_rgb(255, 0, 0, 255));*/
 
 	// TOPBAR and SIDEBARS and BOTTOMBAR
-	draw_rect(doom, make_rect(0, 0, doom->settings->window_width, 80), make_rgb(255, 0, 0, 255));
-	draw_rect(doom, make_rect(0, 80, 80, doom->settings->window_height - 80 - 300), make_rgb(0, 255, 0, 255));
-	draw_rect(doom, make_rect(doom->settings->window_width - 300, 80, 300, doom->settings->window_height - 80), make_rgb(0, 255, 0, 255));
-	draw_rect(doom, make_rect(0, doom->settings->window_height - 300, doom->settings->window_width - 300, 300), make_rgb(0, 0, 255, 255));
+	draw_rect(doom, make_rect(0, 0, doom->settings.window_width, 80), make_rgb(255, 0, 0, 255));
+	draw_rect(doom, make_rect(0, 80, 80, doom->settings.window_height - 80 - 300), make_rgb(0, 255, 0, 255));
+	draw_rect(doom, make_rect(doom->settings.window_width - 300, 80, 300, doom->settings.window_height - 80), make_rgb(0, 255, 0, 255));
+	draw_rect(doom, make_rect(0, doom->settings.window_height - 300, doom->settings.window_width - 300, 300), make_rgb(0, 0, 255, 255));
 
-	button_render(doom, doom->editor->test_button);
+	button_render(doom, doom->editor.test_button);
 
 	doom->fps_counter->text = ft_strjoin(ft_itoa(doom->average_fps), " fps", 1);
 	text_prepare(doom, doom->fps_counter, 1);
@@ -90,7 +88,7 @@ void	loop_editor(t_doom *doom)
 	Uint32	time;
 	t_settings	*sett;
 
-	sett = doom->settings;
+	sett = &doom->settings;
 	while (1)
 	{
 		doom->last_frame = SDL_GetTicks();

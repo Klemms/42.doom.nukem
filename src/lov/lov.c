@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lov.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 11:20:18 by hdussert          #+#    #+#             */
-/*   Updated: 2019/04/30 14:24:48 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/04/30 17:15:19 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void				calc_lov(t_doom *doom)
 	int		tex;
 
 	x = 0;
-	while (x < doom->settings->window_width)
+	while (x < doom->settings.window_width)
 	{
 		if (see_wall(&doom->sight, doom))
 		init_sight(doom, &doom->sight, x, &doom->you);
@@ -57,10 +57,6 @@ void				calc_lov(t_doom *doom)
 			column = calc_column(&doom->sight, doom, tex);
 			draw_wall(doom, x, column, tex);
 		}
-//		printf("16\n");
 		x++;
-		ffree(w->sight->pos);
-		w->sight->pos = NULL;
 	}
-//	printf("19\n");
 }

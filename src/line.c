@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   line.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 13:13:25 by hdussert          #+#    #+#             */
-/*   Updated: 2019/04/30 14:25:31 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/04/30 17:14:57 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ static void				dx_dom(t_doom *doom, t_line *l)
 			stack -= l->dir.x;
 			l->cur.y += l->inc.y;
 		}
-		if ((l->inc.x > 0 && l->cur.x >= doom->settings->window_width)
+		if ((l->inc.x > 0 && l->cur.x >= doom->settings.window_width)
 		|| (l->inc.x < 0 && l->cur.x < 0) || (l->inc.y < 0 && l->cur.y < 0)
-		|| (l->inc.y > 0 && l->cur.y >= doom->settings->window_height))
+		|| (l->inc.y > 0 && l->cur.y >= doom->settings.window_height))
 			break ;
 		pixel_put(doom, round(l->cur.x), round(l->cur.y), l->color);
 	}
@@ -52,9 +52,9 @@ static void				dy_dom(t_doom *doom, t_line *l)
 			stack -= l->dir.y;
 			l->cur.x += l->inc.x;
 		}
-		if ((l->inc.x > 0 && l->cur.x >= doom->settings->window_width)
+		if ((l->inc.x > 0 && l->cur.x >= doom->settings.window_width)
 		|| (l->inc.x < 0 && l->cur.x < 0) || (l->inc.y < 0 && l->cur.y < 0)
-		|| (l->inc.y > 0 && l->cur.y >= doom->settings->window_height))
+		|| (l->inc.y > 0 && l->cur.y >= doom->settings.window_height))
 			break ;
 		pixel_put(doom, round(l->cur.x), round(l->cur.y), l->color);
 	}

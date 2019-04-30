@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+         #
+#    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 22:39:07 by cababou           #+#    #+#              #
-#    Updated: 2019/04/29 21:43:50 by cababou          ###   ########.fr        #
+#    Updated: 2019/04/30 17:20:06 by cababou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ SRC := doom.c easter_eggs/hypercam.c editor/base_events.c \
 	mlx_context/image_manip.c mlx_context/inits.c parsing.c parsing_norme.c \
 	player.c shapes/rect.c ui/button/button.c ui/button/button_events.c \
 	ui/button/button_util.c ui/init_fonts.c ui/text/text.c \
-	ui/text/text_util.c ui/ui_el/ui.c ui/ui_ids.c vectors.c
+	ui/text/text_util.c ui/ui_el/ui.c ui/ui_ids.c
 
 HEADERS := doom.h editor.h errors.h
 
