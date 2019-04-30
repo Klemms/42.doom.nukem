@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/02 14:51:35 by hdussert          #+#    #+#             */
-/*   Updated: 2019/04/30 23:11:01 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/01 00:28:23 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int				mouse_movement(t_doom *doom, SDL_Event event)
 	SDL_MouseMotionEvent mouse;
 
 	mouse = event.motion;
-	turn(mouse.xrel * -doom->settings.mouse_sensitivity, &doom->you);
+	if (doom->mouse_focused)
+		turn(mouse.xrel * -doom->settings.mouse_sensitivity, &doom->you);
 	return (1);
 }
 
@@ -60,6 +61,12 @@ int				key_up(t_doom *doom, SDL_Event event)
 		doom->you.is_sprinting = 0;
 	if (keyb.keysym.scancode == doom->settings.key_crouch)
 		doom->you.is_crouching = 1;
+	if (keyb.keysym.scancode == SDL_SCANCODE_F9)
+	{
+		SDL_SetRelativeMouseMode(!doom->mouse_focused);
+		SDL_WarpMouseInWindow(doom->win, doom->settings.window_width / 2, doom->settings.window_height / 2);
+		doom->mouse_focused = !doom->mouse_focused;
+	}
 	return (1);
 }
 

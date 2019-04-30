@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 02:04:31 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/30 16:15:59 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/01 00:34:00 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void		button_render(t_doom *doom, t_el_button *button)
 	if (button->is_visible)
 	{
 		draw_rect(doom, button->rect, button->is_disabled ?
-			button->background_color_disabled : button->background_color);
+			button->background_color_disabled : button->background_color, 1);
 		text_render(doom, button->text);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 02:04:31 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/30 19:00:53 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/01 00:33:36 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,18 +63,18 @@ void	render_editor(t_doom *doom)
     SDL_RenderClear(doom->rend);
 
 	//draw_rect(doom, make_rect(95, 95, doom->settings->window_width - 95 - 300 - 15, doom->settings->window_height - 95 - 300 - 15), make_rgb(255, 125, 0, 255));
-	draw_rect(doom, make_rect(e->in_x, e->in_y, e->square_width, e->square_height), make_rgb(255, 125, 0, 255));
-	draw_rect(doom, make_rect(e->in_x + e->square_width + e->sep_size, e->in_y, e->square_width, e->square_height), make_rgb(255, 125, 125, 255));
-	draw_rect(doom, make_rect(e->in_x, e->in_y + e->square_height + e->sep_size, e->square_width, e->square_height), make_rgb(255, 0, 255, 255));
-	draw_rect(doom, make_rect(e->in_x + e->square_width + e->sep_size, e->in_y + e->square_height + e->sep_size, e->square_width, e->square_height), make_rgb(0, 255, 125, 255));
+	draw_rect(doom, make_rect(e->in_x, e->in_y, e->square_width, e->square_height), make_rgb(255, 125, 0, 255), 1);
+	draw_rect(doom, make_rect(e->in_x + e->square_width + e->sep_size, e->in_y, e->square_width, e->square_height), make_rgb(255, 125, 125, 255), 1);
+	draw_rect(doom, make_rect(e->in_x, e->in_y + e->square_height + e->sep_size, e->square_width, e->square_height), make_rgb(255, 0, 255, 255), 1);
+	draw_rect(doom, make_rect(e->in_x + e->square_width + e->sep_size, e->in_y + e->square_height + e->sep_size, e->square_width, e->square_height), make_rgb(0, 255, 125, 255), 1);
 	/*draw_rect(doom, make_rect(125, 125, 125, 125), make_rgb(255, 0, 0, 255));
 	draw_rect(doom, make_rect(125, 125, 125, 125), make_rgb(255, 0, 0, 255));*/
 
 	// TOPBAR and SIDEBARS and BOTTOMBAR
-	draw_rect(doom, make_rect(0, 0, doom->settings.window_width, 80), make_rgb(255, 0, 0, 255));
-	draw_rect(doom, make_rect(0, 80, 80, doom->settings.window_height - 80 - 300), make_rgb(0, 255, 0, 255));
-	draw_rect(doom, make_rect(doom->settings.window_width - 300, 80, 300, doom->settings.window_height - 80), make_rgb(0, 255, 0, 255));
-	draw_rect(doom, make_rect(0, doom->settings.window_height - 300, doom->settings.window_width - 300, 300), make_rgb(0, 0, 255, 255));
+	draw_rect(doom, make_rect(0, 0, doom->settings.window_width, 80), make_rgb(255, 0, 0, 255), 1);
+	draw_rect(doom, make_rect(0, 80, 80, doom->settings.window_height - 80 - 300), make_rgb(0, 255, 0, 255), 1);
+	draw_rect(doom, make_rect(doom->settings.window_width - 300, 80, 300, doom->settings.window_height - 80), make_rgb(0, 255, 0, 255), 1);
+	draw_rect(doom, make_rect(0, doom->settings.window_height - 300, doom->settings.window_width - 300, 300), make_rgb(0, 0, 255, 255), 1);
 
 	button_render(doom, doom->editor.test_button);
 

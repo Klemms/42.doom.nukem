@@ -215,6 +215,7 @@ typedef struct		s_doom
 	int				temp_color;
 	t_lstcontainer	*textures;
 	t_sight			sight;
+	int				mouse_focused;
 }					t_doom;
 
 typedef struct			s_registered_event
@@ -294,7 +295,7 @@ int					button_coords_contained(t_el_button *button, int x, int y);
 int					button_click(t_doom *doom, SDL_Event sdl_event);
 
 SDL_Rect			make_rect(int x, int y, int width, int height);
-void				draw_rect(t_doom *doom, SDL_Rect rect, SDL_Color color);
+void				draw_rect(t_doom *doom, SDL_Rect rect, SDL_Color color, int fill_rect);
 
 void				turn(double angle, t_player *you);
 void				moove(double dist, t_player *you, t_map *map, int ang);

@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 18:15:46 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/30 23:10:41 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/01 00:34:40 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void			pixel_put(t_doom *doom, int x, int y, int color)
 void	init_game(t_doom *doom)
 {
 	SDL_SetRelativeMouseMode(SDL_TRUE);
+	doom->mouse_focused = 1;
 
 	init_events(doom);
 	init_textures(doom);
@@ -65,7 +66,8 @@ void	loop_game(t_doom *doom)
 		while (SDL_PollEvent(&doom->last_event))
 			distribute_events(doom, doom->last_event);
 		render_game(doom);
-		
+	if (!doom->mouse_focused)
+		draw_rect(doom, make_rect(0, 0, doom->settings.window_width, doom->settings.window_height), make_rgb(255, 0, 0, 255), 0);
 		SDL_UpdateWindowSurface(doom->win);
 		time = (SDL_GetTicks() - doom->last_frame);
 		SDL_Delay(time > sett->framerate ? 0 : sett->framerate - time);
