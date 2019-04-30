@@ -29,6 +29,11 @@ void	init_sight(t_doom *doom, t_sight *p, double x, t_player *you)
 					(you->pos.x - (int)p->pos.x) * p->delta_dist.x :
 					((int)p->pos.x + 1.0 - you->pos.x) * p->delta_dist.x);
 	p->side_dist.y = (p->ray_dir.y < 0 ?
-					(you->pos.y - (int)p->pos.y) * p->delta_dist.y :
-					((int)p->pos.y + 1.0 - you->pos.y) * p->delta_dist.y);
+					(you->pos->y - (int)p->pos->y) * p->delta_dist.y :
+					((int)p->pos->y + 1.0 - you->pos->y) * p->delta_dist.y);
+	
+	int i;
+	i = -1;
+	while (++i < you->rov)
+		p->saw_that[i] = (t_wall_sight) { -1, -1, -1, -1, -1, -1, -1, -1 };
 }
