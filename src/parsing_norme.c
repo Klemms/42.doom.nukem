@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_norme.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 13:42:00 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/05 12:30:12 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/30 19:29:46 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	is_valid_2(t_doom *doom, int gres, int fd, char *line)
 		exit_program(doom, ERROR_READING_FILE);
 	while ((gres = get_next_line(fd, &line)) > 0)
 		if (line)
-			lstcontainer_add(doom->textures, line);
+			lstcontainer_add(doom->textures, make_texture(doom, NULL, line));
 	if (gres < 0)
 		exit_program(doom, ERROR_READING_FILE);
 	if ((doom->map.height += 1) && lstcontainer_fastsize(doom->textures) < 4)

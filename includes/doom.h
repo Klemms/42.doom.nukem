@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/30 19:02:52 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/30 20:24:33 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <time.h>
 # include <SDL2/SDL.h>
 # include <SDL2_ttf/SDL_ttf.h>
+# include <SDL2_image/SDL_image.h>
 
 # include "errors.h"
 
@@ -97,15 +98,6 @@ typedef struct	s_editor
 	int			square_height;
 }				t_editor;
 
-typedef struct		s_image
-{
-	void		*ptr;
-	char		*img;
-	int			bpp;
-	int			s_l;
-	int			endian;
-}					t_image;
-
 typedef struct		s_vec
 {
 	double	x;
@@ -156,10 +148,21 @@ typedef struct		s_key
 
 typedef struct		s_texture
 {
-	t_image		img;
-	int			height;
-	int			width;
+	SDL_Surface	*surface;
+	char		*texture_name;
 }					t_texture;
+
+typedef struct		s_wall_sight
+{
+	double				x;
+	double				y;
+	double				z;
+	double				side;
+	int					tex;
+	int					next_x;
+	int					next_y;
+	double				next_perp;
+}					t_wall_sight;
 
 typedef struct		s_sight
 {
@@ -175,6 +178,8 @@ typedef struct		s_sight
 	int		rov;
 	int		side;
 	int		tex;
+	t_wall_sight	saw_that[40]; // Must be sized[you->rov]
+	int				queue_cpt;
 }					t_sight;
 
 typedef struct		s_doom
@@ -198,7 +203,6 @@ typedef struct		s_doom
 	t_map			map;
 	t_player		you;
 	t_key			keys;
-	t_texture		texture[4];
 	int				temp_color;
 	t_lstcontainer	*textures;
 	t_sight			sight;
@@ -212,12 +216,14 @@ typedef struct			s_registered_event
 
 void				init_window(t_doom *w);
 void				init_sdl(t_doom *w);
-t_image				*new_screen_image(t_doom *w);
 int					is_valid(t_doom *w, int fd);
 
-int					init_texture(t_doom *w);
+void				init_textures(t_doom *doom);
+t_texture			*make_texture(t_doom *doom, SDL_Surface *surface, char *texture_name);
+SDL_Surface			*get_surface(t_doom *doom, int texture_id);
 
-void				calc_perp_dist(t_sight *p, t_player *you);
+double				calc_perp_dist(t_sight *p, t_player *you, int num);
+double				calc_perp_dist_next(t_sight *p, t_player *you, int num, int num2);
 int					see_wall(t_sight *p, t_doom *w);
 void				draw_wall(t_doom *w, double x, int column, int tex);
 

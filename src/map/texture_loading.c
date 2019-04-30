@@ -6,35 +6,39 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 00:24:22 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/30 17:17:13 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/30 20:24:19 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int			init_texture(t_doom *doom)
+SDL_Surface	*get_surface(t_doom *doom, int texture_id)
 {
-	int		i;
-	t_list	*lst;
-	char	*tmp_txture;
+	return (((t_texture *)ft_lstget(texture_id, doom->textures->firstelement)->content)->surface);
+}
 
-	i = -1;
+t_texture	*make_texture(t_doom *doom, SDL_Surface *surface, char *texture_name)
+{
+	t_texture	*texture;
+
+	if (!(texture = mmalloc(sizeof(t_texture))))
+		exit_program(doom, ERROR_SDL_AFTER_INIT);
+	texture->surface = surface;
+	texture->texture_name = texture_name;
+	return (texture);
+}
+
+void		init_textures(t_doom *doom)
+{
+	t_list		*lst;
+	t_texture	*tmp_texture;
+
 	lst = doom->textures->firstelement;
-	while (lst && ++i < 4)
+	while (lst)
 	{
-		tmp_txture = (char *)lst->content;
-		/*if (!(doom->texture[i].ptr = mlx_xpm_file_to_image(doom->mlx,
-		tmp_txture, &(doom->texture[i].width), &(doom->texture[i].height))))
-			return (0);
-		if (!(doom->texture[i].img.ptr = mlx_xpm_file_to_image(doom->mlx, tmp_txture,
-													&(doom->texture[i].width),
-													&(doom->texture[i].height))))
-			return (0);
-		doom->texture[i].img.img = mlx_get_data_addr(doom->texture[i].img.ptr,
-												&(doom->texture[i].img.bpp),
-												&(doom->texture[i].img.s_l),
-												&(doom->texture[i].img.endian));*/
+		tmp_texture = (t_texture *)lst->content;
+		if (!tmp_texture->surface)
+			tmp_texture->surface = IMG_Load(tmp_texture->texture_name);
 		lst = lst->next;
 	}
-	return (1);
 }

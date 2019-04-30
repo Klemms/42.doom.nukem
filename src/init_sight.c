@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 03:30:59 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/30 17:13:41 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/30 19:12:34 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	init_sight(t_doom *doom, t_sight *p, double x, t_player *you)
 					(you->pos.x - (int)p->pos.x) * p->delta_dist.x :
 					((int)p->pos.x + 1.0 - you->pos.x) * p->delta_dist.x);
 	p->side_dist.y = (p->ray_dir.y < 0 ?
-					(you->pos->y - (int)p->pos->y) * p->delta_dist.y :
-					((int)p->pos->y + 1.0 - you->pos->y) * p->delta_dist.y);
+					(you->pos.y - (int)p->pos.y) * p->delta_dist.y :
+					((int)p->pos.y + 1.0 - you->pos.y) * p->delta_dist.y);
 	
 	int i;
 	i = -1;
