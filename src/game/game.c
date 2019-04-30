@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 18:15:46 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/30 17:09:53 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/30 18:59:48 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void			pixel_put(t_doom *doom, int x, int y, int color)
 
 void	init_game(t_doom *doom)
 {
-	SDL_ShowCursor(SDL_DISABLE);
-	SDL_SetWindowGrab(doom->win, SDL_TRUE);
+	/*SDL_ShowCursor(SDL_DISABLE);
+	SDL_SetWindowGrab(doom->win, SDL_TRUE);*/
 	//SDL_SetRelativeMouseMode(SDL_TRUE); -- Comment fix tous les problemes de souris
 	// quand on la bouge trop vite, mais ca demande de rework les events de souris,
 	// je le ferais peut etre plus tard
@@ -69,10 +69,13 @@ void	loop_game(t_doom *doom)
 		while (SDL_PollEvent(&doom->last_event))
 			distribute_events(doom, doom->last_event);
 		render_game(doom);
+		
 		SDL_UpdateWindowSurface(doom->win);
 		time = (SDL_GetTicks() - doom->last_frame);
 		SDL_Delay(time > sett->framerate ? 0 : sett->framerate - time);
 		time = (SDL_GetTicks() - doom->last_frame);
+		doom->you.speed = 0.1;
+		doom->you.rotspeed = 0.05;
 		doom->average_fps = (1000 / time);
 		if (doom->keys.right == 1)
 			turn(-doom->you.rotspeed, &doom->you);

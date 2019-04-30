@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 23:44:05 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/30 17:18:11 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/30 19:04:59 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	setup_settings(t_doom *doom)
 	doom->settings.framerate = 1000.0f / 60;
 	doom->settings.angle_h = 0.73f * doom->settings.window_height;
 	doom->settings.angle_v = 0.2f * doom->settings.window_height;
+	doom->settings.default_wall_color = rgba_to_int(176, 193, 145, 255);
 }
 
 void	init_sdl(t_doom *doom)
