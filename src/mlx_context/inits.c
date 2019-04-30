@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   inits.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 23:44:05 by cababou           #+#    #+#             */
 /*   Updated: 2019/04/29 21:21:05 by cababou          ###   ########.fr       */
@@ -19,6 +19,26 @@ void	init_doom(t_doom *doom)
 		|| !(doom->textures = lstcontainer_new())
 		|| !(doom->sight = mmalloc(sizeof(t_sight))))
 		exit_program(NULL, ERROR_MEMORY);
+	ft_bzero(w, sizeof(t_wolf));
+	if (!(w->keys = mmalloc(sizeof(t_key)))
+		|| !(w->map = mmalloc(sizeof(t_map)))
+		|| !(w->textures = lstcontainer_new())
+		|| !(w->sight = mmalloc(sizeof(t_sight))))
+		exit_program(NULL, ERROR_MEMORY);
+	w->w_width = 1200;
+	w->w_height = 800;
+	w->map->height = 0;
+	w->map->width = 0;
+	w->map->start_x = 0;
+	w->map->start_y = 0;
+	w->map->m = NULL;
+	w->keys->left = 0;
+	w->keys->right = 0;
+	w->keys->up = 0;
+	w->keys->down = 0;
+	w->keys->shadow = 0;
+	normecchiant(w);
+	return (w);
 }
 
 void	setup_settings(t_doom *doom)

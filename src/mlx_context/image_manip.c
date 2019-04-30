@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   image_manip.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 00:06:45 by cababou           #+#    #+#             */
 /*   Updated: 2019/04/29 21:57:54 by cababou          ###   ########.fr       */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   line.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 13:13:25 by hdussert          #+#    #+#             */
-/*   Updated: 2019/04/30 16:28:20 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/30 14:25:31 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,22 +62,19 @@ static void				dy_dom(t_doom *doom, t_line *l)
 
 void					line(t_doom *doom, t_vec *start, t_vec *end, int color)
 {
-	t_line *line;
+	t_line line;
 
-	if (!(line = mmalloc(sizeof(t_line))))
-		exit_program(doom, ERROR_MEMORY);
-	line->cur.x = start->x;
-	line->cur.y = start->y;
-	line->dir.x = end->x - start->x;
-	line->dir.y = end->y - start->y;
-	line->inc.x = (line->dir.x > 0) ? 1 : -1;
-	line->inc.y = (line->dir.y > 0) ? 1 : -1;
-	line->dir.x = fabs(line->dir.x);
-	line->dir.y = fabs(line->dir.y);
-	line->color = color;
-	if (line->dir.x > line->dir.y)
-		dx_dom(doom, line);
+	line.cur.x = start->x;
+	line.cur.y = start->y;
+	line.dir.x = end->x - start->x;
+	line.dir.y = end->y - start->y;
+	line.inc.x = (line.dir.x > 0) ? 1 : -1;
+	line.inc.y = (line.dir.y > 0) ? 1 : -1;
+	line.dir.x = fabs(line.dir.x);
+	line.dir.y = fabs(line.dir.y);
+	line.color = color;
+	if (line.dir.x > line.dir.y)
+		dx_dom(doom, &line);
 	else
-		dy_dom(doom, line);
-	ffree(line);
+		dy_dom(doom, &line);
 }

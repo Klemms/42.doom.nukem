@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   texture_loading.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 00:24:22 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/29 21:57:07 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/30 14:24:47 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int			check_extension(char *ext, char *file_name)
+int			init_texture(t_doom *doom)
 {
 	int		i;
 	int		j;
@@ -44,7 +44,8 @@ int			init_texture(t_doom *doom)
 	while (lst && ++i < 4)
 	{
 		tmp_txture = (char *)lst->content;
-		if (!check_extension(".xpm", tmp_txture))
+		if (!(doom->texture[i].ptr = mlx_xpm_file_to_image(doom->mlx,
+		tmp_txture, &(doom->texture[i].width), &(doom->texture[i].height))))
 			return (0);
 		/*if (!(doom->texture[i].img.ptr = mlx_xpm_file_to_image(doom->mlx, tmp_txture,
 													&(doom->texture[i].width),

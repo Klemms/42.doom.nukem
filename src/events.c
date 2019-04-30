@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/02 14:51:35 by hdussert          #+#    #+#             */
 /*   Updated: 2019/04/30 16:38:19 by cababou          ###   ########.fr       */
@@ -59,35 +59,47 @@ void		turn(double angle, t_player *you)
 	double		old_dir_x;
 	double		old_plane_x;
 
-	old_dir_x = you->dir->x;
-	you->dir->x = you->dir->x * cos(angle) - you->dir->y * sin(angle);
-	you->dir->y = old_dir_x * sin(angle) + you->dir->y * cos(angle);
-	old_plane_x = you->plane->x;
-	you->plane->x = you->plane->x * cos(angle) - you->plane->y * sin(angle);
-	you->plane->y = old_plane_x * sin(angle) + you->plane->y * cos(angle);
+	old_dir_x = you->dir.x;
+	you->dir.x = you->dir.x * cos(angle) - you->dir.y * sin(angle);
+	you->dir.y = old_dir_x * sin(angle) + you->dir.y * cos(angle);
+	old_plane_x = you->plane.x;
+	you->plane.x = you->plane.x * cos(angle) - you->plane.y * sin(angle);
+	you->plane.y = old_plane_x * sin(angle) + you->plane.y * cos(angle);
 }
 
 void		moove(double dist, t_player *you, t_map *map)
 {
+	double		tmp_dir_x;
 	double		vx;
 	double		vy;
 	double		next_y;
 	double		next_x;
 
-	vx = you->dir->x * dist;
-	vy = you->dir->y * dist;
-	next_x = you->pos->x + vx;
-	next_y = you->pos->y + vy;
+	if (ang == 0)
+	{
+		printf("w ou s\n");
+		vx = you->dir.x * dist;
+		vy = you->dir.y * dist;
+	}
+	else
+	{
+		printf("a ou d\n");
+		tmp_dir_x = you->dir.x;
+		vx = (you->dir.x * cos(M_PI_2 * ang) - you->dir.y * sin(M_PI_2 * ang)) * dist;
+		vy = (tmp_dir_x * sin(M_PI_2 * ang) + you->dir.y * cos(M_PI_2 * ang)) * dist;
+	}
+	next_x = you->pos.x + vx;
+	next_y = you->pos.y + vy;
 	if (next_x < map->width && next_x >= 0
 	&& next_y < map->height && next_y > 0)
 	{
-		if (map->m[(int)you->pos->y][(int)(next_x)] != '#')
-			you->pos->x = next_x;
-		if (map->m[(int)(next_y)][(int)you->pos->x] != '#')
-			you->pos->y = next_y;
-		if (you->pos->x == next_x && you->pos->y != next_y)
-			you->pos->x -= (vx / 2);
-		else if (you->pos->x != next_x && you->pos->y == next_y)
-			you->pos->y -= (vy / 2);
+		if (map->m[(int)you->pos.y][(int)(next_x)] != '#')
+			you->pos.x = next_x;
+		if (map->m[(int)(next_y)][(int)you->pos.x] != '#')
+			you->pos.y = next_y;
+		if (you->pos.x == next_x && you->pos.y != next_y)
+			you->pos.x -= (vx / 2);
+		else if (you->pos.x != next_x && you->pos.y == next_y)
+			you->pos.y -= (vy / 2);
 	}
 }

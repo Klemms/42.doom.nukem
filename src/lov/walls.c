@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   walls.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:58:00 by cababou           #+#    #+#             */
 /*   Updated: 2019/04/30 16:28:49 by cababou          ###   ########.fr       */
@@ -20,15 +20,15 @@ void				draw_wall(t_doom *doom, double x, int column, int tex)
 	int		py;
 	int		wall_size;
 
-	calc_perp_dist(doom->sight, doom->you);
-	line_height = (int)(doom->settings->window_height / doom->sight->perp_wall_dist);
+	calc_perp_dist(&doom->sight, &doom->you);
+	line_height = (int)(doom->w_height / doom->sight.perp_wall_dist);
 	draw_start = -line_height / 2 + doom->settings->window_height / 2;
 	draw_end = line_height / 2 + doom->settings->window_height / 2;
 	wall_size = draw_end - draw_start;
 	py = draw_start;
 	py = (py < 0 ? 0 : py);
 	draw_end = (draw_end > doom->settings->window_height ? doom->settings->window_height - 1 : draw_end);
-	if (doom->sight->hit)
+	if (doom->sight.hit)
 		while (py < draw_end)
 		{
 			line_height = (py - draw_start) / (double)wall_size;
@@ -45,25 +45,29 @@ int					see_wall(t_sight *p, t_doom *doom)
 {
 	p->hit = 0;
 	p->cpt = 0;
+//	printf("20\n");
 	while (p->hit == 0 && p->cpt < p->rov)
 	{
+//		printf("21\n");
 		if (p->side_dist.x < p->side_dist.y)
 		{
 			p->side_dist.x += p->delta_dist.x;
-			p->pos->x += p->step.x;
+			p->pos.x += p->step.x;
 			p->side = 0;
 		}
 		else
 		{
 			p->side_dist.y += p->delta_dist.y;
-			p->pos->y += p->step.y;
+			p->pos.y += p->step.y;
 			p->side = 1;
 		}
-		if (p->pos->x >= 0 && p->pos->x < doom->map->width
-		&& p->pos->y >= 0 && p->pos->y < doom->map->height
-		&& doom->map->m[(int)p->pos->y][(int)p->pos->x] == '#')
+		if (p->pos.x >= 0 && p->pos.x < doom->map.width
+		&& p->pos.y >= 0 && p->pos.y < doom->map.height
+		&& doom->map.m[(int)p->pos.y][(int)p->pos.x] == '#')
 			break ;
+//		printf("23\n");
 		p->cpt += 1;
 	}
+//	printf("24\n");
 	return (p->cpt < p->rov ? (p->hit = 1) : 0);
 }

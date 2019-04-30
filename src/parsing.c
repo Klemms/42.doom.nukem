@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 11:21:38 by hdussert          #+#    #+#             */
 /*   Updated: 2019/04/30 16:14:35 by cababou          ###   ########.fr       */
@@ -114,9 +114,9 @@ int				parsing(t_doom *doom, char *file)
 	fd[1] = open(file, O_RDONLY);
 	if (is_valid(doom, fd[0]))
 	{
-		fill(doom, doom->map, fd[1]);
-		contour(doom, doom->map);
-		if (!startpos(doom->map, '.'))
+		fill(doom, &doom->map, fd[1]);
+		contour(doom, &doom->map);
+		if (!startpos(&doom->map, '.'))
 			return (0);
 		return (1);
 	}

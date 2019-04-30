@@ -22,7 +22,6 @@ void	init_base(t_doom *doom, int argc, char **argv)
 
 int			main(int argc, char *argv[])
 {
-	t_doom	*doom;
 
 	if (!(doom = mmalloc(sizeof(t_doom))))
 		exit_program(NULL, ERROR_MEMORY);
@@ -46,3 +45,5 @@ int			main(int argc, char *argv[])
 	exit_program(doom, ERROR_GENERIC);
 	return (0);
 }
+
+	t_doom	*doom;
