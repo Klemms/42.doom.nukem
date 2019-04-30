@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:58:00 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/30 18:50:20 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/30 19:02:58 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void				draw_wall(t_doom *doom, double x, int column, int tex)
 		while (py < draw_end)
 		{
 			line_height = (py - draw_start) / (double)wall_size;
-			doom->temp_color = 1817122;
+			doom->temp_color = doom->settings.default_wall_color;
 			/*doom->temp_color = ((int *)doom->texture[tex].img.img)[column
 				+ (int)round(line_height * (doom->texture[tex].height - 1))
 				* doom->texture[tex].width];*/
