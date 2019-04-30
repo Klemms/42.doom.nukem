@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 11:20:18 by hdussert          #+#    #+#             */
-/*   Updated: 2019/04/30 17:15:19 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/30 18:48:15 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ void				calc_lov(t_doom *doom)
 	x = 0;
 	while (x < doom->settings.window_width)
 	{
-		if (see_wall(&doom->sight, doom))
 		init_sight(doom, &doom->sight, x, &doom->you);
+		if (see_wall(&doom->sight, doom))
 		{
 			if (doom->sight.side == 1)
 				tex = doom->sight.step.y < 0;

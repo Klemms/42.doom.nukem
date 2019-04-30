@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 02:04:31 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/30 17:05:44 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/30 19:00:53 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,7 @@ void	loop_editor(t_doom *doom)
 	{
 		doom->last_frame = SDL_GetTicks();
 		while (SDL_PollEvent(&doom->last_event))
-		{
-			//printf("Event type : %d\n", doom->event.type);
 			distribute_events(doom, doom->last_event);
-		}
 		render_editor(doom);
 		SDL_UpdateWindowSurface(doom->win);
 		time = (SDL_GetTicks() - doom->last_frame);
