@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
+#    By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 22:39:07 by cababou           #+#    #+#              #
-#    Updated: 2019/04/05 14:44:24 by cababou          ###   ########.fr        #
+#    Updated: 2019/04/30 14:26:16 by lde-batz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,9 +21,9 @@ COL_VIOLET	:= \033[1;35m
 COL_CYAN	:= \033[1;36m
 COL_WHITE	:= \033[1;37m
 
-NAME :=	wolf3d
+NAME :=	doom
 
-SRC :=	wolf3d.c vectors.c parsing.c player.c lov/lov.c line.c init_sight.c \
+SRC :=	doom.c parsing.c player.c lov/lov.c line.c init_sight.c \
 		events.c draw.c errors/errors.c mlx_context/inits.c \
 		map/texture_loading.c mlx_context/image_manip.c free_structs.c \
 		lov/walls.c parsing_norme.c
@@ -55,7 +55,7 @@ $(NAME) : $(OBJP)
 			@gcc $(FLAG) $(MLX) $(OBJP)  ./libft/libft.a -o $(NAME) -Lmlx_sierra -lmlx 
 			@echo "$(CLEAR_LINE)$(COL_BLUE)[$(NAME)] $(COL_YELLOW)Finished compilation. Output file : $(COL_VIOLET)$(PWD)/$(NAME)$(COL_END)"
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c  src/wolf3d.h libft/libft.a
+$(OBJDIR)/%.o: $(SRCDIR)/%.c  src/doom.h libft/libft.a
 			@mkdir -p $(ONLYDIR)
 			@gcc -c $(FLAG) -I ./mlx_sierra/ $< -o $@
 			@echo "$(CLEAR_LINE)$(COL_BLUE)[$(NAME)] $(COL_YELLOW)Compiling file [$(COL_VIOLET)$<$(COL_YELLOW)]. ($(CURRENT_FILES) / $(TOTAL_FILES))$(COL_END)$(BEGIN_LINE)"
