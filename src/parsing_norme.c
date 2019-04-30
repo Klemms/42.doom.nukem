@@ -6,28 +6,28 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 13:42:00 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/05 12:30:12 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/30 16:15:15 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wolf3d.h"
+#include "doom.h"
 
-void	is_valid_2(t_wolf *w, int gres, int fd, char *line)
+void	is_valid_2(t_doom *doom, int gres, int fd, char *line)
 {
 	if (gres < 0)
-		exit_program(w, ERROR_READING_FILE);
+		exit_program(doom, ERROR_READING_FILE);
 	while ((gres = get_next_line(fd, &line)) > 0)
 		if (line)
-			lstcontainer_add(w->textures, line);
+			lstcontainer_add(doom->textures, line);
 	if (gres < 0)
-		exit_program(w, ERROR_READING_FILE);
-	if ((w->map->height += 1) && lstcontainer_fastsize(w->textures) < 4)
-		exit_program(w, ERROR_MAP_MISSING_TEXTURES);
-	w->map->width += 2;
+		exit_program(doom, ERROR_READING_FILE);
+	if ((doom->map->height += 1) && lstcontainer_fastsize(doom->textures) < 4)
+		exit_program(doom, ERROR_MAP_MISSING_TEXTURES);
+	doom->map->width += 2;
 	close(fd);
 }
 
-int		is_valid(t_wolf *w, int fd)
+int		is_valid(t_doom *doom, int fd)
 {
 	int		i;
 	char	*line;
@@ -35,7 +35,7 @@ int		is_valid(t_wolf *w, int fd)
 
 	line = NULL;
 	gres = 0;
-	while (++w->map->height && (i = -1)
+	while (++doom->map->height && (i = -1)
 		&& (gres = get_next_line(fd, &line)) > 0)
 	{
 		if (line && ft_strcmp(line, "TEXTURES:") == 0)
@@ -49,9 +49,9 @@ int		is_valid(t_wolf *w, int fd)
 				ffree(line);
 				return (0);
 			}
-		w->map->width = (i > w->map->width ? i : w->map->width);
+		doom->map->width = (i > doom->map->width ? i : doom->map->width);
 		ffree(line);
 	}
-	is_valid_2(w, gres, fd, line);
+	is_valid_2(doom, gres, fd, line);
 	return (1);
 }

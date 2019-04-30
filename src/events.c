@@ -6,47 +6,55 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/02 14:51:35 by hdussert          #+#    #+#             */
-/*   Updated: 2019/02/22 15:06:14 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/30 16:38:19 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wolf3d.h"
+#include "doom.h"
 
-int				key_down(int key, t_wolf *w)
+int				key_down(t_doom *doom, SDL_Event event)
 {
-	if (key == 123)
-		w->keys->left = 1;
-	if (key == 124)
-		w->keys->right = 1;
-	if (key == 126)
-		w->keys->up = 1;
-	if (key == 125)
-		w->keys->down = 1;
-	if (key == 1)
-		w->keys->shadow = !w->keys->shadow;
-	if (key == 41)
-		w->you->rov += (w->you->rov + 1 < 30);
-	if (key == 39)
-		w->you->rov -= (w->you->rov - 1 > 8);
-	if (key == 53)
-		exit_program(w, 0);
-	return (key);
+	SDL_KeyboardEvent keyb;
+
+	keyb = event.key;
+	printf("scancode: %d\n", keyb.keysym.scancode);
+	fflush(stdout);
+	if (keyb.keysym.scancode == SDL_SCANCODE_RIGHT)
+		doom->keys->left = 1;
+	if (keyb.keysym.scancode == SDL_SCANCODE_LEFT)
+		doom->keys->right = 1;
+	if (keyb.keysym.scancode == SDL_SCANCODE_UP)
+		doom->keys->up = 1;
+	if (keyb.keysym.scancode == SDL_SCANCODE_DOWN)
+		doom->keys->down = 1;
+	if (keyb.keysym.scancode == SDL_SCANCODE_S)
+		doom->keys->shadow = !doom->keys->shadow;
+	if (keyb.keysym.scancode == SDL_SCANCODE_J)
+		doom->you->rov += (doom->you->rov + 1 < 30);
+	if (keyb.keysym.scancode == SDL_SCANCODE_K)
+		doom->you->rov -= (doom->you->rov - 1 > 8);
+	if (keyb.keysym.scancode == SDL_SCANCODE_ESCAPE)
+		exit_program(doom, 0);
+	return (1);
 }
 
-int				key_up(int key, t_wolf *w)
+int				key_up(t_doom *doom, SDL_Event event)
 {
-	if (key == 123)
-		w->keys->left = 0;
-	if (key == 124)
-		w->keys->right = 0;
-	if (key == 126)
-		w->keys->up = 0;
-	if (key == 125)
-		w->keys->down = 0;
-	return (key);
+	SDL_KeyboardEvent keyb;
+
+	keyb = event.key;
+	if (keyb.keysym.scancode == SDL_SCANCODE_RIGHT)
+		doom->keys->left = 0;
+	if (keyb.keysym.scancode == SDL_SCANCODE_LEFT)
+		doom->keys->right = 0;
+	if (keyb.keysym.scancode == SDL_SCANCODE_UP)
+		doom->keys->up = 0;
+	if (keyb.keysym.scancode == SDL_SCANCODE_DOWN)
+		doom->keys->down = 0;
+	return (1);
 }
 
-static void		turn(double angle, t_player *you)
+void		turn(double angle, t_player *you)
 {
 	double		old_dir_x;
 	double		old_plane_x;
@@ -59,7 +67,7 @@ static void		turn(double angle, t_player *you)
 	you->plane->y = old_plane_x * sin(angle) + you->plane->y * cos(angle);
 }
 
-static void		moove(double dist, t_player *you, t_map *map)
+void		moove(double dist, t_player *you, t_map *map)
 {
 	double		vx;
 	double		vy;
@@ -82,18 +90,4 @@ static void		moove(double dist, t_player *you, t_map *map)
 		else if (you->pos->x != next_x && you->pos->y == next_y)
 			you->pos->y -= (vy / 2);
 	}
-}
-
-int				loop(t_wolf *w)
-{
-	if (w->keys->right == 1)
-		turn(-w->you->rotspeed, w->you);
-	if (w->keys->left == 1)
-		turn(w->you->rotspeed, w->you);
-	if (w->keys->up == 1)
-		moove(w->you->speed, w->you, w->map);
-	if (w->keys->down == 1)
-		moove(-w->you->speed, w->you, w->map);
-	draw(w);
-	return (0);
 }

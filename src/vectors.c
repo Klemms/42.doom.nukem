@@ -6,11 +6,11 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 11:23:36 by hdussert          #+#    #+#             */
-/*   Updated: 2019/04/05 12:27:02 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/29 21:42:06 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wolf3d.h"
+#include "doom.h"
 
 t_vec		*new_vec(double x, double y, double z)
 {

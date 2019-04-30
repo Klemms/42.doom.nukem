@@ -6,18 +6,18 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 03:30:59 by cababou           #+#    #+#             */
-/*   Updated: 2019/02/22 15:33:28 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/29 21:52:39 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wolf3d.h"
+#include "doom.h"
 
-void	init_sight(t_wolf *w, double x, t_player *you)
+void	init_sight(t_doom *doom, double x, t_player *you)
 {
 	t_sight *p;
 
-	p = w->sight;
-	p->camera_x = 2.0 * x / (double)(w->w_width) - 1.0;
+	p = doom->sight;
+	p->camera_x = 2.0 * x / (double)(doom->settings->window_width) - 1.0;
 	p->ray_dir.x = you->dir->x + you->plane->x * p->camera_x;
 	p->ray_dir.y = you->dir->y + you->plane->y * p->camera_x;
 	p->step.x = (p->ray_dir.x < 0 ? -1 : 1);

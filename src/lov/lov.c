@@ -6,13 +6,13 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 11:20:18 by hdussert          #+#    #+#             */
-/*   Updated: 2019/04/05 14:20:26 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/29 21:55:18 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../wolf3d.h"
+#include "doom.h"
 
-int					calc_column(t_sight *p, t_wolf *w, int tex)
+int					calc_column(t_sight *p, t_doom *doom, int tex)
 {
 	double	col;
 
@@ -21,10 +21,10 @@ int					calc_column(t_sight *p, t_wolf *w, int tex)
 	else
 		col = p->pos->y + p->perp_wall_dist * p->ray_dir.y;
 	col = col - floor(col);
-	col = round(col * (double)(w->texture[tex].width - 1));
+	col = round(col * (double)(doom->texture[tex].width - 1));
 	if ((p->side == 0 && p->ray_dir.x > 0)
 	|| (p->side == 1 && p->ray_dir.y < 0))
-		col = w->texture[tex].width - col - 1;
+		col = doom->texture[tex].width - col - 1;
 	return (col);
 }
 
@@ -38,27 +38,27 @@ void				calc_perp_dist(t_sight *p, t_player *you)
 			+ (1.0 - p->step.y) / 2.0) / p->ray_dir.y;
 }
 
-void				calc_lov(t_wolf *w)
+void				calc_lov(t_doom *doom)
 {
 	int		x;
 	int		column;
 	int		tex;
 
 	x = 0;
-	while (x < w->w_width)
+	while (x < doom->settings->window_width)
 	{
-		init_sight(w, x, w->you);
-		if (see_wall(w->sight, w))
+		init_sight(doom, x, doom->you);
+		if (see_wall(doom->sight, doom))
 		{
-			if (w->sight->side == 1)
-				tex = w->sight->step.y < 0;
+			if (doom->sight->side == 1)
+				tex = doom->sight->step.y < 0;
 			else
-				tex = (w->sight->step.x < 0 ? 2 : 3);
-			column = calc_column(w->sight, w, tex);
-			draw_wall(w, x, column, tex);
+				tex = (doom->sight->step.x < 0 ? 2 : 3);
+			column = calc_column(doom->sight, doom, tex);
+			draw_wall(doom, x, column, tex);
 		}
 		x++;
-		ffree(w->sight->pos);
-		w->sight->pos = NULL;
+		ffree(doom->sight->pos);
+		doom->sight->pos = NULL;
 	}
 }

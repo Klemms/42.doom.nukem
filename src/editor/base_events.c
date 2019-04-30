@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   player.c                                           :+:      :+:    :+:   */
+/*   base_events.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/23 00:26:56 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/30 16:15:41 by cababou          ###   ########.fr       */
+/*   Created: 2019/04/19 04:16:03 by cababou           #+#    #+#             */
+/*   Updated: 2019/04/29 21:44:17 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
+#include "editor.h"
 
-t_player	*new_player(t_doom *doom, t_map *map)
+int		quit_event(t_doom *doom, SDL_Event sdl_event)
 {
-	t_player	*you;
+	exit_program(doom, ERROR_GENERIC);
 
-	if (!(you = mmalloc(sizeof(t_player))))
-		exit_program(doom, ERROR_MEMORY);
-	ft_bzero(you, sizeof(t_player));
-	if (!(you->pos = new_vec(map->start_x + 0.5, map->start_y + 0.5, 0))
-	|| !(you->dir = new_vec(-1, 0, 0))
-	|| !(you->plane = new_vec(0, 0.66, 0)))
-		exit_program(doom, ERROR_MEMORY);
-	you->speed = 0;
-	you->rotspeed = 0;
-	you->rov = 40;
-	return (you);
+	return (0);
+}
+
+int		key_event(t_doom *doom, SDL_Event sdl_event)
+{
+	if (sdl_event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
+		exit_program(doom, ERROR_GENERIC);
+
+	return (0);
 }

@@ -6,19 +6,19 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 00:06:45 by cababou           #+#    #+#             */
-/*   Updated: 2019/02/22 15:07:02 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/29 21:57:54 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../wolf3d.h"
+#include "doom.h"
 
-t_image		*new_screen_image(t_wolf *w)
+t_image		*new_screen_image(t_doom *doom)
 {
 	t_image		*img;
 
-	if (!(img = (t_image *)malloc(sizeof(t_image)))
-		|| !(img->ptr = mlx_new_image(w->mlx, w->w_width, w->w_height)))
+	/*if (!(img = (t_image *)malloc(sizeof(t_image)))
+		|| !(img->ptr = mlx_new_image(doom->mlx, doom->settings->window_width, doom->settings->window_height)))
 		exit_program(w, ERROR_MEMORY);
-	img->img = mlx_get_data_addr(img->ptr, &img->bpp, &img->s_l, &img->endian);
-	return (img);
+	img->img = mlx_get_data_addr(img->ptr, &img->bpp, &img->s_l, &img->endian);*/
+	return (NULL);
 }

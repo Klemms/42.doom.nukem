@@ -6,13 +6,13 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 11:21:38 by hdussert          #+#    #+#             */
-/*   Updated: 2019/04/05 12:30:18 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/30 16:14:35 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wolf3d.h"
+#include "doom.h"
 
-static int		fill_2(t_wolf *w, int gres, int fd, t_map *map)
+static int		fill_2(t_doom *doom, int gres, int fd, t_map *map)
 {
 	char	*line;
 	int		i;
@@ -23,7 +23,7 @@ static int		fill_2(t_wolf *w, int gres, int fd, t_map *map)
 	while ((gres = get_next_line(fd, &line)) > 0)
 	{
 		if (!(map->m[++j] = mmalloc(sizeof(char) * (map->width + 1))))
-			exit_program(w, ERROR_MEMORY);
+			exit_program(doom, ERROR_MEMORY);
 		if (line && ft_strcmp(line, "TEXTURES:") == 0)
 		{
 			ffree(line);
@@ -41,21 +41,21 @@ static int		fill_2(t_wolf *w, int gres, int fd, t_map *map)
 	return (gres);
 }
 
-static void		fill(t_wolf *w, t_map *map, int fd)
+static void		fill(t_doom *doom, t_map *map, int fd)
 {
 	int		gres;
 
 	gres = 0;
 	if (!(map->m = mmalloc(sizeof(char *) * (map->height + 1))))
-		exit_program(w, ERROR_MEMORY);
+		exit_program(doom, ERROR_MEMORY);
 	map->m[map->height] = NULL;
-	gres = fill_2(w, gres, fd, map);
+	gres = fill_2(doom, gres, fd, map);
 	close(fd);
 	if (gres < 0)
-		exit_program(w, ERROR_READING_FILE);
+		exit_program(doom, ERROR_READING_FILE);
 }
 
-static void		contour(t_wolf *w, t_map *map)
+static void		contour(t_doom *doom, t_map *map)
 {
 	int		i;
 	int		width;
@@ -67,7 +67,7 @@ static void		contour(t_wolf *w, t_map *map)
 	ffree(map->m[height - 1]);
 	if (!(map->m[0] = mmalloc(sizeof(char) * (width + 1)))
 		|| !(map->m[height - 1] = mmalloc(sizeof(char) * (width + 1))))
-		exit_program(w, ERROR_MEMORY);
+		exit_program(doom, ERROR_MEMORY);
 	while (++i < width)
 	{
 		map->m[0][i] = '#';
@@ -104,7 +104,7 @@ static int		startpos(t_map *map, char c)
 	return (map->start_x != 0);
 }
 
-int				parsing(t_wolf *w, char *file)
+int				parsing(t_doom *doom, char *file)
 {
 	int		fd[2];
 
@@ -112,11 +112,11 @@ int				parsing(t_wolf *w, char *file)
 	|| (read(fd[0], NULL, 0) < 0))
 		return (0);
 	fd[1] = open(file, O_RDONLY);
-	if (is_valid(w, fd[0]))
+	if (is_valid(doom, fd[0]))
 	{
-		fill(w, w->map, fd[1]);
-		contour(w, w->map);
-		if (!startpos(w->map, '.'))
+		fill(doom, doom->map, fd[1]);
+		contour(doom, doom->map);
+		if (!startpos(doom->map, '.'))
 			return (0);
 		return (1);
 	}
