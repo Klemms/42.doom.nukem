@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 18:15:46 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/30 18:59:48 by cababou          ###   ########.fr       */
+/*   Updated: 2019/04/30 20:24:54 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	init_game(t_doom *doom)
 	// je le ferais peut etre plus tard
 
 	init_events(doom);
+	init_textures(doom);
 	register_event(doom, SDL_KEYDOWN, key_down);
 	register_event(doom, SDL_KEYUP, key_up);
 	register_event(doom, SDL_QUIT, quit_window);
