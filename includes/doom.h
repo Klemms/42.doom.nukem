@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/30 23:04:19 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/01 02:05:48 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct	s_settings
 	int			key_right;
 	int			key_sprint;
 	int			key_crouch;
+	int			render_textures;
 }				t_settings;
 
 typedef struct	s_font
@@ -159,6 +160,7 @@ typedef struct		s_texture
 {
 	SDL_Surface	*surface;
 	char		*texture_name;
+	int			tex_pixels;
 }					t_texture;
 
 typedef struct		s_wall_sight
@@ -214,6 +216,7 @@ typedef struct		s_doom
 	t_key			keys;
 	int				temp_color;
 	t_lstcontainer	*textures;
+	int				texture_amount;
 	t_sight			sight;
 	int				mouse_focused;
 }					t_doom;
@@ -247,6 +250,7 @@ int					loop(t_doom *w);
 void				calc_lov(t_doom *w);
 void				init_sight(t_doom *doom, t_sight *p, double x, t_player *you);
 void				pixel_put(t_doom *w, int x, int y, int color);
+Uint32				get_t_exact_pixel(t_texture *texture, int x, int y);
 
 int					mouse_movement(t_doom *doom, SDL_Event event);
 

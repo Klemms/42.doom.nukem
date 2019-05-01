@@ -6,21 +6,32 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:58:00 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/30 23:03:45 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/01 02:18:03 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
+Uint32				get_texture_pixel(t_texture *texture, int x, int y)
+{
+	SDL_Surface	*surf;
+
+	if (!texture || !texture->surface)
+		return (-1);
+	surf = texture->surface;
+	return (get_t_exact_pixel(texture, x % surf->w, y % surf->h));
+}
+
 void				draw_wall(t_doom *doom, double x, int column, int num)
 {
-	double	line_height;
-	int		draw_start;
-	int		draw_end;
-	int		py;
-	int		wall_size;
+	double		line_height;
+	int			draw_start;
+	int			draw_end;
+	int			py;
+	int			wall_size;
+	SDL_Surface	*tmp;
 
-
+	tmp = get_surface(doom, num);
 	line_height = (int)(doom->settings.window_height / doom->sight.saw_that[num].z);
 	if (doom->map.m[(int)doom->sight.saw_that[num].y][(int)doom->sight.saw_that[num].x] == 'T')
 	{
@@ -41,9 +52,12 @@ void				draw_wall(t_doom *doom, double x, int column, int num)
 		{
 			line_height = (py - draw_start) / (double)wall_size;
 			doom->temp_color = doom->settings.default_wall_color;
-			/*doom->temp_color = ((int *)doom->texture[tex].img.img)[column
-				+ (int)round(line_height * (doom->texture[tex].height - 1))
-				* doom->texture[tex].width];*/
+			if (!tmp || !doom->settings.render_textures || num >= doom->texture_amount)
+				doom->temp_color = doom->settings.default_wall_color;
+			else
+				doom->temp_color = ((Uint32 *)tmp->pixels)[column
+					+ (int)(line_height * (tmp->h - 1))
+					* tmp->w];
 			pixel_put(doom, x, py, doom->temp_color);
 			py++;
 		}
@@ -55,7 +69,7 @@ void				draw_wall(t_doom *doom, double x, int column, int num)
 		line_height = (int)(doom->settings.window_height / doom->sight.saw_that[num].next_perp);
 		draw_start = (line_height / 6 + doom->settings.window_height / 2) - 1;
 		while (++draw_start < draw_end)
-			((Uint32 *)doom->surface->pixels)[(int)x + draw_start * doom->settings.window_width] = 0x6CAAC2;
+			((Uint32 *)doom->surface->pixels)[(int)x + draw_start * doom->settings.window_width] = doom->settings.default_wall_color;
 	}
 }
 
