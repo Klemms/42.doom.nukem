@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:58:00 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/01 02:18:03 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/01 21:26:54 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,20 @@ void				draw_wall(t_doom *doom, double x, int column, int num)
 	SDL_Surface	*tmp;
 
 	tmp = get_surface(doom, queue[num].tex);
-	d.line_height = (int)(WIN_HEIGHT / queue[num].z);
+	d.line_height = (int)(doom->h / queue[num].z);
 	if (doom->map.m[(int)queue[num].y][(int)queue[num].x] == 'T')
 	{
-		d.end = d.line_height / 2 + WIN_HEIGHT / 2;
-		d.start = d.line_height / 6 + WIN_HEIGHT / 2;
+		d.end = d.line_height / 2 + doom->h / 2;
+		d.start = d.line_height / 6 + doom->h / 2;
 	}
 	else
 	{
-		d.start = -d.line_height / 2 + WIN_HEIGHT / 2;
-		d.end = d.line_height / 2 + WIN_HEIGHT / 2;
+		d.start = -d.line_height / 2 + doom->h / 2;
+		d.end = d.line_height / 2 + doom->h / 2;
 	}
 	// TEXTURE FLOOR
 	int my_s = d.end;
-	int	my_e = WIN_HEIGHT - 1;
+	int	my_e = doom->h - 1;
 	while (++my_s < my_e)
 	{
 		int		c = rand();
@@ -54,7 +54,7 @@ void				draw_wall(t_doom *doom, double x, int column, int num)
 	d.wall_size = d.end - d.start;
 	d.py = d.start;
 	d.py = (d.py < 0 ? 0 : d.py);
-	d.end = (d.end > WIN_HEIGHT ? WIN_HEIGHT - 1 : d.end);
+	d.end = (d.end > doom->h ? doom->h - 1 : d.end);
 	if (doom->sight.hit)
 		while (d.py < d.end)
 		{
@@ -71,13 +71,13 @@ void				draw_wall(t_doom *doom, double x, int column, int num)
 		}
 	if (doom->map.m[(int)queue[num].y][(int)queue[num].x] == 'T')
 	{
-		d.line_height = (int)(WIN_HEIGHT / queue[num].z);
-		d.end = d.line_height / 6.0 + WIN_HEIGHT / 2.0;
-		d.end = (d.end > WIN_HEIGHT ? WIN_HEIGHT - 1 : d.end);
-		d.line_height = (int)(WIN_HEIGHT / queue[num].next_perp);
-		d.start = (d.line_height / 6.0 + WIN_HEIGHT / 2.0) - 1;
+		d.line_height = (int)(doom->h / queue[num].z);
+		d.end = d.line_height / 6.0 + doom->h / 2.0;
+		d.end = (d.end > doom->h ? doom->h - 1 : d.end);
+		d.line_height = (int)(doom->h / queue[num].next_perp);
+		d.start = (d.line_height / 6.0 + doom->h / 2.0) - 1;
 		while (++d.start < d.end)
-			((Uint32 *)doom->surface->pixels)[(int)x + d.start * WIN_WIDTH] = doom->settings.default_wall_color;
+			((Uint32 *)doom->surface->pixels)[(int)x + d.start * doom->w] = doom->settings.default_wall_color;
 	}
 }
 
