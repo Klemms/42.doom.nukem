@@ -31,7 +31,7 @@ void				draw_wall(t_doom *doom, double x, int column, int num)
 	int			wall_size;
 	SDL_Surface	*tmp;
 
-	tmp = get_surface(doom, num);
+	tmp = get_surface(doom, doom->sight.saw_that[num].tex);
 	line_height = (int)(doom->settings.window_height / doom->sight.saw_that[num].z);
 	if (doom->map.m[(int)doom->sight.saw_that[num].y][(int)doom->sight.saw_that[num].x] == 'T')
 	{
@@ -52,7 +52,7 @@ void				draw_wall(t_doom *doom, double x, int column, int num)
 		{
 			line_height = (py - draw_start) / (double)wall_size;
 			doom->temp_color = doom->settings.default_wall_color;
-			if (!tmp || !doom->settings.render_textures || num >= doom->texture_amount)
+			if (!tmp || !doom->settings.render_textures)
 				doom->temp_color = doom->settings.default_wall_color;
 			else
 				doom->temp_color = ((Uint32 *)tmp->pixels)[column
@@ -64,10 +64,10 @@ void				draw_wall(t_doom *doom, double x, int column, int num)
 	if (doom->map.m[(int)doom->sight.saw_that[num].y][(int)doom->sight.saw_that[num].x] == 'T')
 	{
 		line_height = (int)(doom->settings.window_height / doom->sight.saw_that[num].z);
-		draw_end = line_height / 6 + doom->settings.window_height / 2;
+		draw_end = line_height / 6.0 + doom->settings.window_height / 2.0;
 		draw_end = (draw_end > doom->settings.window_height ? doom->settings.window_height - 1 : draw_end);
 		line_height = (int)(doom->settings.window_height / doom->sight.saw_that[num].next_perp);
-		draw_start = (line_height / 6 + doom->settings.window_height / 2) - 1;
+		draw_start = (line_height / 6.0 + doom->settings.window_height / 2.0) - 1;
 		while (++draw_start < draw_end)
 			((Uint32 *)doom->surface->pixels)[(int)x + draw_start * doom->settings.window_width] = doom->settings.default_wall_color;
 	}
@@ -107,16 +107,16 @@ int					see_wall(t_sight *p, t_doom *doom)
 			else
 				p->saw_that[p->queue_cpt].tex = (p->step.x < 0 ? 2 : 3);
 
-			p->saw_that[p->queue_cpt].next_x = p->pos.x;
-			p->saw_that[p->queue_cpt].next_y = p->pos.y;
 			int tmpside;
 			if (p->side_dist.x < p->side_dist.y)
 			{
-				p->saw_that[p->queue_cpt].next_x += p->step.x;
+				p->saw_that[p->queue_cpt].next_x = p->pos.x + p->step.x;
+				p->saw_that[p->queue_cpt].next_y = p->pos.y;
 				tmpside = 0;
 			}
 			else
 			{
+				p->saw_that[p->queue_cpt].next_x = p->pos.x;
 				p->saw_that[p->queue_cpt].next_y = p->pos.y + p->step.y;
 				tmpside = 1;
 			}

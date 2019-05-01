@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/01 07:22:39 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/01 15:21:01 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <SDL2/SDL.h>
 # include <SDL2_ttf/SDL_ttf.h>
 # include <SDL2_image/SDL_image.h>
+/*# include <SDL2/SDL_mixer.h>
+*/
 
 # include "errors.h"
 
@@ -122,6 +124,12 @@ typedef struct	s_editor
 	Uint8				anim_alpha;
 }				t_editor;
 
+typedef struct		s_xy
+{
+	double	x;
+	double	y;
+}					t_xy;
+
 typedef struct		s_vec
 {
 	double	x;
@@ -152,6 +160,7 @@ typedef struct		s_player
 	int				rov;
 	int				is_sprinting;
 	int				is_crouching;
+	int				moving;
 }					t_player;
 
 typedef struct		s_map
@@ -291,6 +300,8 @@ void				init_game(t_doom *doom);
 void				loop_game(t_doom *doom);
 void				game_loop(t_doom *doom, t_settings *sett);
 void				render_game(t_doom *doom);
+void				update_velocity(t_doom *doom, t_player *player);
+void				moving(t_doom *doom);
 
 void				init_editor(t_doom *doom);
 void				loop_editor(t_doom *doom);
