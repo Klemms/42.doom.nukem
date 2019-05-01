@@ -56,7 +56,7 @@ INC := -I includes -I $(FRAMEWORKSDIR)/SDL2
 FLAG := -g
 
 FRAMEWORKSDIR := $(PWD)/frameworks
-SDL := -F $(FRAMEWORKSDIR) -framework SDL2 -framework SDL2_ttf -framework SDL2_image -Wl,-rpath $(FRAMEWORKSDIR)
+SDL := -F $(FRAMEWORKSDIR) -framework SDL2 -framework SDL2_ttf -framework SDL2_image -framework SDL2_mixer -Wl,-rpath $(FRAMEWORKSDIR)
 
 TOTAL_FILES := $(shell echo $(SRC) | wc -w | sed -e 's/ //g')
 CURRENT_FILES = $(shell ls $(PWD)/obj/ 2> /dev/null | wc -l | sed -e 's/ //g')
