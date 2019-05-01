@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 11:21:38 by hdussert          #+#    #+#             */
-/*   Updated: 2019/05/01 02:31:12 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/01 23:00:13 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,14 @@ static void		contour(t_doom *doom, t_map *map)
 		exit_program(doom, ERROR_MEMORY);
 	while (++i < width)
 	{
-		map->m[0][i] = '#';
-		map->m[height - 1][i] = '#';
+		map->m[0][i] = 'C';
+		map->m[height - 1][i] = 'C';
 	}
 	i = -1;
 	while (++i < height)
 	{
-		map->m[i][0] = '#';
-		map->m[i][width - 1] = '#';
+		map->m[i][0] = 'C';
+		map->m[i][width - 1] = 'C';
 	}
 	map->m[0][width] = '\0';
 	map->m[height - 1][width] = '\0';

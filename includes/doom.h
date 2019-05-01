@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/01 22:22:43 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/02 01:20:39 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <SDL2/SDL.h>
 # include <SDL2_ttf/SDL_ttf.h>
 # include <SDL2_image/SDL_image.h>
+# include <SDL2_mixer/SDL_mixer.h>
 
 # include "errors.h"
 
@@ -31,6 +32,36 @@
 # define M_GAME 42
 # define M_EDITOR 69
 
+typedef enum	e_block_types
+{
+	block_air = 0,
+	block_wall = 1,
+	block_small_wall = 2,
+	block_spawn = 3
+}				t_block_type;
+
+typedef struct	s_map_block
+{
+	int			block_type;
+	int			orientation;
+	int			x_size;
+	int			y_size;
+	int			height;
+	int			n_texture;
+	int			s_texture;
+	int			w_texture;
+	int			e_texture;
+}				t_mblock;
+
+typedef struct	s_nmap
+{
+	char			*map_name;
+	t_mblock		**map;
+	int				size_x;
+	int				size_y;
+	t_lstcontainer	*textures;
+}				t_nmap;
+
 typedef struct	s_draw_wall
 {
 	double	line_height;
@@ -39,7 +70,6 @@ typedef struct	s_draw_wall
 	int		py;
 	int		wall_size;
 }				t_draw_wall;
-
 
 typedef struct	s_settings
 {
@@ -108,12 +138,13 @@ typedef struct	s_quadrant_renderer
 	int			zoom_level;
 	int			x_start;
 	int			y_start;
+	int			pos_x;
+	int			pos_y;
 }				t_quadrant_renderer;
 
 typedef struct	s_editor
 {
 	SDL_Surface			*ed_surface;
-	t_el_button			*test_button;
 	int					in_x;
 	int					in_y;
 	int					in_width;
@@ -129,6 +160,11 @@ typedef struct	s_editor
 	int					anim_w;
 	int					anim_h;
 	Uint8				anim_alpha;
+	t_el_button			*tool_block;
+	t_el_button			*tool_none;
+	int					hand_tool;
+	t_el_text			*current_tool;
+	t_el_text			*str_tool;
 }				t_editor;
 
 typedef struct		s_vec
@@ -251,6 +287,7 @@ typedef struct		s_doom
 	int				w;
 	int				h;
 	int				crt_color;
+	t_nmap			*nmap;
 }					t_doom;
 
 typedef struct			s_registered_event
@@ -351,5 +388,11 @@ void				fade_surface_back(t_doom *doom);
 
 Uint32				color_to_uint(SDL_Color color);
 int					mouse_in(int m_x, int m_y, SDL_Rect rect);
+SDL_Rect			mouse_pos();
+
+void				switch_tool(t_doom *doom, int to_tool);
+
+t_nmap				*convert_map(t_doom *doom, t_map *map, t_lstcontainer *texs);
+int					char_to_blocktype(char block);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 18:15:46 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/01 22:29:15 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/02 00:55:59 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	init_game(t_doom *doom)
 	doom->mouse_focused = 1;
 	doom->game_init = 1;
 	
-	init_textures(doom);
 	register_event(doom, SDL_KEYDOWN, key_down);
 	register_event(doom, SDL_KEYUP, key_up);
 	register_event(doom, SDL_QUIT, quit_window);
@@ -51,7 +50,7 @@ void	game_loop(t_doom *doom, t_settings *sett)
 	if (!doom->mouse_focused)
 		draw_rect(doom->surface, make_rect(0, 0, doom->settings.window_width, doom->settings.window_height), make_rgb(255, 0, 0, 255), 0);
 	doom->you.rotspeed = 0.05;
-	doom->you.speed = 0.1 * (doom->you.is_sprinting ? 1.5 : 1.0);
+	doom->you.speed = 0.1 * (doom->you.is_sprinting ? 2 : 1.0);
 	if (doom->keys.right == 1)
 		turn(-doom->you.rotspeed, &doom->you);
 	if (doom->keys.left == 1)

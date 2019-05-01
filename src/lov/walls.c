@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:58:00 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/01 22:23:28 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/01 23:02:34 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,10 @@ int					see_wall(t_sight *p, t_doom *doom)
 		}
 
 		if (p->pos.x >= 0 && p->pos.x < doom->map.width
-		&& p->pos.y >= 0 && p->pos.y < doom->map.height
-		&& ((doom->map.m[(int)p->pos.y][(int)p->pos.x] == '#') 
-		|| (doom->map.m[(int)p->pos.y][(int)p->pos.x] == 'T')))
+			&& p->pos.y >= 0 && p->pos.y < doom->map.height
+			&& ((doom->map.m[(int)p->pos.y][(int)p->pos.x] == '#') 
+				|| (doom->map.m[(int)p->pos.y][(int)p->pos.x] == 'T')
+				|| (doom->map.m[(int)p->pos.y][(int)p->pos.x] == 'C')))
 		{
 			p->queue[p->queue_cpt].x = p->pos.x;
 			p->queue[p->queue_cpt].y = p->pos.y;
@@ -134,7 +135,7 @@ int					see_wall(t_sight *p, t_doom *doom)
 			}
 			p->queue[p->queue_cpt].next_perp = calc_perp_dist_next(&doom->sight, &doom->you, p->queue_cpt, tmpside);
 			p->queue_cpt++;
-			if (doom->map.m[(int)p->pos.y][(int)p->pos.x] == '#')
+			if (doom->map.m[(int)p->pos.y][(int)p->pos.x] == '#' || doom->map.m[(int)p->pos.y][(int)p->pos.x] == 'C')
 				break;
 		}
 		p->cpt += 1;

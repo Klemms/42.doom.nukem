@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 03:48:04 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/01 05:18:42 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/01 23:24:12 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_el_text	*create_text(t_doom *doom, char *string, char *font_path, int size)
 	text->text_color.b = 255;
 	text->text_color.a = 255;
 	text->font = make_font(doom, font_path, size);
-	text->text = string;
+	text->text = ft_strdup(string);
 	text_size(text);
 	text->ui_element->width = text->u_w;
 	text->ui_element->height = text->u_h;
