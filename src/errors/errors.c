@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 23:38:15 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/30 20:53:08 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/01 02:33:38 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,10 @@ void	exit_program(t_doom *doom, int code)
 		quit(doom, "This map is missing textures.", code);
 	else if (code == ERROR_READING_FILE)
 		quit(doom, "There was an error while reading your map.", code);
+	else if (code == ERROR_EDITOR_NEED_MAP)
+		quit(doom, "Please add a map to edit ./doom editor <map>", code);
+	else if (code == ERROR_USAGE)
+		quit(doom, "Usage : ./doom <map name> OR ./doom editor <map name>", code);
 	else
-		quit(doom, "Exiting Wolf3D", code);
+		quit(doom, "Exiting Le Doom", code);
 }

@@ -6,7 +6,7 @@
 #    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 22:39:07 by cababou           #+#    #+#              #
-#    Updated: 2019/05/01 02:01:29 by cababou          ###   ########.fr        #
+#    Updated: 2019/05/01 05:27:51 by cababou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,10 +27,12 @@ SRC := doom.c easter_eggs/hypercam.c editor/base_events.c \
 	editor/editor.c editor/system_files/list_files.c errors/errors.c \
 	events/event_system.c events.c free_structs.c game/game.c init_sight.c \
 	line.c lov/lov.c lov/walls.c map/texture_loading.c \
-	mlx_context/inits.c parsing.c parsing_norme.c \
+	mlx_context/inits.c parsing.c parsing_norme.c editor/map/load_map.c \
 	player.c shapes/rect.c ui/button/button.c ui/button/button_events.c \
 	ui/button/button_util.c ui/init_fonts.c ui/text/text.c \
-	ui/text/text_util.c ui/ui_el/ui.c ui/ui_ids.c
+	ui/text/text_util.c ui/ui_el/ui.c ui/ui_ids.c editor/editor_util.c \
+	editor/renderers/flat_top_render.c editor/switcher.c \
+	animation/fade.c
 
 HEADERS := doom.h editor.h errors.h
 

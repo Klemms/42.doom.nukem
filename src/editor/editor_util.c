@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   editor.h                                           :+:      :+:    :+:   */
+/*   editor_util.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/17 01:32:17 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/01 04:30:06 by cababou          ###   ########.fr       */
+/*   Created: 2019/05/01 02:55:07 by cababou           #+#    #+#             */
+/*   Updated: 2019/05/01 04:08:58 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EDITOR_H
-# define EDITOR_H
-
 #include "doom.h"
 
-int				quit_event(t_doom *doom, SDL_Event sdl_event);
-int				key_event(t_doom *doom, SDL_Event sdl_event);
-int				zoom_event(t_doom *doom, SDL_Event sdl_event);
-int				ed_mouse_button(t_doom *doom, SDL_Event sdl_event);
-int				ed_mouse_motion(t_doom *doom, SDL_Event sdl_event);
+Uint32	color_to_uint(SDL_Color color)
+{
+	return (Uint32)((color.r << 16) + (color.g << 8) + (color.b << 0));
+}
 
-#endif
+int		mouse_in(int m_x, int m_y, SDL_Rect rect)
+{
+	if (m_x >= rect.x && m_x < rect.x + rect.w)
+		if (m_y >= rect.y && m_y < rect.y + rect.h)
+			return (1);
+	return (0);
+}

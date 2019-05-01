@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 11:21:38 by hdussert          #+#    #+#             */
-/*   Updated: 2019/04/30 16:14:35 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/01 02:31:12 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ int				parsing(t_doom *doom, char *file)
 {
 	int		fd[2];
 
+	doom->map.map_name = file;
 	if ((fd[0] = open(file, O_RDONLY)) < 2
 	|| (read(fd[0], NULL, 0) < 0))
 		return (0);

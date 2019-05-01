@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 02:04:31 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/01 00:34:00 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/01 05:18:18 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ void		button_prepare(t_doom *doom, t_el_button *button)
 	text_prepare(doom, button->text, 1);
 }
 
-void		button_render(t_doom *doom, t_el_button *button)
+void		button_render(t_doom *doom, SDL_Surface *surface, t_el_button *button)
 {
 	if (button->is_visible)
 	{
-		draw_rect(doom, button->rect, button->is_disabled ?
+		draw_rect(surface, button->rect, button->is_disabled ?
 			button->background_color_disabled : button->background_color, 1);
-		text_render(doom, button->text);
+		text_render(doom, surface, button->text);
 	}
 }

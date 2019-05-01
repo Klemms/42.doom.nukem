@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/02 14:51:35 by hdussert          #+#    #+#             */
-/*   Updated: 2019/05/01 00:28:23 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/01 07:11:14 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ int				key_up(t_doom *doom, SDL_Event event)
 		SDL_WarpMouseInWindow(doom->win, doom->settings.window_width / 2, doom->settings.window_height / 2);
 		doom->mouse_focused = !doom->mouse_focused;
 	}
+	if (keyb.keysym.scancode == SDL_SCANCODE_TAB && doom->editor.anim_finished)
+		switch_to_editor(doom);
 	return (1);
 }
 
