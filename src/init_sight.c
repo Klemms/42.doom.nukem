@@ -35,5 +35,5 @@ void	init_sight(t_doom *doom, t_sight *p, double x, t_player *you)
 	int i;
 	i = -1;
 	while (++i < you->rov)
-		p->saw_that[i] = (t_wall_sight) { -1, -1, -1, -1, -1, -1, -1, -1 };
+		p->queue[i] = (t_wall_sight) { -1, -1, -1, -1, -1, -1, -1, -1 };
 }

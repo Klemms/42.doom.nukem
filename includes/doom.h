@@ -206,7 +206,7 @@ typedef struct		s_sight
 	int		rov;
 	int		side;
 	int		tex;
-	t_wall_sight	saw_that[40]; // Must be sized[you->rov]
+	t_wall_sight	queue[40]; // Must be sized[you->rov]
 	int				queue_cpt;
 }					t_sight;
 
