@@ -15,39 +15,39 @@
 int					calc_column(t_sight *p, t_doom *doom, int num)
 {
 	double	col;
-	SDL_Surface	*tmp = get_surface(doom, p->saw_that[num].tex);
+	SDL_Surface	*tmp = get_surface(doom, p->queue[num].tex);
 
 	if (!tmp)
 		return (0);
-	if (p->saw_that[num].side == 1)
-		col = p->saw_that[num].x + p->saw_that[num].z * p->ray_dir.x;
+	if (p->queue[num].side == 1)
+		col = p->queue[num].x + p->queue[num].z * p->ray_dir.x;
 	else
-		col = p->saw_that[num].y + p->saw_that[num].z * p->ray_dir.y;
+		col = p->queue[num].y + p->queue[num].z * p->ray_dir.y;
 	col = col - floor(col);
 	col = round(col * (tmp->w - 1));
-	if ((p->saw_that[num].side == 0 && p->ray_dir.x > 0)
-	|| (p->saw_that[num].side == 1 && p->ray_dir.y < 0))
+	if ((p->queue[num].side == 0 && p->ray_dir.x > 0)
+	|| (p->queue[num].side == 1 && p->ray_dir.y < 0))
 		col = tmp->w - col - 1;
 	return (col);
 }
 
 double				calc_perp_dist(t_sight *p, t_player *you, int num)
 {
-	if (p->saw_that[num].side == 0)
-		return(((int)p->saw_that[num].x - you->pos.x
+	if (p->queue[num].side == 0)
+		return(((int)p->queue[num].x - you->pos.x
 			+ (1.0 - p->step.x) / 2.0) / p->ray_dir.x);
 	else
-		return(((int)p->saw_that[num].y - you->pos.y
+		return(((int)p->queue[num].y - you->pos.y
 			+ (1.0 - p->step.y) / 2.0) / p->ray_dir.y);
 }
 
 double				calc_perp_dist_next(t_sight *p, t_player *you, int num, int num2)
 {
 	if (num2 == 0)
-		return(((int)p->saw_that[num].next_x - you->pos.x
+		return(((int)p->queue[num].next_x - you->pos.x
 			+ (1.0 - p->step.x) / 2.0) / p->ray_dir.x);
 	else
-		return(((int)p->saw_that[num].next_y - you->pos.y
+		return(((int)p->queue[num].next_y - you->pos.y
 			+ (1.0 - p->step.y) / 2.0) / p->ray_dir.y);
 }
 
@@ -58,7 +58,7 @@ void				calc_lov(t_doom *doom)
 	int		cptest;
 
 	x = 0;
-	while (x < doom->settings.window_width)
+	while (x < WIN_WIDTH)
 	{
 		init_sight(doom, &doom->sight, x, &doom->you);
 		if (see_wall(&doom->sight, doom))

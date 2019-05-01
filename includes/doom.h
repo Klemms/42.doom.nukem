@@ -30,6 +30,18 @@
 
 # define M_GAME 42
 # define M_EDITOR 69
+# define WIN_WIDTH 1920
+# define WIN_HEIGHT 1080
+
+typedef struct	s_draw_wall
+{
+	double	line_height;
+	int		start;
+	int		end;
+	int		py;
+	int		wall_size;
+}				t_draw_wall;
+
 
 typedef struct	s_settings
 {
@@ -206,7 +218,7 @@ typedef struct		s_sight
 	int		rov;
 	int		side;
 	int		tex;
-	t_wall_sight	saw_that[40]; // Must be sized[you->rov]
+	t_wall_sight	queue[40]; // Must be sized[you->rov]
 	int				queue_cpt;
 }					t_sight;
 
@@ -253,7 +265,7 @@ int					is_valid(t_doom *w, int fd);
 
 void				init_textures(t_doom *doom);
 t_texture			*make_texture(t_doom *doom, SDL_Surface *surface, char *texture_name);
-t_texture			*load_texture(char *path);
+t_texture			*load_texture(char *path, t_doom *doom);
 SDL_Surface			*get_surface(t_doom *doom, int texture_id);
 
 double				calc_perp_dist(t_sight *p, t_player *you, int num);

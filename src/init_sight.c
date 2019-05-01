@@ -14,7 +14,7 @@
 
 void	init_sight(t_doom *doom, t_sight *p, double x, t_player *you)
 {
-	p->camera_x = 2.0 * x / (double)(doom->settings.window_width) - 1.0;
+	p->camera_x = 2.0 * x / (double)(WIN_WIDTH) - 1.0;
 	p->ray_dir.x = you->dir.x + you->plane.x * p->camera_x;
 	p->ray_dir.y = you->dir.y + you->plane.y * p->camera_x;
 	p->step.x = (p->ray_dir.x < 0 ? -1 : 1);
@@ -35,5 +35,5 @@ void	init_sight(t_doom *doom, t_sight *p, double x, t_player *you)
 	int i;
 	i = -1;
 	while (++i < you->rov)
-		p->saw_that[i] = (t_wall_sight) { -1, -1, -1, -1, -1, -1, -1, -1 };
+		p->queue[i] = (t_wall_sight) { -1, -1, -1, -1, -1, -1, -1, -1 };
 }
