@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 03:48:04 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/30 16:16:38 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/01 05:18:42 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,12 @@ t_el_text	*create_text(t_doom *doom, char *string, char *font_path, int size)
 
 void		text_prepare(t_doom *doom, t_el_text *text, int make_size)
 {
-	SDL_Surface *surface;
-	
-	surface = TTF_RenderUTF8_Blended(
+	text->surface = TTF_RenderUTF8_Blended(
 		text->font,
 		text->text,
 		text->text_color);
-	text->texture = SDL_CreateTextureFromSurface(doom->rend, surface);
-	SDL_FreeSurface(surface);
+	/*text->texture = SDL_CreateTextureFromSurface(doom->rend, surface);
+	SDL_FreeSurface(surface);*/
 	if (make_size)
 	{
 		text_size(text);
@@ -55,7 +53,8 @@ void		text_prepare(t_doom *doom, t_el_text *text, int make_size)
 	text->rect.h = text->ui_element->height;
 }
 
-void		text_render(t_doom *doom, t_el_text *text)
+void		text_render(t_doom *doom, SDL_Surface *surface, t_el_text *text)
 {
-	SDL_RenderCopy(doom->rend, text->texture, NULL, &text->rect);
+	SDL_BlitSurface(text->surface, NULL, surface, &text->rect);
+	//SDL_RenderCopy(doom->rend, text->texture, NULL, &text->rect);
 }

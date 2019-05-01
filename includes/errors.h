@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/14 03:03:58 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/29 20:12:14 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/01 02:27:32 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,7 @@
 # define ERROR_SDL_BEFORE_INIT 111
 # define ERROR_SDL_AFTER_INIT 112
 # define ERROR_SDL_RENDERER_INIT 113
+# define ERROR_EDITOR_NEED_MAP 114
+# define ERROR_USAGE 115
 
 #endif
