@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   inits.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 23:44:05 by cababou           #+#    #+#             */
 /*   Updated: 2019/05/01 21:53:39 by cababou          ###   ########.fr       */
@@ -33,7 +33,7 @@ void	setup_settings(t_doom *doom)
 void	init_sdl(t_doom *doom)
 {
 	setup_settings(doom);
-	if (SDL_Init(SDL_INIT_VIDEO) != 0)
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0)
 		exit_program(doom, ERROR_SDL_INIT);
 	doom->win = SDL_CreateWindow("Le Doom", SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED, doom->settings.window_width, doom->settings.window_height, 0);
@@ -42,4 +42,5 @@ void	init_sdl(t_doom *doom)
 	doom->rend = SDL_CreateRenderer(doom->win, -1, SDL_RENDERER_SOFTWARE);
 	if (doom->rend == NULL)
 		exit_program(doom, ERROR_SDL_RENDERER_INIT);
+//	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
 }
