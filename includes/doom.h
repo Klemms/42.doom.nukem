@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/01 15:21:01 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/02 01:20:39 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@
 # include <SDL2/SDL.h>
 # include <SDL2_ttf/SDL_ttf.h>
 # include <SDL2_image/SDL_image.h>
-/*# include <SDL2/SDL_mixer.h>
-*/
+# include <SDL2_mixer/SDL_mixer.h>
 
 # include "errors.h"
 
@@ -33,13 +32,50 @@
 # define M_GAME 42
 # define M_EDITOR 69
 
+typedef enum	e_block_types
+{
+	block_air = 0,
+	block_wall = 1,
+	block_small_wall = 2,
+	block_spawn = 3
+}				t_block_type;
+
+typedef struct	s_map_block
+{
+	int			block_type;
+	int			orientation;
+	int			x_size;
+	int			y_size;
+	int			height;
+	int			n_texture;
+	int			s_texture;
+	int			w_texture;
+	int			e_texture;
+}				t_mblock;
+
+typedef struct	s_nmap
+{
+	char			*map_name;
+	t_mblock		**map;
+	int				size_x;
+	int				size_y;
+	t_lstcontainer	*textures;
+}				t_nmap;
+
+typedef struct	s_draw_wall
+{
+	double	line_height;
+	int		start;
+	int		end;
+	int		py;
+	int		wall_size;
+}				t_draw_wall;
+
 typedef struct	s_settings
 {
 	int			window_width;
 	int			window_height;
 	float		framerate;
-	float		angle_h;
-	float		angle_v;
 	int			azerty_mode;
 	int			default_wall_color;
 	float		mouse_sensitivity;
@@ -50,6 +86,7 @@ typedef struct	s_settings
 	int			key_sprint;
 	int			key_crouch;
 	int			render_textures;
+	int			enable_crt_floor;
 }				t_settings;
 
 typedef struct	s_font
@@ -101,12 +138,13 @@ typedef struct	s_quadrant_renderer
 	int			zoom_level;
 	int			x_start;
 	int			y_start;
+	int			pos_x;
+	int			pos_y;
 }				t_quadrant_renderer;
 
 typedef struct	s_editor
 {
 	SDL_Surface			*ed_surface;
-	t_el_button			*test_button;
 	int					in_x;
 	int					in_y;
 	int					in_width;
@@ -122,6 +160,11 @@ typedef struct	s_editor
 	int					anim_w;
 	int					anim_h;
 	Uint8				anim_alpha;
+	t_el_button			*tool_block;
+	t_el_button			*tool_none;
+	int					hand_tool;
+	t_el_text			*current_tool;
+	t_el_text			*str_tool;
 }				t_editor;
 
 typedef struct		s_xy
@@ -215,7 +258,7 @@ typedef struct		s_sight
 	int		rov;
 	int		side;
 	int		tex;
-	t_wall_sight	saw_that[40]; // Must be sized[you->rov]
+	t_wall_sight	queue[40]; // Must be sized[you->rov]
 	int				queue_cpt;
 }					t_sight;
 
@@ -225,6 +268,7 @@ typedef struct		s_doom
 	SDL_Renderer	*rend;
 	SDL_Event		last_event;
 	SDL_Surface		*surface;
+	Uint32			*s_pixels;
 	t_lstcontainer	*events;
 	Uint32			last_frame;
 	t_settings		settings;
@@ -247,6 +291,10 @@ typedef struct		s_doom
 	t_sight			sight;
 	int				mouse_focused;
 	int				game_init;
+	int				w;
+	int				h;
+	int				crt_color;
+	t_nmap			*nmap;
 }					t_doom;
 
 typedef struct			s_registered_event
@@ -262,6 +310,7 @@ int					is_valid(t_doom *w, int fd);
 
 void				init_textures(t_doom *doom);
 t_texture			*make_texture(t_doom *doom, SDL_Surface *surface, char *texture_name);
+t_texture			*load_texture(char *path, t_doom *doom);
 SDL_Surface			*get_surface(t_doom *doom, int texture_id);
 
 double				calc_perp_dist(t_sight *p, t_player *you, int num);
@@ -278,7 +327,6 @@ void				line(t_doom *w, t_vec *start, t_vec *end, int color);
 int					loop(t_doom *w);
 void				calc_lov(t_doom *w);
 void				init_sight(t_doom *doom, t_sight *p, double x, t_player *you);
-void				pixel_put(t_doom *w, int x, int y, int color);
 Uint32				get_t_exact_pixel(t_texture *texture, int x, int y);
 
 int					mouse_movement(t_doom *doom, SDL_Event event);
@@ -349,5 +397,11 @@ void				fade_surface_back(t_doom *doom);
 
 Uint32				color_to_uint(SDL_Color color);
 int					mouse_in(int m_x, int m_y, SDL_Rect rect);
+SDL_Rect			mouse_pos();
+
+void				switch_tool(t_doom *doom, int to_tool);
+
+t_nmap				*convert_map(t_doom *doom, t_map *map, t_lstcontainer *texs);
+int					char_to_blocktype(char block);
 
 #endif
