@@ -59,3 +59,13 @@ void		init_textures(t_doom *doom)
 	}
 	doom->texture_amount = lstcontainer_size(doom->textures);
 }
+
+t_texture	*load_texture(char *path)
+{
+	t_texture	*texture;
+	if (!(texture = mmalloc(sizeof(t_texture))))
+		exit_program(doom, ERROR_SDL_AFTER_INIT); // ??
+	texture->surface = IMG_Load(path);
+	texture->surface = SDL_ConvertSurfaceFormat(texture->surface, SDL_PIXELFORMAT_ARGB32, 0);
+	texture->tex_pixels = texture->surface->w * tmp_texture->surface->h;
+}
