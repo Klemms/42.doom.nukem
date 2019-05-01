@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 02:04:31 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/01 07:21:35 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/02 01:19:51 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	init_editor_sizes(t_doom *doom)
 void	init_editor(t_doom *doom)
 {
 	t_editor	*e;
-	
+
 	e = &doom->editor;
 	e->anim_finished = 1;
 	e->ed_surface = SDL_CreateRGBSurfaceWithFormat(0, doom->settings.window_width, doom->settings.window_height, 32, doom->surface->format->format);
@@ -46,6 +46,24 @@ void	init_editor(t_doom *doom)
 	e->flat_top_render_rect = make_rect(e->in_x + e->square_width + e->sep_size, e->in_y, e->square_width, e->square_height);
 	e->flat_top_render = SDL_CreateRGBSurfaceWithFormat(0, e->square_width, e->square_height, 32, doom->surface->format->format);
 	e->flat_top_quadrant.zoom_level = 16;
+	e->flat_top_quadrant.pos_x = e->flat_top_render_rect.x;
+	e->flat_top_quadrant.pos_y = e->flat_top_render_rect.y;
+
+	e->tool_none = create_button(doom, "None", make_rect(10, 125, 60, 60), ed_none_c);
+	button_prepare(doom, e->tool_none);
+	e->tool_block = create_button(doom, "Block", make_rect(10, 195, 60, 60), ed_block_c);
+	button_prepare(doom, e->tool_block);
+
+	e->current_tool = create_text(doom, "Current tool : none", FONT_RIFFIC, 30);
+	e->current_tool->ui_element->pos_x = 90;
+	e->current_tool->ui_element->pos_y = 20;
+	text_prepare(doom, e->current_tool, 1);
+
+	e->str_tool = create_text(doom, "Tools", FONT_RIFFIC, 20);
+	e->str_tool->ui_element->pos_x = 10;
+	e->str_tool->ui_element->pos_y = 90;
+	e->str_tool->text_color = make_rgb(0, 0, 0, 255);
+	text_prepare(doom, e->str_tool, 1);
 
 	doom->average_fps = 0;
 
@@ -68,10 +86,15 @@ void	render_editor(t_doom *doom)
 	draw_rect(e->ed_surface, make_rect(e->in_x + e->square_width + e->sep_size, e->in_y + e->square_height + e->sep_size, e->square_width, e->square_height), make_rgb(0, 255, 125, 255), 1);
 	
 	// TOPBAR and SIDEBARS and BOTTOMBAR
-	draw_rect(e->ed_surface, make_rect(0, 0, doom->settings.window_width, 80), make_rgb(255, 0, 0, 255), 1);
-	draw_rect(e->ed_surface, make_rect(0, 80, 80, doom->settings.window_height - 80 - 300), make_rgb(0, 255, 0, 255), 1);
+	draw_rect_u(e->ed_surface, make_rect(0, 0, doom->settings.window_width, 80), 0xFF626468, 1);
+	draw_rect_u(e->ed_surface, make_rect(0, 80, 80, doom->settings.window_height - 80 - 300), 0xFFd4d5d8, 1);
 	draw_rect(e->ed_surface, make_rect(doom->settings.window_width - 300, 80, 300, doom->settings.window_height - 80), make_rgb(0, 255, 0, 255), 1);
 	draw_rect(e->ed_surface, make_rect(0, doom->settings.window_height - 300, doom->settings.window_width - 300, 300), make_rgb(0, 0, 255, 255), 1);
+
+	button_render(doom, e->ed_surface, e->tool_none);
+	button_render(doom, e->ed_surface, e->tool_block);
+	text_render(doom, e->ed_surface, e->current_tool);
+	text_render(doom, e->ed_surface, e->str_tool);
 
 	doom->fps_counter->text = ft_strjoin(ft_itoa(doom->average_fps), " fps", 1);
 	text_prepare(doom, doom->fps_counter, 1);

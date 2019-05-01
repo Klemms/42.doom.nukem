@@ -6,7 +6,7 @@
 #    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 22:39:07 by cababou           #+#    #+#              #
-#    Updated: 2019/04/05 14:30:57 by cababou          ###   ########.fr        #
+#    Updated: 2019/05/02 01:04:11 by cababou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,7 +67,7 @@ $(NAME) : $(OBJP)
 
 $(OBJDIR)/%.o: %.c libft.h get_next_line.h
 			@mkdir -p $(ONLYDIR)
-			@gcc -g -c -Wall -Wextra -Werror $< -o $@
+			@gcc -c -Wall -Wextra -Werror $< -o $@
 			@echo "$(CLEAR_LINE)$(COL_BLUE)[$(NAME)] $(COL_YELLOW)Compiling file [$(COL_VIOLET)$<$(COL_YELLOW)]. ($(CURRENT_FILES) / $(TOTAL_FILES))$(COL_END)$(BEGIN_LINE)"
 
 clean :

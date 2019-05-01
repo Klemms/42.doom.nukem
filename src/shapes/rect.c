@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 03:38:40 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/01 05:15:00 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/01 22:52:26 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ void	draw_rect(SDL_Surface *s, SDL_Rect rect, SDL_Color color, int fill_rect)
 	{
 		rc = make_rect(rect.x, rect.y, rect.w, 1);
 		SDL_FillRect(s, &rc, rgba_to_int(color.r, color.g, color.b, color.a));
-		rc = make_rect(rect.x, rect.h - 1, rect.w, 1);
+		rc = make_rect(rect.x, rect.y + rect.h - 1, rect.w, 1);
 		SDL_FillRect(s, &rc, rgba_to_int(color.r, color.g, color.b, color.a));
 		rc = make_rect(rect.x, rect.y, 1, rect.h);
 		SDL_FillRect(s, &rc, rgba_to_int(color.r, color.g, color.b, color.a));
-		rc = make_rect(rect.w - 1, rect.y, 1, rect.h);
+		rc = make_rect(rect.x + rect.w - 1, rect.y, 1, rect.h);
 		SDL_FillRect(s, &rc, rgba_to_int(color.r, color.g, color.b, color.a));
 	}
 }
@@ -52,11 +52,11 @@ void	draw_rect_u(SDL_Surface *s, SDL_Rect rect, Uint32 color, int fill_rect)
 	{
 		rc = make_rect(rect.x, rect.y, rect.w, 1);
 		SDL_FillRect(s, &rc, color);
-		rc = make_rect(rect.x, rect.h - 1, rect.w, 1);
+		rc = make_rect(rect.x, rect.y + rect.h - 1, rect.w, 1);
 		SDL_FillRect(s, &rc, color);
 		rc = make_rect(rect.x, rect.y, 1, rect.h);
 		SDL_FillRect(s, &rc, color);
-		rc = make_rect(rect.w - 1, rect.y, 1, rect.h);
+		rc = make_rect(rect.x + rect.w - 1, rect.y, 1, rect.h);
 		SDL_FillRect(s, &rc, color);
 	}
 }

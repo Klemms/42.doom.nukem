@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/02 14:51:35 by hdussert          #+#    #+#             */
-/*   Updated: 2019/05/01 07:11:14 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/01 23:02:56 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,9 +113,9 @@ void		moove(double dist, t_player *player, t_map *map, int ang)
 	if (next_x < map->width && next_x >= 0
 	&& next_y < map->height && next_y > 0)
 	{
-		if (map->m[(int)player->pos.y][(int)(next_x)] != '#')
+		if (map->m[(int)player->pos.y][(int)(next_x)] != '#' && map->m[(int)player->pos.y][(int)(next_x)] != 'C')
 			player->pos.x = next_x;
-		if (map->m[(int)(next_y)][(int)player->pos.x] != '#')
+		if (map->m[(int)(next_y)][(int)player->pos.x] != '#' && map->m[(int)(next_y)][(int)player->pos.x] != 'C')
 			player->pos.y = next_y;
 		if (player->pos.x == next_x && player->pos.y != next_y)
 			player->pos.x -= (vx / 2);
