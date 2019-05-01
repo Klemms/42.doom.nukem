@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 23:44:05 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/01 06:02:18 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/01 21:27:46 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	setup_settings(t_doom *doom)
 {
 	doom->settings.window_width = doom->game_mode == M_GAME ? 1920 : 2304;
 	doom->settings.window_height = doom->game_mode == M_GAME ? 1080 : 1296;
+	doom->w = doom->settings.window_width;
+	doom->h = doom->settings.window_height;
 	doom->settings.framerate = 1000.0f / 60;
 	doom->settings.angle_h = 0.73f * doom->settings.window_height;
 	doom->settings.angle_v = 0.2f * doom->settings.window_height;

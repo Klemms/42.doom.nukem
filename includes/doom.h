@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/01 07:22:39 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/01 21:25:49 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@
 
 # define M_GAME 42
 # define M_EDITOR 69
-# define WIN_WIDTH 1920
-# define WIN_HEIGHT 1080
 
 typedef struct	s_draw_wall
 {
@@ -250,6 +248,8 @@ typedef struct		s_doom
 	t_sight			sight;
 	int				mouse_focused;
 	int				game_init;
+	int				w;
+	int				h;
 }					t_doom;
 
 typedef struct			s_registered_event

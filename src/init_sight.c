@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 03:30:59 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/30 19:12:34 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/01 21:26:07 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	init_sight(t_doom *doom, t_sight *p, double x, t_player *you)
 {
-	p->camera_x = 2.0 * x / (double)(WIN_WIDTH) - 1.0;
+	p->camera_x = 2.0 * x / (double)(doom->w) - 1.0;
 	p->ray_dir.x = you->dir.x + you->plane.x * p->camera_x;
 	p->ray_dir.y = you->dir.y + you->plane.y * p->camera_x;
 	p->step.x = (p->ray_dir.x < 0 ? -1 : 1);
