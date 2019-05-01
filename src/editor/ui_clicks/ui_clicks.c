@@ -1,35 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   editor_util.c                                      :+:      :+:    :+:   */
+/*   ui_clicks.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/01 02:55:07 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/01 22:40:53 by cababou          ###   ########.fr       */
+/*   Created: 2019/05/01 23:07:12 by cababou           #+#    #+#             */
+/*   Updated: 2019/05/01 23:32:27 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
+#include "editor.h"
 
-Uint32	color_to_uint(SDL_Color color)
+void	ed_none_c(t_doom *doom, t_el_button *b, SDL_MouseButtonEvent ev)
 {
-	return (Uint32)((color.r << 16) + (color.g << 8) + (color.b << 0));
+	if (ev.button == SDL_BUTTON_LEFT)
+	{
+		switch_tool(doom, TOOL_NONE);
+	}
 }
 
-int		mouse_in(int m_x, int m_y, SDL_Rect rect)
+void	ed_block_c(t_doom *doom, t_el_button *b, SDL_MouseButtonEvent ev)
 {
-	if (m_x >= rect.x && m_x < rect.x + rect.w)
-		if (m_y >= rect.y && m_y < rect.y + rect.h)
-			return (1);
-	return (0);
-}
-
-SDL_Rect	mouse_pos()
-{
-	int	x;
-	int	y;
-
-	SDL_GetMouseState(&x, &y);
-	return (make_rect(x, y, 0, 0));
+	if (ev.button == SDL_BUTTON_LEFT)
+	{
+		switch_tool(doom, TOOL_BLOCK);
+	}
 }
