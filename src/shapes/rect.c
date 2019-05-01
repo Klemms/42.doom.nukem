@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   rect.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 03:38:40 by cababou           #+#    #+#             */
 /*   Updated: 2019/05/01 22:52:26 by cababou          ###   ########.fr       */
