@@ -24,7 +24,7 @@ Uint32		get_t_exact_pixel(t_texture *texture, int x, int y)
 
 SDL_Surface	*get_surface(t_doom *doom, int texture_id)
 {
-	if (texture_id >= doom->textures->lastelement->index)
+	if (texture_id > doom->textures->lastelement->index)
 		return (NULL);
 	return (((t_texture *)ft_lstget_fromelement(texture_id, doom->textures->firstelement)->content)->surface);
 }
