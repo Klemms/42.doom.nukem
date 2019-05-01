@@ -19,8 +19,6 @@ void	new_player(t_doom *doom, t_player *player, t_map *map)
 	player->pos.y = map->start_y + 0.5;
 	player->anglecos = 1;
 	player->dir.x = -1;
-	player->dir.y = 0;
-	player->plane.x = 0;
 	player->plane.y = 0.66;
 	player->rov = 40;
 }

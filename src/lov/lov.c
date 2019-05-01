@@ -58,7 +58,7 @@ void				calc_lov(t_doom *doom)
 	int		cptest;
 
 	x = 0;
-	while (x < doom->settings.window_width)
+	while (x < WIN_WIDTH)
 	{
 		init_sight(doom, &doom->sight, x, &doom->you);
 		if (see_wall(&doom->sight, doom))

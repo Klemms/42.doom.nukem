@@ -30,6 +30,18 @@
 
 # define M_GAME 42
 # define M_EDITOR 69
+# define WIN_WIDTH 1920
+# define WIN_HEIGHT 1080
+
+typedef struct	s_draw_wall
+{
+	double	line_height;
+	int		start;
+	int		end;
+	int		py;
+	int		wall_size;
+}				t_draw_wall;
+
 
 typedef struct	s_settings
 {
