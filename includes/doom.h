@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/01 21:25:49 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/01 22:22:43 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ typedef struct	s_settings
 	int			window_width;
 	int			window_height;
 	float		framerate;
-	float		angle_h;
-	float		angle_v;
 	int			azerty_mode;
 	int			default_wall_color;
 	float		mouse_sensitivity;
@@ -58,6 +56,7 @@ typedef struct	s_settings
 	int			key_sprint;
 	int			key_crouch;
 	int			render_textures;
+	int			enable_crt_floor;
 }				t_settings;
 
 typedef struct	s_font
@@ -226,6 +225,7 @@ typedef struct		s_doom
 	SDL_Renderer	*rend;
 	SDL_Event		last_event;
 	SDL_Surface		*surface;
+	Uint32			*s_pixels;
 	t_lstcontainer	*events;
 	Uint32			last_frame;
 	t_settings		settings;
@@ -250,6 +250,7 @@ typedef struct		s_doom
 	int				game_init;
 	int				w;
 	int				h;
+	int				crt_color;
 }					t_doom;
 
 typedef struct			s_registered_event
@@ -282,7 +283,6 @@ void				line(t_doom *w, t_vec *start, t_vec *end, int color);
 int					loop(t_doom *w);
 void				calc_lov(t_doom *w);
 void				init_sight(t_doom *doom, t_sight *p, double x, t_player *you);
-void				pixel_put(t_doom *w, int x, int y, int color);
 Uint32				get_t_exact_pixel(t_texture *texture, int x, int y);
 
 int					mouse_movement(t_doom *doom, SDL_Event event);

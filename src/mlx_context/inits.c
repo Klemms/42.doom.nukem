@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 23:44:05 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/01 21:27:46 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/01 21:53:39 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ void	setup_settings(t_doom *doom)
 	doom->w = doom->settings.window_width;
 	doom->h = doom->settings.window_height;
 	doom->settings.framerate = 1000.0f / 60;
-	doom->settings.angle_h = 0.73f * doom->settings.window_height;
-	doom->settings.angle_v = 0.2f * doom->settings.window_height;
 	doom->settings.default_wall_color = rgba_to_int(176, 193, 145, 255);
 	doom->settings.mouse_sensitivity = 0.007;
 	doom->settings.key_forward = SDL_SCANCODE_W;
@@ -29,6 +27,7 @@ void	setup_settings(t_doom *doom)
 	doom->settings.key_right = SDL_SCANCODE_D;
 	doom->settings.key_sprint = SDL_SCANCODE_LSHIFT;
 	doom->settings.render_textures = 1;
+	doom->settings.enable_crt_floor = 1;
 }
 
 void	init_sdl(t_doom *doom)
