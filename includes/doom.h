@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/30 20:24:33 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/01 07:22:39 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,14 @@ typedef struct	s_settings
 	float		angle_v;
 	int			azerty_mode;
 	int			default_wall_color;
+	float		mouse_sensitivity;
+	int			key_forward;
+	int			key_backward;
+	int			key_left;
+	int			key_right;
+	int			key_sprint;
+	int			key_crouch;
+	int			render_textures;
 }				t_settings;
 
 typedef struct	s_font
@@ -62,7 +70,7 @@ typedef struct	s_ui_element
 typedef struct	s_text_element
 {
 	t_el_ui		*ui_element;
-	SDL_Texture	*texture;
+	SDL_Surface	*surface;
 	SDL_Rect	rect;
 	TTF_Font	*font;
 	SDL_Color	text_color;
@@ -86,16 +94,32 @@ typedef struct	s_button_element
 	int			is_visible;
 }				t_el_button;
 
+typedef struct	s_quadrant_renderer
+{
+	int			zoom_level;
+	int			x_start;
+	int			y_start;
+}				t_quadrant_renderer;
+
 typedef struct	s_editor
 {
-	t_el_button	*test_button;
-	int			in_x;
-	int			in_y;
-	int			in_width;
-	int			in_height;
-	int			sep_size;
-	int			square_width;
-	int			square_height;
+	SDL_Surface			*ed_surface;
+	t_el_button			*test_button;
+	int					in_x;
+	int					in_y;
+	int					in_width;
+	int					in_height;
+	int					sep_size;
+	int					square_width;
+	int					square_height;
+	SDL_Surface			*flat_top_render;
+	SDL_Rect			flat_top_render_rect;
+	t_quadrant_renderer	flat_top_quadrant;
+	int					wheel_pressed;
+	int					anim_finished;
+	int					anim_w;
+	int					anim_h;
+	Uint8				anim_alpha;
 }				t_editor;
 
 typedef struct		s_vec
@@ -126,10 +150,13 @@ typedef struct		s_player
 	double			speed;
 	double			rotspeed;
 	int				rov;
+	int				is_sprinting;
+	int				is_crouching;
 }					t_player;
 
 typedef struct		s_map
 {
+	char	*map_name;
 	int		width;
 	int		height;
 	int		start_x;
@@ -150,6 +177,7 @@ typedef struct		s_texture
 {
 	SDL_Surface	*surface;
 	char		*texture_name;
+	int			tex_pixels;
 }					t_texture;
 
 typedef struct		s_wall_sight
@@ -191,6 +219,7 @@ typedef struct		s_doom
 	t_lstcontainer	*events;
 	Uint32			last_frame;
 	t_settings		settings;
+	int				original_mode;
 	int				game_mode;
 	t_lstcontainer	*fonts;
 	t_lstcontainer	*texts;
@@ -205,12 +234,16 @@ typedef struct		s_doom
 	t_key			keys;
 	int				temp_color;
 	t_lstcontainer	*textures;
+	int				texture_amount;
 	t_sight			sight;
+	int				mouse_focused;
+	int				game_init;
 }					t_doom;
 
 typedef struct			s_registered_event
 {
 	Uint32				type;
+	int					gamemode;
 	int					(*handler)(t_doom *doom, SDL_Event ev);
 }						t_registered_event;
 
@@ -237,6 +270,9 @@ int					loop(t_doom *w);
 void				calc_lov(t_doom *w);
 void				init_sight(t_doom *doom, t_sight *p, double x, t_player *you);
 void				pixel_put(t_doom *w, int x, int y, int color);
+Uint32				get_t_exact_pixel(t_texture *texture, int x, int y);
+
+int					mouse_movement(t_doom *doom, SDL_Event event);
 
 void				exit_program(t_doom *w, int code);
 void				quit(t_doom *w, char *message, int code);
@@ -249,10 +285,11 @@ void				register_event(t_doom *doom, Uint32 type,
 void				distribute_events(t_doom *doom, SDL_Event sdl_event);
 
 void				setup_hypercam(t_doom *doom);
-void				render_hypercam(t_doom *doom);
+void				render_hypercam(t_doom *doom, SDL_Surface *surface);
 
 void				init_game(t_doom *doom);
 void				loop_game(t_doom *doom);
+void				game_loop(t_doom *doom, t_settings *sett);
 void				render_game(t_doom *doom);
 
 void				init_editor(t_doom *doom);
@@ -272,20 +309,34 @@ void				set_rgb(SDL_Color *color, int r, int g, int b);
 
 t_el_text			*create_text(t_doom *doom, char *string, char *font_path, int size);
 void				text_prepare(t_doom *doom, t_el_text *text, int make_size);
-void				text_render(t_doom *doom, t_el_text *text);
+void				text_render(t_doom *doom, SDL_Surface *surface, t_el_text *text);
 int					text_size(t_el_text *text);
 
 t_el_button			*create_button(t_doom *doom, char *string, SDL_Rect ps,
 						void (*ui_callback)(t_doom *doom, t_el_button *b, SDL_MouseButtonEvent event));
 void				button_prepare(t_doom *doom, t_el_button *button);
-void				button_render(t_doom *doom, t_el_button *button);
+void				button_render(t_doom *doom, SDL_Surface *surface, t_el_button *button);
 int					button_coords_contained(t_el_button *button, int x, int y);
 int					button_click(t_doom *doom, SDL_Event sdl_event);
 
 SDL_Rect			make_rect(int x, int y, int width, int height);
-void				draw_rect(t_doom *doom, SDL_Rect rect, SDL_Color color);
+void				draw_rect(SDL_Surface *s, SDL_Rect rect, SDL_Color color, int fill_rect);
+void				draw_rect_u(SDL_Surface *s, SDL_Rect rect, Uint32 color, int fill_rect);
 
 void				turn(double angle, t_player *you);
 void				moove(double dist, t_player *you, t_map *map, int ang);
+
+void				editor_init_map(t_doom *doom);
+
+void				editor_ftr_brender(t_doom *doom);
+void				editor_ftr_mrender(t_doom *doom);
+
+void				switch_to_game(t_doom *doom);
+void				switch_to_editor(t_doom *doom);
+void				fade_surface(t_doom *doom);
+void				fade_surface_back(t_doom *doom);
+
+Uint32				color_to_uint(SDL_Color color);
+int					mouse_in(int m_x, int m_y, SDL_Rect rect);
 
 #endif

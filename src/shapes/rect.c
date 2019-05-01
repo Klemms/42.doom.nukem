@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 03:38:40 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/19 03:49:42 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/01 05:15:00 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,40 @@ SDL_Rect	make_rect(int x, int y, int width, int height)
 	return (rect);
 }
 
-void	draw_rect(t_doom *doom, SDL_Rect rect, SDL_Color color)
+void	draw_rect(SDL_Surface *s, SDL_Rect rect, SDL_Color color, int fill_rect)
 {
-	SDL_SetRenderDrawColor(doom->rend, color.r, color.g, color.b, color.a);
-	SDL_RenderFillRect(doom->rend, &rect);
+	SDL_Rect rc;
+
+	if (fill_rect)
+		SDL_FillRect(s, &rect, rgba_to_int(color.r, color.g, color.b, color.a));
+	else
+	{
+		rc = make_rect(rect.x, rect.y, rect.w, 1);
+		SDL_FillRect(s, &rc, rgba_to_int(color.r, color.g, color.b, color.a));
+		rc = make_rect(rect.x, rect.h - 1, rect.w, 1);
+		SDL_FillRect(s, &rc, rgba_to_int(color.r, color.g, color.b, color.a));
+		rc = make_rect(rect.x, rect.y, 1, rect.h);
+		SDL_FillRect(s, &rc, rgba_to_int(color.r, color.g, color.b, color.a));
+		rc = make_rect(rect.w - 1, rect.y, 1, rect.h);
+		SDL_FillRect(s, &rc, rgba_to_int(color.r, color.g, color.b, color.a));
+	}
+}
+
+void	draw_rect_u(SDL_Surface *s, SDL_Rect rect, Uint32 color, int fill_rect)
+{
+	SDL_Rect rc;
+
+	if (fill_rect)
+		SDL_FillRect(s, &rect, color);
+	else
+	{
+		rc = make_rect(rect.x, rect.y, rect.w, 1);
+		SDL_FillRect(s, &rc, color);
+		rc = make_rect(rect.x, rect.h - 1, rect.w, 1);
+		SDL_FillRect(s, &rc, color);
+		rc = make_rect(rect.x, rect.y, 1, rect.h);
+		SDL_FillRect(s, &rc, color);
+		rc = make_rect(rect.w - 1, rect.y, 1, rect.h);
+		SDL_FillRect(s, &rc, color);
+	}
 }

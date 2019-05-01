@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 03:54:08 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/30 17:04:01 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/01 05:17:36 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ void	setup_hypercam(t_doom *doom)
 	text_prepare(doom, doom->easter_egg, 1);
 }
 
-void	render_hypercam(t_doom *doom)
+void	render_hypercam(t_doom *doom, SDL_Surface *surface)
 {
-	draw_rect(doom, 
+	draw_rect(surface, 
 		make_rect(doom->settings.window_width - doom->easter_egg->u_w - 8,
 			0, doom->easter_egg->u_w + 8, doom->easter_egg->u_h + 5),
-		make_rgb(255, 255, 255, 255));
-	text_render(doom, doom->easter_egg);
+		make_rgb(255, 255, 255, 255), 1);
+	text_render(doom, surface, doom->easter_egg);
 }

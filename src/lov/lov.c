@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 11:20:18 by hdussert          #+#    #+#             */
-/*   Updated: 2019/04/30 20:23:02 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/01 02:14:41 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,19 @@
 int					calc_column(t_sight *p, t_doom *doom, int num)
 {
 	double	col;
-	SDL_Surface	*test = get_surface(doom, p->saw_that[num].tex);
+	SDL_Surface	*tmp = get_surface(doom, p->saw_that[num].tex);
 
+	if (!tmp)
+		return (0);
 	if (p->saw_that[num].side == 1)
 		col = p->saw_that[num].x + p->saw_that[num].z * p->ray_dir.x;
 	else
 		col = p->saw_that[num].y + p->saw_that[num].z * p->ray_dir.y;
 	col = col - floor(col);
-	col = round(col * (double)(get_surface(doom, p->saw_that[num].tex)->w - 1));
+	col = round(col * (tmp->w - 1));
 	if ((p->saw_that[num].side == 0 && p->ray_dir.x > 0)
 	|| (p->saw_that[num].side == 1 && p->ray_dir.y < 0))
-		col = get_surface(doom, p->saw_that[num].tex)->w - col - 1;
+		col = tmp->w - col - 1;
 	return (col);
 }
 

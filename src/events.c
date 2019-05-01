@@ -6,31 +6,39 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/02 14:51:35 by hdussert          #+#    #+#             */
-/*   Updated: 2019/04/30 19:00:34 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/01 07:11:14 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
+
+int				mouse_movement(t_doom *doom, SDL_Event event)
+{
+	SDL_MouseMotionEvent mouse;
+
+	mouse = event.motion;
+	if (doom->mouse_focused)
+		turn(mouse.xrel * -doom->settings.mouse_sensitivity, &doom->you);
+	return (1);
+}
 
 int				key_down(t_doom *doom, SDL_Event event)
 {
 	SDL_KeyboardEvent keyb;
 
 	keyb = event.key;
-	if (keyb.keysym.scancode == SDL_SCANCODE_LEFT)
-		doom->keys.left = 1;
-	if (keyb.keysym.scancode == SDL_SCANCODE_RIGHT)
-		doom->keys.right = 1;
-	if (keyb.keysym.scancode == SDL_SCANCODE_UP)
+	if (keyb.keysym.scancode == doom->settings.key_forward)
 		doom->keys.up = 1;
-	if (keyb.keysym.scancode == SDL_SCANCODE_DOWN)
+	if (keyb.keysym.scancode == doom->settings.key_backward)
 		doom->keys.down = 1;
-	if (keyb.keysym.scancode == SDL_SCANCODE_S)
-		doom->keys.shadow = !doom->keys.shadow;
-	if (keyb.keysym.scancode == SDL_SCANCODE_J)
-		doom->you.rov += (doom->you.rov + 1 < 30);
-	if (keyb.keysym.scancode == SDL_SCANCODE_K)
-		doom->you.rov -= (doom->you.rov - 1 > 8);
+	if (keyb.keysym.scancode == doom->settings.key_left)
+		doom->keys.left = 1;
+	if (keyb.keysym.scancode == doom->settings.key_right)
+		doom->keys.right = 1;
+	if (keyb.keysym.scancode == doom->settings.key_sprint)
+		doom->you.is_sprinting = 1;
+	if (keyb.keysym.scancode == doom->settings.key_crouch)
+		doom->you.is_crouching = 1;
 	if (keyb.keysym.scancode == SDL_SCANCODE_ESCAPE)
 		exit_program(doom, 0);
 	return (1);
@@ -41,14 +49,26 @@ int				key_up(t_doom *doom, SDL_Event event)
 	SDL_KeyboardEvent keyb;
 
 	keyb = event.key;
-	if (keyb.keysym.scancode == SDL_SCANCODE_LEFT)
-		doom->keys.left = 0;
-	if (keyb.keysym.scancode == SDL_SCANCODE_RIGHT)
-		doom->keys.right = 0;
-	if (keyb.keysym.scancode == SDL_SCANCODE_UP)
+	if (keyb.keysym.scancode == doom->settings.key_forward)
 		doom->keys.up = 0;
-	if (keyb.keysym.scancode == SDL_SCANCODE_DOWN)
+	if (keyb.keysym.scancode == doom->settings.key_backward)
 		doom->keys.down = 0;
+	if (keyb.keysym.scancode == doom->settings.key_left)
+		doom->keys.left = 0;
+	if (keyb.keysym.scancode == doom->settings.key_right)
+		doom->keys.right = 0;
+	if (keyb.keysym.scancode == doom->settings.key_sprint)
+		doom->you.is_sprinting = 0;
+	if (keyb.keysym.scancode == doom->settings.key_crouch)
+		doom->you.is_crouching = 1;
+	if (keyb.keysym.scancode == SDL_SCANCODE_F9)
+	{
+		SDL_SetRelativeMouseMode(!doom->mouse_focused);
+		SDL_WarpMouseInWindow(doom->win, doom->settings.window_width / 2, doom->settings.window_height / 2);
+		doom->mouse_focused = !doom->mouse_focused;
+	}
+	if (keyb.keysym.scancode == SDL_SCANCODE_TAB && doom->editor.anim_finished)
+		switch_to_editor(doom);
 	return (1);
 }
 
