@@ -253,6 +253,7 @@ int					is_valid(t_doom *w, int fd);
 
 void				init_textures(t_doom *doom);
 t_texture			*make_texture(t_doom *doom, SDL_Surface *surface, char *texture_name);
+t_texture			*load_texture(char *path);
 SDL_Surface			*get_surface(t_doom *doom, int texture_id);
 
 double				calc_perp_dist(t_sight *p, t_player *you, int num);

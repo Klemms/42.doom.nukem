@@ -24,7 +24,7 @@ Uint32		get_t_exact_pixel(t_texture *texture, int x, int y)
 
 SDL_Surface	*get_surface(t_doom *doom, int texture_id)
 {
-	if (texture_id >= doom->textures->lastelement->index)
+	if (texture_id > doom->textures->lastelement->index)
 		return (NULL);
 	return (((t_texture *)ft_lstget_fromelement(texture_id, doom->textures->firstelement)->content)->surface);
 }
@@ -58,4 +58,14 @@ void		init_textures(t_doom *doom)
 		lst = lst->next;
 	}
 	doom->texture_amount = lstcontainer_size(doom->textures);
+}
+
+t_texture	*load_texture(char *path)
+{
+	t_texture	*texture;
+	if (!(texture = mmalloc(sizeof(t_texture))))
+		exit_program(doom, ERROR_SDL_AFTER_INIT); // ??
+	texture->surface = IMG_Load(path);
+	texture->surface = SDL_ConvertSurfaceFormat(texture->surface, SDL_PIXELFORMAT_ARGB32, 0);
+	texture->tex_pixels = texture->surface->w * tmp_texture->surface->h;
 }
