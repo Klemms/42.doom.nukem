@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:58:00 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/01 21:26:54 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/01 22:23:28 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,15 @@ void				draw_wall(t_doom *doom, double x, int column, int num)
 		d.end = d.line_height / 2 + doom->h / 2;
 	}
 	// TEXTURE FLOOR
-	int my_s = d.end;
-	int	my_e = doom->h - 1;
-	while (++my_s < my_e)
+	if (doom->settings.enable_crt_floor)
 	{
-		int		c = rand();
-		pixel_put(doom, x, my_s, (c % 2 ? 0xFFFFFF : 0x000000));
+		int my_s = d.end;
+		int	my_e = doom->h - 1;
+		while (++my_s < my_e)
+		{
+			doom->s_pixels[my_s * doom->w + (int)x] = (rand() % 2 ? 0xFFFFFF : 0x000000);
+			//pixel_put(doom, x, my_s, (c % 2 ? 0xFFFFFF : 0x000000));
+		}
 	}
 	// -------------
 	d.wall_size = d.end - d.start;
@@ -66,7 +69,8 @@ void				draw_wall(t_doom *doom, double x, int column, int num)
 				doom->temp_color = ((Uint32 *)tmp->pixels)[column
 					+ (int)(d.line_height * (tmp->h - 1))
 					* tmp->w];
-			pixel_put(doom, x, d.py, doom->temp_color);
+			doom->s_pixels[d.py * doom->w + (int)x] = doom->temp_color;
+			//pixel_put(doom, x, d.py, doom->temp_color);
 			d.py++;
 		}
 	if (doom->map.m[(int)queue[num].y][(int)queue[num].x] == 'T')
@@ -77,7 +81,7 @@ void				draw_wall(t_doom *doom, double x, int column, int num)
 		d.line_height = (int)(doom->h / queue[num].next_perp);
 		d.start = (d.line_height / 6.0 + doom->h / 2.0) - 1;
 		while (++d.start < d.end)
-			((Uint32 *)doom->surface->pixels)[(int)x + d.start * doom->w] = doom->settings.default_wall_color;
+			doom->s_pixels[(int)x + d.start * doom->w] = doom->settings.default_wall_color;
 	}
 }
 

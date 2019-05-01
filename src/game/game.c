@@ -6,17 +6,11 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 18:15:46 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/01 07:22:48 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/01 22:29:15 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/doom.h"
-
-void			pixel_put(t_doom *doom, int x, int y, int color)
-{
-	if (x >= 0 && x < doom->settings.window_width && y >= 0 && y < doom->settings.window_height)
-		((Uint32 *)doom->surface->pixels)[y * doom->settings.window_width + x] = color;
-}
 
 void	init_game(t_doom *doom)
 {
@@ -77,7 +71,6 @@ void	loop_game(t_doom *doom)
 	sett = &doom->settings;
 	while (1)
 	{
-		ft_putendl("testststs\n");
 		doom->last_frame = SDL_GetTicks();
 		game_loop(doom, sett);
 		SDL_UpdateWindowSurface(doom->win);
