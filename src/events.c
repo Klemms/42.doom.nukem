@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/02 14:51:35 by hdussert          #+#    #+#             */
-/*   Updated: 2019/05/01 23:02:56 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/02 12:29:12 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int				mouse_movement(t_doom *doom, SDL_Event event)
 
 	mouse = event.motion;
 	if (doom->mouse_focused)
-		turn(mouse.xrel * -doom->settings.mouse_sensitivity, &doom->you);
+		turn(mouse.xrel * -doom->settings.mouse_sensitivity, &doom->you, doom);
 	return (1);
 }
 
@@ -72,11 +72,14 @@ int				key_up(t_doom *doom, SDL_Event event)
 	return (1);
 }
 
-void		turn(double angle, t_player *player)
+void		turn(double angle, t_player *player, t_doom *doom)
 {
 	double		old_dir_x;
 	double		old_plane_x;
 
+	player->angle = atan2(player->dir.y, player->dir.x);
+	player->anglecos = cos(player->angle);
+	player->anglesin = sin(player->angle);
 	old_dir_x = player->dir.x;
 	player->dir.x = player->dir.x * cos(angle) - player->dir.y * sin(angle);
 	player->dir.y = old_dir_x * sin(angle) + player->dir.y * cos(angle);
@@ -85,16 +88,20 @@ void		turn(double angle, t_player *player)
 	player->plane.y = old_plane_x * sin(angle) + player->plane.y * cos(angle);
 }
 
-void		moove(double dist, t_player *player, t_map *map, int ang)
+void		moove(double dist, t_doom *doom, t_map *map, int ang)
 {
 	double		tmp_dir_x;
 	double		vx;
 	double		vy;
 	double		next_y;
 	double		next_x;
+	int			channel;
 
-	vx = player->dir.x * dist;
-	vy = player->dir.y * dist;
+	channel = Mix_PlayChannel(-1, doom->scores.walk, 0);
+	if (channel != 0)
+		Mix_HaltChannel(channel);
+	vx = doom->you.dir.x * dist;
+	vy = doom->you.dir.y * dist;
 	/*if (ang == 0)
 	{
 		printf("w ou s\n");
@@ -108,18 +115,18 @@ void		moove(double dist, t_player *player, t_map *map, int ang)
 		vx = (player->dir.x * cos(M_PI_2 * ang) - player->dir.y * sin(M_PI_2 * ang)) * dist;
 		vy = (tmp_dir_x * sin(M_PI_2 * ang) + player->dir.y * cos(M_PI_2 * ang)) * dist;
 	}*/
-	next_x = player->pos.x + vx;
-	next_y = player->pos.y + vy;
+	next_x = doom->you.pos.x + vx;
+	next_y = doom->you.pos.y + vy;
 	if (next_x < map->width && next_x >= 0
 	&& next_y < map->height && next_y > 0)
 	{
-		if (map->m[(int)player->pos.y][(int)(next_x)] != '#' && map->m[(int)player->pos.y][(int)(next_x)] != 'C')
-			player->pos.x = next_x;
-		if (map->m[(int)(next_y)][(int)player->pos.x] != '#' && map->m[(int)(next_y)][(int)player->pos.x] != 'C')
-			player->pos.y = next_y;
-		if (player->pos.x == next_x && player->pos.y != next_y)
-			player->pos.x -= (vx / 2);
-		else if (player->pos.x != next_x && player->pos.y == next_y)
-			player->pos.y -= (vy / 2);
+		if (map->m[(int)doom->you.pos.y][(int)(next_x)] != '#' && map->m[(int)doom->you.pos.y][(int)(next_x)] != 'C')
+			doom->you.pos.x = next_x;
+		if (map->m[(int)(next_y)][(int)doom->you.pos.x] != '#' && map->m[(int)(next_y)][(int)doom->you.pos.x] != 'C')
+			doom->you.pos.y = next_y;
+		if (doom->you.pos.x == next_x && doom->you.pos.y != next_y)
+			doom->you.pos.x -= (vx / 2);
+		else if (doom->you.pos.x != next_x && doom->you.pos.y == next_y)
+			doom->you.pos.y -= (vy / 2);
 	}
 }

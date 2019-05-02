@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 18:15:46 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/01 15:22:38 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/02 12:59:16 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,18 @@ void	game_loop(t_doom *doom, t_settings *sett)
 		draw_rect(doom->surface, make_rect(0, 0, doom->settings.window_width, doom->settings.window_height), make_rgb(255, 0, 0, 255), 0);
 	doom->you.rotspeed = 0.05;
 	doom->you.speed = doom->you.is_sprinting ? 0.2 : 0.10;
-//	update_velocity(doom, &doom->you);
-//	if (doom->you.moving)
-//		moving(doom);
-	if (doom->keys.right == 1)
-		turn(-doom->you.rotspeed, &doom->you);
-	if (doom->keys.left == 1)
-		turn(doom->you.rotspeed, &doom->you);
-	if (doom->keys.up == 1)
-		moove(doom->you.speed, &doom->you, &doom->map, 0);
-	if (doom->keys.down == 1)
-		moove(-doom->you.speed, &doom->you, &doom->map, 0);
+	update_velocity(doom, &doom->you);
+//	printf("velocity: %f %f\n", doom->you.velocity.x, doom->you.velocity.y);
+	if (doom->you.moving)
+		moving(doom);
+//	if (doom->keys.right == 1)
+//		turn(-doom->you.rotspeed, &doom->you, doom);
+//	if (doom->keys.left == 1)
+//		turn(doom->you.rotspeed, &doom->you, doom);
+//	if (doom->keys.up == 1)
+//		moove(doom->you.speed, doom, &doom->map, 0);
+//	if (doom->keys.down == 1)
+//		moove(-doom->you.speed, doom, &doom->map, 0);
 	doom->you.rotspeed = doom->settings.framerate * 3.0;
 }
 

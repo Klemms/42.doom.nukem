@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/02 01:20:39 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/02 11:45:17 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,6 +225,14 @@ typedef struct		s_key
 	int		shadow;
 }					t_key;
 
+typedef struct		s_scores
+{
+	Mix_Music	*bgm;
+	Mix_Chunk	*walk;
+	Mix_Chunk	*shot;
+}					t_scores;
+
+
 typedef struct		s_texture
 {
 	SDL_Surface	*surface;
@@ -295,6 +303,7 @@ typedef struct		s_doom
 	int				h;
 	int				crt_color;
 	t_nmap			*nmap;
+	t_scores		scores;
 }					t_doom;
 
 typedef struct			s_registered_event
@@ -312,6 +321,8 @@ void				init_textures(t_doom *doom);
 t_texture			*make_texture(t_doom *doom, SDL_Surface *surface, char *texture_name);
 t_texture			*load_texture(char *path, t_doom *doom);
 SDL_Surface			*get_surface(t_doom *doom, int texture_id);
+
+void				init_scores(t_doom *doom);
 
 double				calc_perp_dist(t_sight *p, t_player *you, int num);
 double				calc_perp_dist_next(t_sight *p, t_player *you, int num, int num2);
@@ -382,8 +393,8 @@ SDL_Rect			make_rect(int x, int y, int width, int height);
 void				draw_rect(SDL_Surface *s, SDL_Rect rect, SDL_Color color, int fill_rect);
 void				draw_rect_u(SDL_Surface *s, SDL_Rect rect, Uint32 color, int fill_rect);
 
-void				turn(double angle, t_player *you);
-void				moove(double dist, t_player *you, t_map *map, int ang);
+void				turn(double angle, t_player *you, t_doom *doom);
+void				moove(double dist, t_doom *doom, t_map *map, int ang);
 
 void				editor_init_map(t_doom *doom);
 
