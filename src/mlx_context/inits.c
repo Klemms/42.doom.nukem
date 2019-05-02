@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 23:44:05 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/02 16:13:39 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/02 18:13:31 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	init_scores(t_doom *doom)
 	if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1)
 		exit_program(doom, ERROR_SDL_AUDIO_INIT);
 	Mix_AllocateChannels(10);
-	Mix_VolumeMusic(MIX_MAX_VOLUME / 200);
+	Mix_VolumeMusic(MIX_MAX_VOLUME / 2);
 	if ((doom->scores.bgm = Mix_LoadMUS("musics/test.mp3")) == NULL)
 		exit_program(doom, ERROR_INVALID_MUSIC);
 	if ((doom->scores.walk = Mix_LoadWAV("musics/marche.wav")) == NULL)
@@ -57,7 +57,7 @@ void	init_scores(t_doom *doom)
 	if ((doom->scores.shot = Mix_LoadWAV("musics/test_tir.wav")) == NULL)
 		exit_program(doom, ERROR_INVALID_MUSIC);
 	Mix_PlayMusic(doom->scores.bgm, -1);
-	Mix_VolumeChunk(doom->scores.walk, MIX_MAX_VOLUME / 200);
+	Mix_VolumeChunk(doom->scores.walk, MIX_MAX_VOLUME / 2);
 	Mix_VolumeChunk(doom->scores.shot, MIX_MAX_VOLUME / 2);
 }
 
