@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 02:55:07 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/01 22:40:53 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/02 05:42:12 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ int		mouse_in(int m_x, int m_y, SDL_Rect rect)
 		if (m_y >= rect.y && m_y < rect.y + rect.h)
 			return (1);
 	return (0);
+}
+
+int			is_left_clicking()
+{
+	return (SDL_GetMouseState(NULL, NULL) == SDL_BUTTON_LMASK);
 }
 
 SDL_Rect	mouse_pos()

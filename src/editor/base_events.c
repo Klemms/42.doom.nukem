@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 04:16:03 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/01 07:11:02 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/02 02:42:58 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ int		ed_mouse_motion(t_doom *doom, SDL_Event sdl_event)
 int		ed_mouse_button(t_doom *doom, SDL_Event sdl_event)
 {
 	SDL_MouseButtonEvent	mouse;
+	t_editor				*e;
 
+	e = &doom->editor;
 	mouse = sdl_event.button;
 	if (mouse.button == SDL_BUTTON_MIDDLE)
 	{
@@ -40,6 +42,11 @@ int		ed_mouse_button(t_doom *doom, SDL_Event sdl_event)
 			doom->editor.wheel_pressed = 1;
 		else
 			doom->editor.wheel_pressed = 0;
+	}
+	if (mouse.button == SDL_BUTTON_LEFT)
+	{
+		if (e->c_focus == 1 && e->x_focus >= 0 && e->y_focus >= 0)
+			editor_ftr_clicked(doom);
 	}
 	return (0);
 }
@@ -71,5 +78,9 @@ int		key_event(t_doom *doom, SDL_Event sdl_event)
 		exit_program(doom, 0);
 	if (sdl_event.key.keysym.scancode == SDL_SCANCODE_TAB && doom->editor.anim_finished)
 		switch_to_game(doom);
+	if (sdl_event.key.keysym.scancode == SDL_SCANCODE_1)
+		switch_tool(doom, tool_none);
+	if (sdl_event.key.keysym.scancode == SDL_SCANCODE_2)
+		switch_tool(doom, tool_block);
 	return (0);
 }

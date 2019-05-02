@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 18:15:46 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/01 15:22:38 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/02 05:46:38 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ void	init_game(t_doom *doom)
 
 void	render_game(t_doom *doom)
 {
-	SDL_SetRenderDrawColor(doom->rend, 0x00, 0x00, 0x00, 0xFF );
+	SDL_SetRenderDrawColor(doom->rend,
+		doom->nmap->skybox_color.r, 
+		doom->nmap->skybox_color.g, 
+		doom->nmap->skybox_color.b, 0xFF);
     SDL_RenderClear(doom->rend);
 
 	calc_lov(doom);
@@ -69,11 +72,15 @@ void	loop_game(t_doom *doom)
 {
 	Uint32		time;
 	t_settings	*sett;
+	SDL_Rect	mouse;
 
 	sett = &doom->settings;
 	while (1)
 	{
 		doom->last_frame = SDL_GetTicks();
+		mouse = mouse_pos();
+		doom->m_x = mouse.x;
+		doom->m_y = mouse.y;
 		game_loop(doom, sett);
 		SDL_UpdateWindowSurface(doom->win);
 		time = (SDL_GetTicks() - doom->last_frame);

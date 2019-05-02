@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+         #
+#    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 22:39:07 by cababou           #+#    #+#              #
-#    Updated: 2019/05/02 01:21:48 by cababou          ###   ########.fr        #
+#    Updated: 2019/05/02 03:56:05 by cababou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,8 @@ SRC := doom.c easter_eggs/hypercam.c editor/base_events.c \
 	ui/text/text_util.c ui/ui_el/ui.c ui/ui_ids.c editor/editor_util.c \
 	editor/renderers/flat_top_render.c editor/switcher.c \
 	animation/fade.c editor/ui_clicks/ui_clicks.c editor/tools.c \
-	map/converter.c map/map_util.c move.c
+	map/converter.c map/map_util.c move.c \
+	editor/renderers/bottom_select_render.c
 
 HEADERS := doom.h editor.h errors.h
 
