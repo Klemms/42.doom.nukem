@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/02 01:20:39 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/02 06:58:17 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@
 # define M_GAME 42
 # define M_EDITOR 69
 
-typedef enum	e_block_types
+enum			e_block_types
 {
 	block_air = 0,
 	block_wall = 1,
 	block_small_wall = 2,
 	block_spawn = 3
-}				t_block_type;
+};
 
 typedef struct	s_map_block
 {
@@ -47,10 +47,14 @@ typedef struct	s_map_block
 	int			x_size;
 	int			y_size;
 	int			height;
+	int			ceiling_height;
+	int			has_ceiling;
+	int			ceilng_tex;
 	int			n_texture;
 	int			s_texture;
 	int			w_texture;
 	int			e_texture;
+	int			light;
 }				t_mblock;
 
 typedef struct	s_nmap
@@ -59,6 +63,7 @@ typedef struct	s_nmap
 	t_mblock		**map;
 	int				size_x;
 	int				size_y;
+	SDL_Color		skybox_color;
 	t_lstcontainer	*textures;
 }				t_nmap;
 
@@ -133,6 +138,13 @@ typedef struct	s_button_element
 	int			is_visible;
 }				t_el_button;
 
+typedef struct	s_block_type
+{
+	char		*block_name;
+	Uint32		block_color;
+	int			block_type;
+}				t_block_type;
+
 typedef struct	s_quadrant_renderer
 {
 	int			zoom_level;
@@ -141,6 +153,19 @@ typedef struct	s_quadrant_renderer
 	int			pos_x;
 	int			pos_y;
 }				t_quadrant_renderer;
+
+typedef struct	s_ed_focus
+{
+	int			b_block_type;
+	int			b_orientation;
+	int			b_x_size;
+	int			b_y_size;
+	int			b_height;
+	int			b_n_texture;
+	int			b_s_texture;
+	int			b_w_texture;
+	int			b_e_texture;
+}				t_ed_focus;
 
 typedef struct	s_editor
 {
@@ -155,6 +180,9 @@ typedef struct	s_editor
 	SDL_Surface			*flat_top_render;
 	SDL_Rect			flat_top_render_rect;
 	t_quadrant_renderer	flat_top_quadrant;
+	SDL_Surface			*bottom_select_render;
+	SDL_Rect			bottom_select_render_rect;
+	t_quadrant_renderer	bottom_select_quadrant;
 	int					wheel_pressed;
 	int					anim_finished;
 	int					anim_w;
@@ -163,8 +191,14 @@ typedef struct	s_editor
 	t_el_button			*tool_block;
 	t_el_button			*tool_none;
 	int					hand_tool;
+	t_block_type		*selected_block;
 	t_el_text			*current_tool;
 	t_el_text			*str_tool;
+	int					c_focus;
+	int					x_focus;
+	int					y_focus;
+	t_ed_focus			foc;
+	t_lstcontainer		*block_types;
 }				t_editor;
 
 typedef struct		s_xy
@@ -286,6 +320,7 @@ typedef struct		s_doom
 	t_player		you;
 	t_key			keys;
 	int				temp_color;
+	SDL_Color		tmp_color;
 	t_lstcontainer	*textures;
 	int				texture_amount;
 	t_sight			sight;
@@ -293,8 +328,9 @@ typedef struct		s_doom
 	int				game_init;
 	int				w;
 	int				h;
-	int				crt_color;
 	t_nmap			*nmap;
+	int				m_x; // Mouse X // Both Updated each frame
+	int				m_y; // Mouse Y
 }					t_doom;
 
 typedef struct			s_registered_event
@@ -366,6 +402,7 @@ t_el_ui				*create_ui_element(t_doom *doom);
 SDL_Color			make_rgb(Uint8 r, Uint8 g, Uint8 b, Uint8 a);
 void				set_rgb(SDL_Color *color, int r, int g, int b);
 
+void				instant_text(t_doom *d, SDL_Surface *s, char *st, SDL_Rect poscols);
 t_el_text			*create_text(t_doom *doom, char *string, char *font_path, int size);
 void				text_prepare(t_doom *doom, t_el_text *text, int make_size);
 void				text_render(t_doom *doom, SDL_Surface *surface, t_el_text *text);
@@ -389,6 +426,10 @@ void				editor_init_map(t_doom *doom);
 
 void				editor_ftr_brender(t_doom *doom);
 void				editor_ftr_mrender(t_doom *doom);
+void				editor_ftr_clicked(t_doom *doom);
+
+void				editor_bsr_brender(t_doom *doom);
+void				editor_bsr_mrender(t_doom *doom);
 
 void				switch_to_game(t_doom *doom);
 void				switch_to_editor(t_doom *doom);
@@ -398,10 +439,12 @@ void				fade_surface_back(t_doom *doom);
 Uint32				color_to_uint(SDL_Color color);
 int					mouse_in(int m_x, int m_y, SDL_Rect rect);
 SDL_Rect			mouse_pos();
+int					is_left_clicking();
 
 void				switch_tool(t_doom *doom, int to_tool);
 
 t_nmap				*convert_map(t_doom *doom, t_map *map, t_lstcontainer *texs);
 int					char_to_blocktype(char block);
+t_block_type		*make_block_type(t_doom *doom, char *bn, Uint32 bc, int bt);
 
 #endif

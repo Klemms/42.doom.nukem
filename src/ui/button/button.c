@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 02:04:31 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/01 05:18:18 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/02 02:54:21 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,12 @@ t_el_button	*create_button(t_doom *doom, char *string, SDL_Rect rect,
 		exit_program(doom, ERROR_SDL_AFTER_INIT);
 	but->ui_element = create_ui_element(doom);
 	but->text = create_text(doom, string, FONT_RIFFIC, 20);
-	set_rgb(&but->background_color, 57, 114, 206);
-	set_rgb(&but->background_color_disabled, 96, 136, 201);
+	but->background_color = make_rgb(57, 114, 206, 255);
+	but->background_color_disabled = make_rgb(96, 136, 201, 255);
 	but->text->text_color = make_rgb(0, 0, 0, 255);
 	but->ui_callback = ui_callback;
 	but->is_visible = 1;
+	but->is_disabled = 0;
 	but->rect = rect;
 	lstcontainer_add(doom->buttons, but);
 	return (but);
