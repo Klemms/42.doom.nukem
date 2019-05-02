@@ -42,18 +42,9 @@ void				draw_wall(t_doom *doom, double x, int column, int num)
 		d.start = -d.line_height / 2 + doom->h / 2;
 		d.end = d.line_height / 2 + doom->h / 2;
 	}
-	// TEXTURE FLOOR
-	if (doom->settings.enable_crt_floor)
-	{
-		int my_s = d.end;
-		int	my_e = doom->h - 1;
-		while (++my_s < my_e)
-		{
-			doom->s_pixels[my_s * doom->w + (int)x] = (rand() % 2 ? 0xFFFFFF : 0x000000);
-			//pixel_put(doom, x, my_s, (c % 2 ? 0xFFFFFF : 0x000000));
-		}
-	}
+
 	// -------------
+	
 	d.wall_size = d.end - d.start;
 	d.py = d.start;
 	d.py = (d.py < 0 ? 0 : d.py);
@@ -70,7 +61,6 @@ void				draw_wall(t_doom *doom, double x, int column, int num)
 					+ (int)(d.line_height * (tmp->h - 1))
 					* tmp->w];
 			doom->s_pixels[d.py * doom->w + (int)x] = doom->temp_color;
-			//pixel_put(doom, x, d.py, doom->temp_color);
 			d.py++;
 		}
 	if (doom->map.m[(int)queue[num].y][(int)queue[num].x] == 'T')
