@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 02:04:31 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/02 01:19:51 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/02 05:46:25 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,41 @@ void	init_editor(t_doom *doom)
 	e->ed_surface = SDL_CreateRGBSurfaceWithFormat(0, doom->settings.window_width, doom->settings.window_height, 32, doom->surface->format->format);
 	init_editor_sizes(doom);
 
+	e->c_focus = -1;
+	e->x_focus = -1;
+	e->y_focus = -1;
+
 	editor_init_map(doom);
+
+	e->block_types = lstcontainer_new();
+	lstcontainer_add(e->block_types, make_block_type(doom, "Air", 0xFFFFFEDD, block_air));
+	lstcontainer_add(e->block_types, make_block_type(doom, "Wall", 0xFF848484, block_wall));
+	lstcontainer_add(e->block_types, make_block_type(doom, "Small Wall", 0xFFb78c73, block_small_wall));
+	lstcontainer_add(e->block_types, make_block_type(doom, "Spawn Point", 0xFFC13CC1, block_spawn));
+	lstcontainer_add(e->block_types, make_block_type(doom, "Spawn Point", 0xFFC13CC1, block_spawn));
+	lstcontainer_add(e->block_types, make_block_type(doom, "Spawn Point", 0xFFC13CC1, block_spawn));
+	lstcontainer_add(e->block_types, make_block_type(doom, "Spawn Point", 0xFFC13CC1, block_spawn));
+	lstcontainer_add(e->block_types, make_block_type(doom, "Spawn Point", 0xFFC13CC1, block_spawn));
+	lstcontainer_add(e->block_types, make_block_type(doom, "Spawn Point", 0xFFC13CC1, block_spawn));
+	lstcontainer_add(e->block_types, make_block_type(doom, "Spawn Point", 0xFFC13CC1, block_spawn));
+	lstcontainer_add(e->block_types, make_block_type(doom, "Spawn Point", 0xFFC13CC1, block_spawn));
+	lstcontainer_add(e->block_types, make_block_type(doom, "Spawn Point", 0xFFC13CC1, block_spawn));
+	lstcontainer_add(e->block_types, make_block_type(doom, "Spawn Point", 0xFFC13CC1, block_spawn));
+	lstcontainer_add(e->block_types, make_block_type(doom, "Spawn Point", 0xFFC13CC1, block_spawn));
+	lstcontainer_add(e->block_types, make_block_type(doom, "Spawn Point", 0xFFC13CC1, block_spawn));
+	lstcontainer_add(e->block_types, make_block_type(doom, "Spawn Point", 0xFFC13CC1, block_spawn));
+	lstcontainer_add(e->block_types, make_block_type(doom, "Spawn Point", 0xFFC13CC1, block_spawn));
+	lstcontainer_add(e->block_types, make_block_type(doom, "Spawn Point", 0xFFC13CC1, block_spawn));
+	lstcontainer_add(e->block_types, make_block_type(doom, "Spawn Point", 0xFFC13CC1, block_spawn));
+	lstcontainer_add(e->block_types, make_block_type(doom, "Spawn Point", 0xFFC13CC1, block_spawn));
+	lstcontainer_add(e->block_types, make_block_type(doom, "Spawn Point", 0xFFC13CC1, block_spawn));
+	lstcontainer_add(e->block_types, make_block_type(doom, "Spawn Point", 0xFFC13CC1, block_spawn));
+	lstcontainer_add(e->block_types, make_block_type(doom, "Spawn Point", 0xFFC13CC1, block_spawn));
+	lstcontainer_add(e->block_types, make_block_type(doom, "Spawn Point", 0xFFC13CC1, block_spawn));
+	lstcontainer_add(e->block_types, make_block_type(doom, "Spawn Point", 0xFFC13CC1, block_spawn));
+	lstcontainer_add(e->block_types, make_block_type(doom, "Spawn Point", 0xFFC13CC1, block_spawn));
+	lstcontainer_add(e->block_types, make_block_type(doom, "Spawn Point", 0xFFC13CC1, block_spawn));
+	e->selected_block = NULL;
 
 	register_event(doom, SDL_QUIT, quit_event);
 	register_event(doom, SDL_KEYUP, key_event);
@@ -49,9 +83,16 @@ void	init_editor(t_doom *doom)
 	e->flat_top_quadrant.pos_x = e->flat_top_render_rect.x;
 	e->flat_top_quadrant.pos_y = e->flat_top_render_rect.y;
 
+	e->bottom_select_render_rect = make_rect(0, doom->settings.window_height - 300, doom->settings.window_width - 300, 300);
+	e->bottom_select_render = SDL_CreateRGBSurfaceWithFormat(0, e->bottom_select_render_rect.w, e->bottom_select_render_rect.h, 32, doom->surface->format->format);
+	e->bottom_select_quadrant.pos_x = e->bottom_select_render_rect.x;
+	e->bottom_select_quadrant.pos_y = e->bottom_select_render_rect.y;
+
 	e->tool_none = create_button(doom, "None", make_rect(10, 125, 60, 60), ed_none_c);
+	e->tool_none->background_color = make_rgb(145, 145, 145, 255);
 	button_prepare(doom, e->tool_none);
 	e->tool_block = create_button(doom, "Block", make_rect(10, 195, 60, 60), ed_block_c);
+	e->tool_block->background_color = make_rgb(145, 145, 145, 255);
 	button_prepare(doom, e->tool_block);
 
 	e->current_tool = create_text(doom, "Current tool : none", FONT_RIFFIC, 30);
@@ -65,6 +106,8 @@ void	init_editor(t_doom *doom)
 	e->str_tool->text_color = make_rgb(0, 0, 0, 255);
 	text_prepare(doom, e->str_tool, 1);
 
+	switch_tool(doom, tool_none);
+
 	doom->average_fps = 0;
 
 	draw_rect_u(e->ed_surface, make_rect(0, 0, doom->settings.window_width, doom->settings.window_height), 0xFFA1A4A8, 1);
@@ -73,12 +116,17 @@ void	init_editor(t_doom *doom)
 void	render_editor(t_doom *doom)
 {
 	t_editor	*e;
+	SDL_Rect	m_pos;
 
+	m_pos = mouse_pos();
 	e = &doom->editor;
 	SDL_SetRenderDrawColor(doom->rend, 0xA1, 0xA4, 0xA8, 0xFF );
     SDL_RenderClear(doom->rend);
 
-	draw_rect(e->flat_top_render, make_rect(20, 20, 104, 92), make_rgb(255, 0, 255, 255), 1);
+	if (mouse_in(m_pos.x, m_pos.y, doom->editor.flat_top_render_rect))
+		doom->editor.c_focus = 1;
+	else
+		doom->editor.c_focus = -1;
 
 	draw_rect(e->ed_surface, make_rect(e->in_x, e->in_y, e->square_width, e->square_height), make_rgb(255, 125, 0, 255), 1);
 	editor_ftr_brender(doom);
@@ -89,7 +137,8 @@ void	render_editor(t_doom *doom)
 	draw_rect_u(e->ed_surface, make_rect(0, 0, doom->settings.window_width, 80), 0xFF626468, 1);
 	draw_rect_u(e->ed_surface, make_rect(0, 80, 80, doom->settings.window_height - 80 - 300), 0xFFd4d5d8, 1);
 	draw_rect(e->ed_surface, make_rect(doom->settings.window_width - 300, 80, 300, doom->settings.window_height - 80), make_rgb(0, 255, 0, 255), 1);
-	draw_rect(e->ed_surface, make_rect(0, doom->settings.window_height - 300, doom->settings.window_width - 300, 300), make_rgb(0, 0, 255, 255), 1);
+	editor_bsr_brender(doom);
+	//draw_rect(e->ed_surface, make_rect(0, doom->settings.window_height - 300, doom->settings.window_width - 300, 300), make_rgb(0, 0, 255, 255), 1);
 
 	button_render(doom, e->ed_surface, e->tool_none);
 	button_render(doom, e->ed_surface, e->tool_block);
@@ -105,11 +154,15 @@ void	loop_editor(t_doom *doom)
 {
 	Uint32	time;
 	t_settings	*sett;
+	SDL_Rect	mouse;
 
 	sett = &doom->settings;
 	while (1)
 	{
 		doom->last_frame = SDL_GetTicks();
+		mouse = mouse_pos();
+		doom->m_x = mouse.x;
+		doom->m_y = mouse.y;
 		if (doom->game_mode == M_EDITOR && doom->editor.anim_finished)
 		{
 			while (SDL_PollEvent(&doom->last_event))

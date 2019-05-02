@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 00:19:47 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/02 01:19:07 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/02 04:06:29 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_nmap	*convert_map(t_doom *doom, t_map *map, t_lstcontainer *texs)
 	nmap->map_name = ft_strdup(map->map_name);
 	nmap->size_x = map->height;
 	nmap->size_y = map->width;
+	nmap->skybox_color = make_rgb(0, 0, 0, 255);
 	nmap->textures = lstcontainer_new();
 	lstcontainer_add(nmap->textures, ft_lstget_fromelement(0, texs->firstelement));
 	lstcontainer_add(nmap->textures, ft_lstget_fromelement(1, texs->firstelement));
@@ -48,6 +49,7 @@ t_nmap	*convert_map(t_doom *doom, t_map *map, t_lstcontainer *texs)
 			nmap->map[x][y].height = 100;
 			nmap->map[x][y].x_size = 100;
 			nmap->map[x][y].y_size = 100;
+			nmap->map[x][y].light = 0xFFFFFFFF;
 			y++;
 		}
 		x++;
