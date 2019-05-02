@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 00:24:22 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/01 03:58:44 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/01 21:22:06 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,15 @@ void		init_textures(t_doom *doom)
 		lst = lst->next;
 	}
 	doom->texture_amount = lstcontainer_size(doom->textures);
+}
+
+t_texture	*load_texture(char *path, t_doom *doom)
+{
+	t_texture	*texture;
+	if (!(texture = mmalloc(sizeof(t_texture))))
+		exit_program(doom, ERROR_SDL_AFTER_INIT); // ??
+	texture->surface = IMG_Load(path);
+	texture->surface = SDL_ConvertSurfaceFormat(texture->surface, SDL_PIXELFORMAT_ARGB32, 0);
+	texture->tex_pixels = texture->surface->w * texture->surface->h;
+	return (texture);
 }

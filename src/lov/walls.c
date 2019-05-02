@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:58:00 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/01 02:18:03 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/01 23:02:34 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,52 +24,64 @@ Uint32				get_texture_pixel(t_texture *texture, int x, int y)
 
 void				draw_wall(t_doom *doom, double x, int column, int num)
 {
-	double		line_height;
-	int			draw_start;
-	int			draw_end;
-	int			py;
-	int			wall_size;
+	t_wall_sight	*queue;
+	t_draw_wall 	d;
+
+	queue = doom->sight.queue;
 	SDL_Surface	*tmp;
 
-	tmp = get_surface(doom, doom->sight.saw_that[num].tex);
-	line_height = (int)(doom->settings.window_height / doom->sight.saw_that[num].z);
-	if (doom->map.m[(int)doom->sight.saw_that[num].y][(int)doom->sight.saw_that[num].x] == 'T')
+	tmp = get_surface(doom, queue[num].tex);
+	d.line_height = (int)(doom->h / queue[num].z);
+	if (doom->map.m[(int)queue[num].y][(int)queue[num].x] == 'T')
 	{
-		draw_end = line_height / 2 + doom->settings.window_height / 2;
-		draw_start = line_height / 6 + doom->settings.window_height / 2;
+		d.end = d.line_height / 2 + doom->h / 2;
+		d.start = d.line_height / 6 + doom->h / 2;
 	}
 	else
 	{
-		draw_start = -line_height / 2 + doom->settings.window_height / 2;
-		draw_end = line_height / 2 + doom->settings.window_height / 2;
+		d.start = -d.line_height / 2 + doom->h / 2;
+		d.end = d.line_height / 2 + doom->h / 2;
 	}
-	wall_size = draw_end - draw_start;
-	py = draw_start;
-	py = (py < 0 ? 0 : py);
-	draw_end = (draw_end > doom->settings.window_height ? doom->settings.window_height - 1 : draw_end);
-	if (doom->sight.hit)
-		while (py < draw_end)
+	// TEXTURE FLOOR
+	if (doom->settings.enable_crt_floor)
+	{
+		int my_s = d.end;
+		int	my_e = doom->h - 1;
+		while (++my_s < my_e)
 		{
-			line_height = (py - draw_start) / (double)wall_size;
+			doom->s_pixels[my_s * doom->w + (int)x] = (rand() % 2 ? 0xFFFFFF : 0x000000);
+			//pixel_put(doom, x, my_s, (c % 2 ? 0xFFFFFF : 0x000000));
+		}
+	}
+	// -------------
+	d.wall_size = d.end - d.start;
+	d.py = d.start;
+	d.py = (d.py < 0 ? 0 : d.py);
+	d.end = (d.end > doom->h ? doom->h - 1 : d.end);
+	if (doom->sight.hit)
+		while (d.py < d.end)
+		{
+			d.line_height = (d.py - d.start) / (double)(d.wall_size);
 			doom->temp_color = doom->settings.default_wall_color;
 			if (!tmp || !doom->settings.render_textures)
 				doom->temp_color = doom->settings.default_wall_color;
 			else
 				doom->temp_color = ((Uint32 *)tmp->pixels)[column
-					+ (int)(line_height * (tmp->h - 1))
+					+ (int)(d.line_height * (tmp->h - 1))
 					* tmp->w];
-			pixel_put(doom, x, py, doom->temp_color);
-			py++;
+			doom->s_pixels[d.py * doom->w + (int)x] = doom->temp_color;
+			//pixel_put(doom, x, d.py, doom->temp_color);
+			d.py++;
 		}
-	if (doom->map.m[(int)doom->sight.saw_that[num].y][(int)doom->sight.saw_that[num].x] == 'T')
+	if (doom->map.m[(int)queue[num].y][(int)queue[num].x] == 'T')
 	{
-		line_height = (int)(doom->settings.window_height / doom->sight.saw_that[num].z);
-		draw_end = line_height / 6.0 + doom->settings.window_height / 2.0;
-		draw_end = (draw_end > doom->settings.window_height ? doom->settings.window_height - 1 : draw_end);
-		line_height = (int)(doom->settings.window_height / doom->sight.saw_that[num].next_perp);
-		draw_start = (line_height / 6.0 + doom->settings.window_height / 2.0) - 1;
-		while (++draw_start < draw_end)
-			((Uint32 *)doom->surface->pixels)[(int)x + draw_start * doom->settings.window_width] = doom->settings.default_wall_color;
+		d.line_height = (int)(doom->h / queue[num].z);
+		d.end = d.line_height / 6.0 + doom->h / 2.0;
+		d.end = (d.end > doom->h ? doom->h - 1 : d.end);
+		d.line_height = (int)(doom->h / queue[num].next_perp);
+		d.start = (d.line_height / 6.0 + doom->h / 2.0) - 1;
+		while (++d.start < d.end)
+			doom->s_pixels[(int)x + d.start * doom->w] = doom->settings.default_wall_color;
 	}
 }
 
@@ -94,35 +106,36 @@ int					see_wall(t_sight *p, t_doom *doom)
 		}
 
 		if (p->pos.x >= 0 && p->pos.x < doom->map.width
-		&& p->pos.y >= 0 && p->pos.y < doom->map.height
-		&& ((doom->map.m[(int)p->pos.y][(int)p->pos.x] == '#') 
-		|| (doom->map.m[(int)p->pos.y][(int)p->pos.x] == 'T')))
+			&& p->pos.y >= 0 && p->pos.y < doom->map.height
+			&& ((doom->map.m[(int)p->pos.y][(int)p->pos.x] == '#') 
+				|| (doom->map.m[(int)p->pos.y][(int)p->pos.x] == 'T')
+				|| (doom->map.m[(int)p->pos.y][(int)p->pos.x] == 'C')))
 		{
-			p->saw_that[p->queue_cpt].x = p->pos.x;
-			p->saw_that[p->queue_cpt].y = p->pos.y;
-			p->saw_that[p->queue_cpt].side = p->side;
-			p->saw_that[p->queue_cpt].z = calc_perp_dist(&doom->sight, &doom->you, p->queue_cpt);
+			p->queue[p->queue_cpt].x = p->pos.x;
+			p->queue[p->queue_cpt].y = p->pos.y;
+			p->queue[p->queue_cpt].side = p->side;
+			p->queue[p->queue_cpt].z = calc_perp_dist(&doom->sight, &doom->you, p->queue_cpt);
 			if (p->side == 1)
-				p->saw_that[p->queue_cpt].tex = p->step.y < 0;
+				p->queue[p->queue_cpt].tex = p->step.y < 0;
 			else
-				p->saw_that[p->queue_cpt].tex = (p->step.x < 0 ? 2 : 3);
+				p->queue[p->queue_cpt].tex = (p->step.x < 0 ? 2 : 3);
 
 			int tmpside;
 			if (p->side_dist.x < p->side_dist.y)
 			{
-				p->saw_that[p->queue_cpt].next_x = p->pos.x + p->step.x;
-				p->saw_that[p->queue_cpt].next_y = p->pos.y;
+				p->queue[p->queue_cpt].next_x = p->pos.x + p->step.x;
+				p->queue[p->queue_cpt].next_y = p->pos.y;
 				tmpside = 0;
 			}
 			else
 			{
-				p->saw_that[p->queue_cpt].next_x = p->pos.x;
-				p->saw_that[p->queue_cpt].next_y = p->pos.y + p->step.y;
+				p->queue[p->queue_cpt].next_x = p->pos.x;
+				p->queue[p->queue_cpt].next_y = p->pos.y + p->step.y;
 				tmpside = 1;
 			}
-			p->saw_that[p->queue_cpt].next_perp = calc_perp_dist_next(&doom->sight, &doom->you, p->queue_cpt, tmpside);
+			p->queue[p->queue_cpt].next_perp = calc_perp_dist_next(&doom->sight, &doom->you, p->queue_cpt, tmpside);
 			p->queue_cpt++;
-			if (doom->map.m[(int)p->pos.y][(int)p->pos.x] == '#')
+			if (doom->map.m[(int)p->pos.y][(int)p->pos.x] == '#' || doom->map.m[(int)p->pos.y][(int)p->pos.x] == 'C')
 				break;
 		}
 		p->cpt += 1;

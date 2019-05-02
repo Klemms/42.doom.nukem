@@ -6,7 +6,7 @@
 #    By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 22:39:07 by cababou           #+#    #+#              #
-#    Updated: 2019/05/01 15:22:11 by lde-batz         ###   ########.fr        #
+#    Updated: 2019/05/02 01:21:48 by cababou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,8 @@ SRC := doom.c easter_eggs/hypercam.c editor/base_events.c \
 	ui/button/button_util.c ui/init_fonts.c ui/text/text.c \
 	ui/text/text_util.c ui/ui_el/ui.c ui/ui_ids.c editor/editor_util.c \
 	editor/renderers/flat_top_render.c editor/switcher.c \
-	animation/fade.c move.c
+	animation/fade.c editor/ui_clicks/ui_clicks.c editor/tools.c \
+	map/converter.c map/map_util.c move.c
 
 HEADERS := doom.h editor.h errors.h
 
@@ -56,10 +57,10 @@ INC := -I includes -I $(FRAMEWORKSDIR)/SDL2
 FLAG := -g
 
 FRAMEWORKSDIR := $(PWD)/frameworks
-SDL := -F $(FRAMEWORKSDIR) -framework SDL2 -framework SDL2_ttf -framework SDL2_image -Wl,-rpath $(FRAMEWORKSDIR)
+SDL := -F $(FRAMEWORKSDIR) -framework SDL2 -framework SDL2_ttf -framework SDL2_image -framework SDL2_mixer -Wl,-rpath $(FRAMEWORKSDIR)
 
 TOTAL_FILES := $(shell echo $(SRC) | wc -w | sed -e 's/ //g')
-CURRENT_FILES = $(shell ls $(PWD)/obj/ 2> /dev/null | wc -l | sed -e 's/ //g')
+CURRENT_FILES = $(shell find $(PWD)/obj/ -type f 2> /dev/null | wc -l | sed -e 's/ //g')
 
 all : libft_comp $(NAME)
 

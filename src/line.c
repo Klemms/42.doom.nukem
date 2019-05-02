@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 13:13:25 by hdussert          #+#    #+#             */
-/*   Updated: 2019/04/30 17:14:57 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/01 22:23:09 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ static void				dx_dom(t_doom *doom, t_line *l)
 		|| (l->inc.x < 0 && l->cur.x < 0) || (l->inc.y < 0 && l->cur.y < 0)
 		|| (l->inc.y > 0 && l->cur.y >= doom->settings.window_height))
 			break ;
-		pixel_put(doom, round(l->cur.x), round(l->cur.y), l->color);
+		doom->s_pixels[(int)l->cur.y * doom->w + (int)l->cur.x] = l->color;
+		//pixel_put(doom, round(l->cur.x), round(l->cur.y), l->color);
 	}
 }
 
@@ -56,7 +57,8 @@ static void				dy_dom(t_doom *doom, t_line *l)
 		|| (l->inc.x < 0 && l->cur.x < 0) || (l->inc.y < 0 && l->cur.y < 0)
 		|| (l->inc.y > 0 && l->cur.y >= doom->settings.window_height))
 			break ;
-		pixel_put(doom, round(l->cur.x), round(l->cur.y), l->color);
+		doom->s_pixels[(int)l->cur.y * doom->w + (int)l->cur.x] = l->color;
+		//pixel_put(doom, round(l->cur.x), round(l->cur.y), l->color);
 	}
 }
 

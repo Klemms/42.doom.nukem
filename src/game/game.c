@@ -12,19 +12,12 @@
 
 #include "../../includes/doom.h"
 
-void			pixel_put(t_doom *doom, int x, int y, int color)
-{
-	if (x >= 0 && x < doom->settings.window_width && y >= 0 && y < doom->settings.window_height)
-		((Uint32 *)doom->surface->pixels)[y * doom->settings.window_width + x] = color;
-}
-
 void	init_game(t_doom *doom)
 {
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	doom->mouse_focused = 1;
 	doom->game_init = 1;
 	
-	init_textures(doom);
 	register_event(doom, SDL_KEYDOWN, key_down);
 	register_event(doom, SDL_KEYUP, key_up);
 	register_event(doom, SDL_QUIT, quit_window);
@@ -57,7 +50,7 @@ void	game_loop(t_doom *doom, t_settings *sett)
 	if (!doom->mouse_focused)
 		draw_rect(doom->surface, make_rect(0, 0, doom->settings.window_width, doom->settings.window_height), make_rgb(255, 0, 0, 255), 0);
 	doom->you.rotspeed = 0.05;
-	doom->you.speed = doom->you.is_sprinting ? 0.15 : 0.10;
+	doom->you.speed = doom->you.is_sprinting ? 0.2 : 0.10;
 //	update_velocity(doom, &doom->you);
 //	if (doom->you.moving)
 //		moving(doom);
@@ -80,7 +73,6 @@ void	loop_game(t_doom *doom)
 	sett = &doom->settings;
 	while (1)
 	{
-		ft_putendl("testststs\n");
 		doom->last_frame = SDL_GetTicks();
 		game_loop(doom, sett);
 		SDL_UpdateWindowSurface(doom->win);
