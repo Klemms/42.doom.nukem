@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/02 06:35:22 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/02 06:58:17 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,9 @@ typedef struct	s_map_block
 	int			x_size;
 	int			y_size;
 	int			height;
+	int			ceiling_height;
+	int			has_ceiling;
+	int			ceilng_tex;
 	int			n_texture;
 	int			s_texture;
 	int			w_texture;
