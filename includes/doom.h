@@ -292,6 +292,7 @@ typedef struct		s_sight
 	int		rov;
 	int		side;
 	int		tex;
+	int		end;
 	t_wall_sight	queue[40]; // Must be sized[you->rov]
 	int				queue_cpt;
 }					t_sight;
@@ -349,10 +350,12 @@ t_texture			*make_texture(t_doom *doom, SDL_Surface *surface, char *texture_name
 t_texture			*load_texture(char *path, t_doom *doom);
 SDL_Surface			*get_surface(t_doom *doom, int texture_id);
 
+double				calc_column(t_sight *p, t_doom *doom, int num);
 double				calc_perp_dist(t_sight *p, t_player *you, int num);
 double				calc_perp_dist_next(t_sight *p, t_player *you, int num, int num2);
 int					see_wall(t_sight *p, t_doom *w);
-void				draw_wall(t_doom *w, double x, int column, int tex);
+void				draw_wall(t_doom *w, double x, double column, int tex);
+void				draw_floor(t_doom *doom, double x, int column);
 
 void				new_player(t_doom *doom, t_player *player, t_map *map);
 int					draw(t_doom *w);
