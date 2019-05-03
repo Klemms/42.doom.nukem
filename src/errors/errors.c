@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 23:38:15 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/01 02:33:38 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/02 10:29:43 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	quit(t_doom *doom, char *message, int code)
 	ft_putendl_fd(message, code > 100 ? STDERR_FILENO : STDOUT_FILENO);
 	if (doom)
 		megafree_1(doom);
+	Mix_CloseAudio();
+	SDL_Quit();
 	exit(code);
 }
 
@@ -41,10 +43,14 @@ void	exit_program(t_doom *doom, int code)
 		quit(doom, "Couldn't initalize MLX.", code);
 	else if (code == ERROR_MLX_WINDOW_INIT)
 		quit(doom, "Couldn't initialize MLX window.", code);
+	else if (code == ERROR_SDL_AUDIO_INIT)
+		quit(doom, "Couldn't initialize SDL audio.", code);
 	else if (code == ERROR_NOT_ENOUGH_ARGS)
 		quit(doom, "Invalid arguments", code);
 	else if (code == ERROR_INVALID_MAP)
 		quit(doom, "Wrong map format or missing map.", code);
+	else if (code == ERROR_INVALID_MUSIC)
+		quit(doom, "Invalid or missing music(s)", code);
 	else if (code == ERROR_INVALID_TEXTURES)
 		quit(doom, "Invalid or missing texture(s). XPM files only", code);
 	else if (code == ERROR_MAP_MISSING_TEXTURES)
