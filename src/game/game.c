@@ -37,8 +37,8 @@ void	render_game(t_doom *doom)
 		doom->nmap->skybox_color.b, 0xFF);
     SDL_RenderClear(doom->rend);
 
-	calc_lov(doom);
-
+	//calc_lov(doom);
+	draw_screen(doom);
 	doom->fps_counter->text = ft_strjoin(ft_itoa(doom->average_fps), " fps", 1);
 	text_prepare(doom, doom->fps_counter, 1);
 	text_render(doom, doom->surface, doom->fps_counter);
