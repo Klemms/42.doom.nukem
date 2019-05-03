@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 02:04:31 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/03 07:33:48 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/03 09:07:39 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	init_editor(t_doom *doom)
 	register_event(doom, SDL_MOUSEWHEEL, rbr_wheel);
 	register_event(doom, SDL_MOUSEBUTTONDOWN, ed_mouse_button);
 	register_event(doom, SDL_MOUSEBUTTONUP, ed_mouse_button);
+	register_event(doom, SDL_MOUSEBUTTONUP, rbr_click);
 	register_event(doom, SDL_MOUSEMOTION, ed_mouse_motion);
 
 	e->ftr_rect = make_rect(e->in_x, e->in_y, e->in_width, e->in_height);
@@ -93,26 +94,37 @@ void	init_editor(t_doom *doom)
 	e->str_tool->text_color = make_rgb(0, 0, 0, 255);
 	text_prepare(doom, e->str_tool, 1);
 
-	e->rbr_quadrant.orient_n = create_button(doom, "N", make_rect(15, 45, 60, 60), ed_bt_edit_click);
+	e->rbr_quadrant.orient_n = create_button(doom, "N", make_rect(15, 80, 60, 60), ed_bt_edit_click);
 	e->rbr_quadrant.orient_n->background_color = make_rgb(145, 145, 145, 255);
 	add_button_rcoords(e->rbr_quadrant.orient_n, e->rbr_rect.x, e->rbr_rect.y);
 	button_prepare(doom, e->rbr_quadrant.orient_n);
-	e->rbr_quadrant.orient_s = create_button(doom, "S", make_rect(85, 45, 60, 60), ed_bt_edit_click);
+	e->rbr_quadrant.orient_s = create_button(doom, "S", make_rect(85, 80, 60, 60), ed_bt_edit_click);
 	e->rbr_quadrant.orient_s->background_color = make_rgb(145, 145, 145, 255);
 	add_button_rcoords(e->rbr_quadrant.orient_s, e->rbr_rect.x, e->rbr_rect.y);
 	button_prepare(doom, e->rbr_quadrant.orient_s);
-	e->rbr_quadrant.orient_w = create_button(doom, "W", make_rect(155, 45, 60, 60), ed_bt_edit_click);
+	e->rbr_quadrant.orient_w = create_button(doom, "W", make_rect(155, 80, 60, 60), ed_bt_edit_click);
 	e->rbr_quadrant.orient_w->background_color = make_rgb(145, 145, 145, 255);
 	add_button_rcoords(e->rbr_quadrant.orient_w, e->rbr_rect.x, e->rbr_rect.y);
 	button_prepare(doom, e->rbr_quadrant.orient_w);
-	e->rbr_quadrant.orient_e = create_button(doom, "E", make_rect(225, 45, 60, 60), ed_bt_edit_click);
+	e->rbr_quadrant.orient_e = create_button(doom, "E", make_rect(225, 80, 60, 60), ed_bt_edit_click);
 	e->rbr_quadrant.orient_e->background_color = make_rgb(145, 145, 145, 255);
 	add_button_rcoords(e->rbr_quadrant.orient_e, e->rbr_rect.x, e->rbr_rect.y);
 	button_prepare(doom, e->rbr_quadrant.orient_e);
 
 	e->rbr_quadrant.s_height = create_wjauge(doom, make_rect(15, 190, 270, 30), make_rect(0, 1000, 50, 10));
-	e->rbr_quadrant.s_height->unit = " penis";
+	e->rbr_quadrant.s_height->unit = "";
 	wjauge_prepare(doom, e->rbr_quadrant.s_height);
+	e->rbr_quadrant.sc_height = create_wjauge(doom, make_rect(15, 265, 270, 30), make_rect(0, 1000, 50, 10));
+	e->rbr_quadrant.sc_height->unit = "";
+	wjauge_prepare(doom, e->rbr_quadrant.sc_height);
+	e->rbr_quadrant.b_w = create_wjauge(doom, make_rect(15, 380, 270, 30), make_rect(0, 100, 50, 5));
+	e->rbr_quadrant.b_w->unit = "";
+	wjauge_prepare(doom, e->rbr_quadrant.b_w);
+	e->rbr_quadrant.b_h = create_wjauge(doom, make_rect(15, 455, 270, 30), make_rect(0, 100, 50, 5));
+	e->rbr_quadrant.b_h->unit = "";
+	wjauge_prepare(doom, e->rbr_quadrant.b_h);
+
+	e->rbr_quadrant.has_celng = create_checkbox(doom, make_rect(256, 310, 29, 29), 0);
 
 	switch_tool(doom, tool_none);
 

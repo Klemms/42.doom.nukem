@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 05:50:34 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/03 07:31:34 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/03 09:00:14 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,12 @@ void		wjauge_render(t_doom *d, SDL_Surface *s, t_el_wh_jauge *jg)
 
 void		wjauge_affect(t_doom *d, t_el_wh_jauge *jg, int change, int prepare)
 {
-	ft_putnbr(jg->value);
-	ft_putendl("");
-	jg->value = jg->value + change * jg->step;
+	wjauge_set(d, jg, jg->value + change, prepare);
+}
+
+void		wjauge_set(t_doom *d, t_el_wh_jauge *jg, int value, int prepare)
+{
+	jg->value = value;
 	if (jg->value > jg->max)
 		jg->value = jg->max;
 	if (jg->value < jg->min)

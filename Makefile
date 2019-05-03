@@ -6,7 +6,7 @@
 #    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 22:39:07 by cababou           #+#    #+#              #
-#    Updated: 2019/05/03 06:14:43 by cababou          ###   ########.fr        #
+#    Updated: 2019/05/03 09:25:26 by cababou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,8 +25,8 @@ NAME :=	doom
 
 SRC := doom.c easter_eggs/hypercam.c editor/base_events.c \
 	editor/editor.c editor/system_files/list_files.c errors/errors.c \
-	events/event_system.c events.c free_structs.c game/game.c init_sight.c \
-	line.c lov/lov.c lov/walls.c map/texture_loading.c \
+	events/event_system.c events.c free_structs.c game/game.c \
+	line.c map/texture_loading.c \
 	mlx_context/inits.c parsing.c parsing_norme.c editor/map/load_map.c \
 	player.c shapes/rect.c ui/button/button.c ui/button/button_events.c \
 	ui/button/button_util.c ui/init_fonts.c ui/text/text.c \
@@ -34,9 +34,12 @@ SRC := doom.c easter_eggs/hypercam.c editor/base_events.c \
 	editor/renderers/flat_top_render.c editor/switcher.c \
 	animation/fade.c editor/ui_clicks/ui_clicks.c editor/tools.c \
 	map/converter.c map/map_util.c move.c \
+	editor/renderers/bottom_select_render.c lov/raycasting.c \
 	editor/renderers/bottom_select_render.c \
 	editor/renderers/right_bar_render.c \
-	ui/wjauge/wjauge.c
+	ui/wjauge/wjauge.c \
+	ui/checkbox/checkbox.c \
+	editor/blocks.c
 
 HEADERS := doom.h editor.h errors.h
 

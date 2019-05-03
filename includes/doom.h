@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/03 07:25:42 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/03 09:02:05 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,28 @@
 # define WIN_W 1920
 # define WIN_H 1080
 
+/* Vector-like structs */
+typedef struct 		s_xy
+{
+	double 	x;
+	double	y;
+}					t_xy;
+
+typedef struct		s_vec
+{
+	double	x;
+	double	y;
+	double	z;
+}					t_vec;
+
+typedef struct		s_vec_int
+{
+	int	x;
+	int	y;
+	int	z;
+}					t_vec_int;
+/*---------------------------*/
+
 enum			e_block_types
 {
 	block_air = 0,
@@ -53,6 +75,7 @@ typedef struct	s_map_block
 	int			ceiling_height;
 	int			has_ceiling;
 	int			ceilng_tex;
+	int			floor_tex;
 	int			n_texture;
 	int			s_texture;
 	int			w_texture;
@@ -141,6 +164,18 @@ typedef struct	s_whjauge_element
 	char		*unit;
 }				t_el_wh_jauge;
 
+typedef struct	s_checkbox_element
+{
+	t_el_ui		*ui;
+	SDL_Rect	pos;
+	SDL_Color	disabled_c;
+	SDL_Color	background;
+	SDL_Color	border;
+	SDL_Color	color;
+	int			checked;
+	int			disabled;
+}				t_el_checkbox;
+
 typedef struct s_doom t_doom;
 
 typedef struct	s_button_element
@@ -176,6 +211,10 @@ typedef struct	s_quadrant_renderer
 	t_el_button		*orient_w;
 	t_el_button		*orient_e;
 	t_el_wh_jauge	*s_height;
+	t_el_wh_jauge	*sc_height;
+	t_el_wh_jauge	*b_w;
+	t_el_wh_jauge	*b_h;
+	t_el_checkbox	*has_celng;
 }				t_quadrant_renderer;
 
 typedef struct	s_ed_focus
@@ -185,10 +224,15 @@ typedef struct	s_ed_focus
 	int			b_x_size;
 	int			b_y_size;
 	int			b_height;
+	int			b_ceiling_height;
+	int			b_has_ceiling;
+	int			b_ceilng_tex;
+	int			b_floor_tex;
 	int			b_n_texture;
 	int			b_s_texture;
 	int			b_w_texture;
 	int			b_e_texture;
+	int			b_light;
 }				t_ed_focus;
 
 typedef struct	s_editor
@@ -230,18 +274,6 @@ typedef struct	s_editor
 	SDL_Color			select_color;
 }				t_editor;
 
-typedef struct		s_xy
-{
-	double	x;
-	double	y;
-}					t_xy;
-
-typedef struct		s_vec
-{
-	double	x;
-	double	y;
-	double	z;
-}					t_vec;
 
 typedef struct		s_line
 {
@@ -315,23 +347,27 @@ typedef struct		s_wall_sight
 	double				next_perp;
 }					t_wall_sight;
 
-typedef struct		s_sight
+typedef struct		s_raycasting
 {
-	double	camera_x;
-	t_vec	ray_dir;
-	t_vec	pos;
-	t_vec	side_dist;
-	t_vec	delta_dist;
-	double	perp_wall_dist;
-	t_vec	step;
-	int		hit;
-	int		cpt;
-	int		rov;
-	int		side;
-	int		tex;
-	t_wall_sight	queue[40]; // Must be sized[you->rov]
-	int				queue_cpt;
-}					t_sight;
+	SDL_Surface	*texture;
+	int			x;
+	double		camera_x;
+	t_vec		ray_dir;
+	t_vec_int	map;
+	t_vec		side_dist;
+	t_vec		delta_dist;
+	t_vec_int	step;
+	int			side;
+	int			dist_hit; // nb of boxes crossed by ray before hitting
+	double		perp_wall_dist;
+	int			lineHeight;
+	int			draw_start;
+	int			draw_end;
+	t_vec_int	tex;
+	t_vec		floor;
+	t_vec_int	floor_tex;
+	double		wall_x;
+}					t_raycasting;
 
 typedef struct		s_doom
 {
@@ -360,7 +396,7 @@ typedef struct		s_doom
 	SDL_Color		tmp_color;
 	t_lstcontainer	*textures;
 	int				texture_amount;
-	t_sight			sight;
+	t_raycasting	raycasting;
 	int				mouse_focused;
 	int				game_init;
 	t_nmap			*nmap;
@@ -385,12 +421,10 @@ t_texture			*make_texture(t_doom *doom, SDL_Surface *surface, char *texture_name
 t_texture			*load_texture(char *path, t_doom *doom);
 SDL_Surface			*get_surface(t_doom *doom, int texture_id);
 
-void				init_scores(t_doom *doom);
+//void				draw_wall(t_doom *w, double x, double column, int tex);
+//void				draw_floor(t_doom *doom, double x, int column);
 
-double				calc_perp_dist(t_sight *p, t_player *you, int num);
-double				calc_perp_dist_next(t_sight *p, t_player *you, int num, int num2);
-int					see_wall(t_sight *p, t_doom *w);
-void				draw_wall(t_doom *w, double x, int column, int tex);
+void    			draw_screen(t_doom *doom);
 
 void				new_player(t_doom *doom, t_player *player, t_map *map);
 int					draw(t_doom *w);
@@ -399,8 +433,6 @@ int					key_down(t_doom *doom, SDL_Event event);
 int					key_up(t_doom *doom, SDL_Event event);
 void				line(t_doom *w, t_vec *start, t_vec *end, int color);
 int					loop(t_doom *w);
-void				calc_lov(t_doom *w);
-void				init_sight(t_doom *doom, t_sight *p, double x, t_player *you);
 Uint32				get_t_exact_pixel(t_texture *texture, int x, int y);
 
 int					mouse_movement(t_doom *doom, SDL_Event event);
@@ -457,7 +489,11 @@ int					button_click(t_doom *doom, SDL_Event sdl_event);
 t_el_wh_jauge		*create_wjauge(t_doom *d, SDL_Rect rc, SDL_Rect mmvs);
 void				wjauge_render(t_doom *d, SDL_Surface *s, t_el_wh_jauge *jg);
 void				wjauge_prepare(t_doom *d, t_el_wh_jauge *jg);
+void				wjauge_set(t_doom *d, t_el_wh_jauge *jg, int value, int prepare);
 void				wjauge_affect(t_doom *d, t_el_wh_jauge *jg, int change, int prepare);
+
+t_el_checkbox		*create_checkbox(t_doom *d, SDL_Rect pos, int checked);
+void				checkbox_render(t_doom *d, SDL_Surface *s, t_el_checkbox *ck);
 
 SDL_Rect			make_rect(int x, int y, int width, int height);
 void				draw_rect(SDL_Surface *s, SDL_Rect rect, SDL_Color color, int fill_rect);
@@ -476,6 +512,7 @@ void				editor_ftr_clicked(t_doom *doom);
 void				editor_rbr_brender(t_doom *doom);
 void				editor_rbr_mrender(t_doom *doom);
 int					rbr_wheel(t_doom *d, SDL_Event event);
+int					rbr_click(t_doom *d, SDL_Event event);
 
 void				editor_bsr_brender(t_doom *doom);
 void				editor_bsr_mrender(t_doom *doom);
@@ -496,5 +533,9 @@ t_nmap				*convert_map(t_doom *doom, t_map *map, t_lstcontainer *texs);
 int					char_to_blocktype(char block);
 t_block_type		*make_block_type(t_doom *doom, char *bn, Uint32 bc, int bt);
 t_block_type		*block_type(t_doom *d, int bt);
+
+void				select_block_type(t_doom *d, t_block_type *type);
+void				copy_block_type(t_doom *d, t_block_type *type, t_mblock *blk);
+void				update_interactions(t_doom *d);
 
 #endif
