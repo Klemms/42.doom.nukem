@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/02 06:58:17 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/03 09:32:56 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,13 @@ typedef struct	s_map_block
 	int			ceiling_height;
 	int			has_ceiling;
 	int			ceilng_tex;
+	int			floor_tex;
 	int			n_texture;
 	int			s_texture;
 	int			w_texture;
 	int			e_texture;
 	int			light;
+	int			collides;
 }				t_mblock;
 
 typedef struct	s_nmap
@@ -103,8 +105,6 @@ typedef struct	s_draw_wall
 
 typedef struct	s_settings
 {
-	int			window_width;
-	int			window_height;
 	float		framerate;
 	int			azerty_mode;
 	int			default_wall_color;
@@ -138,7 +138,7 @@ typedef struct	s_ui_element
 
 typedef struct	s_text_element
 {
-	t_el_ui		*ui_element;
+	t_el_ui		*ui;
 	SDL_Surface	*surface;
 	SDL_Rect	rect;
 	TTF_Font	*font;
@@ -149,11 +149,39 @@ typedef struct	s_text_element
 	int			u_h;
 }				t_el_text;
 
+typedef struct	s_whjauge_element
+{
+	t_el_ui		*ui;
+	t_el_text	*txt;
+	SDL_Rect	pos;
+	SDL_Color	background;
+	SDL_Color	border;
+	SDL_Color	color;
+	int			min;
+	int			max;
+	int			value;
+	int			step;
+	int			is_focused;
+	char		*unit;
+}				t_el_wh_jauge;
+
+typedef struct	s_checkbox_element
+{
+	t_el_ui		*ui;
+	SDL_Rect	pos;
+	SDL_Color	disabled_c;
+	SDL_Color	background;
+	SDL_Color	border;
+	SDL_Color	color;
+	int			checked;
+	int			disabled;
+}				t_el_checkbox;
+
 typedef struct s_doom t_doom;
 
 typedef struct	s_button_element
 {
-	t_el_ui		*ui_element;
+	t_el_ui		*ui;
 	void		(*ui_callback)(t_doom *doom, struct s_button_element *b, SDL_MouseButtonEvent event);
 	SDL_Color	background_color;
 	SDL_Color	background_color_disabled;
@@ -161,6 +189,8 @@ typedef struct	s_button_element
 	SDL_Rect	rect;
 	int			is_disabled;
 	int			is_visible;
+	int			real_x;
+	int			real_y;
 }				t_el_button;
 
 typedef struct	s_block_type
@@ -172,11 +202,20 @@ typedef struct	s_block_type
 
 typedef struct	s_quadrant_renderer
 {
-	int			zoom_level;
-	int			x_start;
-	int			y_start;
-	int			pos_x;
-	int			pos_y;
+	int				zoom_level;
+	int				x_start;
+	int				y_start;
+	int				pos_x;
+	int				pos_y;
+	t_el_button		*orient_n;
+	t_el_button		*orient_s;
+	t_el_button		*orient_w;
+	t_el_button		*orient_e;
+	t_el_wh_jauge	*s_height;
+	t_el_wh_jauge	*sc_height;
+	t_el_wh_jauge	*b_w;
+	t_el_wh_jauge	*b_h;
+	t_el_checkbox	*has_celng;
 }				t_quadrant_renderer;
 
 typedef struct	s_ed_focus
@@ -186,10 +225,16 @@ typedef struct	s_ed_focus
 	int			b_x_size;
 	int			b_y_size;
 	int			b_height;
+	int			b_ceiling_height;
+	int			b_has_ceiling;
+	int			b_ceilng_tex;
+	int			b_floor_tex;
 	int			b_n_texture;
 	int			b_s_texture;
 	int			b_w_texture;
 	int			b_e_texture;
+	int			b_light;
+	int			b_collides;
 }				t_ed_focus;
 
 typedef struct	s_editor
@@ -202,12 +247,15 @@ typedef struct	s_editor
 	int					sep_size;
 	int					square_width;
 	int					square_height;
-	SDL_Surface			*flat_top_render;
-	SDL_Rect			flat_top_render_rect;
-	t_quadrant_renderer	flat_top_quadrant;
-	SDL_Surface			*bottom_select_render;
-	SDL_Rect			bottom_select_render_rect;
-	t_quadrant_renderer	bottom_select_quadrant;
+	SDL_Surface			*ftr;
+	SDL_Rect			ftr_rect;
+	t_quadrant_renderer	ftr_quadrant;
+	SDL_Surface			*bsr;
+	SDL_Rect			bsr_rect;
+	t_quadrant_renderer	bsr_quadrant;
+	SDL_Surface			*rbr;
+	SDL_Rect			rbr_rect;
+	t_quadrant_renderer	rbr_quadrant;
 	int					wheel_pressed;
 	int					anim_finished;
 	int					anim_w;
@@ -224,6 +272,8 @@ typedef struct	s_editor
 	int					y_focus;
 	t_ed_focus			foc;
 	t_lstcontainer		*block_types;
+	SDL_Color			base_color;
+	SDL_Color			select_color;
 }				t_editor;
 
 
@@ -271,6 +321,14 @@ typedef struct		s_key
 	int		down;
 	int		shadow;
 }					t_key;
+
+typedef struct		s_scores
+{
+	Mix_Music	*bgm;
+	Mix_Chunk	*walk;
+	Mix_Chunk	*shot;
+}					t_scores;
+
 
 typedef struct		s_texture
 {
@@ -343,19 +401,18 @@ typedef struct		s_doom
 	t_raycasting	raycasting;
 	int				mouse_focused;
 	int				game_init;
-	int				w;
-	int				h;
 	t_nmap			*nmap;
 	int				m_x; // Mouse X // Both Updated each frame
 	int				m_y; // Mouse Y
+	t_scores		scores;
 }					t_doom;
 
-typedef struct			s_registered_event
+typedef struct		s_registered_event
 {
-	Uint32				type;
-	int					gamemode;
-	int					(*handler)(t_doom *doom, SDL_Event ev);
-}						t_registered_event;
+	Uint32			type;
+	int				gamemode;
+	int				(*handler)(t_doom *doom, SDL_Event ev);
+}					t_registered_event;
 
 void				init_window(t_doom *w);
 void				init_sdl(t_doom *w);
@@ -428,20 +485,36 @@ t_el_button			*create_button(t_doom *doom, char *string, SDL_Rect ps,
 void				button_prepare(t_doom *doom, t_el_button *button);
 void				button_render(t_doom *doom, SDL_Surface *surface, t_el_button *button);
 int					button_coords_contained(t_el_button *button, int x, int y);
+void				add_button_rcoords(t_el_button *but, int x, int y);
 int					button_click(t_doom *doom, SDL_Event sdl_event);
+
+t_el_wh_jauge		*create_wjauge(t_doom *d, SDL_Rect rc, SDL_Rect mmvs);
+void				wjauge_render(t_doom *d, SDL_Surface *s, t_el_wh_jauge *jg);
+void				wjauge_prepare(t_doom *d, t_el_wh_jauge *jg);
+void				wjauge_set(t_doom *d, t_el_wh_jauge *jg, int value, int prepare);
+void				wjauge_affect(t_doom *d, t_el_wh_jauge *jg, int change, int prepare);
+
+t_el_checkbox		*create_checkbox(t_doom *d, SDL_Rect pos, int checked);
+void				checkbox_render(t_doom *d, SDL_Surface *s, t_el_checkbox *ck);
 
 SDL_Rect			make_rect(int x, int y, int width, int height);
 void				draw_rect(SDL_Surface *s, SDL_Rect rect, SDL_Color color, int fill_rect);
 void				draw_rect_u(SDL_Surface *s, SDL_Rect rect, Uint32 color, int fill_rect);
 
-void				turn(double angle, t_player *you);
-void				moove(double dist, t_player *you, t_map *map, int ang);
+void				turn(double angle, t_player *you, t_doom *doom);
+void				moove(double dist, t_doom *doom, t_map *map, int ang);
+
+void				ed_bt_edit_click(t_doom *doom, t_el_button *b, SDL_MouseButtonEvent ev);
 
 void				editor_init_map(t_doom *doom);
 
 void				editor_ftr_brender(t_doom *doom);
 void				editor_ftr_mrender(t_doom *doom);
 void				editor_ftr_clicked(t_doom *doom);
+void				editor_rbr_brender(t_doom *doom);
+void				editor_rbr_mrender(t_doom *doom);
+int					rbr_wheel(t_doom *d, SDL_Event event);
+int					rbr_click(t_doom *d, SDL_Event event);
 
 void				editor_bsr_brender(t_doom *doom);
 void				editor_bsr_mrender(t_doom *doom);
@@ -461,5 +534,10 @@ void				switch_tool(t_doom *doom, int to_tool);
 t_nmap				*convert_map(t_doom *doom, t_map *map, t_lstcontainer *texs);
 int					char_to_blocktype(char block);
 t_block_type		*make_block_type(t_doom *doom, char *bn, Uint32 bc, int bt);
+t_block_type		*block_type(t_doom *d, int bt);
+
+void				select_block_type(t_doom *d, t_block_type *type);
+void				copy_block_type(t_doom *d, t_block_type *type, t_mblock *blk);
+void				update_interactions(t_doom *d);
 
 #endif

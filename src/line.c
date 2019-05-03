@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 13:13:25 by hdussert          #+#    #+#             */
-/*   Updated: 2019/05/01 22:23:09 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/03 02:35:30 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ static void				dx_dom(t_doom *doom, t_line *l)
 			stack -= l->dir.x;
 			l->cur.y += l->inc.y;
 		}
-		if ((l->inc.x > 0 && l->cur.x >= doom->settings.window_width)
+		if ((l->inc.x > 0 && l->cur.x >= WIN_W)
 		|| (l->inc.x < 0 && l->cur.x < 0) || (l->inc.y < 0 && l->cur.y < 0)
-		|| (l->inc.y > 0 && l->cur.y >= doom->settings.window_height))
+		|| (l->inc.y > 0 && l->cur.y >= WIN_H))
 			break ;
-		doom->s_pixels[(int)l->cur.y * doom->w + (int)l->cur.x] = l->color;
+		doom->s_pixels[(int)l->cur.y * WIN_W + (int)l->cur.x] = l->color;
 		//pixel_put(doom, round(l->cur.x), round(l->cur.y), l->color);
 	}
 }
@@ -53,11 +53,11 @@ static void				dy_dom(t_doom *doom, t_line *l)
 			stack -= l->dir.y;
 			l->cur.x += l->inc.x;
 		}
-		if ((l->inc.x > 0 && l->cur.x >= doom->settings.window_width)
+		if ((l->inc.x > 0 && l->cur.x >= WIN_W)
 		|| (l->inc.x < 0 && l->cur.x < 0) || (l->inc.y < 0 && l->cur.y < 0)
-		|| (l->inc.y > 0 && l->cur.y >= doom->settings.window_height))
+		|| (l->inc.y > 0 && l->cur.y >= WIN_H))
 			break ;
-		doom->s_pixels[(int)l->cur.y * doom->w + (int)l->cur.x] = l->color;
+		doom->s_pixels[(int)l->cur.y * WIN_W + (int)l->cur.x] = l->color;
 		//pixel_put(doom, round(l->cur.x), round(l->cur.y), l->color);
 	}
 }

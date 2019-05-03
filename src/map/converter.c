@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 00:19:47 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/02 06:59:45 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/03 09:30:57 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,9 @@ t_nmap	*convert_map(t_doom *doom, t_map *map, t_lstcontainer *texs)
 			nmap->map[x][y].ceiling_height = 100;
 			nmap->map[x][y].ceilng_tex = 0;
 			nmap->map[x][y].has_ceiling = 1;
+			nmap->map[x][y].has_ceiling = 1;
+			nmap->map[x][y].floor_tex = 2;
+			nmap->map[x][y].floor_tex = nmap->map[x][y].block_type == block_wall || nmap->map[x][y].block_type == block_small_wall ? 1 : 0;
 			y++;
 		}
 		x++;

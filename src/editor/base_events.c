@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 04:16:03 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/02 02:42:58 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/03 07:07:06 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ int		ed_mouse_motion(t_doom *doom, SDL_Event sdl_event)
 
 	SDL_GetMouseState(&m_x, &m_y);
 	motion = sdl_event.motion;
-	if (mouse_in(m_x, m_y, doom->editor.flat_top_render_rect) && doom->editor.wheel_pressed)
+	if (mouse_in(m_x, m_y, doom->editor.ftr_rect) && doom->editor.wheel_pressed)
 	{
-		doom->editor.flat_top_quadrant.x_start += motion.xrel;
-		doom->editor.flat_top_quadrant.y_start += motion.yrel;
+		doom->editor.ftr_quadrant.x_start += motion.xrel;
+		doom->editor.ftr_quadrant.y_start += motion.yrel;
 	}
 	return (1);
 }
@@ -54,15 +54,12 @@ int		ed_mouse_button(t_doom *doom, SDL_Event sdl_event)
 int		zoom_event(t_doom *doom, SDL_Event sdl_event)
 {
 	SDL_MouseWheelEvent	wheel;
-	int					m_x;
-	int					m_y;
 
-	SDL_GetMouseState(&m_x, &m_y);
 	wheel = sdl_event.wheel;
-	if (mouse_in(m_x, m_y, doom->editor.flat_top_render_rect))
-		doom->editor.flat_top_quadrant.zoom_level += wheel.y > 0 ? 1 : -1;
-	if (doom->editor.flat_top_quadrant.zoom_level <= 0)
-		doom->editor.flat_top_quadrant.zoom_level = 1;
+	if (mouse_in(doom->m_x, doom->m_y, doom->editor.ftr_rect))
+		doom->editor.ftr_quadrant.zoom_level += wheel.y > 0 ? 1 : -1;
+	if (doom->editor.ftr_quadrant.zoom_level <= 0)
+		doom->editor.ftr_quadrant.zoom_level = 1;
 	return (1);
 }
 

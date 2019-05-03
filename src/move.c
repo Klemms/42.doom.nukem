@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 10:12:00 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/05/01 14:30:45 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/02 18:12:21 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,22 @@ void	update_velocity(t_doom *doom, t_player *player)
 
 	move_vec.x = 0.0;
 	move_vec.y = 0.0;
-	if (doom->keys.right == 1)
+	if (doom->keys.up == 1)
 	{
 		move_vec.x += player->anglecos * 0.1f;
 		move_vec.y += player->anglesin * 0.1f;
 	}
-	if (doom->keys.right == 1)
+	if (doom->keys.down == 1)
 	{
 		move_vec.x -= player->anglecos * 0.1f;
 		move_vec.y -= player->anglesin * 0.1f;
 	}
-	if (doom->keys.up == 1)
+	if (doom->keys.right == 1)
 	{
 		move_vec.x += player->anglesin * 0.1f;
 		move_vec.y -= player->anglecos * 0.1f;
 	}
-	if (doom->keys.down == 1)
+	if (doom->keys.left == 1)
 	{
 		move_vec.x -= player->anglesin * 0.1f;
 		move_vec.y += player->anglecos * 0.1f;
@@ -54,15 +54,35 @@ void	update_velocity(t_doom *doom, t_player *player)
 void	moving(t_doom *doom)
 {
 	int	dest[2];
+	int channel;
+	int	tmp_pos_x;
+	t_xy	collision;
 
-	dest[0] = doom->you.pos.x + doom->you.velocity.x;
-	dest[1] = doom->you.pos.y + doom->you.velocity.y;
+	channel = Mix_PlayChannel(-1, doom->scores.walk, 0);
+	if (channel != 0)
+		Mix_HaltChannel(channel);
+	collision.x = (doom->you.velocity.x < 0) ? doom->you.velocity.x - 0.2 : doom->you.velocity.x + 0.2;
+	collision.y = (doom->you.velocity.y < 0) ? doom->you.velocity.y - 0.2 : doom->you.velocity.y + 0.2;
+	tmp_pos_x = doom->you.pos.x;
+	dest[0] = doom->you.pos.x + collision.x;
+	dest[1] = doom->you.pos.y + collision.y;
 	if (doom->map.m[(int)doom->you.pos.y][dest[0]] != '.')
-		doom->you.pos.x = dest[0] - 1e-9f;
+	{
+		if (doom->you.velocity.x < 0)
+			doom->you.pos.x = dest[0] + 1 + 0.2;
+		else
+			doom->you.pos.x = dest[0] - 0.2;
+	}
 	else
 		doom->you.pos.x += doom->you.velocity.x;
-	if (doom->map.m[dest[1]][(int)doom->you.pos.x] != '.')
-		doom->you.pos.y = dest[1] - 1e-9f;
+	if (doom->map.m[dest[1]][tmp_pos_x] != '.')
+	{
+		if (doom->you.velocity.y < 0)
+			doom->you.pos.y = dest[1] + 1 + 0.2;
+		else
+			doom->you.pos.y = dest[1] - 0.2;
+	}
 	else
 		doom->you.pos.y += doom->you.velocity.y;
+	doom->you.moving = 0;
 }
