@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:58:00 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/01 23:02:34 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/03 06:39:49 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,33 +31,24 @@ void				draw_wall(t_doom *doom, double x, int column, int num)
 	SDL_Surface	*tmp;
 
 	tmp = get_surface(doom, queue[num].tex);
-	d.line_height = (int)(doom->h / queue[num].z);
+	d.line_height = (int)(WIN_H / queue[num].z);
 	if (doom->map.m[(int)queue[num].y][(int)queue[num].x] == 'T')
 	{
-		d.end = d.line_height / 2 + doom->h / 2;
-		d.start = d.line_height / 6 + doom->h / 2;
+		d.end = d.line_height / 2 + WIN_H / 2;
+		d.start = d.line_height / 6 + WIN_H / 2;
 	}
 	else
 	{
-		d.start = -d.line_height / 2 + doom->h / 2;
-		d.end = d.line_height / 2 + doom->h / 2;
+		d.start = -d.line_height / 2 + WIN_H / 2;
+		d.end = d.line_height / 2 + WIN_H / 2;
 	}
-	// TEXTURE FLOOR
-	if (doom->settings.enable_crt_floor)
-	{
-		int my_s = d.end;
-		int	my_e = doom->h - 1;
-		while (++my_s < my_e)
-		{
-			doom->s_pixels[my_s * doom->w + (int)x] = (rand() % 2 ? 0xFFFFFF : 0x000000);
-			//pixel_put(doom, x, my_s, (c % 2 ? 0xFFFFFF : 0x000000));
-		}
-	}
+
 	// -------------
+	
 	d.wall_size = d.end - d.start;
 	d.py = d.start;
 	d.py = (d.py < 0 ? 0 : d.py);
-	d.end = (d.end > doom->h ? doom->h - 1 : d.end);
+	d.end = (d.end > WIN_H ? WIN_H - 1 : d.end);
 	if (doom->sight.hit)
 		while (d.py < d.end)
 		{
@@ -69,19 +60,18 @@ void				draw_wall(t_doom *doom, double x, int column, int num)
 				doom->temp_color = ((Uint32 *)tmp->pixels)[column
 					+ (int)(d.line_height * (tmp->h - 1))
 					* tmp->w];
-			doom->s_pixels[d.py * doom->w + (int)x] = doom->temp_color;
-			//pixel_put(doom, x, d.py, doom->temp_color);
+			doom->s_pixels[d.py * WIN_W + (int)x] = doom->temp_color;
 			d.py++;
 		}
 	if (doom->map.m[(int)queue[num].y][(int)queue[num].x] == 'T')
 	{
-		d.line_height = (int)(doom->h / queue[num].z);
-		d.end = d.line_height / 6.0 + doom->h / 2.0;
-		d.end = (d.end > doom->h ? doom->h - 1 : d.end);
-		d.line_height = (int)(doom->h / queue[num].next_perp);
-		d.start = (d.line_height / 6.0 + doom->h / 2.0) - 1;
+		d.line_height = (int)(WIN_H / queue[num].z);
+		d.end = d.line_height / 6.0 + WIN_H / 2.0;
+		d.end = (d.end > WIN_H ? WIN_H - 1 : d.end);
+		d.line_height = (int)(WIN_H / queue[num].next_perp);
+		d.start = (d.line_height / 6.0 + WIN_H / 2.0) - 1;
 		while (++d.start < d.end)
-			doom->s_pixels[(int)x + d.start * doom->w] = doom->settings.default_wall_color;
+			doom->s_pixels[(int)x + d.start * WIN_W] = doom->settings.default_wall_color;
 	}
 }
 

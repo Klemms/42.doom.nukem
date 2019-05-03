@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 02:04:31 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/02 02:54:21 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/03 05:16:18 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_el_button	*create_button(t_doom *doom, char *string, SDL_Rect rect,
 
 	if (!(but = mmalloc(sizeof(t_el_button))))
 		exit_program(doom, ERROR_SDL_AFTER_INIT);
-	but->ui_element = create_ui_element(doom);
+	but->ui = create_ui_element(doom);
 	but->text = create_text(doom, string, FONT_RIFFIC, 20);
 	but->background_color = make_rgb(57, 114, 206, 255);
 	but->background_color_disabled = make_rgb(96, 136, 201, 255);
@@ -28,15 +28,17 @@ t_el_button	*create_button(t_doom *doom, char *string, SDL_Rect rect,
 	but->is_visible = 1;
 	but->is_disabled = 0;
 	but->rect = rect;
+	but->real_x = rect.x;
+	but->real_y = rect.y;
 	lstcontainer_add(doom->buttons, but);
 	return (but);
 }
 
 void		button_prepare(t_doom *doom, t_el_button *button)
 {
-	button->text->ui_element->pos_x
+	button->text->ui->pos_x
 		= button->rect.x + button->rect.w / 2 - button->text->u_w / 2;
-	button->text->ui_element->pos_y
+	button->text->ui->pos_y
 		= button->rect.y + button->rect.h / 2 - button->text->u_h / 2;
 	text_prepare(doom, button->text, 1);
 }
