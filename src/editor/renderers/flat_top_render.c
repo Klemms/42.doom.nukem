@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 03:33:20 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/03 01:57:52 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/03 02:29:58 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	editor_ftr_brender(t_doom *doom)
 
 	e = &doom->editor;
 	draw_rect_u(e->flat_top_render, make_rect(0, 0, e->flat_top_render_rect.w,
-		e->flat_top_render_rect.h), 0xFF000000, 1);
+		e->flat_top_render_rect.h), 0xFF333333, 1);
 	editor_ftr_mrender(doom);
 	draw_rect_u(e->flat_top_render, make_rect(0, 0, e->flat_top_render_rect.w,
 		e->flat_top_render_rect.h), 0xFF000000, 0);

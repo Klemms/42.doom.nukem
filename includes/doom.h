@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/03 01:58:41 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/03 03:30:16 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@
 
 # define M_GAME 42
 # define M_EDITOR 69
+
+# define WIN_W 1920
+# define WIN_H 1080
 
 enum			e_block_types
 {
@@ -78,8 +81,6 @@ typedef struct	s_draw_wall
 
 typedef struct	s_settings
 {
-	int			window_width;
-	int			window_height;
 	float		framerate;
 	int			azerty_mode;
 	int			default_wall_color;
@@ -152,6 +153,10 @@ typedef struct	s_quadrant_renderer
 	int			y_start;
 	int			pos_x;
 	int			pos_y;
+	t_el_button	*orient_n;
+	t_el_button	*orient_s;
+	t_el_button	*orient_w;
+	t_el_button	*orient_e;
 }				t_quadrant_renderer;
 
 typedef struct	s_ed_focus
@@ -202,6 +207,8 @@ typedef struct	s_editor
 	int					y_focus;
 	t_ed_focus			foc;
 	t_lstcontainer		*block_types;
+	SDL_Color			base_color;
+	SDL_Color			select_color;
 }				t_editor;
 
 typedef struct		s_xy
@@ -337,8 +344,6 @@ typedef struct		s_doom
 	t_sight			sight;
 	int				mouse_focused;
 	int				game_init;
-	int				w;
-	int				h;
 	t_nmap			*nmap;
 	int				m_x; // Mouse X // Both Updated each frame
 	int				m_y; // Mouse Y
@@ -436,11 +441,15 @@ void				draw_rect_u(SDL_Surface *s, SDL_Rect rect, Uint32 color, int fill_rect);
 void				turn(double angle, t_player *you, t_doom *doom);
 void				moove(double dist, t_doom *doom, t_map *map, int ang);
 
+void				ed_bt_edit_click(t_doom *doom, t_el_button *b, SDL_MouseButtonEvent ev);
+
 void				editor_init_map(t_doom *doom);
 
 void				editor_ftr_brender(t_doom *doom);
 void				editor_ftr_mrender(t_doom *doom);
 void				editor_ftr_clicked(t_doom *doom);
+void				editor_rbr_brender(t_doom *doom);
+void				editor_rbr_mrender(t_doom *doom);
 
 void				editor_bsr_brender(t_doom *doom);
 void				editor_bsr_mrender(t_doom *doom);

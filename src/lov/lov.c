@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 11:20:18 by hdussert          #+#    #+#             */
-/*   Updated: 2019/05/01 21:26:18 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/03 02:35:37 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void				calc_lov(t_doom *doom)
 	int		cptest;
 
 	x = 0;
-	while (x < doom->w)
+	while (x < WIN_W)
 	{
 		init_sight(doom, &doom->sight, x, &doom->you);
 		if (see_wall(&doom->sight, doom))

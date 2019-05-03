@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 23:38:15 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/02 10:29:43 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/03 02:33:21 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	exit_program(t_doom *doom, int code)
 	if (doom && doom->win)
 	{
 		SDL_SetRelativeMouseMode(SDL_FALSE);
-		SDL_WarpMouseInWindow(doom->win, doom->settings.window_width / 2, doom->settings.window_height / 2);
+		SDL_WarpMouseInWindow(doom->win, WIN_W / 2, WIN_H / 2);
 	}
 	if (code == ERROR_GENERIC)
 		quit(doom, "An error occured.", code);

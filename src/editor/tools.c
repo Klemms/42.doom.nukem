@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 23:15:27 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/02 06:34:59 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/03 03:31:22 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ char	*tool_name(int tool)
 void	tool_button_color(t_doom *doom, int tool)
 {
 	doom->editor.tool_none->background_color = tool == tool_none ?
-		make_rgb(150, 150, 115, 255) : make_rgb(145, 145, 145, 255);
+		doom->editor.base_color : doom->editor.select_color;
 	doom->editor.tool_block->background_color = tool == tool_block ?
-		make_rgb(150, 150, 115, 255) : make_rgb(145, 145, 145, 255);
+		doom->editor.base_color : doom->editor.select_color;
 }
 
 void	switch_tool(t_doom *doom, int to_tool)
