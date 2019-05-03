@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 18:15:46 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/02 18:11:22 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/03 02:10:19 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,8 @@ void	game_loop(t_doom *doom, t_settings *sett)
 	if (!doom->mouse_focused)
 		draw_rect(doom->surface, make_rect(0, 0, doom->settings.window_width, doom->settings.window_height), make_rgb(255, 0, 0, 255), 0);
 	doom->you.rotspeed = 0.05;
-	doom->you.speed = doom->you.is_sprinting ? 0.2 : 0.10;
+	doom->you.speed = doom->you.is_sprinting ? 0.2 : 0.1;
 	update_velocity(doom, &doom->you);
-	printf("velocity: %f %f\n", doom->you.velocity.x, doom->you.velocity.y);
 	moving(doom);
 //	if (doom->keys.right == 1)
 //		turn(-doom->you.rotspeed, &doom->you, doom);

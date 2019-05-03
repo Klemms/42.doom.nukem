@@ -6,23 +6,27 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 03:33:20 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/02 05:38:48 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/03 01:57:52 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 #include "editor.h"
 
-Uint32	tile_color(int block_type)
+t_block_type	*block_type(t_doom *d, int bt)
 {
-	if (block_type == block_wall)
-		return (0xFF848484);
-	else if (block_type == block_air)
-		return (0xFFFFFEDD);
-	else if (block_type == block_small_wall)
-		return (0xFFb78c73);
-	else
-		return (0xFF000000);
+	t_list			*tmp;
+	t_block_type	*tmpbt;
+
+	tmp = d->editor.block_types->firstelement;
+	while (tmp)
+	{
+		tmpbt = tmp->content;
+		if (tmpbt->block_type == bt)
+			return (tmpbt);
+		tmp = tmp->next;
+	}
+	return (NULL);
 }
 
 void	editor_ftr_brender(t_doom *doom)
@@ -55,11 +59,11 @@ void	editor_ftr_mrender(t_doom *doom)
 		while (y < doom->nmap->size_y)
 		{
 			r = make_rect(q->x_start + x * q->zoom_level, q->y_start + y * q->zoom_level, q->zoom_level, q->zoom_level);
-			draw_rect_u(doom->editor.flat_top_render, r, tile_color(doom->nmap->map[x][y].block_type), 1);
-			if (mouse_in(m_pos.x - q->pos_x, m_pos.y - q->pos_y, r))
+			draw_rect_u(doom->editor.flat_top_render, r, block_type(doom, doom->nmap->map[x][y].block_type)->block_color, 1);
+			/*if (mouse_in(m_pos.x - q->pos_x, m_pos.y - q->pos_y, r))
 			{
 				//draw_rect_u(doom->editor.flat_top_render, r, 0xFF000000, 0);
-			}
+			}*/
 			y++;
 		}
 		x++;
@@ -85,6 +89,7 @@ void	editor_ftr_clicked(t_doom *doom)
 		&& e->y_focus < doom->nmap->size_y && e->selected_block >= 0
 		&& e->selected_block && doom->editor.hand_tool == tool_block)
 	{
+		ft_putchar('\a');
 		doom->nmap->map[e->x_focus][e->y_focus].block_type = e->selected_block->block_type;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/02 18:12:24 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/03 01:58:41 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,6 +183,9 @@ typedef struct	s_editor
 	SDL_Surface			*bottom_select_render;
 	SDL_Rect			bottom_select_render_rect;
 	t_quadrant_renderer	bottom_select_quadrant;
+	SDL_Surface			*right_bar_render;
+	SDL_Rect			right_bar_render_rect;
+	t_quadrant_renderer	right_bar_quadrant;
 	int					wheel_pressed;
 	int					anim_finished;
 	int					anim_w;
@@ -457,5 +460,6 @@ void				switch_tool(t_doom *doom, int to_tool);
 t_nmap				*convert_map(t_doom *doom, t_map *map, t_lstcontainer *texs);
 int					char_to_blocktype(char block);
 t_block_type		*make_block_type(t_doom *doom, char *bn, Uint32 bc, int bt);
+t_block_type		*block_type(t_doom *d, int bt);
 
 #endif

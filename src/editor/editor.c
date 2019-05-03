@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 02:04:31 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/02 05:46:25 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/03 01:59:09 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,11 @@ void	init_editor(t_doom *doom)
 	e->bottom_select_render = SDL_CreateRGBSurfaceWithFormat(0, e->bottom_select_render_rect.w, e->bottom_select_render_rect.h, 32, doom->surface->format->format);
 	e->bottom_select_quadrant.pos_x = e->bottom_select_render_rect.x;
 	e->bottom_select_quadrant.pos_y = e->bottom_select_render_rect.y;
+
+	e->right_bar_render_rect = make_rect(0, doom->settings.window_height - 300, doom->settings.window_width - 300, 300);
+	e->right_bar_render = SDL_CreateRGBSurfaceWithFormat(0, e->bottom_select_render_rect.w, e->bottom_select_render_rect.h, 32, doom->surface->format->format);
+	e->right_bar_quadrant.pos_x = e->bottom_select_render_rect.x;
+	e->right_bar_quadrant.pos_y = e->bottom_select_render_rect.y;
 
 	e->tool_none = create_button(doom, "None", make_rect(10, 125, 60, 60), ed_none_c);
 	e->tool_none->background_color = make_rgb(145, 145, 145, 255);
