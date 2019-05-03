@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   flat_top_render.c                                  :+:      :+:    :+:   */
+/*   ftr.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -34,12 +34,12 @@ void	editor_ftr_brender(t_doom *doom)
 	t_editor	*e;
 
 	e = &doom->editor;
-	draw_rect_u(e->flat_top_render, make_rect(0, 0, e->flat_top_render_rect.w,
-		e->flat_top_render_rect.h), 0xFF333333, 1);
+	draw_rect_u(e->ftr, make_rect(0, 0, e->ftr_rect.w,
+		e->ftr_rect.h), 0xFF333333, 1);
 	editor_ftr_mrender(doom);
-	draw_rect_u(e->flat_top_render, make_rect(0, 0, e->flat_top_render_rect.w,
-		e->flat_top_render_rect.h), 0xFF000000, 0);
-	SDL_BlitSurface(e->flat_top_render, NULL, doom->editor.ed_surface, &e->flat_top_render_rect);
+	draw_rect_u(e->ftr, make_rect(0, 0, e->ftr_rect.w,
+		e->ftr_rect.h), 0xFF000000, 0);
+	SDL_BlitSurface(e->ftr, NULL, doom->editor.ed_surface, &e->ftr_rect);
 }
 
 void	editor_ftr_mrender(t_doom *doom)
@@ -50,7 +50,7 @@ void	editor_ftr_mrender(t_doom *doom)
 	int					y;
 	SDL_Rect			r;
 
-	q = &doom->editor.flat_top_quadrant;
+	q = &doom->editor.ftr_quadrant;
 	m_pos = mouse_pos();
 	x = 0;
 	while (x < doom->nmap->size_x)
@@ -59,10 +59,10 @@ void	editor_ftr_mrender(t_doom *doom)
 		while (y < doom->nmap->size_y)
 		{
 			r = make_rect(q->x_start + x * q->zoom_level, q->y_start + y * q->zoom_level, q->zoom_level, q->zoom_level);
-			draw_rect_u(doom->editor.flat_top_render, r, block_type(doom, doom->nmap->map[x][y].block_type)->block_color, 1);
+			draw_rect_u(doom->editor.ftr, r, block_type(doom, doom->nmap->map[x][y].block_type)->block_color, 1);
 			/*if (mouse_in(m_pos.x - q->pos_x, m_pos.y - q->pos_y, r))
 			{
-				//draw_rect_u(doom->editor.flat_top_render, r, 0xFF000000, 0);
+				//draw_rect_u(doom->editor.ftr, r, 0xFF000000, 0);
 			}*/
 			y++;
 		}
@@ -73,7 +73,7 @@ void	editor_ftr_mrender(t_doom *doom)
 	if (m_pos.x - q->pos_x - q->x_start >= 0 && m_pos.y - q->pos_y - q->y_start >= 0)
 	{
 		r = make_rect(q->x_start + x * q->zoom_level, q->y_start + y * q->zoom_level, q->zoom_level, q->zoom_level);
-		draw_rect_u(doom->editor.flat_top_render, r, doom->editor.selected_block ?
+		draw_rect_u(doom->editor.ftr, r, doom->editor.selected_block ?
 			doom->editor.selected_block->block_color : 0xFFFF0000, 0);
 		doom->editor.x_focus = x;
 		doom->editor.y_focus = y;

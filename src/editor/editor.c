@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 02:04:31 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/03 03:30:51 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/03 07:33:48 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,27 +52,28 @@ void	init_editor(t_doom *doom)
 	register_event(doom, SDL_KEYUP, key_event);
 	register_event(doom, SDL_MOUSEBUTTONUP, button_click);
 	register_event(doom, SDL_MOUSEWHEEL, zoom_event);
+	register_event(doom, SDL_MOUSEWHEEL, rbr_wheel);
 	register_event(doom, SDL_MOUSEBUTTONDOWN, ed_mouse_button);
 	register_event(doom, SDL_MOUSEBUTTONUP, ed_mouse_button);
 	register_event(doom, SDL_MOUSEMOTION, ed_mouse_motion);
 
-	e->flat_top_render_rect = make_rect(e->in_x, e->in_y, e->in_width, e->in_height);
-	e->flat_top_render = SDL_CreateRGBSurfaceWithFormat(0, e->in_width, e->in_height, 32, doom->surface->format->format);
-	e->flat_top_quadrant.zoom_level = e->flat_top_render_rect.h / doom->nmap->size_y * 0.9;
-	e->flat_top_quadrant.x_start = e->flat_top_render_rect.w / 2 - doom->nmap->size_x * e->flat_top_quadrant.zoom_level / 2;
-	e->flat_top_quadrant.y_start = e->flat_top_render_rect.h / 2 - doom->nmap->size_y * e->flat_top_quadrant.zoom_level / 2;
-	e->flat_top_quadrant.pos_x = e->flat_top_render_rect.x;
-	e->flat_top_quadrant.pos_y = e->flat_top_render_rect.y;
+	e->ftr_rect = make_rect(e->in_x, e->in_y, e->in_width, e->in_height);
+	e->ftr = SDL_CreateRGBSurfaceWithFormat(0, e->in_width, e->in_height, 32, doom->surface->format->format);
+	e->ftr_quadrant.zoom_level = e->ftr_rect.h / doom->nmap->size_y * 0.9;
+	e->ftr_quadrant.x_start = e->ftr_rect.w / 2 - doom->nmap->size_x * e->ftr_quadrant.zoom_level / 2;
+	e->ftr_quadrant.y_start = e->ftr_rect.h / 2 - doom->nmap->size_y * e->ftr_quadrant.zoom_level / 2;
+	e->ftr_quadrant.pos_x = e->ftr_rect.x;
+	e->ftr_quadrant.pos_y = e->ftr_rect.y;
 
-	e->bottom_select_render_rect = make_rect(0, WIN_H - 300, WIN_W - 300, 300);
-	e->bottom_select_render = SDL_CreateRGBSurfaceWithFormat(0, e->bottom_select_render_rect.w, e->bottom_select_render_rect.h, 32, doom->surface->format->format);
-	e->bottom_select_quadrant.pos_x = e->bottom_select_render_rect.x;
-	e->bottom_select_quadrant.pos_y = e->bottom_select_render_rect.y;
+	e->bsr_rect = make_rect(0, WIN_H - 300, WIN_W - 300, 300);
+	e->bsr = SDL_CreateRGBSurfaceWithFormat(0, e->bsr_rect.w, e->bsr_rect.h, 32, doom->surface->format->format);
+	e->bsr_quadrant.pos_x = e->bsr_rect.x;
+	e->bsr_quadrant.pos_y = e->bsr_rect.y;
 
-	e->right_bar_render_rect = make_rect(WIN_W - 300, 80, 300, WIN_H - 80);
-	e->right_bar_render = SDL_CreateRGBSurfaceWithFormat(0, e->right_bar_render_rect.w, e->right_bar_render_rect.h, 32, doom->surface->format->format);
-	e->right_bar_quadrant.pos_x = e->right_bar_render_rect.x;
-	e->right_bar_quadrant.pos_y = e->right_bar_render_rect.y;
+	e->rbr_rect = make_rect(WIN_W - 300, 80, 300, WIN_H - 80);
+	e->rbr = SDL_CreateRGBSurfaceWithFormat(0, e->rbr_rect.w, e->rbr_rect.h, 32, doom->surface->format->format);
+	e->rbr_quadrant.pos_x = e->rbr_rect.x;
+	e->rbr_quadrant.pos_y = e->rbr_rect.y;
 
 	e->tool_none = create_button(doom, "None", make_rect(10, 125, 60, 60), ed_none_c);
 	e->tool_none->background_color = make_rgb(145, 145, 145, 255);
@@ -82,28 +83,36 @@ void	init_editor(t_doom *doom)
 	button_prepare(doom, e->tool_block);
 
 	e->current_tool = create_text(doom, "Current tool : none", FONT_RIFFIC, 30);
-	e->current_tool->ui_element->pos_x = 90;
-	e->current_tool->ui_element->pos_y = 20;
+	e->current_tool->ui->pos_x = 90;
+	e->current_tool->ui->pos_y = 20;
 	text_prepare(doom, e->current_tool, 1);
 
 	e->str_tool = create_text(doom, "Tools", FONT_RIFFIC, 20);
-	e->str_tool->ui_element->pos_x = 10;
-	e->str_tool->ui_element->pos_y = 90;
+	e->str_tool->ui->pos_x = 10;
+	e->str_tool->ui->pos_y = 90;
 	e->str_tool->text_color = make_rgb(0, 0, 0, 255);
 	text_prepare(doom, e->str_tool, 1);
 
-	e->right_bar_quadrant.orient_n = create_button(doom, "N", make_rect(15, 45, 60, 60), ed_bt_edit_click);
-	e->right_bar_quadrant.orient_n->background_color = make_rgb(145, 145, 145, 255);
-	button_prepare(doom, e->right_bar_quadrant.orient_n);
-	e->right_bar_quadrant.orient_s = create_button(doom, "S", make_rect(85, 45, 60, 60), ed_bt_edit_click);
-	e->right_bar_quadrant.orient_s->background_color = make_rgb(145, 145, 145, 255);
-	button_prepare(doom, e->right_bar_quadrant.orient_s);
-	e->right_bar_quadrant.orient_w = create_button(doom, "W", make_rect(155, 45, 60, 60), ed_bt_edit_click);
-	e->right_bar_quadrant.orient_w->background_color = make_rgb(145, 145, 145, 255);
-	button_prepare(doom, e->right_bar_quadrant.orient_w);
-	e->right_bar_quadrant.orient_e = create_button(doom, "E", make_rect(225, 45, 60, 60), ed_bt_edit_click);
-	e->right_bar_quadrant.orient_e->background_color = make_rgb(145, 145, 145, 255);
-	button_prepare(doom, e->right_bar_quadrant.orient_e);
+	e->rbr_quadrant.orient_n = create_button(doom, "N", make_rect(15, 45, 60, 60), ed_bt_edit_click);
+	e->rbr_quadrant.orient_n->background_color = make_rgb(145, 145, 145, 255);
+	add_button_rcoords(e->rbr_quadrant.orient_n, e->rbr_rect.x, e->rbr_rect.y);
+	button_prepare(doom, e->rbr_quadrant.orient_n);
+	e->rbr_quadrant.orient_s = create_button(doom, "S", make_rect(85, 45, 60, 60), ed_bt_edit_click);
+	e->rbr_quadrant.orient_s->background_color = make_rgb(145, 145, 145, 255);
+	add_button_rcoords(e->rbr_quadrant.orient_s, e->rbr_rect.x, e->rbr_rect.y);
+	button_prepare(doom, e->rbr_quadrant.orient_s);
+	e->rbr_quadrant.orient_w = create_button(doom, "W", make_rect(155, 45, 60, 60), ed_bt_edit_click);
+	e->rbr_quadrant.orient_w->background_color = make_rgb(145, 145, 145, 255);
+	add_button_rcoords(e->rbr_quadrant.orient_w, e->rbr_rect.x, e->rbr_rect.y);
+	button_prepare(doom, e->rbr_quadrant.orient_w);
+	e->rbr_quadrant.orient_e = create_button(doom, "E", make_rect(225, 45, 60, 60), ed_bt_edit_click);
+	e->rbr_quadrant.orient_e->background_color = make_rgb(145, 145, 145, 255);
+	add_button_rcoords(e->rbr_quadrant.orient_e, e->rbr_rect.x, e->rbr_rect.y);
+	button_prepare(doom, e->rbr_quadrant.orient_e);
+
+	e->rbr_quadrant.s_height = create_wjauge(doom, make_rect(15, 190, 270, 30), make_rect(0, 1000, 50, 10));
+	e->rbr_quadrant.s_height->unit = " penis";
+	wjauge_prepare(doom, e->rbr_quadrant.s_height);
 
 	switch_tool(doom, tool_none);
 
@@ -122,7 +131,7 @@ void	render_editor(t_doom *doom)
 	SDL_SetRenderDrawColor(doom->rend, 0xA1, 0xA4, 0xA8, 0xFF );
     SDL_RenderClear(doom->rend);
 
-	if (mouse_in(m_pos.x, m_pos.y, doom->editor.flat_top_render_rect))
+	if (mouse_in(m_pos.x, m_pos.y, doom->editor.ftr_rect))
 		doom->editor.c_focus = 1;
 	else
 		doom->editor.c_focus = -1;

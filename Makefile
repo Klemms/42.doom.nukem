@@ -6,7 +6,7 @@
 #    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 22:39:07 by cababou           #+#    #+#              #
-#    Updated: 2019/05/03 02:23:22 by cababou          ###   ########.fr        #
+#    Updated: 2019/05/03 06:14:43 by cababou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SRC := doom.c easter_eggs/hypercam.c editor/base_events.c \
 	map/converter.c map/map_util.c move.c \
 	editor/renderers/bottom_select_render.c \
 	editor/renderers/right_bar_render.c \
+	ui/wjauge/wjauge.c
 
 HEADERS := doom.h editor.h errors.h
 

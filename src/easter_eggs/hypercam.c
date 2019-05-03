@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 03:54:08 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/03 02:32:34 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/03 05:01:28 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void	setup_hypercam(t_doom *doom)
 {
 	doom->easter_egg = create_text(doom, "Unregistered HyperCam 2", FONT_SYS, 18);
-	doom->easter_egg->ui_element->pos_x = WIN_W
+	doom->easter_egg->ui->pos_x = WIN_W
 		- doom->easter_egg->u_w - 4;
-	doom->easter_egg->ui_element->pos_y = 3;
+	doom->easter_egg->ui->pos_y = 3;
 	set_rgb(&doom->easter_egg->text_color, 0, 0, 0);
 	text_prepare(doom, doom->easter_egg, 1);
 }
