@@ -297,6 +297,22 @@ typedef struct		s_sight
 	int				queue_cpt;
 }					t_sight;
 
+typedef struct		s_raycasting
+{
+	double		camera_x;
+	t_vec		ray_dir;
+	t_vec_int	map;
+	t_vec		side_dist;
+	t_vec		delta_dist;
+	t_vec_int	step;
+	int			side;
+	int			dist_hit; // nb of boxes crossed by ray before hitting
+	int			lineHeight;
+	int			draw_start;
+	int			draw_end;
+	double		wall_x;
+}					t_raycasting;
+
 typedef struct		s_doom
 {
 	SDL_Window		*win;
