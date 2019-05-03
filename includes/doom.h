@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/03 07:25:42 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/03 09:02:05 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef struct	s_map_block
 	int			ceiling_height;
 	int			has_ceiling;
 	int			ceilng_tex;
+	int			floor_tex;
 	int			n_texture;
 	int			s_texture;
 	int			w_texture;
@@ -163,6 +164,18 @@ typedef struct	s_whjauge_element
 	char		*unit;
 }				t_el_wh_jauge;
 
+typedef struct	s_checkbox_element
+{
+	t_el_ui		*ui;
+	SDL_Rect	pos;
+	SDL_Color	disabled_c;
+	SDL_Color	background;
+	SDL_Color	border;
+	SDL_Color	color;
+	int			checked;
+	int			disabled;
+}				t_el_checkbox;
+
 typedef struct s_doom t_doom;
 
 typedef struct	s_button_element
@@ -198,6 +211,10 @@ typedef struct	s_quadrant_renderer
 	t_el_button		*orient_w;
 	t_el_button		*orient_e;
 	t_el_wh_jauge	*s_height;
+	t_el_wh_jauge	*sc_height;
+	t_el_wh_jauge	*b_w;
+	t_el_wh_jauge	*b_h;
+	t_el_checkbox	*has_celng;
 }				t_quadrant_renderer;
 
 typedef struct	s_ed_focus
@@ -207,10 +224,15 @@ typedef struct	s_ed_focus
 	int			b_x_size;
 	int			b_y_size;
 	int			b_height;
+	int			b_ceiling_height;
+	int			b_has_ceiling;
+	int			b_ceilng_tex;
+	int			b_floor_tex;
 	int			b_n_texture;
 	int			b_s_texture;
 	int			b_w_texture;
 	int			b_e_texture;
+	int			b_light;
 }				t_ed_focus;
 
 typedef struct	s_editor
@@ -467,7 +489,11 @@ int					button_click(t_doom *doom, SDL_Event sdl_event);
 t_el_wh_jauge		*create_wjauge(t_doom *d, SDL_Rect rc, SDL_Rect mmvs);
 void				wjauge_render(t_doom *d, SDL_Surface *s, t_el_wh_jauge *jg);
 void				wjauge_prepare(t_doom *d, t_el_wh_jauge *jg);
+void				wjauge_set(t_doom *d, t_el_wh_jauge *jg, int value, int prepare);
 void				wjauge_affect(t_doom *d, t_el_wh_jauge *jg, int change, int prepare);
+
+t_el_checkbox		*create_checkbox(t_doom *d, SDL_Rect pos, int checked);
+void				checkbox_render(t_doom *d, SDL_Surface *s, t_el_checkbox *ck);
 
 SDL_Rect			make_rect(int x, int y, int width, int height);
 void				draw_rect(SDL_Surface *s, SDL_Rect rect, SDL_Color color, int fill_rect);
@@ -486,6 +512,7 @@ void				editor_ftr_clicked(t_doom *doom);
 void				editor_rbr_brender(t_doom *doom);
 void				editor_rbr_mrender(t_doom *doom);
 int					rbr_wheel(t_doom *d, SDL_Event event);
+int					rbr_click(t_doom *d, SDL_Event event);
 
 void				editor_bsr_brender(t_doom *doom);
 void				editor_bsr_mrender(t_doom *doom);
@@ -506,5 +533,9 @@ t_nmap				*convert_map(t_doom *doom, t_map *map, t_lstcontainer *texs);
 int					char_to_blocktype(char block);
 t_block_type		*make_block_type(t_doom *doom, char *bn, Uint32 bc, int bt);
 t_block_type		*block_type(t_doom *d, int bt);
+
+void				select_block_type(t_doom *d, t_block_type *type);
+void				copy_block_type(t_doom *d, t_block_type *type, t_mblock *blk);
+void				update_interactions(t_doom *d);
 
 #endif

@@ -35,9 +35,7 @@ void	render_blocks(t_doom *doom)
 		instant_text(doom, doom->editor.bsr,
 			tmp_bt->block_name, make_rect(x + 10, y + 22, 20, 0));
 		if (is_left_clicking() && mouse_in(doom->m_x, doom->m_y, make_rect(doom->editor.bsr_rect.x + x, doom->editor.bsr_rect.y + y, 170, 70)))
-		{
-			doom->editor.selected_block = tmp_bt;
-		}
+			select_block_type(doom, tmp_bt);
 		x += 180;
 		if (x + 180 >= doom->editor.bsr_rect.w)
 		{
