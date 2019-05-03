@@ -35,6 +35,28 @@
 # define WIN_W 1920
 # define WIN_H 1080
 
+/* Vector-like structs */
+typedef struct 		s_xy
+{
+	double 	x;
+	double	y;
+}					t_xy;
+
+typedef struct		s_vec
+{
+	double	x;
+	double	y;
+	double	z;
+}					t_vec;
+
+typedef struct		s_vec_int
+{
+	int	x;
+	int	y;
+	int	z;
+}					t_vec_int;
+/*---------------------------*/
+
 enum			e_block_types
 {
 	block_air = 0,
@@ -230,18 +252,6 @@ typedef struct	s_editor
 	SDL_Color			select_color;
 }				t_editor;
 
-typedef struct		s_xy
-{
-	double	x;
-	double	y;
-}					t_xy;
-
-typedef struct		s_vec
-{
-	double	x;
-	double	y;
-	double	z;
-}					t_vec;
 
 typedef struct		s_line
 {
@@ -315,23 +325,27 @@ typedef struct		s_wall_sight
 	double				next_perp;
 }					t_wall_sight;
 
-typedef struct		s_sight
+typedef struct		s_raycasting
 {
-	double	camera_x;
-	t_vec	ray_dir;
-	t_vec	pos;
-	t_vec	side_dist;
-	t_vec	delta_dist;
-	double	perp_wall_dist;
-	t_vec	step;
-	int		hit;
-	int		cpt;
-	int		rov;
-	int		side;
-	int		tex;
-	t_wall_sight	queue[40]; // Must be sized[you->rov]
-	int				queue_cpt;
-}					t_sight;
+	SDL_Surface	*texture;
+	int			x;
+	double		camera_x;
+	t_vec		ray_dir;
+	t_vec_int	map;
+	t_vec		side_dist;
+	t_vec		delta_dist;
+	t_vec_int	step;
+	int			side;
+	int			dist_hit; // nb of boxes crossed by ray before hitting
+	double		perp_wall_dist;
+	int			lineHeight;
+	int			draw_start;
+	int			draw_end;
+	t_vec_int	tex;
+	t_vec		floor;
+	t_vec_int	floor_tex;
+	double		wall_x;
+}					t_raycasting;
 
 typedef struct		s_doom
 {
@@ -360,7 +374,7 @@ typedef struct		s_doom
 	SDL_Color		tmp_color;
 	t_lstcontainer	*textures;
 	int				texture_amount;
-	t_sight			sight;
+	t_raycasting	raycasting;
 	int				mouse_focused;
 	int				game_init;
 	t_nmap			*nmap;
@@ -385,12 +399,10 @@ t_texture			*make_texture(t_doom *doom, SDL_Surface *surface, char *texture_name
 t_texture			*load_texture(char *path, t_doom *doom);
 SDL_Surface			*get_surface(t_doom *doom, int texture_id);
 
-void				init_scores(t_doom *doom);
+//void				draw_wall(t_doom *w, double x, double column, int tex);
+//void				draw_floor(t_doom *doom, double x, int column);
 
-double				calc_perp_dist(t_sight *p, t_player *you, int num);
-double				calc_perp_dist_next(t_sight *p, t_player *you, int num, int num2);
-int					see_wall(t_sight *p, t_doom *w);
-void				draw_wall(t_doom *w, double x, int column, int tex);
+void    			draw_screen(t_doom *doom);
 
 void				new_player(t_doom *doom, t_player *player, t_map *map);
 int					draw(t_doom *w);
@@ -399,8 +411,6 @@ int					key_down(t_doom *doom, SDL_Event event);
 int					key_up(t_doom *doom, SDL_Event event);
 void				line(t_doom *w, t_vec *start, t_vec *end, int color);
 int					loop(t_doom *w);
-void				calc_lov(t_doom *w);
-void				init_sight(t_doom *doom, t_sight *p, double x, t_player *you);
 Uint32				get_t_exact_pixel(t_texture *texture, int x, int y);
 
 int					mouse_movement(t_doom *doom, SDL_Event event);
