@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/03 09:02:05 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/03 09:32:56 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct	s_map_block
 	int			w_texture;
 	int			e_texture;
 	int			light;
+	int			collides;
 }				t_mblock;
 
 typedef struct	s_nmap
@@ -233,6 +234,7 @@ typedef struct	s_ed_focus
 	int			b_w_texture;
 	int			b_e_texture;
 	int			b_light;
+	int			b_collides;
 }				t_ed_focus;
 
 typedef struct	s_editor
