@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/02 14:51:35 by hdussert          #+#    #+#             */
-/*   Updated: 2019/05/02 12:29:12 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/03 02:33:35 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int				key_up(t_doom *doom, SDL_Event event)
 	if (keyb.keysym.scancode == SDL_SCANCODE_F9)
 	{
 		SDL_SetRelativeMouseMode(!doom->mouse_focused);
-		SDL_WarpMouseInWindow(doom->win, doom->settings.window_width / 2, doom->settings.window_height / 2);
+		SDL_WarpMouseInWindow(doom->win, WIN_W / 2, WIN_H / 2);
 		doom->mouse_focused = !doom->mouse_focused;
 	}
 	if (keyb.keysym.scancode == SDL_SCANCODE_TAB && doom->editor.anim_finished)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 18:15:46 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/02 18:11:22 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/03 02:34:08 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,14 @@ void	init_game(t_doom *doom)
 
 void	render_game(t_doom *doom)
 {
-	SDL_SetRenderDrawColor(doom->rend, 0x00, 0x00, 0x00, 0xFF );
+	SDL_SetRenderDrawColor(doom->rend,
+		doom->nmap->skybox_color.r, 
+		doom->nmap->skybox_color.g, 
+		doom->nmap->skybox_color.b, 0xFF);
     SDL_RenderClear(doom->rend);
 
-	calc_lov(doom);
-
+	//calc_lov(doom);
+	draw_screen(doom);
 	doom->fps_counter->text = ft_strjoin(ft_itoa(doom->average_fps), " fps", 1);
 	text_prepare(doom, doom->fps_counter, 1);
 	text_render(doom, doom->surface, doom->fps_counter);
@@ -48,11 +51,10 @@ void	game_loop(t_doom *doom, t_settings *sett)
 		distribute_events(doom, doom->last_event);
 	render_game(doom);
 	if (!doom->mouse_focused)
-		draw_rect(doom->surface, make_rect(0, 0, doom->settings.window_width, doom->settings.window_height), make_rgb(255, 0, 0, 255), 0);
+		draw_rect(doom->surface, make_rect(0, 0, WIN_W, WIN_H), make_rgb(255, 0, 0, 255), 0);
 	doom->you.rotspeed = 0.05;
-	doom->you.speed = doom->you.is_sprinting ? 0.2 : 0.10;
+	doom->you.speed = doom->you.is_sprinting ? 0.2 : 0.1;
 	update_velocity(doom, &doom->you);
-	printf("velocity: %f %f\n", doom->you.velocity.x, doom->you.velocity.y);
 	moving(doom);
 //	if (doom->keys.right == 1)
 //		turn(-doom->you.rotspeed, &doom->you, doom);
@@ -69,11 +71,15 @@ void	loop_game(t_doom *doom)
 {
 	Uint32		time;
 	t_settings	*sett;
+	SDL_Rect	mouse;
 
 	sett = &doom->settings;
 	while (1)
 	{
 		doom->last_frame = SDL_GetTicks();
+		mouse = mouse_pos();
+		doom->m_x = mouse.x;
+		doom->m_y = mouse.y;
 		game_loop(doom, sett);
 		SDL_UpdateWindowSurface(doom->win);
 		time = (SDL_GetTicks() - doom->last_frame);

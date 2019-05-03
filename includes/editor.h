@@ -6,17 +6,20 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 01:32:17 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/01 23:32:49 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/02 02:42:38 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EDITOR_H
 # define EDITOR_H
 
-# define TOOL_NONE 0
-# define TOOL_BLOCK 1
-
 #include "doom.h"
+
+enum	e_tools
+{
+	tool_none = 0,
+	tool_block
+};
 
 int		quit_event(t_doom *doom, SDL_Event sdl_event);
 int		key_event(t_doom *doom, SDL_Event sdl_event);

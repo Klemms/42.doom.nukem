@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   inits.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 23:44:05 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/02 18:13:31 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/03 02:34:58 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,6 @@
 
 void	setup_settings(t_doom *doom)
 {
-	doom->settings.window_width = doom->game_mode == M_GAME ? 1920 : 2304;
-	doom->settings.window_height = doom->game_mode == M_GAME ? 1080 : 1296;
-	doom->w = doom->settings.window_width;
-	doom->h = doom->settings.window_height;
 	doom->settings.framerate = 1000.0f / 60;
 	doom->settings.default_wall_color = rgba_to_int(176, 193, 145, 255);
 	doom->settings.mouse_sensitivity = 0.007;
@@ -36,7 +32,7 @@ void	init_sdl(t_doom *doom)
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0)
 		exit_program(doom, ERROR_SDL_INIT);
 	doom->win = SDL_CreateWindow("Le Doom", SDL_WINDOWPOS_CENTERED,
-		SDL_WINDOWPOS_CENTERED, doom->settings.window_width, doom->settings.window_height, 0);
+		SDL_WINDOWPOS_CENTERED, WIN_W, WIN_H, 0);
 	if (doom->win == NULL)
 		exit_program(doom, ERROR_SDL_WINDOW_INIT);
 	doom->rend = SDL_CreateRenderer(doom->win, -1, SDL_RENDERER_SOFTWARE);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/29 13:20:21 by hdussert          #+#    #+#             */
-/*   Updated: 2019/05/02 10:25:40 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/03 05:01:18 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ int			main(int argc, char *argv[])
 	doom.surface = SDL_GetWindowSurface(doom.win);
 	doom.s_pixels = doom.surface->pixels;
 	doom.fps_counter = create_text(&doom, "- fps", FONT_RIFFIC, 20);
-	doom.fps_counter->ui_element->pos_x = 8;
-	doom.fps_counter->ui_element->pos_y = 8;
+	doom.fps_counter->ui->pos_x = 8;
+	doom.fps_counter->ui->pos_y = 8;
 	init_textures(&doom);
-	init_scores(&doom);
+	//init_scores(&doom);
 	doom.nmap = convert_map(&doom, &doom.map, doom.textures);
 	if (doom.game_mode == M_GAME)
 	{
