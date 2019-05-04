@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 03:08:26 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/04 08:16:29 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/04 08:54:33 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,16 @@ int		read_map(char *path)
 	fd = open("maps/test.nmap", O_RDONLY);
 	if (fd < 0)
 		return (errno);
-	while ((sr = read(fd, &buff, BUFF_SIZE)))
+	sr = 0;
+	sdata = 0;
+	buff = ft_strnew(BUFF_SIZE);
+	while ((sr = read(fd, buff, BUFF_SIZE)) > 0)
 	{
+		printf("sdata : %d\n", sr);
 		test = ft_memjoin(&test, &buff, sdata, sr);
 		sdata += sr;
 	}
+		printf("err : %s\n", strerror(errno));
 	//printf("%d %d %d\n", ((char *)test)[0], ((char *)test)[4], ((SDL_Color *)((char *)test)[8])->r);
 	fflush(stdout);
 	close(fd);
