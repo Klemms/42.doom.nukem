@@ -44,7 +44,7 @@ void    init_raycasting(t_raycasting *rc, t_player *p)
   }
 }
 
-void    ray_hit(t_raycasting *rc, t_map map)
+void    ray_hit(t_raycasting *rc, t_nmap *nmap)
 {
   int hit;
   hit = 0;
@@ -64,7 +64,7 @@ void    ray_hit(t_raycasting *rc, t_map map)
       rc->side = 1;
     }
     rc->dist_hit++;
-    if (map.m[rc->map.y][rc->map.x] != '.')
+    if (nmap->map[rc->map.y][rc->map.x].block_type != 0 && nmap->map[rc->map.y][rc->map.x].block_type != 3)
       hit = 1;
   }
 }
@@ -216,7 +216,7 @@ void    draw_screen(t_doom *doom)
   while (++doom->raycasting.x < WIN_W)
   {
     init_raycasting(&doom->raycasting, &doom->you);
-    ray_hit(&doom->raycasting, doom->map);
+    ray_hit(&doom->raycasting, doom->nmap);
 
     init_raycasting_draw_wall(&doom->raycasting, &doom->you);
     draw_wall(&doom->raycasting, &doom->s_pixels);
