@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_norme.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 13:42:00 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/04 09:10:51 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/04 17:50:46 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	is_valid_2(t_doom *doom, int gres, int fd, char *line)
 			lstcontainer_add(doom->textures, make_texture(doom, NULL, line));
 	if (gres < 0)
 		exit_program(doom, ERROR_READING_FILE);
-	if ((doom->old_map.height += 1) && lstcontainer_fastsize(doom->textures) < 4)
+	if ((doom->old_map.height += 1) && lstcontainer_fastsize(doom->textures)
+	< 4)
 		exit_program(doom, ERROR_MAP_MISSING_TEXTURES);
 	doom->old_map.width += 2;
 	close(fd);
@@ -49,7 +50,7 @@ int		is_valid(t_doom *doom, int fd)
 				ffree(line);
 				return (0);
 			}
-		doom->old_map.width = (i > doom->old_map.width ? i : doom->old_map.width);
+		doom->old_map.width = i > doom->old_map.width ? i : doom->old_map.width;
 		ffree(line);
 	}
 	is_valid_2(doom, gres, fd, line);
