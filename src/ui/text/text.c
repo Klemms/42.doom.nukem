@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 03:48:04 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/03 05:02:02 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/04 01:48:35 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void		instant_text(t_doom *d, SDL_Surface *s, char *st, SDL_Rect poscols)
 	rect = make_rect(poscols.x, poscols.y, w, h);
 	SDL_BlitSurface(su, NULL, s, &rect);
 	SDL_FreeSurface(su);
+	if (poscols.h)
+		free(st);
 }
 
 t_el_text	*create_text(t_doom *doom, char *string, char *font_path, int size)
@@ -38,6 +40,7 @@ t_el_text	*create_text(t_doom *doom, char *string, char *font_path, int size)
 	if (!(text = mmalloc(sizeof(t_el_text))))
 		exit_program(doom, ERROR_SDL_AFTER_INIT);
 	lstcontainer_add(doom->texts, text);
+	text->surface = NULL;
 	text->list_id = doom->texts->lastelement->index;
 	text->ui = create_ui_element(doom);
 	text->text_color.r = 255;
@@ -52,22 +55,23 @@ t_el_text	*create_text(t_doom *doom, char *string, char *font_path, int size)
 	return (text);
 }
 
-void		text_prepare(t_doom *doom, t_el_text *text, int make_size)
+void		text_prepare(t_doom *doom, t_el_text *text, int mk_size, int cent)
 {
+	SDL_FreeSurface(text->surface);
 	text->surface = TTF_RenderUTF8_Blended(
 		text->font,
 		text->text,
 		text->text_color);
 	/*text->texture = SDL_CreateTextureFromSurface(doom->rend, surface);
 	SDL_FreeSurface(surface);*/
-	if (make_size)
+	if (mk_size)
 	{
 		text_size(text);
 		text->ui->width = text->u_w;
-		text->ui->height = text->u_h;
+		text->ui->height = text->u_w;
 	}
-	text->rect.x = text->ui->pos_x;
-	text->rect.y = text->ui->pos_y;
+	text->rect.x = cent ? text->ui->pos_x - text->u_w / 2 : text->ui->pos_x;
+	text->rect.y = cent ? text->ui->pos_y - text->u_h / 2 : text->ui->pos_y;
 	text->rect.w = text->ui->width;
 	text->rect.h = text->ui->height;
 }
