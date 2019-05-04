@@ -47,7 +47,7 @@ void	editor_rbr_mrender(t_doom *doom)
 	if (e->selected_block)
 	{
 		doom->temp_color = 0xFF000000;
-		instant_text(doom, e->rbr, ft_strjoin("Block : ", e->selected_block->block_name, 0), make_rect(10, 10, 22, 0));
+		instant_text(doom, e->rbr, ft_strjoin("Block : ", e->selected_block->block_name, 0), make_rect(10, 10, 22, 1));
 		instant_text(doom, e->rbr, "Block orientation", make_rect(10, 45, 20, 0));
 		e->rbr_quadrant.orient_n->background_color = e->foc.b_orientation == 0 ? e->select_color : e->base_color;
 		button_render(doom, e->rbr, e->rbr_quadrant.orient_n);

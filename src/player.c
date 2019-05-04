@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 00:26:56 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/02 12:34:44 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/04 02:21:29 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,13 @@ void	new_player(t_doom *doom, t_player *player, t_map *map)
 	player->dir.x = -1;
 	player->plane.y = 0.66;
 	player->rov = 40;
+}
+
+void	teleport_player(t_player *player, double x, double y, double z)
+{
+	printf("Teleporting player from %f %f %f to %f %f %f\n", player->pos.x, player->pos.y, player->pos.z, x, y, z);
+	fflush(stdout);
+	player->pos.x = x;
+	player->pos.y = y;
+	player->pos.z = z;
 }

@@ -6,13 +6,13 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 19:20:19 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/05 12:25:31 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/04 00:48:49 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strrev(char const *s1)
+char	*ft_strrev(char *s1, int free_input)
 {
 	size_t	i;
 	char	*nstring;
@@ -27,5 +27,7 @@ char	*ft_strrev(char const *s1)
 		i++;
 	}
 	nstring[i] = '\0';
+	if (free_input)
+		free(s1);
 	return (nstring);
 }

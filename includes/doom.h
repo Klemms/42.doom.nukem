@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/03 09:32:56 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/04 02:28:48 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,21 @@ typedef struct		s_vec_int
 }					t_vec_int;
 /*---------------------------*/
 
+enum			e_map_valid
+{
+	map_good = 0,
+	map_wall_contour = 1,
+	map_spawn_point = 2,
+	map_end_point = 3
+};
+
 enum			e_block_types
 {
 	block_air = 0,
 	block_wall = 1,
 	block_small_wall = 2,
-	block_spawn = 3
+	block_spawn = 3,
+	block_end = 4
 };
 
 typedef struct	s_map_block
@@ -82,6 +91,8 @@ typedef struct	s_map_block
 	int			e_texture;
 	int			light;
 	int			collides;
+	int			x;
+	int			y;
 }				t_mblock;
 
 typedef struct	s_nmap
@@ -274,6 +285,9 @@ typedef struct	s_editor
 	t_lstcontainer		*block_types;
 	SDL_Color			base_color;
 	SDL_Color			select_color;
+	t_el_button			*validate;
+	t_el_button			*save;
+	t_el_text			*state;
 }				t_editor;
 
 
@@ -476,7 +490,7 @@ void				set_rgb(SDL_Color *color, int r, int g, int b);
 
 void				instant_text(t_doom *d, SDL_Surface *s, char *st, SDL_Rect poscols);
 t_el_text			*create_text(t_doom *doom, char *string, char *font_path, int size);
-void				text_prepare(t_doom *doom, t_el_text *text, int make_size);
+void				text_prepare(t_doom *doom, t_el_text *text, int mk_size, int cent);
 void				text_render(t_doom *doom, SDL_Surface *surface, t_el_text *text);
 int					text_size(t_el_text *text);
 
@@ -539,5 +553,14 @@ t_block_type		*block_type(t_doom *d, int bt);
 void				select_block_type(t_doom *d, t_block_type *type);
 void				copy_block_type(t_doom *d, t_block_type *type, t_mblock *blk);
 void				update_interactions(t_doom *d);
+
+int					validate_map(t_nmap	*m);
+void				ed_save_file(t_doom *d, t_el_button *b, SDL_MouseButtonEvent ev);
+void				ed_test_map(t_doom *d, t_el_button *b, SDL_MouseButtonEvent ev);
+char				*map_reason_to_txt(int reason);
+int					player_valid_tile(t_player *pl, t_nmap *nmap);
+t_mblock			*get_spawn_point(t_nmap *nmap);
+
+void				teleport_player(t_player *player, double x, double y, double z);
 
 #endif

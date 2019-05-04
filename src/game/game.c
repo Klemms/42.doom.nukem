@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 18:15:46 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/03 02:34:08 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/04 01:46:59 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,9 @@ void	render_game(t_doom *doom)
 
 	//calc_lov(doom);
 	draw_screen(doom);
+	free(doom->fps_counter->text);
 	doom->fps_counter->text = ft_strjoin(ft_itoa(doom->average_fps), " fps", 1);
-	text_prepare(doom, doom->fps_counter, 1);
+	text_prepare(doom, doom->fps_counter, 1, 0);
 	text_render(doom, doom->surface, doom->fps_counter);
 	render_hypercam(doom, doom->surface);
 }

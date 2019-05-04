@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 23:15:27 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/03 06:50:53 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/04 01:47:11 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,6 @@ void	switch_tool(t_doom *doom, int to_tool)
 	doom->editor.hand_tool = to_tool > 0 && to_tool <= 1 ? to_tool : 0;
 	free(doom->editor.current_tool->text);
 	doom->editor.current_tool->text = ft_strjoin("Current tool : ", tool_name(to_tool), 0);
-	text_prepare(doom, doom->editor.current_tool, 1);
+	text_prepare(doom, doom->editor.current_tool, 1, 0);
 	tool_button_color(doom, to_tool);
 }
