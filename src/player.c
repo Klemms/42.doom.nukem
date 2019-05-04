@@ -17,6 +17,7 @@ void	new_player(t_doom *doom, t_player *player, t_nmap *nmap)
 	ft_bzero(player, sizeof(t_player));
 	player->pos.x = get_spawn_point(nmap)->x + 0.5;
 	player->pos.y = get_spawn_point(nmap)->y + 0.5;
+	player->pos.z = 0.5;
 	player->anglecos = -1;
 	player->dir.x = -1;
 	player->plane.y = 0.66;

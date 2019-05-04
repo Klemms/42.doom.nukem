@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   doom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
 /*   Updated: 2019/05/04 09:10:18 by cababou          ###   ########.fr       */
@@ -34,6 +34,8 @@
 
 # define WIN_W 1920
 # define WIN_H 1080
+
+# define COL 0.1
 
 /* Vector-like structs */
 typedef struct 		s_xy
@@ -126,6 +128,8 @@ typedef struct	s_settings
 	int			key_right;
 	int			key_sprint;
 	int			key_crouch;
+	int			z_up;
+	int			z_down;
 	int			render_textures;
 	int			enable_crt_floor;
 }				t_settings;
@@ -310,7 +314,6 @@ typedef struct		s_player
 	double			anglesin;
 	double			pitch;
 	double			speed;
-	double			rotspeed;
 	int				rov;
 	int				is_sprinting;
 	int				is_crouching;
@@ -333,6 +336,8 @@ typedef struct		s_key
 	int		right;
 	int		up;
 	int		down;
+	int		z_up;
+	int		z_down;
 	int		shadow;
 }					t_key;
 
@@ -367,6 +372,7 @@ typedef struct		s_raycasting
 {
 	SDL_Surface	*texture;
 	int			x;
+	double		p_z;
 	double		camera_x;
 	t_vec		ray_dir;
 	t_vec_int	map;
@@ -515,8 +521,8 @@ SDL_Rect			make_rect(int x, int y, int width, int height);
 void				draw_rect(SDL_Surface *s, SDL_Rect rect, SDL_Color color, int fill_rect);
 void				draw_rect_u(SDL_Surface *s, SDL_Rect rect, Uint32 color, int fill_rect);
 
-void				turn(double angle, t_player *you, t_doom *doom);
-void				moove(double dist, t_doom *doom, t_map *map, int ang);
+void				turn(double angle, t_player *player, t_doom *doom);
+void				moove(double dist, t_player *player, t_map *map, double ang);
 
 void				ed_bt_edit_click(t_doom *doom, t_el_button *b, SDL_MouseButtonEvent ev);
 
@@ -553,6 +559,8 @@ t_block_type		*block_type(t_doom *d, int bt);
 void				select_block_type(t_doom *d, t_block_type *type);
 void				copy_block_type(t_doom *d, t_block_type *type, t_mblock *blk);
 void				update_interactions(t_doom *d);
+
+void				init_scores(t_doom *doom);
 
 int					validate_map(t_nmap	*m);
 void				ed_save_file(t_doom *d, t_el_button *b, SDL_MouseButtonEvent ev);

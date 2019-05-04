@@ -14,6 +14,7 @@
 
 void    init_raycasting(t_raycasting *rc, t_player *p)
 {
+  rc->p_z = p->pos.z;
   rc->camera_x = 2 * rc->x / (double)(WIN_W) - 1;
   rc->ray_dir.x = p->dir.x + p->plane.x * rc->camera_x;
   rc->ray_dir.y = p->dir.y + p->plane.y * rc->camera_x;
@@ -43,7 +44,7 @@ void    init_raycasting(t_raycasting *rc, t_player *p)
   }
 }
 
-void    ray_hit(t_raycasting *rc, t_map map)
+void    ray_hit(t_raycasting *rc, t_nmap *nmap)
 {
   int hit;
   hit = 0;
@@ -63,7 +64,7 @@ void    ray_hit(t_raycasting *rc, t_map map)
       rc->side = 1;
     }
     rc->dist_hit++;
-    if (map.m[rc->map.y][rc->map.x] != '.')
+    if (nmap->map[rc->map.y][rc->map.x].block_type != 0 && nmap->map[rc->map.y][rc->map.x].block_type != 3)
       hit = 1;
   }
 }
@@ -82,8 +83,8 @@ void    init_raycasting_draw_wall(t_raycasting *rc, t_player *p)
   else
     rc->perp_wall_dist = (rc->map.y - p->pos.y + (1 - rc->step.y) / 2) / rc->ray_dir.y;
   rc->lineHeight = (int)(WIN_H / rc->perp_wall_dist);
-  rc->draw_start = -rc->lineHeight / 2 + WIN_H / 2;
-  rc->draw_end = rc->lineHeight / 2 + WIN_H / 2;
+  rc->draw_start = -rc->lineHeight / 2 + WIN_H * rc->p_z;
+  rc->draw_end = rc->lineHeight / 2 + WIN_H * rc->p_z;
   if(rc->draw_start < 0)
     rc->draw_start = 0;
   if(rc->draw_end >= WIN_H)
@@ -100,6 +101,7 @@ void    init_raycasting_draw_wall(t_raycasting *rc, t_player *p)
     rc->wall_x = p->pos.x + rc->perp_wall_dist * rc->ray_dir.x;
   rc->wall_x -= floor((rc->wall_x));
   rc->tex.x = (int)(rc->wall_x * (double)(rc->texture->w));
+  rc->tex.x = rc->tex.x % rc->texture->w;
   if(rc->side == 0 && rc->ray_dir.x > 0)
     rc->tex.x = rc->texture->w - rc->tex.x - 1;
   if(rc->side == 1 && rc->ray_dir.y < 0)
@@ -115,9 +117,10 @@ void    draw_wall(t_raycasting *rc, Uint32 **canvas)
   y = rc->draw_start - 1;
   while (++y < rc->draw_end)
   {
-    d = y * 256 - WIN_H * 128 + rc->lineHeight * 128; //256 and 128 factors to avoid floats
+    d = y * 256 - (WIN_H * rc->p_z * 256) + rc->lineHeight * 128; //256 and 128 factors to avoid floats
     // TODO: avoid the division to speed this up
     rc->tex.y = ((d * rc->texture->h) / rc->lineHeight) / 256;
+    rc->tex.y = rc->tex.y % rc->texture->h;
     color = ((Uint32 *)rc->texture->pixels)[rc->texture->w * rc->tex.y + rc->tex.x];
     //make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
     if(rc->side == 1) color = (color >> 1) & 8355711;
@@ -165,7 +168,7 @@ void    draw_floor(t_raycasting *rc, t_player *p, Uint32 **canvas)
   y = rc->draw_end;
   while (++y < WIN_H)
   {
-    currentDist = WIN_H / (2.0 * y - WIN_H); //you could make a small lookup table for this instead
+    currentDist = WIN_H / (2.0 * y - (WIN_H * rc->p_z * 2.0)); //you could make a small lookup table for this instead
     weight = (currentDist - distPlayer) / (distWall - distPlayer);
     currentFloorX = weight * rc->floor.x + (1.0 - weight) * p->pos.x;
     currentFloorY = weight * rc->floor.y + (1.0 - weight) * p->pos.y;
@@ -176,7 +179,33 @@ void    draw_floor(t_raycasting *rc, t_player *p, Uint32 **canvas)
     // if(checkerBoardPattern == 0) floorTexture = 3;
     // else floorTexture = 4;
     (*canvas)[y * WIN_W + rc->x] = (((Uint32 *)rc->texture->pixels)[rc->texture->w * rc->floor_tex.y + rc->floor_tex.x] >> 1) & 8355711; //floor
-    (*canvas)[(WIN_H - y) * WIN_W + rc->x] = ((Uint32 *)rc->texture->pixels)[rc->texture->w * rc->floor_tex.y + rc->floor_tex.x]; //ceiling (symmetrical!)
+  }
+}
+
+void    draw_ceiling(t_raycasting *rc, t_player *p, Uint32 **canvas)
+{
+  double weight;
+  double currentFloorX;
+  double currentFloorY;
+  double distWall, distPlayer, currentDist;
+  int   y;
+
+  distWall = rc->perp_wall_dist;
+  distPlayer = 0.0;
+  y = 0;
+  while (++y < rc->draw_start)
+  {
+    currentDist = WIN_H / ((WIN_H * rc->p_z * 2.0) - 2.0 * y); //you could make a small lookup table for this instead
+    weight = (currentDist - distPlayer) / (distWall - distPlayer);
+    currentFloorX = weight * rc->floor.x + (1.0 - weight) * p->pos.x;
+    currentFloorY = weight * rc->floor.y + (1.0 - weight) * p->pos.y;
+    rc->floor_tex.x = (int)(currentFloorX * rc->texture->w) % rc->texture->w;
+    rc->floor_tex.y = (int)(currentFloorY * rc->texture->h) % rc->texture->h;
+    // int checkerBoardPattern = ((int)(currentFloorX + currentFloorY)) % 2;
+    // int floorTexture;
+    // if(checkerBoardPattern == 0) floorTexture = 3;
+    // else floorTexture = 4;
+    (*canvas)[y * WIN_W + rc->x] = ((Uint32 *)rc->texture->pixels)[rc->texture->w * rc->floor_tex.y + rc->floor_tex.x]; //ceiling (symmetrical!)
   }
 }
 
@@ -187,12 +216,13 @@ void    draw_screen(t_doom *doom)
   while (++doom->raycasting.x < WIN_W)
   {
     init_raycasting(&doom->raycasting, &doom->you);
-    ray_hit(&doom->raycasting, doom->map);
+    ray_hit(&doom->raycasting, doom->nmap);
 
     init_raycasting_draw_wall(&doom->raycasting, &doom->you);
     draw_wall(&doom->raycasting, &doom->s_pixels);
 
     init_raycasting_draw_floor(&doom->raycasting);
     draw_floor(&doom->raycasting, &doom->you, &doom->s_pixels);
+    draw_ceiling(&doom->raycasting, &doom->you, &doom->s_pixels);
   }
 }
