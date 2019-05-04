@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lov.c                                              :+:      :+:    :+:   */
+/*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 11:20:18 by hdussert          #+#    #+#             */
-/*   Updated: 2019/05/01 21:26:18 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/04 09:43:07 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void    ray_hit(t_raycasting *rc, t_nmap *nmap)
       rc->side = 1;
     }
     rc->dist_hit++;
-    if (nmap->map[rc->map.y][rc->map.x].block_type != 0 && nmap->map[rc->map.y][rc->map.x].block_type != 3)
+    if (nmap->map[rc->map.y][rc->map.x].collides)
       hit = 1;
   }
 }

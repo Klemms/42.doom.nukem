@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 04:50:07 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/04 02:26:48 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/04 10:40:05 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,6 @@ void	switch_to_game(t_doom *doom)
 			text_prepare(doom, doom->editor.state, 1, 1);
 			return ;
 		}
-		sp = get_spawn_point(doom->nmap);
-		if (!player_valid_tile(&doom->you, doom->nmap))
-			teleport_player(&doom->you, sp->x + 0.5, sp->y + 1.5, 0);
 		doom->game_mode = M_GAME;
 		doom->editor.anim_w = WIN_W;
 		doom->editor.anim_h = WIN_H;
@@ -41,6 +38,9 @@ void	switch_to_game(t_doom *doom)
 		doom->mouse_focused = 1;
 		if (!doom->game_init)
 			init_game(doom);
+		sp = get_spawn_point(doom->nmap);
+		if (!player_valid_tile(&doom->you, doom->nmap))
+			teleport_player(&doom->you, sp->x + 0.5, sp->y + 0.5, 0.5);
 	}
 }
 

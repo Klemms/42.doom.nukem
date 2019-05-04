@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 00:20:37 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/04 02:23:21 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/04 10:56:42 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,10 @@ int			player_valid_tile(t_player *pl, t_nmap *nmap)
 	t_mblock m;
 	if (pl->pos.x < nmap->size_x && pl->pos.y < nmap->size_y)
 	{
-		m = nmap->map[(int)pl->pos.x][(int)pl->pos.y];
-		if (nmap->map[(int)pl->pos.x][(int)pl->pos.y].collides)
+		m = nmap->map[(int)pl->pos.y][(int)pl->pos.x];
+		printf("tt %d\n", nmap->map[(int)pl->pos.y][(int)pl->pos.x].block_type);
+		printf("tt %d\n", nmap->map[(int)pl->pos.y][(int)pl->pos.x].collides);
+		if (nmap->map[(int)pl->pos.y][(int)pl->pos.x].collides)
 			return (0);
 		return (1);
 	}
@@ -43,17 +45,17 @@ t_mblock	*get_spawn_point(t_nmap *nmap)
 	size_t	x;
 	size_t	y;
 
-	x = 0;
-	while (x < nmap->size_x)
+	y = 0;
+	while (y < nmap->size_y)
 	{
-		y = 0;
-		while (y < nmap->size_y)
+		x = 0;
+		while (x < nmap->size_x)
 		{
-			if (nmap->map[x][y].block_type == block_spawn)
-				return (&nmap->map[x][y]);
-			y++;
+			if (nmap->map[y][x].block_type == block_spawn)
+				return (&nmap->map[y][x]);
+			x++;
 		}
-		x++;
+		y++;
 	}
 	return (NULL);
 }
