@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 18:15:46 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/04 01:46:59 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/04 10:50:22 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	init_game(t_doom *doom)
 	register_event(doom, SDL_QUIT, quit_window);
 	register_event(doom, SDL_MOUSEMOTION, mouse_movement);
 
-	new_player(doom, &doom->you, &doom->map);
+	new_player(doom, &doom->you, doom->nmap);
 	
 	doom->average_fps = 0;
 	setup_hypercam(doom);
@@ -44,6 +44,31 @@ void	render_game(t_doom *doom)
 	text_prepare(doom, doom->fps_counter, 1, 0);
 	text_render(doom, doom->surface, doom->fps_counter);
 	render_hypercam(doom, doom->surface);
+
+
+	t_quadrant_renderer	*q;
+	int					x;
+	int					y;
+	SDL_Rect			r;
+
+	q = &doom->editor.ftr_quadrant;
+	y = 0;
+	while (y < doom->nmap->size_y)
+	{
+		x = 0;
+		while (x < doom->nmap->size_x)
+		{
+			r = make_rect(100 + x * 15, 100 + y * 15, 15, 15);
+			draw_rect_u(doom->surface, r, block_type(doom, doom->nmap->map[y][x].block_type)->block_color, 1);
+			/*if (mouse_in(m_pos.x - q->pos_x, m_pos.y - q->pos_y, r))
+			{
+				//draw_rect_u(doom->editor.ftr, r, 0xFF000000, 0);
+			}*/
+			x++;
+		}
+		y++;
+	}	
+	draw_rect_u(doom->surface, make_rect(100 + doom->you.pos.x * 15, 100 + doom->you.pos.y * 15, 5, 5), 0xFFFF0000, 1);
 }
 
 void	game_loop(t_doom *doom, t_settings *sett)
@@ -60,30 +85,30 @@ void	game_loop(t_doom *doom, t_settings *sett)
 	/*if (doom->keys.up == 1)
 	{
 		if (doom->keys.right == 1)
-			moove(doom->you.speed, &doom->you, &doom->map, -M_PI_4);
+			moove(doom->you.speed, &doom->you, doom->nmap, -M_PI_4);
 		else if (doom->keys.left == 1)
-			moove(doom->you.speed, &doom->you, &doom->map, M_PI_4);
+			moove(doom->you.speed, &doom->you, doom->nmap, M_PI_4);
 		else
-			moove(doom->you.speed, &doom->you, &doom->map, 0);
+			moove(doom->you.speed, &doom->you, doom->nmap, 0);
 	}
 	else if (doom->keys.down == 1)
 	{
 		if (doom->keys.right == 1)
-			moove(-doom->you.speed, &doom->you, &doom->map, -M_PI_4);
+			moove(-doom->you.speed, &doom->you, doom->nmap, -M_PI_4);
 		else if (doom->keys.left == 1)
-			moove(-doom->you.speed, &doom->you, &doom->map, M_PI_4);
+			moove(-doom->you.speed, &doom->you, doom->nmap, M_PI_4);
 		else
-			moove(-doom->you.speed, &doom->you, &doom->map, 0);
+			moove(-doom->you.speed, &doom->you, &doom->nmap, 0);
 	}
 	else if (doom->keys.right == 1)
-		moove(doom->you.speed, &doom->you, &doom->map, -M_PI_2);
+		moove(doom->you.speed, &doom->you, doom->nmap, -M_PI_2);
 	else if (doom->keys.left == 1)
-		moove(doom->you.speed, &doom->you, &doom->map, M_PI_2);
+		moove(doom->you.speed, &doom->you, doom->nmap, M_PI_2);*/
 	
 	if (doom->keys.z_up)
 		doom->you.pos.z += 0.02;
 	else if (doom->keys.z_down)
-		doom->you.pos.z -= 0.02;*/
+		doom->you.pos.z -= 0.02;
 	
 }
 
