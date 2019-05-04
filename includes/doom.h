@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   doom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
 /*   Updated: 2019/05/04 03:38:12 by cababou          ###   ########.fr       */
@@ -34,6 +34,8 @@
 
 # define WIN_W 1920
 # define WIN_H 1080
+
+# define COL 0.1
 
 /* Vector-like structs */
 typedef struct 		s_xy
@@ -553,6 +555,8 @@ t_block_type		*block_type(t_doom *d, int bt);
 void				select_block_type(t_doom *d, t_block_type *type);
 void				copy_block_type(t_doom *d, t_block_type *type, t_mblock *blk);
 void				update_interactions(t_doom *d);
+
+void				init_scores(t_doom *doom);
 
 int					validate_map(t_nmap	*m);
 void				ed_save_file(t_doom *d, t_el_button *b, SDL_MouseButtonEvent ev);
