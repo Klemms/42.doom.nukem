@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 18:15:46 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/04 01:46:59 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/04 09:09:45 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	init_game(t_doom *doom)
 	register_event(doom, SDL_QUIT, quit_window);
 	register_event(doom, SDL_MOUSEMOTION, mouse_movement);
 
-	new_player(doom, &doom->you, &doom->map);
+	new_player(doom, &doom->you, doom->nmap);
 	
 	doom->average_fps = 0;
 	setup_hypercam(doom);

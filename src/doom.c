@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/29 13:20:21 by hdussert          #+#    #+#             */
-/*   Updated: 2019/05/03 05:01:18 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/04 09:09:24 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int			main(int argc, char *argv[])
 	doom.fps_counter->ui->pos_y = 8;
 	init_textures(&doom);
 	//init_scores(&doom);
-	doom.nmap = convert_map(&doom, &doom.map, doom.textures);
+	doom.nmap = convert_map(&doom, &doom.old_map, doom.textures);
 	if (doom.game_mode == M_GAME)
 	{
 		init_game(&doom);

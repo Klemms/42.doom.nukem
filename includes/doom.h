@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/04 03:38:12 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/04 09:10:18 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -405,7 +405,7 @@ typedef struct		s_doom
 	int				average_fps;
 	t_editor		editor;
 	t_lstcontainer	*buttons;
-	t_map			map;
+	t_map			old_map;
 	t_player		you;
 	t_key			keys;
 	int				temp_color;
@@ -442,7 +442,7 @@ SDL_Surface			*get_surface(t_doom *doom, int texture_id);
 
 void    			draw_screen(t_doom *doom);
 
-void				new_player(t_doom *doom, t_player *player, t_map *map);
+void				new_player(t_doom *doom, t_player *player, t_nmap *nmap);
 int					draw(t_doom *w);
 int					parsing(t_doom *w, char *file);
 int					key_down(t_doom *doom, SDL_Event event);
