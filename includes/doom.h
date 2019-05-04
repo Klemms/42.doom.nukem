@@ -126,8 +126,6 @@ typedef struct	s_settings
 	int			key_right;
 	int			key_sprint;
 	int			key_crouch;
-	int			z_up;
-	int			z_down;
 	int			render_textures;
 	int			enable_crt_floor;
 }				t_settings;
@@ -312,6 +310,7 @@ typedef struct		s_player
 	double			anglesin;
 	double			pitch;
 	double			speed;
+	double			rotspeed;
 	int				rov;
 	int				is_sprinting;
 	int				is_crouching;
@@ -334,8 +333,6 @@ typedef struct		s_key
 	int		right;
 	int		up;
 	int		down;
-	int		z_up;
-	int		z_down;
 	int		shadow;
 }					t_key;
 
@@ -370,7 +367,6 @@ typedef struct		s_raycasting
 {
 	SDL_Surface	*texture;
 	int			x;
-	double		p_z;
 	double		camera_x;
 	t_vec		ray_dir;
 	t_vec_int	map;
@@ -519,8 +515,8 @@ SDL_Rect			make_rect(int x, int y, int width, int height);
 void				draw_rect(SDL_Surface *s, SDL_Rect rect, SDL_Color color, int fill_rect);
 void				draw_rect_u(SDL_Surface *s, SDL_Rect rect, Uint32 color, int fill_rect);
 
-void				turn(double angle, t_player *you);
-void				moove(double dist, t_player *player, t_map *map, double ang);
+void				turn(double angle, t_player *you, t_doom *doom);
+void				moove(double dist, t_doom *doom, t_map *map, int ang);
 
 void				ed_bt_edit_click(t_doom *doom, t_el_button *b, SDL_MouseButtonEvent ev);
 

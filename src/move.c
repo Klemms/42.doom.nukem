@@ -12,136 +12,77 @@
 
 #include "doom.h"
 
-#include "doom.h"
-
-int				mouse_movement(t_doom *doom, SDL_Event event)
+void	update_velocity2(t_doom *doom, t_player *player, t_xy *move_vec)
 {
-	SDL_MouseMotionEvent mouse;
+	double acc;
 
-	mouse = event.motion;
-	if (doom->mouse_focused)
-		turn(mouse.xrel * -doom->settings.mouse_sensitivity, &doom->you);
-	return (1);
+	player->moving = doom->keys.right || doom->keys.left || doom->keys.up || doom->keys.down;
+	acc = player->moving ? 0.4 : 0.2;
+	player->velocity.x = player->velocity.x * (1 - acc) + move_vec->x * acc;
+	player->velocity.y = player->velocity.y * (1 - acc) + move_vec->y * acc;
 }
 
-int				key_down(t_doom *doom, SDL_Event event)
+void	update_velocity(t_doom *doom, t_player *player)
 {
-	SDL_KeyboardEvent keyb;
+	t_xy	move_vec;
 
-	keyb = event.key;
-	if (keyb.keysym.scancode == doom->settings.key_forward)
-		doom->keys.up = 1;
-	if (keyb.keysym.scancode == doom->settings.key_backward)
-		doom->keys.down = 1;
-	if (keyb.keysym.scancode == doom->settings.key_left)
-		doom->keys.left = 1;
-	if (keyb.keysym.scancode == doom->settings.key_right)
-		doom->keys.right = 1;
-	if (keyb.keysym.scancode == doom->settings.key_sprint)
-		doom->you.is_sprinting = 1;
-	if (keyb.keysym.scancode == doom->settings.key_crouch)
-		doom->you.is_crouching = 1;
-	if (keyb.keysym.scancode == doom->settings.z_up)
-		doom->keys.z_up = 1;
-	if (keyb.keysym.scancode == doom->settings.z_down)
-		doom->keys.z_down = 1;
-	if (keyb.keysym.scancode == SDL_SCANCODE_ESCAPE)
-		exit_program(doom, 0);
-	return (1);
-}
-
-int				key_up(t_doom *doom, SDL_Event event)
-{
-	SDL_KeyboardEvent keyb;
-
-	keyb = event.key;
-	if (keyb.keysym.scancode == doom->settings.key_forward)
-		doom->keys.up = 0;
-	if (keyb.keysym.scancode == doom->settings.key_backward)
-		doom->keys.down = 0;
-	if (keyb.keysym.scancode == doom->settings.key_left)
-		doom->keys.left = 0;
-	if (keyb.keysym.scancode == doom->settings.key_right)
-		doom->keys.right = 0;
-	if (keyb.keysym.scancode == doom->settings.key_sprint)
-		doom->you.is_sprinting = 0;
-	if (keyb.keysym.scancode == doom->settings.key_crouch)
-		doom->you.is_crouching = 1;
-	if (keyb.keysym.scancode == doom->settings.z_up)
-		doom->keys.z_up = 0;
-	if (keyb.keysym.scancode == doom->settings.z_down)
-		doom->keys.z_down = 0;
-	if (keyb.keysym.scancode == SDL_SCANCODE_F9)
+	move_vec.x = 0.0;
+	move_vec.y = 0.0;
+	if (doom->keys.up == 1)
 	{
-		SDL_SetRelativeMouseMode(!doom->mouse_focused);
-		SDL_WarpMouseInWindow(doom->win, WIN_W / 2, WIN_H / 2);
-		doom->mouse_focused = !doom->mouse_focused;
+		move_vec.x += player->anglecos * 0.1f;
+		move_vec.y += player->anglesin * 0.1f;
 	}
-	if (keyb.keysym.scancode == SDL_SCANCODE_TAB && doom->editor.anim_finished)
-		switch_to_editor(doom);
-	return (1);
-}
-
-void		turn(double angle, t_player *player)
-{
-	double		old_dir_x;
-	double		old_plane_x;
-
-	old_dir_x = player->dir.x;
-	player->dir.x = player->dir.x * cos(angle) - player->dir.y * sin(angle);
-	player->dir.y = old_dir_x * sin(angle) + player->dir.y * cos(angle);
-	old_plane_x = player->plane.x;
-	player->plane.x = player->plane.x * cos(angle) - player->plane.y * sin(angle);
-	player->plane.y = old_plane_x * sin(angle) + player->plane.y * cos(angle);
-}
-
-void		moove(double dist, t_player *player, t_map *map, double angle)
-{
-	double		tmp_dir_x;
-	double		vx;
-	double		vy;
-	double		next_y;
-	double		next_x;
-
-	double tvx;
-	double tvy;
-
-	if (angle != 0)
+	if (doom->keys.down == 1)
 	{
-		vx = (player->dir.x * cos(angle) - player->dir.y * sin(angle));// * dist;
-		vy = (player->dir.x * sin(angle) + player->dir.y * cos(angle));// * dist;
+		move_vec.x -= player->anglecos * 0.1f;
+		move_vec.y -= player->anglesin * 0.1f;
+	}
+	if (doom->keys.right == 1)
+	{
+		move_vec.x += player->anglesin * 0.1f;
+		move_vec.y -= player->anglecos * 0.1f;
+	}
+	if (doom->keys.left == 1)
+	{
+		move_vec.x -= player->anglesin * 0.1f;
+		move_vec.y += player->anglecos * 0.1f;
+	}
+	update_velocity2(doom, player, &move_vec);
+}
+
+void	moving(t_doom *doom)
+{
+	int	dest[2];
+	int channel;
+	int	tmp_pos_x;
+	t_xy	collision;
+
+	channel = Mix_PlayChannel(-1, doom->scores.walk, 0);
+	if (channel != 0)
+		Mix_HaltChannel(channel);
+	collision.x = (doom->you.velocity.x < 0) ? doom->you.velocity.x - 0.2 : doom->you.velocity.x + 0.2;
+	collision.y = (doom->you.velocity.y < 0) ? doom->you.velocity.y - 0.2 : doom->you.velocity.y + 0.2;
+	tmp_pos_x = doom->you.pos.x;
+	dest[0] = doom->you.pos.x + collision.x;
+	dest[1] = doom->you.pos.y + collision.y;
+	if (doom->map.m[(int)doom->you.pos.y][dest[0]] != '.')
+	{
+		if (doom->you.velocity.x < 0)
+			doom->you.pos.x = dest[0] + 1 + 0.2;
+		else
+			doom->you.pos.x = dest[0] - 0.2;
 	}
 	else
+		doom->you.pos.x += doom->you.velocity.x;
+	if (doom->map.m[dest[1]][tmp_pos_x] != '.')
 	{
-		vx = player->dir.x;// * dist;
-		vy = player->dir.y;
+		if (doom->you.velocity.y < 0)
+			doom->you.pos.y = dest[1] + 1 + 0.2;
+		else
+			doom->you.pos.y = dest[1] - 0.2;
 	}
-	
-	tvx = player->pos.x + vx * (dist * 1.1);
-	tvy = player->pos.y + vy * (dist * 1.1);
-	vx *= dist;
-	vy *= dist;
-	next_x = player->pos.x + vx;
-	next_y = player->pos.y + vy;
-	if (next_x < map->width && next_x >= 0
-	&& next_y < map->height && next_y > 0)
-	{
-		//if (map->m[(int)(next_y)][(int)(next_x)] == '.')
-		//{
-			if (map->m[(int)player->pos.y][(int)(tvx)] == '.')
-				player->pos.x = next_x;
-			if (map->m[(int)(tvy)][(int)player->pos.x] == '.')
-				player->pos.y = next_y;
-			if (player->pos.x == next_x && player->pos.y == next_y)
-				if (map->m[(int)(tvy)][(int)(tvx)] != '.')
-				{
-					player->pos.x -= vx;
-					player->pos.y -= vy;
-				}
-		//}
-		if (player->pos.y != next_y && player->pos.x == next_x)
-			player->pos.x -= (vx / 2);
-		else if (player->pos.x != next_x && player->pos.y == next_y)
-			player->pos.y -= (vy / 2);
-	}
+	else
+		doom->you.pos.y += doom->you.velocity.y;
+	doom->you.moving = 0;
 }

@@ -53,36 +53,19 @@ void	game_loop(t_doom *doom, t_settings *sett)
 	render_game(doom);
 	if (!doom->mouse_focused)
 		draw_rect(doom->surface, make_rect(0, 0, WIN_W, WIN_H), make_rgb(255, 0, 0, 255), 0);
+	doom->you.rotspeed = 0.05;
 	doom->you.speed = doom->you.is_sprinting ? 0.2 : 0.1;
-
-	if (doom->keys.up == 1)
-	{
-		if (doom->keys.right == 1)
-			moove(doom->you.speed, &doom->you, &doom->map, -M_PI_4);
-		else if (doom->keys.left == 1)
-			moove(doom->you.speed, &doom->you, &doom->map, M_PI_4);
-		else
-			moove(doom->you.speed, &doom->you, &doom->map, 0);
-	}
-	else if (doom->keys.down == 1)
-	{
-		if (doom->keys.right == 1)
-			moove(-doom->you.speed, &doom->you, &doom->map, -M_PI_4);
-		else if (doom->keys.left == 1)
-			moove(-doom->you.speed, &doom->you, &doom->map, M_PI_4);
-		else
-			moove(-doom->you.speed, &doom->you, &doom->map, 0);
-	}
-	else if (doom->keys.right == 1)
-		moove(doom->you.speed, &doom->you, &doom->map, -M_PI_2);
-	else if (doom->keys.left == 1)
-		moove(doom->you.speed, &doom->you, &doom->map, M_PI_2);
-	
-	if (doom->keys.z_up)
-		doom->you.pos.z += 0.02;
-	else if (doom->keys.z_down)
-		doom->you.pos.z -= 0.02;
-	
+	update_velocity(doom, &doom->you);
+	moving(doom);
+//	if (doom->keys.right == 1)
+//		turn(-doom->you.rotspeed, &doom->you, doom);
+//	if (doom->keys.left == 1)
+//		turn(doom->you.rotspeed, &doom->you, doom);
+//	if (doom->keys.up == 1)
+//		moove(doom->you.speed, doom, &doom->map, 0);
+//	if (doom->keys.down == 1)
+//		moove(-doom->you.speed, doom, &doom->map, 0);
+	doom->you.rotspeed = doom->settings.framerate * 3.0;
 }
 
 void	loop_game(t_doom *doom)

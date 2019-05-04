@@ -21,8 +21,6 @@ void	setup_settings(t_doom *doom)
 	doom->settings.key_backward = SDL_SCANCODE_S;
 	doom->settings.key_left = SDL_SCANCODE_A;
 	doom->settings.key_right = SDL_SCANCODE_D;
-	doom->settings.z_up = SDL_SCANCODE_P;
-	doom->settings.z_down = SDL_SCANCODE_L;
 	doom->settings.key_sprint = SDL_SCANCODE_LSHIFT;
 	doom->settings.render_textures = 1;
 	doom->settings.enable_crt_floor = 1;
