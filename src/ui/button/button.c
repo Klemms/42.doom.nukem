@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 02:04:31 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/03 05:16:18 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/04 01:47:04 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void		button_prepare(t_doom *doom, t_el_button *button)
 		= button->rect.x + button->rect.w / 2 - button->text->u_w / 2;
 	button->text->ui->pos_y
 		= button->rect.y + button->rect.h / 2 - button->text->u_h / 2;
-	text_prepare(doom, button->text, 1);
+	text_prepare(doom, button->text, 1, 0);
 }
 
 void		button_render(t_doom *doom, SDL_Surface *surface, t_el_button *button)

@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 05:50:34 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/03 09:00:14 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/04 01:47:47 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 t_el_wh_jauge	*create_wjauge(t_doom *d, SDL_Rect rc, SDL_Rect mmvs)
 {
 	t_el_wh_jauge	*jg;
+	char			*s;
+
 
 	if (!(jg = mmalloc(sizeof(t_el_wh_jauge))))
 		exit_program(d, ERROR_SDL_AFTER_INIT);
@@ -28,22 +30,25 @@ t_el_wh_jauge	*create_wjauge(t_doom *d, SDL_Rect rc, SDL_Rect mmvs)
 	jg->border = d->editor.base_color;
 	jg->color = d->editor.select_color;
 	jg->is_focused = 0;
-	jg->unit = ft_strdup("%");
-	jg->txt = create_text(d, ft_strjoin(ft_itoa(jg->value), jg->unit, 1), FONT_RIFFIC, 20);
+	jg->unit = "%";
+	s = ft_strjoin(ft_itoa(jg->value), jg->unit, 1);
+	jg->txt = create_text(d, s, FONT_RIFFIC, 20);
+	free(s);
 	jg->txt->text_color = make_rgb(0, 0, 0, 255);
 	jg->txt->ui->pos_x = jg->pos.x + jg->pos.w / 2 - jg->txt->u_w / 2;
 	jg->txt->ui->pos_y = jg->pos.y + jg->pos.h / 2 - jg->txt->u_h / 2;
-	text_prepare(d, jg->txt, 1);
+	text_prepare(d, jg->txt, 1, 0);
 	return (jg);
 }
 
 void		wjauge_prepare(t_doom *d, t_el_wh_jauge *jg)
 {
+	free(jg->txt->text);
 	jg->txt->text = ft_strjoin(ft_itoa(jg->value), jg->unit, 1);
-	text_prepare(d, jg->txt, 1);
+	text_prepare(d, jg->txt, 1, 0);
 	jg->txt->ui->pos_x = jg->pos.x + jg->pos.w / 2 - jg->txt->u_w / 2;
 	jg->txt->ui->pos_y = jg->pos.y + jg->pos.h / 2 - jg->txt->u_h / 2;
-	text_prepare(d, jg->txt, 1);
+	text_prepare(d, jg->txt, 1, 0);
 }
 
 void		wjauge_render(t_doom *d, SDL_Surface *s, t_el_wh_jauge *jg)
@@ -57,7 +62,7 @@ void		wjauge_render(t_doom *d, SDL_Surface *s, t_el_wh_jauge *jg)
 
 void		wjauge_affect(t_doom *d, t_el_wh_jauge *jg, int change, int prepare)
 {
-	wjauge_set(d, jg, jg->value + change, prepare);
+	wjauge_set(d, jg, jg->value + change * jg->step, prepare);
 }
 
 void		wjauge_set(t_doom *d, t_el_wh_jauge *jg, int value, int prepare)

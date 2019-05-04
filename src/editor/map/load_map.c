@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 02:29:43 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/02 02:16:41 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/04 01:07:43 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,10 @@
 
 void	editor_init_map(t_doom *doom)
 {
-	SDL_SetWindowTitle(doom->win, ft_strjoin("Le Doom - Editing : ", doom->nmap->map_name, 0));
+	char	*s;
+
+	if (!(s = ft_strjoin("Le Doom - Editing : ", doom->nmap->map_name, 2)))
+		exit_program(doom, ERROR_SDL_AFTER_INIT);
+	SDL_SetWindowTitle(doom->win, s);
+	free(s);
 }

@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 02:04:31 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/03 09:07:39 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/04 01:50:10 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	init_editor(t_doom *doom)
 	lstcontainer_add(e->block_types, make_block_type(doom, "Wall", 0xFF848484, block_wall));
 	lstcontainer_add(e->block_types, make_block_type(doom, "Small Wall", 0xFFb78c73, block_small_wall));
 	lstcontainer_add(e->block_types, make_block_type(doom, "Spawn Point", 0xFFC13CC1, block_spawn));
+	lstcontainer_add(e->block_types, make_block_type(doom, "End Point", 0xFFF44262, block_end));
 	e->selected_block = NULL;
 
 	register_event(doom, SDL_QUIT, quit_event);
@@ -83,16 +84,25 @@ void	init_editor(t_doom *doom)
 	e->tool_block->background_color = make_rgb(145, 145, 145, 255);
 	button_prepare(doom, e->tool_block);
 
+	e->validate = create_button(doom, "V", make_rect(WIN_W - 285, 10, 60, 60), ed_test_map);
+	e->validate->background_color = e->select_color;
+	e->validate->background_color_disabled = make_rgb(145, 145, 145, 255);
+	button_prepare(doom, e->validate);
+	e->save = create_button(doom, "Save to file", make_rect(WIN_W - 215, 10, 200, 60), ed_save_file);
+	e->save->background_color = e->select_color;
+	e->save->background_color_disabled = make_rgb(145, 145, 145, 255);
+	button_prepare(doom, e->save);
+
 	e->current_tool = create_text(doom, "Current tool : none", FONT_RIFFIC, 30);
 	e->current_tool->ui->pos_x = 90;
 	e->current_tool->ui->pos_y = 20;
-	text_prepare(doom, e->current_tool, 1);
+	text_prepare(doom, e->current_tool, 1, 0);
 
 	e->str_tool = create_text(doom, "Tools", FONT_RIFFIC, 20);
 	e->str_tool->ui->pos_x = 10;
 	e->str_tool->ui->pos_y = 90;
 	e->str_tool->text_color = make_rgb(0, 0, 0, 255);
-	text_prepare(doom, e->str_tool, 1);
+	text_prepare(doom, e->str_tool, 1, 0);
 
 	e->rbr_quadrant.orient_n = create_button(doom, "N", make_rect(15, 80, 60, 60), ed_bt_edit_click);
 	e->rbr_quadrant.orient_n->background_color = make_rgb(145, 145, 145, 255);
@@ -112,17 +122,23 @@ void	init_editor(t_doom *doom)
 	button_prepare(doom, e->rbr_quadrant.orient_e);
 
 	e->rbr_quadrant.s_height = create_wjauge(doom, make_rect(15, 190, 270, 30), make_rect(0, 1000, 50, 10));
-	e->rbr_quadrant.s_height->unit = "";
+	e->rbr_quadrant.s_height->unit = "%";
 	wjauge_prepare(doom, e->rbr_quadrant.s_height);
 	e->rbr_quadrant.sc_height = create_wjauge(doom, make_rect(15, 265, 270, 30), make_rect(0, 1000, 50, 10));
-	e->rbr_quadrant.sc_height->unit = "";
+	e->rbr_quadrant.sc_height->unit = "%";
 	wjauge_prepare(doom, e->rbr_quadrant.sc_height);
 	e->rbr_quadrant.b_w = create_wjauge(doom, make_rect(15, 380, 270, 30), make_rect(0, 100, 50, 5));
-	e->rbr_quadrant.b_w->unit = "";
+	e->rbr_quadrant.b_w->unit = "%";
 	wjauge_prepare(doom, e->rbr_quadrant.b_w);
 	e->rbr_quadrant.b_h = create_wjauge(doom, make_rect(15, 455, 270, 30), make_rect(0, 100, 50, 5));
-	e->rbr_quadrant.b_h->unit = "";
+	e->rbr_quadrant.b_h->unit = "%";
 	wjauge_prepare(doom, e->rbr_quadrant.b_h);
+
+	e->state = create_text(doom, "...", FONT_SYS, 18);
+	e->state->ui->pos_x = WIN_W - 500;
+	e->state->ui->pos_y = 52;
+	e->state->text_color = make_rgb(238, 239, 172, 255);
+	text_prepare(doom, e->state, 1, 1);
 
 	e->rbr_quadrant.has_celng = create_checkbox(doom, make_rect(256, 310, 29, 29), 0);
 
@@ -163,11 +179,19 @@ void	render_editor(t_doom *doom)
 
 	button_render(doom, e->ed_surface, e->tool_none);
 	button_render(doom, e->ed_surface, e->tool_block);
+	button_render(doom, e->ed_surface, e->validate);
+	button_render(doom, e->ed_surface, e->save);
 	text_render(doom, e->ed_surface, e->current_tool);
 	text_render(doom, e->ed_surface, e->str_tool);
+	draw_rect(e->ed_surface, make_rect(WIN_W - 710, 0, 3, 80), e->base_color, 1);
+	draw_rect(e->ed_surface, make_rect(WIN_W - 300, 0, 3, 80), e->base_color, 1);
+	doom->tmp_color = make_rgb(255, 255, 255, 255);
+	instant_text(doom, e->ed_surface, "Last status :", make_rect(WIN_W - 700, 5, 18, 0));
+	text_render(doom, e->ed_surface, e->state);
 
+	free(doom->fps_counter->text);
 	doom->fps_counter->text = ft_strjoin(ft_itoa(doom->average_fps), " fps", 1);
-	text_prepare(doom, doom->fps_counter, 1);
+	text_prepare(doom, doom->fps_counter, 1, 0);
 	text_render(doom, e->ed_surface, doom->fps_counter);
 }
 

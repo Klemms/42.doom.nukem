@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 19:08:52 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/05 12:24:11 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/04 00:49:11 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,5 @@ char			*ft_itoa(int n)
 		n = n / 10;
 		i++;
 	}
-	return (ft_strrev(str));
+	return (ft_strrev(str, 1));
 }
