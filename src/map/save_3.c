@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 03:08:26 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/04 08:59:48 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/04 12:37:20 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int		read_map(char *path)
 	int		fd;
 	int		sr;
 	void	*buff;
-	void	*test;
+	void	*tmp;
+	t_lstcontainer	*data;
 	size_t	sdata;
 
 	//test = mmalloc(sizeof(char) * 1025);
@@ -28,14 +29,21 @@ int		read_map(char *path)
 		return (errno);
 	sr = 0;
 	sdata = 0;
-	buff = ft_strnew(BUFF_SIZE);
+	data = lstcontainer_new();
+	buff = mmalloc(BUFF_SIZE);
 	while ((sr = read(fd, buff, BUFF_SIZE)) > 0)
 	{
-		printf("sdata : %d\n", sr);
-		test = ft_memjoin(&test, &buff, sdata, sr);
+		if (sdata % 100 == 0)
+			{
+
+		printf("s : %d\n", sr);
+		fflush(stdout);
+			}
+		tmp = mmalloc(sr);
+		lstcontainer_add(data, ft_memcpy(buff, tmp, sr));
 		sdata += sr;
 	}
-		printf("err : %s\n", strerror(errno));
+		printf("err : %d\n", sr);
 	//printf("%d %d %d\n", ((char *)test)[0], ((char *)test)[4], ((SDL_Color *)((char *)test)[8])->r);
 	fflush(stdout);
 	close(fd);
@@ -58,8 +66,6 @@ void	write_textures(t_nmap *m, int fd)
 		tmp_texture = (t_texture *)tmp->content;
 		x = 0;
 		write(fd, &tmp_texture->tex_pixels, sizeof(int));
-		ft_putnbr(x);
-		ft_putendl(" TEXT");
 		while (x < tmp_texture->tex_pixels)
 		{
 			write(fd, &(((int *)tmp_texture->surface->pixels)[x]), sizeof(int));

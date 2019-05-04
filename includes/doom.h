@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/04 10:36:44 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/04 11:00:46 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -574,5 +574,7 @@ int					read_map(char *path);
 void				teleport_player(t_player *player, double x, double y, double z);
 
 unsigned int		checksum(void *data, size_t size, unsigned int seed);
+
+void				draw_minimap(t_doom *d);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 00:02:20 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/04 10:55:53 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/04 11:33:41 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		validate_map(t_nmap	*m)
 	int		spawn_points;
 	int		end_points;
 
-	//read_map("maps/test.nmap");
+	read_map("maps/test.nmap");
 
 	y = 0;
 	spawn_points = 0;
