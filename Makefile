@@ -6,7 +6,7 @@
 #    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 22:39:07 by cababou           #+#    #+#              #
-#    Updated: 2019/05/04 00:23:00 by cababou          ###   ########.fr        #
+#    Updated: 2019/05/04 03:17:33 by cababou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,8 @@ SRC := doom.c easter_eggs/hypercam.c editor/base_events.c \
 	ui/checkbox/checkbox.c \
 	editor/blocks.c \
 	map/save.c \
-	map/save_2.c
+	map/save_2.c \
+	map/save_3.c
 
 HEADERS := doom.h editor.h errors.h
 

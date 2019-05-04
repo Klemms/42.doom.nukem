@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/26 17:21:05 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/04 00:49:29 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/04 06:13:24 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,6 +200,8 @@ int					ft_pow(int nb, int power);
 int					rgba_to_int(int r, int g, int b, int a);
 
 int					get_next_line(const int fd, char **line);
+
+void				*ft_memjoin(void *m1, void *m2, size_t s1, size_t s2);
 
 void				*mmalloc(size_t size);
 

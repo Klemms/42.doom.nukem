@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/04 02:28:48 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/04 03:38:12 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -560,7 +560,11 @@ void				ed_test_map(t_doom *d, t_el_button *b, SDL_MouseButtonEvent ev);
 char				*map_reason_to_txt(int reason);
 int					player_valid_tile(t_player *pl, t_nmap *nmap);
 t_mblock			*get_spawn_point(t_nmap *nmap);
+int					write_map(t_nmap *m, char *path);
+int					read_map(char *path);
 
 void				teleport_player(t_player *player, double x, double y, double z);
+
+unsigned int		checksum(void *data, size_t size, unsigned int seed);
 
 #endif

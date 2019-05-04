@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 00:19:47 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/04 02:13:03 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/04 08:23:24 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ t_nmap	*convert_map(t_doom *doom, t_map *map, t_lstcontainer *texs)
 	nmap->size_y = map->width;
 	nmap->skybox_color = make_rgb(0, 0, 0, 255);
 	nmap->textures = lstcontainer_new();
-	lstcontainer_add(nmap->textures, ft_lstget_fromelement(0, texs->firstelement));
-	lstcontainer_add(nmap->textures, ft_lstget_fromelement(1, texs->firstelement));
-	lstcontainer_add(nmap->textures, ft_lstget_fromelement(2, texs->firstelement));
-	lstcontainer_add(nmap->textures, ft_lstget_fromelement(3, texs->firstelement));
+	lstcontainer_add(nmap->textures, ft_lstget_fromelement(0, texs->firstelement)->content);
+	lstcontainer_add(nmap->textures, ft_lstget_fromelement(1, texs->firstelement)->content);
+	lstcontainer_add(nmap->textures, ft_lstget_fromelement(2, texs->firstelement)->content);
+	lstcontainer_add(nmap->textures, ft_lstget_fromelement(3, texs->firstelement)->content);
 	if(!(nmap->map = mmalloc(sizeof(t_mblock *) * nmap->size_x)))
 		exit_program(doom, ERROR_SDL_AFTER_INIT);
 	x = 0;
