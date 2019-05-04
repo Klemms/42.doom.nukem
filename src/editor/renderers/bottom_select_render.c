@@ -23,7 +23,7 @@ void	render_blocks(t_doom *doom)
 	doom->tmp_color = make_rgb(255, 255, 255, 255);
 	instant_text(doom, doom->editor.bsr,
 		"Block list", make_rect(20, 10, 25, 0));
-	tmp = doom->editor.block_types->firstelement;
+	tmp = doom->block_types->firstelement;
 	x = 10;
 	y = 50;
 	while (tmp)

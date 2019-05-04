@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/04 09:10:18 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/04 10:36:44 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -286,7 +286,6 @@ typedef struct	s_editor
 	int					x_focus;
 	int					y_focus;
 	t_ed_focus			foc;
-	t_lstcontainer		*block_types;
 	SDL_Color			base_color;
 	SDL_Color			select_color;
 	t_el_button			*validate;
@@ -425,6 +424,7 @@ typedef struct		s_doom
 	int				m_x; // Mouse X // Both Updated each frame
 	int				m_y; // Mouse Y
 	t_scores		scores;
+	t_lstcontainer		*block_types;
 }					t_doom;
 
 typedef struct		s_registered_event

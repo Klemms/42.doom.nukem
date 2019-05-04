@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/29 13:20:21 by hdussert          #+#    #+#             */
-/*   Updated: 2019/05/04 09:09:24 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/04 10:37:55 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,13 @@ int			main(int argc, char *argv[])
 	ft_bzero(&doom, sizeof(t_doom));
 	if (argc == 1)
 		exit_program(&doom, ERROR_USAGE);
+
+	doom.block_types = lstcontainer_new();
+	lstcontainer_add(doom.block_types, make_block_type(&doom, "Air", 0xFFFFFEDD, block_air));
+	lstcontainer_add(doom.block_types, make_block_type(&doom, "Wall", 0xFF848484, block_wall));
+	lstcontainer_add(doom.block_types, make_block_type(&doom, "Small Wall", 0xFFb78c73, block_small_wall));
+	lstcontainer_add(doom.block_types, make_block_type(&doom, "Spawn Point", 0xFFC13CC1, block_spawn));
+	lstcontainer_add(doom.block_types, make_block_type(&doom, "End Point", 0xFFF44262, block_end));
 	doom.textures = lstcontainer_new();
 	init_base(&doom, argc, argv);
 	if (!parsing(&doom, doom.game_mode == M_EDITOR ? argv[2] : argv[1]))
@@ -46,6 +53,7 @@ int			main(int argc, char *argv[])
 	init_textures(&doom);
 	init_scores(&doom);
 	doom.nmap = convert_map(&doom, &doom.old_map, doom.textures);
+	
 	if (doom.game_mode == M_GAME)
 	{
 		init_game(&doom);

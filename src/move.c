@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 10:12:00 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/05/04 09:11:35 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/04 09:38:27 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	moving2(t_doom *doom)
 
 int		check_collision(t_doom *doom, int neighbors[2])
 {
-	if (doom->map.m[neighbors[1]][neighbors[0]] != '.')
+	if (doom->nmap->map[neighbors[1]][neighbors[0]].collides)
 		return (1);
 	return (0);
 }
