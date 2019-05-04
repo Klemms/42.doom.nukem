@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/26 17:21:05 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/05 14:32:52 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/04 06:13:24 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ char				*ft_strsub(char const *s, size_t t, size_t l, size_t f);
 
 char				*ft_strjoin(char const *s1, char const *s2, size_t freelv);
 
-char				*ft_strrev(char const *s1);
+char				*ft_strrev(char *s1, int free_input);
 
 char				*ft_strtrim(char const *s);
 
@@ -200,6 +200,8 @@ int					ft_pow(int nb, int power);
 int					rgba_to_int(int r, int g, int b, int a);
 
 int					get_next_line(const int fd, char **line);
+
+void				*ft_memjoin(void *m1, void *m2, size_t s1, size_t s2);
 
 void				*mmalloc(size_t size);
 

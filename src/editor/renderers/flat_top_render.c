@@ -89,7 +89,6 @@ void	editor_ftr_clicked(t_doom *doom)
 		&& e->y_focus < doom->nmap->size_y && e->selected_block >= 0
 		&& e->selected_block && doom->editor.hand_tool == tool_block)
 	{
-		ft_putchar('\a');
 		doom->nmap->map[e->x_focus][e->y_focus].block_type = e->selected_block->block_type;
 	}
 }

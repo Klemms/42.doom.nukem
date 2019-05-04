@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 00:24:22 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/01 21:22:06 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/04 00:59:06 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void		init_textures(t_doom *doom)
 {
 	t_list		*lst;
 	t_texture	*tmp_texture;
+	SDL_Surface	*tmp_s;
 
 	lst = doom->textures->firstelement;
 	while (lst)
@@ -52,7 +53,9 @@ void		init_textures(t_doom *doom)
 		if (!tmp_texture->surface)
 		{
 			tmp_texture->surface = IMG_Load(tmp_texture->texture_name);
+			tmp_s = tmp_texture->surface;
 			tmp_texture->surface = SDL_ConvertSurfaceFormat(tmp_texture->surface, doom->surface->format->format, 0);
+			SDL_FreeSurface(tmp_s);
 			tmp_texture->tex_pixels = tmp_texture->surface->w * tmp_texture->surface->h;
 		}
 		lst = lst->next;
