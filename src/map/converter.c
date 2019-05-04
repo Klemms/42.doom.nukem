@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 00:19:47 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/04 08:23:24 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/04 10:33:41 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,44 +23,45 @@ t_nmap	*convert_map(t_doom *doom, t_map *map, t_lstcontainer *texs)
 	if (!(nmap = mmalloc(sizeof(t_nmap))))
 		exit_program(doom, ERROR_SDL_AFTER_INIT);
 	nmap->map_name = ft_strdup(map->map_name);
-	nmap->size_x = map->height;
-	nmap->size_y = map->width;
+	nmap->size_x = map->width;
+	nmap->size_y = map->height;
 	nmap->skybox_color = make_rgb(0, 0, 0, 255);
 	nmap->textures = lstcontainer_new();
 	lstcontainer_add(nmap->textures, ft_lstget_fromelement(0, texs->firstelement)->content);
 	lstcontainer_add(nmap->textures, ft_lstget_fromelement(1, texs->firstelement)->content);
 	lstcontainer_add(nmap->textures, ft_lstget_fromelement(2, texs->firstelement)->content);
 	lstcontainer_add(nmap->textures, ft_lstget_fromelement(3, texs->firstelement)->content);
-	if(!(nmap->map = mmalloc(sizeof(t_mblock *) * nmap->size_x)))
+	if(!(nmap->map = mmalloc(sizeof(t_mblock *) * nmap->size_y)))
 		exit_program(doom, ERROR_SDL_AFTER_INIT);
-	x = 0;
-	while (x < nmap->size_x)
+	y = 0;
+	while (y < nmap->size_y)
 	{
-		y = 0;
-		nmap->map[x] = mmalloc(sizeof(t_mblock) * nmap->size_y);
-		while (y < nmap->size_y)
+		x = 0;
+		nmap->map[y] = mmalloc(sizeof(t_mblock) * nmap->size_x);
+		while (x < nmap->size_x)
 		{
-			nmap->map[x][y].block_type = char_to_blocktype(map->m[x][y]);
-			nmap->map[x][y].n_texture = 0;
-			nmap->map[x][y].s_texture = 1;
-			nmap->map[x][y].w_texture = 2;
-			nmap->map[x][y].e_texture = 3;
-			nmap->map[x][y].orientation = 0;
-			nmap->map[x][y].height = 100;
-			nmap->map[x][y].x_size = 100;
-			nmap->map[x][y].y_size = 100;
-			nmap->map[x][y].light = 0xFFFFFFFF;
-			nmap->map[x][y].ceiling_height = 100;
-			nmap->map[x][y].ceilng_tex = 0;
-			nmap->map[x][y].has_ceiling = 1;
-			nmap->map[x][y].has_ceiling = 1;
-			nmap->map[x][y].floor_tex = 2;
-			nmap->map[x][y].floor_tex = nmap->map[x][y].block_type == block_wall || nmap->map[x][y].block_type == block_small_wall ? 1 : 0;
-			nmap->map[x][y].x = x;
-			nmap->map[x][y].x = y;
-			y++;
+			nmap->map[y][x].block_type = char_to_blocktype(map->m[y][x]);
+			nmap->map[y][x].orientation = 0;
+			nmap->map[y][x].x_size = 100;
+			nmap->map[y][x].y_size = 100;
+			nmap->map[y][x].height = 100;
+			nmap->map[y][x].ceiling_height = 100;
+			nmap->map[y][x].has_ceiling = 1;
+			nmap->map[y][x].ceilng_tex = 1;
+			nmap->map[y][x].floor_tex = 2;
+			nmap->map[y][x].n_texture = 0;
+			nmap->map[y][x].s_texture = 1;
+			nmap->map[y][x].w_texture = 2;
+			nmap->map[y][x].e_texture = 3;
+			nmap->map[y][x].light = 0xFFFFFFFF;
+			nmap->map[y][x].has_ceiling = 1;
+			nmap->map[y][x].collides = nmap->map[y][x].block_type == block_wall || nmap->map[y][x].block_type == block_small_wall ? 1 : 0;
+			nmap->map[y][x].x = x;
+			nmap->map[y][x].y = y;
+			x++;
 		}
-		x++;
+		y++;
 	}
+	nmap->map[map->start_y][map->start_x].block_type = block_spawn;
 	return (nmap);
 }

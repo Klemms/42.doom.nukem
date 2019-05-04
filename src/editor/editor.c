@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 02:04:31 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/04 01:50:10 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/04 10:43:19 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,6 @@ void	init_editor(t_doom *doom)
 
 	editor_init_map(doom);
 
-	e->block_types = lstcontainer_new();
-	lstcontainer_add(e->block_types, make_block_type(doom, "Air", 0xFFFFFEDD, block_air));
-	lstcontainer_add(e->block_types, make_block_type(doom, "Wall", 0xFF848484, block_wall));
-	lstcontainer_add(e->block_types, make_block_type(doom, "Small Wall", 0xFFb78c73, block_small_wall));
-	lstcontainer_add(e->block_types, make_block_type(doom, "Spawn Point", 0xFFC13CC1, block_spawn));
-	lstcontainer_add(e->block_types, make_block_type(doom, "End Point", 0xFFF44262, block_end));
 	e->selected_block = NULL;
 
 	register_event(doom, SDL_QUIT, quit_event);

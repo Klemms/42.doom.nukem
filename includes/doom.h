@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/04 03:38:12 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/04 10:36:44 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -286,7 +286,6 @@ typedef struct	s_editor
 	int					x_focus;
 	int					y_focus;
 	t_ed_focus			foc;
-	t_lstcontainer		*block_types;
 	SDL_Color			base_color;
 	SDL_Color			select_color;
 	t_el_button			*validate;
@@ -411,7 +410,7 @@ typedef struct		s_doom
 	int				average_fps;
 	t_editor		editor;
 	t_lstcontainer	*buttons;
-	t_map			map;
+	t_map			old_map;
 	t_player		you;
 	t_key			keys;
 	int				temp_color;
@@ -425,6 +424,7 @@ typedef struct		s_doom
 	int				m_x; // Mouse X // Both Updated each frame
 	int				m_y; // Mouse Y
 	t_scores		scores;
+	t_lstcontainer		*block_types;
 }					t_doom;
 
 typedef struct		s_registered_event
@@ -448,7 +448,7 @@ SDL_Surface			*get_surface(t_doom *doom, int texture_id);
 
 void    			draw_screen(t_doom *doom);
 
-void				new_player(t_doom *doom, t_player *player, t_map *map);
+void				new_player(t_doom *doom, t_player *player, t_nmap *nmap);
 int					draw(t_doom *w);
 int					parsing(t_doom *w, char *file);
 int					key_down(t_doom *doom, SDL_Event event);

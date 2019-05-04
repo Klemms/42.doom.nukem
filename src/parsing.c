@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 11:21:38 by hdussert          #+#    #+#             */
-/*   Updated: 2019/05/01 23:00:13 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/04 09:10:35 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,16 +108,16 @@ int				parsing(t_doom *doom, char *file)
 {
 	int		fd[2];
 
-	doom->map.map_name = file;
+	doom->old_map.map_name = file;
 	if ((fd[0] = open(file, O_RDONLY)) < 2
 	|| (read(fd[0], NULL, 0) < 0))
 		return (0);
 	fd[1] = open(file, O_RDONLY);
 	if (is_valid(doom, fd[0]))
 	{
-		fill(doom, &doom->map, fd[1]);
-		contour(doom, &doom->map);
-		if (!startpos(&doom->map, '.'))
+		fill(doom, &doom->old_map, fd[1]);
+		contour(doom, &doom->old_map);
+		if (!startpos(&doom->old_map, '.'))
 			return (0);
 		return (1);
 	}
