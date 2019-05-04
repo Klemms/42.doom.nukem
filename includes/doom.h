@@ -388,6 +388,19 @@ typedef struct		s_raycasting
 	t_vec		floor;
 	t_vec_int	floor_tex;
 	double		wall_x;
+// SPRITES
+	int			v_move_screen;
+	t_vec		rel_sprite_pos;
+	t_vec		transform;
+	int			sprite_screen_x;
+	int 		sprite_height;
+	int 		sprite_width;
+	int			draw_start_x;
+	int			draw_end_x;
+	int			draw_start_y;
+	int			draw_end_y;
+	int			tex_x;
+	int			tex_y;
 }					t_raycasting;
 
 typedef struct		s_doom

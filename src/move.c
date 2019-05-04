@@ -51,12 +51,12 @@ void	update_velocity(t_doom *doom, t_player *player)
 	update_velocity2(doom, player, &move_vec);
 }
 
-void	moving2(t_doom *doom)
+void	moving(t_doom *doom)
 {
-	int	dest[2];
+	t_xy dest;
 	int channel;
 	int	tmp_pos_x;
-	t_xy	collision;
+	double t1;
 
 	if (doom->you.moving)
 	{
@@ -64,30 +64,39 @@ void	moving2(t_doom *doom)
 		if (channel != 0)
 			Mix_HaltChannel(channel);
 	}
-	collision.x = (doom->you.velocity.x < 0) ? doom->you.velocity.x - COL : doom->you.velocity.x + COL;
-	collision.y = (doom->you.velocity.y < 0) ? doom->you.velocity.y - COL : doom->you.velocity.y + COL;
-	tmp_pos_x = doom->you.pos.x;
-	dest[0] = doom->you.pos.x + collision.x;
-	dest[1] = doom->you.pos.y + collision.y;
-	if (doom->nmap->map[(int)doom->you.pos.y][dest[0]].collides)
-	{
-		if (doom->you.velocity.x < 0)
-			doom->you.pos.x = dest[0] + 1 + COL;
-		else
-			doom->you.pos.x = dest[0] - COL;
-	}
-	else
+
+	t1 = 0.1;
+	dest.x = doom->you.pos.x + doom->you.velocity.x;
+	dest.y = doom->you.pos.y + doom->you.velocity.y;
+	//!doom->nmap->map[(int)doom->you.pos.y][(int)(dest.x + t1)].collides
+	//&& !doom->nmap->map[(int)doom->you.pos.y][(int)(dest.x - t1)].collides
+	if (!doom->nmap->map[(int)(doom->you.pos.y - t1)][(int)(dest.x + t1)].collides
+	&& !doom->nmap->map[(int)(doom->you.pos.y + t1)][(int)(dest.x - t1)].collides
+	&& !doom->nmap->map[(int)(doom->you.pos.y + t1)][(int)(dest.x + t1)].collides
+	&& !doom->nmap->map[(int)(doom->you.pos.y - t1)][(int)(dest.x - t1)].collides)
 		doom->you.pos.x += doom->you.velocity.x;
-	if (doom->nmap->map[dest[1]][tmp_pos_x].collides)
-	{
-		if (doom->you.velocity.y < 0)
-			doom->you.pos.y = dest[1] + 1 + COL;
-		else
-			doom->you.pos.y = dest[1] - COL;
-	}
 	else
+		doom->you.velocity.x = 0;
+	//!doom->nmap->map[(int)(dest.y + t1)][(int)doom->you.pos.x].collides
+	/*&& !doom->nmap->map[(int)(dest.y - t1)][(int)doom->you.pos.x].collides
+	&&*/ 
+	if (!doom->nmap->map[(int)(dest.y + t1)][(int)(doom->you.pos.x - t1)].collides
+	&& !doom->nmap->map[(int)(dest.y - t1)][(int)(doom->you.pos.x + t1)].collides
+	&& !doom->nmap->map[(int)(dest.y + t1)][(int)(doom->you.pos.x + t1)].collides
+	&& !doom->nmap->map[(int)(dest.y - t1)][(int)(doom->you.pos.x - t1)].collides)
 		doom->you.pos.y += doom->you.velocity.y;
-	doom->you.moving = 0;
+	else
+		doom->you.velocity.y = 0;
+	if (doom->you.pos.x == dest.x && doom->you.pos.y == dest.y)
+		if (doom->nmap->map[(int)(doom->you.pos.y + t1)][(int)(doom->you.pos.x + t1)].collides
+		|| doom->nmap->map[(int)(doom->you.pos.y - t1)][(int)(doom->you.pos.x - t1)].collides
+		|| doom->nmap->map[(int)(doom->you.pos.y - t1)][(int)(doom->you.pos.x + t1)].collides
+		|| doom->nmap->map[(int)(doom->you.pos.y + t1)][(int)(doom->you.pos.x - t1)].collides)
+		{
+		//|| doom->nmap->map[(int)doom->you.pos.y][(int)doom->you.pos.x].collides)
+			doom->you.pos.x -= doom->you.velocity.x;
+			doom->you.pos.y -= doom->you.velocity.y;
+		}
 }
 
 int		check_collision(t_doom *doom, int neighbors[2])
@@ -97,7 +106,7 @@ int		check_collision(t_doom *doom, int neighbors[2])
 	return (0);
 }
 
-void	moving(t_doom *doom)
+void	moving2(t_doom *doom)
 {
 	t_xy	dest;
 	int channel;
@@ -149,55 +158,15 @@ void	moving(t_doom *doom)
 			}
 		}
 	}
-	else if ((dest.x - (int)doom->you.pos.x <= COL || dest.x - (int)doom->you.pos.x >= 1 - COL)
-	&& (dest.y - (int)doom->you.pos.y <= COL || dest.y - (int)doom->you.pos.y >= 1 - COL))
+	else
 	{
-//		printf("3\n");
-		if (dest.x - (int)doom->you.pos.x <= COL)
-			neighbors[0] = (int)doom->you.pos.x - 1;
-		else
-			neighbors[0] = (int)doom->you.pos.x + 1;
-		neighbors[1] = (int)doom->you.pos.y;
+		neighbors[0] = dest.x;
+		neighbors[1] = dest.y;
 		if (check_collision(doom, neighbors))
-			doom->you.velocity.x = 0;
-		tmp_neighbors = neighbors[0];
-		neighbors[0] = (int)doom->you.pos.x;
-		if (dest.y - (int)doom->you.pos.y <= COL)
-			neighbors[1] = (int)doom->you.pos.y - 1;
-		else
-			neighbors[1] = (int)doom->you.pos.y + 1;
-		if (check_collision(doom, neighbors))
-			doom->you.velocity.y = 0;
-		neighbors[0] = tmp_neighbors;
-		if (check_collision(doom, neighbors) && doom->you.velocity.x != 0 && doom->you.velocity.y != 0)
 		{
-			if (fabs(round(dest.x) - dest.x) > fabs(round(dest.y) - dest.y))
-				doom->you.velocity.x = 0;
-			else
-				doom->you.velocity.y = 0;
-		}
-	}
-	else if (dest.x - (int)doom->you.pos.x <= COL || dest.x - (int)doom->you.pos.x >= 1 - COL)
-	{
-//		printf("4\n");
-		if (dest.x - (int)doom->you.pos.x <= COL)
-			neighbors[0] = (int)doom->you.pos.x - 1;
-		else
-			neighbors[0] = (int)doom->you.pos.x + 1;
-		neighbors[1] = (int)doom->you.pos.y;
-		if (check_collision(doom, neighbors))
 			doom->you.velocity.x = 0;
-	}
-	else if (dest.y - (int)doom->you.pos.y <= COL || dest.y - (int)doom->you.pos.y >= 1 - COL)
-	{
-//		printf("5\n");
-		neighbors[0] = (int)doom->you.pos.x;
-		if (dest.y - (int)doom->you.pos.y <= COL)
-			neighbors[1] = (int)doom->you.pos.y - 1;
-		else
-			neighbors[1] = (int)doom->you.pos.y + 1;
-		if (check_collision(doom, neighbors))
 			doom->you.velocity.y = 0;
+		}
 	}
 	doom->you.pos.x += doom->you.velocity.x;
 	doom->you.pos.y += doom->you.velocity.y;	

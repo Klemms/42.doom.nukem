@@ -81,29 +81,6 @@ void	game_loop(t_doom *doom, t_settings *sett)
 	doom->you.speed = doom->you.is_sprinting ? 0.2 : 0.1;
 	update_velocity(doom, &doom->you);
 	moving(doom);
-
-	/*if (doom->keys.up == 1)
-	{
-		if (doom->keys.right == 1)
-			moove(doom->you.speed, &doom->you, doom->nmap, -M_PI_4);
-		else if (doom->keys.left == 1)
-			moove(doom->you.speed, &doom->you, doom->nmap, M_PI_4);
-		else
-			moove(doom->you.speed, &doom->you, doom->nmap, 0);
-	}
-	else if (doom->keys.down == 1)
-	{
-		if (doom->keys.right == 1)
-			moove(-doom->you.speed, &doom->you, doom->nmap, -M_PI_4);
-		else if (doom->keys.left == 1)
-			moove(-doom->you.speed, &doom->you, doom->nmap, M_PI_4);
-		else
-			moove(-doom->you.speed, &doom->you, &doom->nmap, 0);
-	}
-	else if (doom->keys.right == 1)
-		moove(doom->you.speed, &doom->you, doom->nmap, -M_PI_2);
-	else if (doom->keys.left == 1)
-		moove(doom->you.speed, &doom->you, doom->nmap, M_PI_2);*/
 	
 	if (doom->keys.z_up)
 		doom->you.pos.z += 0.02;
