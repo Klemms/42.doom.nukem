@@ -68,6 +68,8 @@ void	editor_ftr_mrender(t_doom *doom)
 		}
 		y++;
 	}
+	doom->editor.x_focus = -1;
+	doom->editor.y_focus = -1;
 	x = (int)((m_pos.x - q->pos_x - q->x_start) / q->zoom_level);
 	y = (int)((m_pos.y - q->pos_y - q->y_start) / q->zoom_level);
 	if (m_pos.x - q->pos_x - q->x_start >= 0 && m_pos.y - q->pos_y - q->y_start >= 0)

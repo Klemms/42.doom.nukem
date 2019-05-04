@@ -577,4 +577,6 @@ void				teleport_player(t_player *player, double x, double y, double z);
 
 unsigned int		checksum(void *data, size_t size, unsigned int seed);
 
+void				draw_minimap(t_doom *d);
+
 #endif
