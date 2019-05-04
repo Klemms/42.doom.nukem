@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fade.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 05:06:45 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/03 09:43:05 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/03 02:36:44 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	fade_surface_back(t_doom *doom)
 	int			new_w;
 	int			new_h;
 
-	new_w = doom->editor.anim_w * 1.15;
-	new_h = doom->editor.anim_h * 1.15;
+	new_w = doom->editor.anim_w * 1.1;
+	new_h = doom->editor.anim_h * 1.1;
 	r = make_rect(WIN_W / 2 - new_w / 2, WIN_H / 2 - new_h / 2, new_w, new_h);
 	SDL_SetSurfaceAlphaMod(doom->editor.ed_surface, doom->editor.anim_alpha);
 	SDL_BlitScaled(doom->editor.ed_surface, NULL, doom->surface, &r);

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   doom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
 /*   Updated: 2019/05/04 03:38:12 by cababou          ###   ########.fr       */
@@ -34,8 +34,6 @@
 
 # define WIN_W 1920
 # define WIN_H 1080
-
-# define COL 0.1
 
 /* Vector-like structs */
 typedef struct 		s_xy
@@ -572,7 +570,5 @@ int					read_map(char *path);
 void				teleport_player(t_player *player, double x, double y, double z);
 
 unsigned int		checksum(void *data, size_t size, unsigned int seed);
-
-void				init_scores(t_doom *doom);
 
 #endif
