@@ -6,7 +6,7 @@
 #    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 22:39:07 by cababou           #+#    #+#              #
-#    Updated: 2019/05/04 06:10:08 by cababou          ###   ########.fr        #
+#    Updated: 2019/05/04 09:00:41 by cababou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,7 @@ OBJDIR := 	obj
 OBJP :=		$(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 ONLYDIR :=	$(foreach dir, $(OBJP), $(shell dirname $(dir)))
 
-FLAG := 	-Wall -Wextra -Werror
+FLAG := -Wall -Wextra -Werror -g
 
 TOTAL_FILES := $(shell echo $(SRC) | wc -w | sed -e 's/ //g')
 CURRENT_FILES = $(shell ls $(PWD)/obj/ 2> /dev/null | wc -l | sed -e 's/ //g')
@@ -67,7 +67,7 @@ $(NAME) : $(OBJP)
 
 $(OBJDIR)/%.o: %.c libft.h get_next_line.h
 			@mkdir -p $(ONLYDIR)
-			@gcc -c -Wall -Wextra -Werror $< -o $@
+			@gcc -c $(FLAG) $< -o $@
 			@echo "$(CLEAR_LINE)$(COL_BLUE)[$(NAME)] $(COL_YELLOW)Compiling file [$(COL_VIOLET)$<$(COL_YELLOW)]. ($(CURRENT_FILES) / $(TOTAL_FILES))$(COL_END)$(BEGIN_LINE)"
 
 clean :

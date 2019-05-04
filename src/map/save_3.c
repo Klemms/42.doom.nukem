@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 03:08:26 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/04 08:16:29 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/04 08:59:48 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int		read_map(char *path)
 	//printf("%d %d %d\n", ((char *)test)[0], ((char *)test)[4], ((SDL_Color *)((char *)test)[8])->r);
 	fflush(stdout);
 	close(fd);
+		printf("FINISH READING");
 	return (0);
 }
 
