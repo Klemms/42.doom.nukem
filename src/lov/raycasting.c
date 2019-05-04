@@ -249,17 +249,18 @@ void    init_raycasting_draw_sprites(t_raycasting *rc, t_player *p, int i, SDL_S
     rc->draw_end_x = WIN_W - 1;
 }
 
-void    draw_sprites(t_doom *doom, t_raycasting *rc, t_player *p, float *z_buffer)
+void    draw_sprites(t_doom *doom, t_raycasting *rc, t_player *p, double **z_buffer, SDL_Surface *texture_sprite, Uint32 **canvas)
 {
   //SPRITE CASTING
   int stripe;
   int d;
   int numSprites = 2;
-  int spriteOrder[numSprites];
-  int spriteDistance[numSprites];
+  int spriteOrder[2];
+  int spriteDistance[2];
   t_vec   sprite[2] = { { 2, 2, 0 }, { 3, 3, 0 } };
   int i;
   int y;
+  Uint32 color;
 
   i = -1;
   while (++i < numSprites)
@@ -269,9 +270,6 @@ void    draw_sprites(t_doom *doom, t_raycasting *rc, t_player *p, float *z_buffe
   }
   //combSort(spriteOrder, spriteDistance, numSprites);
   i = -1;
-  SDL_Surface *texture_sprite;
-
-  texture_sprite = get_surface(doom, 1);
   while (++i < numSprites)
   {
     init_raycasting_draw_sprites(rc, p, i, texture_sprite, sprite, spriteOrder);
@@ -284,16 +282,17 @@ void    draw_sprites(t_doom *doom, t_raycasting *rc, t_player *p, float *z_buffe
       //2) it's on the screen (left)
       //3) it's on the screen (right)
       //4) ZBuffer, with perpendicular distance
-      if (rc->transform.y > 0 && stripe > 0 && stripe < WIN_W && rc->transform.y < z_buffer[stripe])
+      if (rc->transform.y > 0 && stripe > 0 && stripe < WIN_W && rc->transform.y < (*z_buffer)[stripe])
       {
         y = rc->draw_start_y - 1;
         while (++y < rc->draw_end_y) //for every pixel of the current stripe
         {
-          d = (y - rc->v_move_screen) * 256 - WIN_H * 128 + rc->sprite_height * 128; //256 and 128 factors to avoid floats
-          rc->tex_y = ((d * 64) / rc->sprite_height) / 256; // this 64 whas HEIGHT the other WIDTH
-          Uint32 color = ((Uint32*)texture_sprite->pixels)[64 * rc->tex_y + rc->tex_x]; //get current color from the texture
-          if((color & 0x00FFFFFF) != 0)
-            doom->s_pixels[y * WIN_W + stripe] = color; //paint pixel if it isn't black, black is the invisible color
+          //d = (y - rc->v_move_screen) * 256 - WIN_H * 128 + rc->sprite_height * 128; //256 and 128 factors to avoid floats
+          //rc->tex_y = ((d * 64) / rc->sprite_height) / 256; // this 64 whas HEIGHT the other WIDTH
+          rc->tex_y = 0;
+          color = 0xFFFF00FF;//((Uint32*)texture_sprite->pixels)[64 * rc->tex_y + rc->tex_x]; //get current color from the texture
+          //if((color & 0x00FFFFFF) != 0)
+            (*canvas)[y * WIN_W + stripe] = color; //paint pixel if it isn't black, black is the invisible color
         }
       }
     }
@@ -304,10 +303,14 @@ void    draw_screen(t_doom *doom)
 {
   doom->raycasting.texture = get_surface(doom, 2);
   doom->raycasting.x = -1;
+
+  SDL_Surface *texture_sprite;
+  texture_sprite = get_surface(doom, 1);
   //SDL_Surface *sprite;
   //sprite = get_surface(doom, 0);
-  float    *z_buffer;
-  z_buffer = malloc(sizeof(double) * WIN_W);
+  double    **z_buffer;
+  z_buffer = malloc(sizeof(double *));
+  *z_buffer = malloc(sizeof(double) * WIN_W);
   while (++doom->raycasting.x < WIN_W)
   {
     init_raycasting(&doom->raycasting, &doom->you);
@@ -315,13 +318,14 @@ void    draw_screen(t_doom *doom)
 
     init_raycasting_draw_wall(&doom->raycasting, &doom->you);
     draw_wall(&doom->raycasting, &doom->s_pixels);
-    z_buffer[doom->raycasting.x] = doom->raycasting.perp_wall_dist;
+    (*z_buffer)[doom->raycasting.x] = doom->raycasting.perp_wall_dist;
     init_raycasting_draw_floor(&doom->raycasting);
     draw_floor(&doom->raycasting, &doom->you, &doom->s_pixels);
     draw_ceiling(&doom->raycasting, &doom->you, &doom->s_pixels);
 
     //init_raycasting_draw_sprites(&doom->raycasting);
-    draw_sprites(doom, &doom->raycasting, &doom->you, z_buffer);
   }
+  draw_sprites(doom, &doom->raycasting, &doom->you, z_buffer, texture_sprite, &doom->s_pixels);
+  free(*z_buffer);
   free(z_buffer);
 }
