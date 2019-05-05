@@ -460,6 +460,18 @@ SDL_Surface			*get_surface(t_doom *doom, int texture_id);
 //void				draw_floor(t_doom *doom, double x, int column);
 
 void    			draw_screen(t_doom *doom);
+void 				draw_wfc(t_doom *doom, double **z_buffer);
+void  				wfc_init(t_raycasting *rc, t_player *p);
+void  				wfc_rayhit(t_raycasting *rc, t_player *p, t_nmap *nmap);
+void  				wfc_wall_init(t_raycasting *rc, t_player *p);
+void  				wfc_wall_draw(t_raycasting *rc, Uint32 **canvas);
+void  				wfc_fc_init(t_raycasting *rc);
+void  				wfc_floor_draw(t_raycasting *rc, t_player *p, Uint32 **canvas);
+void  				wfc_ceiling_draw(t_raycasting *rc, t_player *p, Uint32 **canvas);
+void    			draw_sprites(t_doom *doom, t_raycasting *rc, t_player *p, double **z_buffer, Uint32 **canvas); //soz
+void    			sprite_flat_init(t_raycasting *rc, t_player *p, int i, SDL_Surface *texture_sprite, t_vec *sprite, int *spriteOrder);
+void              	sprite_flat_draw(t_raycasting *rc, double **z_buffer, SDL_Surface *texture_sprite, Uint32 **canvas);
+
 
 void				new_player(t_doom *doom, t_player *player, t_nmap *nmap);
 int					draw(t_doom *w);
