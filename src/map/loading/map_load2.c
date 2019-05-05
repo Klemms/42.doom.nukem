@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 07:25:25 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/05 11:53:32 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/05 13:20:28 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ t_mblock	*read_block(t_doom *d, char *l)
 		b->s_texture = i == 0 ? ft_atoi(l) : b->s_texture;
 		b->w_texture = i == 0 ? ft_atoi(l) : b->w_texture;
 		b->e_texture = i == 0 ? ft_atoi(l) : b->e_texture;
+		b->light = i == 0 ? ft_atoi(l) : b->light;
 		b->collides = i == 0 ? ft_atoi(l) : b->collides;
 		l = ft_strsub(l, gnc, ft_strlen(l) - gnc, 1);
 		i++;
@@ -56,6 +57,10 @@ void	read_blockline(t_doom *d, t_nmap *m, int y, char *l)
 	{
 		if (l[0] == '[')
 		{
+			if (x == 24)
+			{
+				;
+			}
 			block = ft_strsubuntilchar(l, 1, ']', 0);
 			l = ft_strsub(l, ft_getnextchar(l + 1, '['), ft_strlen(l) - ft_getnextchar(l + 1, '['), 1);
 			copy_block(&m->map[y][x], read_block(d, block), 1);

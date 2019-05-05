@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/05 12:14:35 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/05 13:08:33 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -416,7 +416,6 @@ typedef struct		s_doom
 	t_key			keys;
 	int				temp_color;
 	SDL_Color		tmp_color;
-	t_lstcontainer	*textures;
 	int				texture_amount;
 	t_raycasting	raycasting;
 	int				mouse_focused;
@@ -592,7 +591,7 @@ int					read_map(t_doom *d, char *path);
 void				write_intdl(int fd, int i, int comma, int endl);
 void				wrt_textures(t_nmap *m, int fd);
 void				read_blockline(t_doom *d, t_nmap *m, int y, char *l);
-void				load_map(t_doom *d, char *path);
+t_nmap				*load_map(t_doom *d, char *path);
 void				read_texture(t_doom *d, t_nmap *m, char *l);
 
 void				teleport_player(t_player *player, double x, double y, double z);

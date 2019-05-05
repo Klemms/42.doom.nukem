@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 11:57:34 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/05 12:19:43 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/05 12:57:10 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ void	read_texture(t_doom *d, t_nmap *m, char *l)
 		{
 			gnc = ft_getnextchar(l, ',');
 			((Uint32 *)s->pixels)[sz] = ft_atoi(l + gnc);
+			printf("%x ", ((Uint32 *)s->pixels)[sz]);
 			sz++;
 		}
 		lstcontainer_add(m->textures, make_texture(d, s, NULL));
+		ft_putendl("ENDING TEXTURE");
 	}
 }

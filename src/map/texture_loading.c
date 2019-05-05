@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 00:24:22 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/04 00:59:06 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/05 13:09:22 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ Uint32		get_t_exact_pixel(t_texture *texture, int x, int y)
 
 SDL_Surface	*get_surface(t_doom *doom, int texture_id)
 {
-	if (texture_id > doom->textures->lastelement->index)
+	if (texture_id > doom->nmap->textures->lastelement->index)
 		return (NULL);
-	return (((t_texture *)ft_lstget_fromelement(texture_id, doom->textures->firstelement)->content)->surface);
+	return (((t_texture *)ft_lstget_fromelement(texture_id, doom->nmap->textures->firstelement)->content)->surface);
 }
 
 t_texture	*make_texture(t_doom *doom, SDL_Surface *surface, char *texture_name)
@@ -46,7 +46,7 @@ void		init_textures(t_doom *doom)
 	t_texture	*tmp_texture;
 	SDL_Surface	*tmp_s;
 
-	lst = doom->textures->firstelement;
+	lst = doom->nmap->textures->firstelement;
 	while (lst)
 	{
 		tmp_texture = (t_texture *)lst->content;
@@ -60,7 +60,7 @@ void		init_textures(t_doom *doom)
 		}
 		lst = lst->next;
 	}
-	doom->texture_amount = lstcontainer_size(doom->textures);
+	doom->texture_amount = lstcontainer_size(doom->nmap->textures);
 }
 
 t_texture	*load_texture(char *path, t_doom *doom)

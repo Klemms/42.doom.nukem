@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 05:56:10 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/05 12:14:48 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/05 12:29:36 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int		*get_mapheader(t_doom *d, char *l)
 	return (header);
 }
 
-void	load_map(t_doom *d, char *path)
+t_nmap	*load_map(t_doom *d, char *path)
 {
 	t_nmap	*m;
 	int		fd;
@@ -103,4 +103,5 @@ void	load_map(t_doom *d, char *path)
 	}
 	while (get_next_line(fd, &line) > 0)
 		continue ;
+	return (m);
 }
