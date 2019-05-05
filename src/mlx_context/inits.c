@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 23:44:05 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/04 18:34:41 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/05 16:20:09 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ void	init_scores(t_doom *doom)
 		exit_program(doom, ERROR_INVALID_MUSIC);
 	if ((doom->scores.walk = Mix_LoadWAV("musics/marche.wav")) == NULL)
 		exit_program(doom, ERROR_INVALID_MUSIC);
-	if ((doom->scores.shot = Mix_LoadWAV("musics/test_tir.wav")) == NULL)
+	if ((doom->scores.shot = Mix_LoadWAV("musics/tir.wav")) == NULL)
 		exit_program(doom, ERROR_INVALID_MUSIC);
 	Mix_PlayMusic(doom->scores.bgm, -1);
-	Mix_VolumeChunk(doom->scores.walk, MIX_MAX_VOLUME / 200);
+	Mix_VolumeChunk(doom->scores.walk, MIX_MAX_VOLUME / 2);
 	Mix_VolumeChunk(doom->scores.shot, MIX_MAX_VOLUME / 2);
 }
 

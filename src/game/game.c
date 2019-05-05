@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 18:15:46 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/04 11:01:01 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/05 11:23:46 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	init_game(t_doom *doom)
 	register_event(doom, SDL_KEYUP, key_up);
 	register_event(doom, SDL_QUIT, quit_window);
 	register_event(doom, SDL_MOUSEMOTION, mouse_movement);
+	register_event(doom, SDL_MOUSEBUTTONDOWN, mouse_down);
+	register_event(doom, SDL_MOUSEBUTTONUP, mouse_up);
 
 	new_player(doom, &doom->you, doom->nmap);
 	
