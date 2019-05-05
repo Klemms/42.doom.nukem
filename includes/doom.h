@@ -388,7 +388,7 @@ typedef struct		s_raycasting
 	t_vec		floor;
 	t_vec_int	floor_tex;
 	double		wall_x;
-// SPRITES
+	// SPRITES
 	int			v_move_screen;
 	t_vec		rel_sprite_pos;
 	t_vec		transform;
