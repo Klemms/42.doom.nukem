@@ -377,7 +377,7 @@ typedef struct		s_raycasting
 	t_vec_int	map;
 	t_vec		side_dist;
 	t_vec		delta_dist;
-	t_vec_int	step;
+	t_vec_int   step;
 	int			side;
 	int			dist_hit; // nb of boxes crossed by ray before hitting
 	double		perp_wall_dist;

@@ -46,9 +46,10 @@ void    init_raycasting(t_raycasting *rc, t_player *p)
 
 void    init_raycasting_draw_wall(t_raycasting *rc, t_player *p)
 {
-
-
-
+  if (rc->side == 0) // HERE
+    rc->perp_wall_dist = (rc->map.x - p->pos.x + (1 - rc->step.x) / 2) / rc->ray_dir.x;
+  else
+    rc->perp_wall_dist = (rc->map.y - p->pos.y + (1 - rc->step.y) / 2) / rc->ray_dir.y;
   rc->lineHeight = (int)(WIN_H / rc->perp_wall_dist);
   rc->draw_start = -rc->lineHeight / 2 + WIN_H * rc->p_z;
   rc->draw_end = rc->lineHeight / 2 + WIN_H * rc->p_z;
@@ -101,6 +102,7 @@ void    init_raycasting_draw_floor(t_raycasting *rc)
   if (rc->draw_end < 0)
     rc->draw_end = WIN_H; //becomes < 0 when the integer overflows
 }
+
 void    ray_hit(t_raycasting *rc, t_player *p, t_nmap *nmap)
 {
   int hit;
@@ -122,45 +124,7 @@ void    ray_hit(t_raycasting *rc, t_player *p, t_nmap *nmap)
     }
     rc->dist_hit++;
     if (nmap->map[rc->map.y][rc->map.x].collides)
-    {
-      if (nmap->map[rc->map.y][rc->map.x].block_type == block_small_wall)
-      {
-        if (rc->side_dist.x < rc->side_dist.y)
-        {
-          if (nmap->map[rc->map.y][rc->map.x + rc->step.x].collides)
-            continue ;
-          if (rc->side == 0)
-            rc->perp_wall_dist = ((rc->map.x + rc->step.x / 2.0) - p->pos.x + (1 - rc->step.x) / 2) / rc->ray_dir.x;
-          else
-            rc->perp_wall_dist = ((rc->map.y + rc->step.y / 2.0 - p->pos.y) + (1 - rc->step.y) / 2) / rc->ray_dir.y;
-        }
-        else
-        {
-          if (nmap->map[rc->map.y + rc->step.y][rc->map.x].collides)
-            continue ;
-          if (rc->side == 0)
-            rc->perp_wall_dist = ((rc->map.x + rc->step.x / 2.0) - p->pos.x + (1 - rc->step.x) / 2) / rc->ray_dir.x;
-          else
-            rc->perp_wall_dist = ((rc->map.y + rc->step.y / 2.0 - p->pos.y) + (1 - rc->step.y) / 2) / rc->ray_dir.y;
-        }
-      }
-      else
-      {
-        if (rc->side == 0)
-          rc->perp_wall_dist = (rc->map.x - p->pos.x + (1 - rc->step.x) / 2) / rc->ray_dir.x;
-        else
-          rc->perp_wall_dist = (rc->map.y - p->pos.y + (1 - rc->step.y) / 2) / rc->ray_dir.y;
-      }
       hit = 1;
-    }
-    else
-    {
-      if (rc->side == 0)
-        rc->perp_wall_dist = (rc->map.x - p->pos.x + (1 - rc->step.x) / 2) / rc->ray_dir.x;
-      else
-        rc->perp_wall_dist = (rc->map.y - p->pos.y + (1 - rc->step.y) / 2) / rc->ray_dir.y;
-    }
-    //if (rc->map + rc->step)
   }
 }
 
@@ -243,7 +207,7 @@ void    draw_ceiling(t_raycasting *rc, t_player *p, Uint32 **canvas)
   }
 }
 
-void    init_raycasting_draw_sprites(t_raycasting *rc, t_player *p, int i, SDL_Surface *texture_sprite, t_vec *sprite, int *spriteOrder)
+void    init_raycasting_draw_flat_sprite(t_raycasting *rc, t_player *p, int i, SDL_Surface *texture_sprite, t_vec *sprite, int *spriteOrder)
 {
   //parameters for scaling and moving the sprites
   #define uDiv 1
@@ -300,18 +264,53 @@ Uint32            calc_gradient(Uint32 color1, Uint32 color2, double stage)
         return (color);
 }
 
+void              draw_flat_sprite(t_raycasting *rc, double **z_buffer, SDL_Surface *texture_sprite, Uint32 **canvas)
+{
+  int stripe;
+  Uint32 color;
+  int y;
+  int d;
+  
+  stripe = rc->draw_start_x - 1;
+  while (++stripe < rc->draw_end_x)
+  {
+    rc->tex_x = (int)((stripe - (-rc->sprite_width / 2 + rc->sprite_screen_x)) * texture_sprite->w / rc->sprite_width);
+    //the conditions in the if are:
+    //1) it's in front of camera plane so you don't see things behind you
+    //2) it's on the screen (left)
+    //3) it's on the screen (right)
+    //4) ZBuffer, with perpendicular distance
+    if (rc->transform.y > 0 && stripe > 0 && stripe < WIN_W && rc->transform.y < (*z_buffer)[stripe])
+    {
+      y = rc->draw_start_y - 1;
+      while (++y < rc->draw_end_y) //for every pixel of the current stripe
+      {
+        d = ((y - rc->v_move_screen) - (WIN_H * rc->p_z)) * 256 + rc->sprite_height * 128; //256 and 128 factors to avoid floats
+        //d = (y - (WIN_H * rc->p_z)) * 256) + rc->lineHeight * 128; 
+        rc->tex_y = ((d * texture_sprite->h) / rc->sprite_height) / 256; // this 64 whas HEIGHT the other WIDTH
+        color = ((Uint32*)texture_sprite->pixels)[texture_sprite->w * rc->tex_y + rc->tex_x]; //get current color from the texture
+        if((color & 0x00FFFFFF) != 0)
+          (*canvas)[y * WIN_W + stripe] = calc_gradient(0xFFFFFF - (*canvas)[y * WIN_W + stripe], color, 0.35);// + color / 2; //paint pixel if it isn't black, black is the invisible color
+
+      }
+    }
+  }
+}
+
+
+
 void    draw_sprites(t_doom *doom, t_raycasting *rc, t_player *p, double **z_buffer, SDL_Surface *texture_sprite, Uint32 **canvas)
 {
   //SPRITE CASTING
-  int stripe;
-  int d;
+  
+  
   int numSprites = 2;
   int spriteOrder[2];
   int spriteDistance[2];
   t_vec   sprite[2] = { { 2, 2, 0 }, { 3, 3, 0 } };
   int i;
-  int y;
-  Uint32 color;
+  
+
 
   i = -1;
   while (++i < numSprites)
@@ -323,31 +322,12 @@ void    draw_sprites(t_doom *doom, t_raycasting *rc, t_player *p, double **z_buf
   i = -1;
   while (++i < numSprites)
   {
-    init_raycasting_draw_sprites(rc, p, i, texture_sprite, sprite, spriteOrder);
-    stripe = rc->draw_start_x - 1;
-    while (++stripe < rc->draw_end_x)
-    {
-      rc->tex_x = (int)((stripe - (-rc->sprite_width / 2 + rc->sprite_screen_x)) * texture_sprite->w / rc->sprite_width);
-      //the conditions in the if are:
-      //1) it's in front of camera plane so you don't see things behind you
-      //2) it's on the screen (left)
-      //3) it's on the screen (right)
-      //4) ZBuffer, with perpendicular distance
-      if (rc->transform.y > 0 && stripe > 0 && stripe < WIN_W && rc->transform.y < (*z_buffer)[stripe])
-      {
-        y = rc->draw_start_y - 1;
-        while (++y < rc->draw_end_y) //for every pixel of the current stripe
-        {
-          d = ((y - rc->v_move_screen) - (WIN_H * rc->p_z)) * 256 + rc->sprite_height * 128; //256 and 128 factors to avoid floats
-          //d = (y - (WIN_H * rc->p_z)) * 256) + rc->lineHeight * 128; 
-          rc->tex_y = ((d * texture_sprite->h) / rc->sprite_height) / 256; // this 64 whas HEIGHT the other WIDTH
-          color = ((Uint32*)texture_sprite->pixels)[texture_sprite->w * rc->tex_y + rc->tex_x]; //get current color from the texture
-          if((color & 0x00FFFFFF) != 0)
-            (*canvas)[y * WIN_W + stripe] = calc_gradient(0xFFFFFF - (*canvas)[y * WIN_W + stripe], color, 0.35);// + color / 2; //paint pixel if it isn't black, black is the invisible color
-
-        }
-      }
-    }
+    //if (sprite[numSprites].cast == wall_like)
+    //else if (sprite[numSprites].cast == flat)
+    //{
+      init_raycasting_draw_flat_sprite(rc, p, i, texture_sprite, sprite, spriteOrder);
+      draw_flat_sprite(rc, z_buffer, texture_sprite, canvas);
+    //}
   }
 }
 
