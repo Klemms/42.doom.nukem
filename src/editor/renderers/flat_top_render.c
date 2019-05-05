@@ -91,7 +91,6 @@ void	editor_ftr_clicked(t_doom *doom)
 		&& e->y_focus < doom->nmap->size_y && e->selected_block >= 0
 		&& e->selected_block && doom->editor.hand_tool == tool_block)
 	{
-		ft_putendl("test");
 		doom->nmap->map[e->y_focus][e->x_focus].block_type = e->selected_block->block_type;
 		doom->nmap->map[e->y_focus][e->x_focus].collides = e->selected_block->block_type == block_wall || e->selected_block->block_type == block_small_wall ? 1 : 0;
 	}

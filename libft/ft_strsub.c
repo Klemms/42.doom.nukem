@@ -6,13 +6,13 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 19:01:36 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/05 12:29:50 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/05 11:33:35 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strsub(char const *s, size_t start, size_t len, size_t freeit)
+char	*ft_strsub(char *s, size_t start, size_t len, size_t freeit)
 {
 	size_t	i;
 	char	*nstring;
@@ -20,8 +20,7 @@ char	*ft_strsub(char const *s, size_t start, size_t len, size_t freeit)
 	if (s == NULL)
 		return (NULL);
 	i = 0;
-	nstring = mmalloc(sizeof(char) * (len + 1));
-	if (nstring == NULL)
+	if (!(nstring = ft_strnew(len)))
 		return (NULL);
 	while (i < len)
 	{
@@ -30,6 +29,9 @@ char	*ft_strsub(char const *s, size_t start, size_t len, size_t freeit)
 	}
 	nstring[i] = '\0';
 	if (freeit == 1)
-		ffree((char *)s);
+	{
+		free(s);
+		s = NULL;
+	}
 	return (nstring);
 }

@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 00:02:20 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/04 11:33:41 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/05 09:31:08 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ void	ed_save_file(t_doom *d, t_el_button *b, SDL_MouseButtonEvent ev)
 	ft_putendl("Finished");
 }
 
-int		validate_map(t_nmap	*m)
+int		validate_map(t_doom *d, t_nmap *m)
 {
 	size_t	x;
 	size_t	y;
 	int		spawn_points;
 	int		end_points;
 
-	read_map("maps/test.nmap");
+	load_map(d, "maps/test.nmap");
 
 	y = 0;
 	spawn_points = 0;
@@ -63,7 +63,7 @@ void	ed_test_map(t_doom *d, t_el_button *b, SDL_MouseButtonEvent ev)
 	if (ev.button == SDL_BUTTON_LEFT)
 	{
 		b->is_disabled = 1;
-		result = validate_map(d->nmap);
+		result = validate_map(d, d->nmap);
 		free(d->editor.state->text);
 		d->editor.state->text = ft_strdup(map_reason_to_txt(result));
 		if (result > 0)

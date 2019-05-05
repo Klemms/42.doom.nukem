@@ -6,7 +6,7 @@
 #    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 22:39:07 by cababou           #+#    #+#              #
-#    Updated: 2019/05/04 11:45:09 by cababou          ###   ########.fr        #
+#    Updated: 2019/05/05 12:05:36 by cababou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,8 +41,12 @@ SRC := doom.c easter_eggs/hypercam.c editor/base_events.c \
 	editor/blocks.c \
 	map/save.c \
 	map/save_2.c \
-	map/save_3.c \
-	map/minimap.c
+	map/minimap.c \
+	map/saving/map_write.c \
+	map/saving/texture_write.c \
+	map/loading/map_load.c \
+	map/loading/map_load2.c \
+	map/loading/map_load3.c
 
 HEADERS := doom.h editor.h errors.h
 

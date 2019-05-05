@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/04 11:00:46 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/05 12:14:35 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,11 @@ typedef struct	s_map_block
 
 typedef struct	s_nmap
 {
-	char			*map_name;
-	t_mblock		**map;
-	int				size_x;
-	int				size_y;
-	SDL_Color		skybox_color;
+	char		*map_name;
+	t_mblock	**map;
+	int			size_x;
+	int			size_y;
+	SDL_Color	skybox_color;
 	t_lstcontainer	*textures;
 }				t_nmap;
 
@@ -291,6 +291,7 @@ typedef struct	s_editor
 	t_el_button			*validate;
 	t_el_button			*save;
 	t_el_text			*state;
+	int					is_clicking;
 }				t_editor;
 
 
@@ -427,6 +428,23 @@ typedef struct		s_doom
 	t_lstcontainer		*block_types;
 }					t_doom;
 
+typedef struct		s_rtxt
+{
+	int				j;
+	int				max;
+	t_texture		*txt;
+	SDL_Surface		*s;
+	int				w;
+	int				h;
+	int				k;
+}					t_rtxt;
+
+typedef struct		s_rtx
+{
+	int				sz;
+	void			*data;
+}					t_rtx;
+
 typedef struct		s_registered_event
 {
 	Uint32			type;
@@ -558,18 +576,24 @@ t_block_type		*block_type(t_doom *d, int bt);
 
 void				select_block_type(t_doom *d, t_block_type *type);
 void				copy_block_type(t_doom *d, t_block_type *type, t_mblock *blk);
+void				copy_block(t_mblock *m1, t_mblock *m2, int free2);
 void				update_interactions(t_doom *d);
 
 void				init_scores(t_doom *doom);
 
-int					validate_map(t_nmap	*m);
+int					validate_map(t_doom *d, t_nmap *m);
 void				ed_save_file(t_doom *d, t_el_button *b, SDL_MouseButtonEvent ev);
 void				ed_test_map(t_doom *d, t_el_button *b, SDL_MouseButtonEvent ev);
 char				*map_reason_to_txt(int reason);
 int					player_valid_tile(t_player *pl, t_nmap *nmap);
 t_mblock			*get_spawn_point(t_nmap *nmap);
 int					write_map(t_nmap *m, char *path);
-int					read_map(char *path);
+int					read_map(t_doom *d, char *path);
+void				write_intdl(int fd, int i, int comma, int endl);
+void				wrt_textures(t_nmap *m, int fd);
+void				read_blockline(t_doom *d, t_nmap *m, int y, char *l);
+void				load_map(t_doom *d, char *path);
+void				read_texture(t_doom *d, t_nmap *m, char *l);
 
 void				teleport_player(t_player *player, double x, double y, double z);
 
