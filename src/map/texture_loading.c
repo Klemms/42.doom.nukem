@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   texture_loading.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 00:24:22 by cababou           #+#    #+#             */
 /*   Updated: 2019/05/06 07:29:50 by cababou          ###   ########.fr       */
@@ -50,7 +50,8 @@ void		init_textures(t_doom *doom)
 		tmp_texture = (t_texture *)lst->content;
 		if (!tmp_texture->surface)
 		{
-			tmp_texture->surface = IMG_Load(tmp_texture->texture_name);
+			if (!(tmp_texture->surface = IMG_Load(tmp_texture->texture_name)))
+				exit_program(doom, ERROR_INVALID_TEXTURES);;
 			tmp_s = tmp_texture->surface;
 			tmp_texture->surface = SDL_ConvertSurfaceFormat(
 				tmp_texture->surface, doom->surface->format->format, 0);

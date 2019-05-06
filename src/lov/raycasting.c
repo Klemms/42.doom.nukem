@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 11:20:18 by hdussert          #+#    #+#             */
-/*   Updated: 2019/05/04 09:43:07 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/04 17:13:36 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void    init_raycasting(t_raycasting *rc, t_player *p)
 {
-  rc->p_z = p->pos.z;
+  rc->p_z = p->pitch;
   rc->camera_x = 2 * rc->x / (double)(WIN_W) - 1;
   rc->ray_dir.x = p->dir.x + p->plane.x * rc->camera_x;
   rc->ray_dir.y = p->dir.y + p->plane.y * rc->camera_x;
