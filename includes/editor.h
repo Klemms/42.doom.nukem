@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   editor.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 01:32:17 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/02 02:42:38 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/06 16:00:56 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EDITOR_H
 # define EDITOR_H
 
-#include "doom.h"
+# include "doom.h"
 
 enum	e_tools
 {

@@ -6,7 +6,7 @@
 #    By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 22:39:07 by cababou           #+#    #+#              #
-#    Updated: 2019/05/06 15:24:49 by lde-batz         ###   ########.fr        #
+#    Updated: 2019/05/06 19:50:37 by lde-batz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SRC := doom.c easter_eggs/hypercam.c editor/base_events.c \
 	map/map_util.c move.c moving_sprite.c velocity.c\
 	editor/renderers/bottom_select_render.c lov/raycasting.c \
 	editor/renderers/right_bar_render.c \
+	button.c\
 	ui/wjauge/wjauge.c \
 	ui/checkbox/checkbox.c \
 	editor/blocks.c \

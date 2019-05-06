@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 17:45:39 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/05/06 15:19:19 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/06 19:45:11 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ int		key_up(t_doom *doom, SDL_Event event)
 		doom->you.is_sprinting = 0;
 	if (keyb.keysym.scancode == doom->settings.key_crouch)
 		doom->you.is_crouching = 0;
+	if (keyb.keysym.scancode == doom->settings.key_crouch)
+		press_button(doom);
 	if (keyb.keysym.scancode == SDL_SCANCODE_F9)
 	{
 		SDL_SetRelativeMouseMode(!doom->mouse_focused);

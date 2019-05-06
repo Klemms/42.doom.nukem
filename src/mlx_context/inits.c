@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 23:44:05 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 15:24:11 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/06 19:46:38 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,9 @@ void	setup_settings(t_doom *doom)
 	doom->settings.key_backward = SDL_SCANCODE_S;
 	doom->settings.key_left = SDL_SCANCODE_A;
 	doom->settings.key_right = SDL_SCANCODE_D;
-	doom->settings.z_up = SDL_SCANCODE_P;
-	doom->settings.z_down = SDL_SCANCODE_L;
 	doom->settings.key_sprint = SDL_SCANCODE_LSHIFT;
 	doom->settings.key_crouch = SDL_SCANCODE_LCTRL;
+	doom->settings.key_button = SDL_SCANCODE_E;
 	doom->settings.render_textures = 1;
 	doom->settings.enable_crt_floor = 1;
 }

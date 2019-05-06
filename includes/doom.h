@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 15:21:32 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/06 20:03:08 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@
 
 # define WIN_W 1920
 # define WIN_H 1080
+
+# define N_3_PI_4 -M_PI + M_PI_4
+# define N_PI_4 -M_PI_4
+# define P_3_PI_4 M_PI - M_PI_4
 
 # define COL 0.1
 
@@ -138,8 +142,7 @@ typedef struct	s_settings
 	int			key_right;
 	int			key_sprint;
 	int			key_crouch;
-	int			z_up;
-	int			z_down;
+	int			key_button;
 	int			render_textures;
 	int			enable_crt_floor;
 }				t_settings;
@@ -542,6 +545,10 @@ void				moving(t_doom *doom);
 void				moving_diagonal(t_doom *doom, t_xy *dest, t_xy pt);
 void				check_sprite(t_doom *doom, t_sprite *sprite, t_xy *dest);
 
+void				press_button(t_doom *doom);
+
+void				init_musics(t_doom *doom);
+
 void				init_editor(t_doom *doom);
 void				loop_editor(t_doom *doom);
 void				render_editor(t_doom *doom);
@@ -623,8 +630,6 @@ void				copy_block_type(t_doom *d, t_block_type *type, t_mblock *blk);
 void				copy_block(t_mblock *dest, t_mblock *src, int free2, int cpcrds);
 void				update_interactions(t_doom *d);
 void				set_to_default_mblock(t_mblock *dest, int x, int y);
-
-void				init_musics(t_doom *doom);
 
 int					validate_map(t_doom *d, t_nmap *m);
 void				ed_save_file(t_doom *d, t_el_button *b, SDL_MouseButtonEvent ev);

@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 10:12:00 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/05/06 15:23:28 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/06 19:54:19 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ void	moving(t_doom *doom)
 	t_sprite	*sprite;
 	int			del;
 
+
+	printf("angle: %f, pos: %f %f\n", doom->you.angle, doom->you.pos.x, doom->you.pos.y);
 	if (!(sprite = (t_sprite*)mmalloc(sizeof(t_sprite))))
 		exit_program(doom, ERROR_MEMORY);
 	sprite->pos.x = 3.5;
