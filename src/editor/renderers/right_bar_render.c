@@ -21,10 +21,15 @@ void	ed_bt_edit_click(t_doom *doom, t_el_button *b, SDL_MouseButtonEvent ev)
 			doom->editor.foc.b_orientation = 0;
 		if (b->ui->id == doom->editor.rbr_quadrant.orient_ver->ui->id)
 			doom->editor.foc.b_orientation = 1;
-		if (b->ui->id == doom->editor.rbr_quadrant.orient_w->ui->id)
-			doom->editor.foc.b_orientation = 2;
-		if (b->ui->id == doom->editor.rbr_quadrant.orient_e->ui->id)
-			doom->editor.foc.b_orientation = 3;
+		// TODO: TEXTURE CLICK
+		if (b->ui->id == doom->editor.rbr_quadrant.texture_n->ui->id)
+			switch_tool(doom, tool_textures);
+		if (b->ui->id == doom->editor.rbr_quadrant.texture_s->ui->id)
+			switch_tool(doom, tool_textures);
+		if (b->ui->id == doom->editor.rbr_quadrant.texture_w->ui->id)
+			switch_tool(doom, tool_textures);
+		if (b->ui->id == doom->editor.rbr_quadrant.texture_e->ui->id)
+			switch_tool(doom, tool_textures);
 	}
 }
 
@@ -53,10 +58,10 @@ void	editor_rbr_mrender(t_doom *doom)
 		button_render(doom, e->rbr, e->rbr_quadrant.orient_hor);
 		e->rbr_quadrant.orient_ver->background_color = e->foc.b_orientation == 1 ? e->select_color : e->base_color;
 		button_render(doom, e->rbr, e->rbr_quadrant.orient_ver);
-		e->rbr_quadrant.orient_w->background_color = e->foc.b_orientation == 2 ? e->select_color : e->base_color;
-		button_render(doom, e->rbr, e->rbr_quadrant.orient_w);
-		e->rbr_quadrant.orient_e->background_color = e->foc.b_orientation == 3 ? e->select_color : e->base_color;
-		button_render(doom, e->rbr, e->rbr_quadrant.orient_e);
+		button_render(doom, e->rbr, e->rbr_quadrant.texture_n);
+		button_render(doom, e->rbr, e->rbr_quadrant.texture_s);
+		button_render(doom, e->rbr, e->rbr_quadrant.texture_w);
+		button_render(doom, e->rbr, e->rbr_quadrant.texture_e);
 		instant_text(doom, e->rbr, "Block height", make_rect(10, 155, 20, 0));
 		wjauge_render(doom, e->rbr, e->rbr_quadrant.s_height);
 		instant_text(doom, e->rbr, "Ceiling height", make_rect(10, 230, 20, 0));

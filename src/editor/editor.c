@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 02:04:31 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 12:10:09 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/06 13:08:05 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void	init_editor(t_doom *doom)
 	register_event(doom, SDL_MOUSEBUTTONUP, ed_mouse_button);
 	register_event(doom, SDL_MOUSEBUTTONUP, rbr_click);
 	register_event(doom, SDL_MOUSEMOTION, ed_mouse_motion);
+
+	e->l_textures = list_files("./textures/");
 
 	e->ftr_rect = make_rect(e->in_x, e->in_y, e->in_width, e->in_height);
 	e->ftr = SDL_CreateRGBSurfaceWithFormat(0, e->in_width, e->in_height, 32, doom->surface->format->format);
@@ -107,14 +109,22 @@ void	init_editor(t_doom *doom)
 	add_button_rcoords(e->rbr_quadrant.orient_ver, e->rbr_rect.x, e->rbr_rect.y);
 	button_prepare(doom, e->rbr_quadrant.orient_ver);
 
-	e->rbr_quadrant.orient_w = create_button(doom, "W", make_rect(155, 680, 60, 60), ed_bt_edit_click);
-	e->rbr_quadrant.orient_w->background_color = make_rgb(145, 145, 145, 255);
-	add_button_rcoords(e->rbr_quadrant.orient_w, e->rbr_rect.x, e->rbr_rect.y);
-	button_prepare(doom, e->rbr_quadrant.orient_w);
-	e->rbr_quadrant.orient_e = create_button(doom, "E", make_rect(225, 680, 60, 60), ed_bt_edit_click);
-	e->rbr_quadrant.orient_e->background_color = make_rgb(145, 145, 145, 255);
-	add_button_rcoords(e->rbr_quadrant.orient_e, e->rbr_rect.x, e->rbr_rect.y);
-	button_prepare(doom, e->rbr_quadrant.orient_e);
+	e->rbr_quadrant.texture_n = create_button(doom, "Texture N.", make_rect(85, 785, 130, 60), ed_bt_edit_click);
+	e->rbr_quadrant.texture_n->background_color = make_rgb(145, 145, 145, 255);
+	add_button_rcoords(e->rbr_quadrant.texture_n, e->rbr_rect.x, e->rbr_rect.y);
+	button_prepare(doom, e->rbr_quadrant.texture_n);
+	e->rbr_quadrant.texture_s = create_button(doom, "Texture S.", make_rect(85, 925, 130, 60), ed_bt_edit_click);
+	e->rbr_quadrant.texture_s->background_color = make_rgb(145, 145, 145, 255);
+	add_button_rcoords(e->rbr_quadrant.texture_s, e->rbr_rect.x, e->rbr_rect.y);
+	button_prepare(doom, e->rbr_quadrant.texture_s);
+	e->rbr_quadrant.texture_w = create_button(doom, "Texture W.", make_rect(15, 855, 130, 60), ed_bt_edit_click);
+	e->rbr_quadrant.texture_w->background_color = make_rgb(145, 145, 145, 255);
+	add_button_rcoords(e->rbr_quadrant.texture_w, e->rbr_rect.x, e->rbr_rect.y);
+	button_prepare(doom, e->rbr_quadrant.texture_w);
+	e->rbr_quadrant.texture_e = create_button(doom, "Texture E.", make_rect(155, 855, 130, 60), ed_bt_edit_click);
+	e->rbr_quadrant.texture_e->background_color = make_rgb(145, 145, 145, 255);
+	add_button_rcoords(e->rbr_quadrant.texture_e, e->rbr_rect.x, e->rbr_rect.y);
+	button_prepare(doom, e->rbr_quadrant.texture_e);
 
 	e->rbr_quadrant.s_height = create_wjauge(doom, make_rect(15, 190, 270, 30), make_rect(0, 1000, 50, 10));
 	e->rbr_quadrant.s_height->unit = "%";

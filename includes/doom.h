@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 12:12:39 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/06 13:00:29 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,8 +234,10 @@ typedef struct	s_quadrant_renderer
 	int				pos_y;
 	t_el_button		*orient_hor;
 	t_el_button		*orient_ver;
-	t_el_button		*orient_w;
-	t_el_button		*orient_e;
+	t_el_button		*texture_n;
+	t_el_button		*texture_s;
+	t_el_button		*texture_w;
+	t_el_button		*texture_e;
 	t_el_wh_jauge	*s_height;
 	t_el_wh_jauge	*sc_height;
 	t_el_wh_jauge	*b_w;
@@ -302,6 +304,7 @@ typedef struct	s_editor
 	t_el_button			*save;
 	t_el_text			*state;
 	int					is_clicking;
+	t_lstcontainer		*l_textures;
 }				t_editor;
 
 typedef struct		s_sprite
