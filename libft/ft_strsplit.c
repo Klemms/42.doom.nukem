@@ -6,13 +6,13 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 17:58:14 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/05 12:29:41 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/05 11:35:01 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static size_t	spstrlen(char const *s, int start, char until)
+static size_t	spstrlen(char *s, int start, char until)
 {
 	size_t	i;
 
@@ -24,7 +24,7 @@ static size_t	spstrlen(char const *s, int start, char until)
 	return (i);
 }
 
-static size_t	countwords(char const *s, char c)
+static size_t	countwords(char *s, char c)
 {
 	size_t	i;
 	size_t	count;
@@ -72,7 +72,7 @@ void			free_strsplit(char **array)
 	ffree(array);
 }
 
-char			**ft_strsplit(char const *s, char c)
+char			**ft_strsplit(char *s, char c)
 {
 	size_t	i;
 	size_t	y;

@@ -68,6 +68,8 @@ void	editor_ftr_mrender(t_doom *doom)
 		}
 		y++;
 	}
+	doom->editor.x_focus = -1;
+	doom->editor.y_focus = -1;
 	x = (int)((m_pos.x - q->pos_x - q->x_start) / q->zoom_level);
 	y = (int)((m_pos.y - q->pos_y - q->y_start) / q->zoom_level);
 	if (m_pos.x - q->pos_x - q->x_start >= 0 && m_pos.y - q->pos_y - q->y_start >= 0)
@@ -89,7 +91,6 @@ void	editor_ftr_clicked(t_doom *doom)
 		&& e->y_focus < doom->nmap->size_y && e->selected_block >= 0
 		&& e->selected_block && doom->editor.hand_tool == tool_block)
 	{
-		ft_putendl("test");
 		doom->nmap->map[e->y_focus][e->x_focus].block_type = e->selected_block->block_type;
 		doom->nmap->map[e->y_focus][e->x_focus].collides = e->selected_block->block_type == block_wall || e->selected_block->block_type == block_small_wall ? 1 : 0;
 	}

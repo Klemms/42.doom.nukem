@@ -6,7 +6,7 @@
 #    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 22:39:07 by cababou           #+#    #+#              #
-#    Updated: 2019/05/04 03:17:33 by cababou          ###   ########.fr        #
+#    Updated: 2019/05/06 07:27:46 by cababou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ SRC := doom.c easter_eggs/hypercam.c editor/base_events.c \
 	editor/editor.c editor/system_files/list_files.c errors/errors.c \
 	events/event_system.c events.c free_structs.c game/game.c \
 	line.c map/texture_loading.c \
-	mlx_context/inits.c parsing.c parsing_norme.c editor/map/load_map.c \
+	mlx_context/inits.c editor/map/load_map.c \
 	player.c shapes/rect.c ui/button/button.c ui/button/button_events.c \
 	ui/button/button_util.c ui/init_fonts.c ui/text/text.c \
 	ui/text/text_util.c ui/ui_el/ui.c ui/ui_ids.c editor/editor_util.c \
@@ -40,8 +40,14 @@ SRC := doom.c easter_eggs/hypercam.c editor/base_events.c \
 	ui/checkbox/checkbox.c \
 	editor/blocks.c \
 	map/save.c \
-	map/save_2.c \
-	map/save_3.c
+	map/map_util2.c \
+	map/minimap.c \
+	map/saving/map_write.c \
+	map/saving/texture_write.c \
+	map/loading/map_load.c \
+	map/loading/map_load2.c \
+	map/loading/map_load3.c \
+	map/loading/map_load4.c
 
 HEADERS := doom.h editor.h errors.h
 
@@ -76,7 +82,7 @@ $(NAME) : $(OBJP)
 			@gcc $(SDL) $(FLAG) $(OBJP) $(INC) $(LIB) -o $(NAME)
 			@echo "$(CLEAR_LINE)$(COL_BLUE)[$(NAME)] $(COL_YELLOW)Finished compilation. Output file : $(COL_VIOLET)$(PWD)/$(NAME)$(COL_END)"
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c $(HEADERSP)
+$(OBJDIR)/%.o: $(SRCDIR)/%.c $(HEADERSP) libft/libft.a
 			@mkdir -p $(ONLYDIR)
 			@gcc -c $(FLAG) -F $(FRAMEWORKSDIR) $(INC) $< -o $@
 			@echo "$(CLEAR_LINE)$(COL_BLUE)[$(NAME)] $(COL_YELLOW)Compiling file [$(COL_VIOLET)$<$(COL_YELLOW)]. ($(CURRENT_FILES) / $(TOTAL_FILES))$(COL_END)$(BEGIN_LINE)"
