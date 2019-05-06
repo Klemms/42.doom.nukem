@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 02:04:31 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 12:03:34 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/06 12:10:09 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,20 +98,20 @@ void	init_editor(t_doom *doom)
 	e->str_tool->text_color = make_rgb(0, 0, 0, 255);
 	text_prepare(doom, e->str_tool, 1, 0);
 
-	e->rbr_quadrant.orient_hor = create_button(doom, "N", make_rect(15, 80, 60, 60), ed_bt_edit_click);
+	e->rbr_quadrant.orient_hor = create_button(doom, "Hor.", make_rect(15, 80, 130, 60), ed_bt_edit_click);
 	e->rbr_quadrant.orient_hor->background_color = make_rgb(145, 145, 145, 255);
 	add_button_rcoords(e->rbr_quadrant.orient_hor, e->rbr_rect.x, e->rbr_rect.y);
 	button_prepare(doom, e->rbr_quadrant.orient_hor);
-	e->rbr_quadrant.orient_ver = create_button(doom, "S", make_rect(85, 80, 60, 60), ed_bt_edit_click);
+	e->rbr_quadrant.orient_ver = create_button(doom, "Vert.", make_rect(155, 80, 130, 60), ed_bt_edit_click);
 	e->rbr_quadrant.orient_ver->background_color = make_rgb(145, 145, 145, 255);
 	add_button_rcoords(e->rbr_quadrant.orient_ver, e->rbr_rect.x, e->rbr_rect.y);
 	button_prepare(doom, e->rbr_quadrant.orient_ver);
 
-	e->rbr_quadrant.orient_w = create_button(doom, "W", make_rect(155, 80, 60, 60), ed_bt_edit_click);
+	e->rbr_quadrant.orient_w = create_button(doom, "W", make_rect(155, 680, 60, 60), ed_bt_edit_click);
 	e->rbr_quadrant.orient_w->background_color = make_rgb(145, 145, 145, 255);
 	add_button_rcoords(e->rbr_quadrant.orient_w, e->rbr_rect.x, e->rbr_rect.y);
 	button_prepare(doom, e->rbr_quadrant.orient_w);
-	e->rbr_quadrant.orient_e = create_button(doom, "E", make_rect(225, 80, 60, 60), ed_bt_edit_click);
+	e->rbr_quadrant.orient_e = create_button(doom, "E", make_rect(225, 680, 60, 60), ed_bt_edit_click);
 	e->rbr_quadrant.orient_e->background_color = make_rgb(145, 145, 145, 255);
 	add_button_rcoords(e->rbr_quadrant.orient_e, e->rbr_rect.x, e->rbr_rect.y);
 	button_prepare(doom, e->rbr_quadrant.orient_e);

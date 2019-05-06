@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 23:44:05 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 11:57:45 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/06 12:14:23 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ void	init_scores(t_doom *doom)
 void	init_block_types(t_doom *doom)
 {
 	doom->block_types = lstcontainer_new();
+	lstcontainer_add(doom->block_types
+		, make_block_type(doom, "Apply Settings", 0xFF74a8fc, block_apply));
 	lstcontainer_add(doom->block_types
 		, make_block_type(doom, "Air", 0xFFFFFEDD, block_air));
 	lstcontainer_add(doom->block_types
