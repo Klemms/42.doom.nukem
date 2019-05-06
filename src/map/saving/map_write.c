@@ -6,11 +6,12 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 03:32:55 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/05 05:04:33 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/06 10:16:49 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
+#include <sys/stat.h>
 
 void	write_intdl(int fd, int i, int comma, int endl)
 {
@@ -65,7 +66,7 @@ int		write_map(t_nmap *m, char *path)
 	size_t	x;
 	size_t	y;
 
-	fd = open("maps/test.nmap", O_WRONLY | O_CREAT | O_TRUNC | O_NOFOLLOW);
+	fd = open(path, O_WRONLY | O_CREAT | O_TRUNC | O_NOFOLLOW);
 	if (fd < 0)
 		return (1);
 	wrt_mapheader(fd, m);
@@ -81,6 +82,7 @@ int		write_map(t_nmap *m, char *path)
 		y++;
 	}
 	wrt_textures(m, fd);
+	chmod(path, S_IRWXU);
 	close(fd);
 	return (0);
 }

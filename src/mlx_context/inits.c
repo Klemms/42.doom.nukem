@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   inits.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 23:44:05 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/05 16:20:09 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/06 11:32:19 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ void	init_block_types(t_doom *doom)
 		, make_block_type(doom, "Spawn Point", 0xFFC13CC1, block_spawn));
 	lstcontainer_add(doom->block_types
 		, make_block_type(doom, "End Point", 0xFFF44262, block_end));
-	doom->textures = lstcontainer_new();
 }
 
 void	init_doom(t_doom *doom)
@@ -90,5 +89,4 @@ void	init_doom(t_doom *doom)
 	doom->fps_counter->ui->pos_y = 8;
 	init_textures(doom);
 	init_scores(doom);
-	doom->nmap = convert_map(doom, &doom->old_map, doom->textures);
 }

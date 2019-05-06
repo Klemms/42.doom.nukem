@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 15:52:43 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/29 21:51:56 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/06 09:16:44 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ t_lstcontainer	*list_files(char *folder_path)
 	struct dirent	*dir;
 
 	if (!(files = lstcontainer_new())
-		&& !(directory = opendir(folder_path)))
+		|| !(directory = opendir(folder_path)))
 		return (NULL);
 	while ((dir = readdir(directory)))
 	{
-		lstcontainer_add(files, ft_strdup(dir->d_name));
-		free(dir);
-		dir = NULL;
+		if (dir->d_type == DT_REG)
+			lstcontainer_add(files, ft_strdup(dir->d_name));
 	}
+	closedir(directory);
 	return (files);
 }
