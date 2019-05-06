@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/29 13:20:21 by hdussert          #+#    #+#             */
-/*   Updated: 2019/05/04 18:32:20 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/06 06:04:08 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,17 @@ int		main(int argc, char *argv[])
 		exit_program(&doom, ERROR_USAGE);
 	init_block_types(&doom);
 	init_base(&doom, argc, argv);
-	if (!parsing(&doom, doom.game_mode == M_EDITOR ? argv[2] : argv[1]))
-		exit_program(&doom, ERROR_INVALID_MAP);
-	init_doom(&doom);
+	init_sdl(&doom);
+	init_ids(&doom);
+	init_fonts(&doom);
+	init_events(&doom);
+	doom.surface = SDL_GetWindowSurface(doom.win);
+	doom.s_pixels = doom.surface->pixels;
+	doom.fps_counter = create_text(&doom, "- fps", FONT_RIFFIC, 20);
+	doom.fps_counter->ui->pos_x = 8;
+	doom.fps_counter->ui->pos_y = 8;
+	init_scores(&doom);
+	doom.nmap = load_map(&doom, doom.game_mode == M_EDITOR ? argv[2] : argv[1]);
 	if (doom.game_mode == M_GAME)
 	{
 		init_game(&doom);

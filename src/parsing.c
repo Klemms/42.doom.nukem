@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 11:21:38 by hdussert          #+#    #+#             */
-/*   Updated: 2019/05/04 17:00:04 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/05 10:41:15 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static int		fill_2(t_doom *doom, int gres, int fd, t_map *map)
 		map->m[j][map->width] = '\0';
 		ffree(line);
 	}
+	while (get_next_line(fd, &line) > 0) {}
 	return (gres);
 }
 

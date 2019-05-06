@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 18:15:46 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/05 11:23:46 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/05 03:21:36 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ void	init_game(t_doom *doom)
 void	render_game(t_doom *doom)
 {
 	SDL_SetRenderDrawColor(doom->rend,
-		doom->nmap->skybox_color.r, 
-		doom->nmap->skybox_color.g, 
-		doom->nmap->skybox_color.b, 0xFF);
+		0, 
+		0, 
+		0, 0xFF);
     SDL_RenderClear(doom->rend);
 
 	//calc_lov(doom);

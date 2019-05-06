@@ -6,25 +6,26 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 16:57:07 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/05 12:25:27 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/06 02:29:42 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strnew(size_t size)
+char	*ft_strnew(size_t size, int bzero)
 {
-	char	*mem;
-	size_t	i;
+	char	*str;
 
-	mem = mmalloc(sizeof(char) * (size + 1));
-	if (mem == NULL)
-		return (NULL);
-	i = 0;
-	while (i < (size + 1))
+	if (bzero)
 	{
-		mem[i] = '\0';
-		i++;
+		if (!(str = mmalloc(sizeof(char) * (size + 1))))
+			return (NULL);
 	}
-	return (mem);
+	else
+	{
+		if (!(str = malloc(sizeof(char) * (size + 1))))
+			return (NULL);
+	}
+	str[size] = '\0';
+	return (str);
 }

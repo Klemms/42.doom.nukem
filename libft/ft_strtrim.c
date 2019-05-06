@@ -6,13 +6,13 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 19:19:18 by cababou           #+#    #+#             */
-/*   Updated: 2018/02/16 07:38:06 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/05 11:36:00 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strtrim(char const *s)
+char	*ft_strtrim(char *s)
 {
 	size_t	startws;
 	size_t	endws;

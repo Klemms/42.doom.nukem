@@ -6,11 +6,32 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 08:44:57 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/03 09:33:49 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/05 08:20:46 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
+
+void		copy_block(t_mblock *m1, t_mblock *m2, int free2)
+{
+	m1->block_type = m2->block_type;
+	m1->orientation = m2->orientation;
+	m1->x_size = m2->x_size;
+	m1->y_size = m2->y_size;
+	m1->height = m2->height;
+	m1->ceiling_height = m2->ceiling_height;
+	m1->has_ceiling = m2->has_ceiling;
+	m1->ceilng_tex = m2->ceilng_tex;
+	m1->floor_tex = m2->floor_tex;
+	m1->n_texture = m2->n_texture;
+	m1->s_texture = m2->s_texture;
+	m1->w_texture = m2->w_texture;
+	m1->e_texture = m2->e_texture;
+	m1->light = m2->light;
+	m1->collides = m2->collides;
+	if (free2)
+		free(m2);
+}
 
 void		update_interactions(t_doom *d)
 {
