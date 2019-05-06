@@ -6,31 +6,57 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 08:44:57 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/05 08:20:46 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/06 10:57:36 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-void		copy_block(t_mblock *m1, t_mblock *m2, int free2)
+void		set_to_default_mblock(t_mblock *dest, int x, int y)
 {
-	m1->block_type = m2->block_type;
-	m1->orientation = m2->orientation;
-	m1->x_size = m2->x_size;
-	m1->y_size = m2->y_size;
-	m1->height = m2->height;
-	m1->ceiling_height = m2->ceiling_height;
-	m1->has_ceiling = m2->has_ceiling;
-	m1->ceilng_tex = m2->ceilng_tex;
-	m1->floor_tex = m2->floor_tex;
-	m1->n_texture = m2->n_texture;
-	m1->s_texture = m2->s_texture;
-	m1->w_texture = m2->w_texture;
-	m1->e_texture = m2->e_texture;
-	m1->light = m2->light;
-	m1->collides = m2->collides;
+	dest->block_type = block_wall;
+	dest->orientation = 0;
+	dest->x_size = 100;
+	dest->y_size = 100;
+	dest->height = 100;
+	dest->ceiling_height = 100;
+	dest->has_ceiling = 1;
+	dest->ceilng_tex = 2;
+	dest->floor_tex = 1;
+	dest->n_texture = 0;
+	dest->s_texture = 1;
+	dest->w_texture = 2;
+	dest->e_texture = 3;
+	dest->light = -1;
+	dest->collides = 1;
+	dest->x = x;
+	dest->y = y;
+}
+
+void		copy_block(t_mblock *dest, t_mblock *src, int free2, int cpcrds)
+{
+	dest->block_type = src->block_type;
+	dest->orientation = src->orientation;
+	dest->x_size = src->x_size;
+	dest->y_size = src->y_size;
+	dest->height = src->height;
+	dest->ceiling_height = src->ceiling_height;
+	dest->has_ceiling = src->has_ceiling;
+	dest->ceilng_tex = src->ceilng_tex;
+	dest->floor_tex = src->floor_tex;
+	dest->n_texture = src->n_texture;
+	dest->s_texture = src->s_texture;
+	dest->w_texture = src->w_texture;
+	dest->e_texture = src->e_texture;
+	dest->light = src->light;
+	dest->collides = src->collides;
+	if (cpcrds)
+	{
+	dest->x = src->x;
+	dest->y = src->y;
+	}
 	if (free2)
-		free(m2);
+		free(src);
 }
 
 void		update_interactions(t_doom *d)

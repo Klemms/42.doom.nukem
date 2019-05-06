@@ -87,11 +87,18 @@ void	editor_ftr_clicked(t_doom *doom)
 	t_editor	*e;	
 
 	e = &doom->editor;
-	if (e->x_focus >= 0 && e->y_focus >= 0 && e->x_focus < doom->nmap->size_x
-		&& e->y_focus < doom->nmap->size_y && e->selected_block >= 0
-		&& e->selected_block && doom->editor.hand_tool == tool_block)
+	if (e->selected_block && doom->editor.hand_tool == tool_block && e->selected_block >= 0)
 	{
-		doom->nmap->map[e->y_focus][e->x_focus].block_type = e->selected_block->block_type;
-		doom->nmap->map[e->y_focus][e->x_focus].collides = e->selected_block->block_type == block_wall || e->selected_block->block_type == block_small_wall ? 1 : 0;
+		if (e->x_focus >= 0 && e->y_focus >= 0 && e->x_focus < doom->nmap->size_x
+			&& e->y_focus < doom->nmap->size_y)
+		{
+			doom->nmap->map[e->y_focus][e->x_focus].block_type = e->selected_block->block_type;
+			doom->nmap->map[e->y_focus][e->x_focus].collides = e->selected_block->block_type == block_wall || e->selected_block->block_type == block_small_wall ? 1 : 0;
+
+		}
+		else if (e->x_focus > 0 && e->y_focus > 0)
+		{
+			expand_map(doom, doom->nmap, new_block(doom, e->selected_block->block_type, e->x_focus, e->y_focus));
+		}
 	}
 }
