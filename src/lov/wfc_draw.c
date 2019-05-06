@@ -34,7 +34,7 @@ void    wfc_floor_draw(t_raycasting *rc, t_player *p, Uint32 **canvas)
   y = rc->draw_end;
   while (++y < WIN_H)
   {
-    currentDist = WIN_H / (2.0 * y - (WIN_H * rc->p_z * 2.0)); //you could make a small lookup table for this instead
+    currentDist = WIN_H / (2.0 * (y - (WIN_H * rc->p_z))); //you could make a small lookup table for this instead
     weight = (currentDist - distPlayer) / (distWall - distPlayer);
     currentFloorX = weight * rc->floor.x + (1.0 - weight) * p->pos.x;
     currentFloorY = weight * rc->floor.y + (1.0 - weight) * p->pos.y;
@@ -61,7 +61,7 @@ void    wfc_ceiling_draw(t_raycasting *rc, t_player *p, Uint32 **canvas)
   y = 0;
   while (++y < rc->draw_start)
   {
-    currentDist = WIN_H / ((WIN_H * rc->p_z * 2.0) - 2.0 * y); //you could make a small lookup table for this instead
+    currentDist = WIN_H / (((WIN_H * rc->p_z) - y) * 2.0); //you could make a small lookup table for this instead
     weight = (currentDist - distPlayer) / (distWall - distPlayer);
     currentFloorX = weight * rc->floor.x + (1.0 - weight) * p->pos.x;
     currentFloorY = weight * rc->floor.y + (1.0 - weight) * p->pos.y;
