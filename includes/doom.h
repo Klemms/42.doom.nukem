@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 12:03:04 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/06 12:12:39 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ enum			e_block_types
 	block_wall = 1,
 	block_sprite = 2,
 	block_spawn = 3,
-	block_end = 4
+	block_end = 4,
+	block_apply = 5
 };
 
 enum			e_sprite_type
@@ -307,6 +308,7 @@ typedef struct		s_sprite
 {
 	t_vec	pos;
 	int		texture;
+	int		texture_back;
 	int		alpha;
 	int		base_x;
 	int		base_y;

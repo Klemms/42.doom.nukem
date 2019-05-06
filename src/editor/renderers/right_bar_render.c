@@ -17,9 +17,9 @@ void	ed_bt_edit_click(t_doom *doom, t_el_button *b, SDL_MouseButtonEvent ev)
 {
 	if (ev.button == SDL_BUTTON_LEFT)
 	{
-		if (b->ui->id == doom->editor.rbr_quadrant.orient_n->ui->id)
+		if (b->ui->id == doom->editor.rbr_quadrant.orient_hor->ui->id)
 			doom->editor.foc.b_orientation = 0;
-		if (b->ui->id == doom->editor.rbr_quadrant.orient_s->ui->id)
+		if (b->ui->id == doom->editor.rbr_quadrant.orient_ver->ui->id)
 			doom->editor.foc.b_orientation = 1;
 		if (b->ui->id == doom->editor.rbr_quadrant.orient_w->ui->id)
 			doom->editor.foc.b_orientation = 2;
@@ -49,10 +49,10 @@ void	editor_rbr_mrender(t_doom *doom)
 		doom->tmp_color = make_rgb(0, 0, 0, 255);
 		instant_text(doom, e->rbr, ft_strjoin("Block : ", e->selected_block->block_name, 0), make_rect(10, 10, 22, 1));
 		instant_text(doom, e->rbr, "Block orientation", make_rect(10, 45, 20, 0));
-		e->rbr_quadrant.orient_n->background_color = e->foc.b_orientation == 0 ? e->select_color : e->base_color;
-		button_render(doom, e->rbr, e->rbr_quadrant.orient_n);
-		e->rbr_quadrant.orient_s->background_color = e->foc.b_orientation == 1 ? e->select_color : e->base_color;
-		button_render(doom, e->rbr, e->rbr_quadrant.orient_s);
+		e->rbr_quadrant.orient_hor->background_color = e->foc.b_orientation == 0 ? e->select_color : e->base_color;
+		button_render(doom, e->rbr, e->rbr_quadrant.orient_hor);
+		e->rbr_quadrant.orient_ver->background_color = e->foc.b_orientation == 1 ? e->select_color : e->base_color;
+		button_render(doom, e->rbr, e->rbr_quadrant.orient_ver);
 		e->rbr_quadrant.orient_w->background_color = e->foc.b_orientation == 2 ? e->select_color : e->base_color;
 		button_render(doom, e->rbr, e->rbr_quadrant.orient_w);
 		e->rbr_quadrant.orient_e->background_color = e->foc.b_orientation == 3 ? e->select_color : e->base_color;
