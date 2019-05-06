@@ -6,7 +6,7 @@
 #    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 22:39:07 by cababou           #+#    #+#              #
-#    Updated: 2019/05/05 11:05:51 by cababou          ###   ########.fr        #
+#    Updated: 2019/05/06 02:58:08 by cababou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ SRC :=	ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c \
 		ft_hex_to_int.c ft_pow.c ft_hex_to_color.c \
 		ft_rgba_to_int.c ft_lstget_fromelement.c get_next_line.c \
 		ft_mmalloc.c ft_ffree.c ft_memjoin.c ft_isnum.c ft_charjoin.c \
-		ft_getnextchar.c
+		ft_getnextchar.c ft_strsubuntil.c
 
 OBJ := 	$(SRC:.c=.o)
 
@@ -55,7 +55,7 @@ OBJDIR := 	obj
 OBJP :=		$(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 ONLYDIR :=	$(foreach dir, $(OBJP), $(shell dirname $(dir)))
 
-FLAG := -Wall -Wextra -Werror
+FLAG := -Wall -Wextra -Werror -g
 
 TOTAL_FILES := $(shell echo $(SRC) | wc -w | sed -e 's/ //g')
 CURRENT_FILES = $(shell ls $(PWD)/obj/ 2> /dev/null | wc -l | sed -e 's/ //g')

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   save_2.c                                           :+:      :+:    :+:   */
+/*   map_util2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 00:20:37 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/04 10:56:42 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/06 07:27:37 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,10 @@ char		*map_reason_to_txt(int reason)
 int			player_valid_tile(t_player *pl, t_nmap *nmap)
 {
 	t_mblock m;
+
 	if (pl->pos.x < nmap->size_x && pl->pos.y < nmap->size_y)
 	{
 		m = nmap->map[(int)pl->pos.y][(int)pl->pos.x];
-		printf("tt %d\n", nmap->map[(int)pl->pos.y][(int)pl->pos.x].block_type);
-		printf("tt %d\n", nmap->map[(int)pl->pos.y][(int)pl->pos.x].collides);
 		if (nmap->map[(int)pl->pos.y][(int)pl->pos.x].collides)
 			return (0);
 		return (1);

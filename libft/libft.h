@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/26 17:21:05 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/05 11:36:04 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/06 02:12:37 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void				*ft_memalloc(size_t size);
 
 void				ft_memdel(void **ap);
 
-char				*ft_strnew(size_t size);
+char				*ft_strnew(size_t size, int bzero);
 
 void				ft_strdel(char **as);
 
@@ -212,5 +212,7 @@ int					ft_isnum(char c);
 char				*ft_charjoin(char const *s1, char c2, size_t free_level);
 
 int					ft_getnextchar(char *str, char c);
+
+char				*ft_strsubuntil(char *s, size_t start, size_t end, int f);
 
 #endif

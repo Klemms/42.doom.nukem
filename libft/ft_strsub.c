@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 19:01:36 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/05 11:33:35 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/06 02:30:49 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_strsub(char *s, size_t start, size_t len, size_t freeit)
 	if (s == NULL)
 		return (NULL);
 	i = 0;
-	if (!(nstring = ft_strnew(len)))
+	if (!(nstring = ft_strnew(len, 0)))
 		return (NULL);
 	while (i < len)
 	{
