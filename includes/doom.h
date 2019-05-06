@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   doom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
 /*   Updated: 2019/05/06 10:57:42 by cababou          ###   ########.fr       */
@@ -40,15 +40,15 @@
 /* Vector-like structs */
 typedef struct 		s_xy
 {
-	double 	x;
-	double	y;
+	float	x;
+	float	y;
 }					t_xy;
 
 typedef struct		s_vec
 {
-	double	x;
-	double	y;
-	double	z;
+	float	x;
+	float	y;
+	float	z;
 }					t_vec;
 
 typedef struct		s_vec_int
@@ -105,6 +105,7 @@ typedef struct	s_nmap
 	int			size_y;
 	SDL_Color	skybox_color;
 	t_lstcontainer	*textures;
+	t_lstcontainer	*sprites;
 }				t_nmap;
 
 typedef struct	s_draw_wall
@@ -294,6 +295,14 @@ typedef struct	s_editor
 	int					is_clicking;
 }				t_editor;
 
+typedef struct		s_sprite
+{
+	t_vec	pos;
+	t_xy	size;
+	int		collides;
+	int		obtainable;
+	int		type;
+}					t_sprite;
 
 typedef struct		s_line
 {
@@ -303,21 +312,31 @@ typedef struct		s_line
 	int		color;
 }					t_line;
 
+typedef struct		s_hud
+{
+	int	health;
+	int	ammo;
+	int	key;
+}					t_hud;
+
 typedef struct		s_player
 {
 	t_vec			pos;
 	t_vec			velocity;
 	t_vec			dir;
 	t_vec			plane;
-	double			angle;
+	float			angle;
 	double			anglecos;
 	double			anglesin;
-	double			pitch;
-	double			speed;
+	float			pitch;
+	float			speed;
 	int				rov;
 	int				is_sprinting;
 	int				is_crouching;
+	int				is_shooting;
 	int				moving;
+	t_hud			hud;
+	int				is_walking;
 }					t_player;
 
 typedef struct		s_map
@@ -459,6 +478,8 @@ typedef struct		s_validate
 	int				end_points;
 }					t_validate;
 
+void				init_block_types(t_doom *doom);
+void				init_doom(t_doom *doom);
 void				init_window(t_doom *w);
 void				init_sdl(t_doom *w);
 int					is_valid(t_doom *w, int fd);
@@ -478,6 +499,8 @@ int					draw(t_doom *w);
 int					parsing(t_doom *w, char *file);
 int					key_down(t_doom *doom, SDL_Event event);
 int					key_up(t_doom *doom, SDL_Event event);
+int					mouse_down(t_doom *doom, SDL_Event event);
+int					mouse_up(t_doom *doom, SDL_Event event);
 void				line(t_doom *w, t_vec *start, t_vec *end, int color);
 int					loop(t_doom *w);
 Uint32				get_t_exact_pixel(t_texture *texture, int x, int y);
@@ -546,7 +569,7 @@ SDL_Rect			make_rect(int x, int y, int width, int height);
 void				draw_rect(SDL_Surface *s, SDL_Rect rect, SDL_Color color, int fill_rect);
 void				draw_rect_u(SDL_Surface *s, SDL_Rect rect, Uint32 color, int fill_rect);
 
-void				turn(double angle, t_player *player, t_doom *doom);
+void				turn(double angle, t_player *player);
 void				moove(double dist, t_player *player, t_map *map, double ang);
 
 void				ed_bt_edit_click(t_doom *doom, t_el_button *b, SDL_MouseButtonEvent ev);

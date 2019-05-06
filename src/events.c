@@ -1,16 +1,35 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   events.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/05/04 17:45:39 by lde-batz          #+#    #+#             */
+/*   Updated: 2019/05/05 15:39:36 by lde-batz         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "doom.h"
 
-int				mouse_movement(t_doom *doom, SDL_Event event)
+int		mouse_movement(t_doom *doom, SDL_Event event)
 {
 	SDL_MouseMotionEvent mouse;
 
 	mouse = event.motion;
 	if (doom->mouse_focused)
-		turn(mouse.xrel * -doom->settings.mouse_sensitivity, &doom->you, doom);
+	{
+		turn(mouse.xrel * -doom->settings.mouse_sensitivity, &doom->you);
+		doom->you.pitch += mouse.yrel * -doom->settings.mouse_sensitivity;
+		if (doom->you.pitch < 0)
+			doom->you.pitch = 0;
+		if (doom->you.pitch > 1)
+			doom->you.pitch = 1;
+	}
 	return (1);
 }
 
-void		turn(double angle, t_player *player, t_doom *doom)
+void	turn(double angle, t_player *player)
 {
 	double		old_dir_x;
 	double		old_plane_x;
@@ -22,11 +41,12 @@ void		turn(double angle, t_player *player, t_doom *doom)
 	player->dir.x = player->dir.x * cos(angle) - player->dir.y * sin(angle);
 	player->dir.y = old_dir_x * sin(angle) + player->dir.y * cos(angle);
 	old_plane_x = player->plane.x;
-	player->plane.x = player->plane.x * cos(angle) - player->plane.y * sin(angle);
+	player->plane.x = player->plane.x * cos(angle)
+		- player->plane.y * sin(angle);
 	player->plane.y = old_plane_x * sin(angle) + player->plane.y * cos(angle);
 }
 
-int				key_down(t_doom *doom, SDL_Event event)
+int		key_down(t_doom *doom, SDL_Event event)
 {
 	SDL_KeyboardEvent keyb;
 
@@ -43,16 +63,24 @@ int				key_down(t_doom *doom, SDL_Event event)
 		doom->you.is_sprinting = 1;
 	if (keyb.keysym.scancode == doom->settings.key_crouch)
 		doom->you.is_crouching = 1;
-	if (keyb.keysym.scancode == doom->settings.z_up)
-		doom->keys.z_up = 1;
-	if (keyb.keysym.scancode == doom->settings.z_down)
-		doom->keys.z_down = 1;
 	if (keyb.keysym.scancode == SDL_SCANCODE_ESCAPE)
 		exit_program(doom, 0);
 	return (1);
 }
 
-int				key_up(t_doom *doom, SDL_Event event)
+void	key_up2(t_doom *doom, SDL_KeyboardEvent *keyb)
+{
+	if (keyb->keysym.scancode == SDL_SCANCODE_F9)
+	{
+		SDL_SetRelativeMouseMode(!doom->mouse_focused);
+		SDL_WarpMouseInWindow(doom->win, WIN_W / 2, WIN_H / 2);
+		doom->mouse_focused = !doom->mouse_focused;
+	}
+	if (keyb->keysym.scancode == SDL_SCANCODE_TAB && doom->editor.anim_finished)
+		switch_to_editor(doom);
+}
+
+int		key_up(t_doom *doom, SDL_Event event)
 {
 	SDL_KeyboardEvent keyb;
 
@@ -68,11 +96,7 @@ int				key_up(t_doom *doom, SDL_Event event)
 	if (keyb.keysym.scancode == doom->settings.key_sprint)
 		doom->you.is_sprinting = 0;
 	if (keyb.keysym.scancode == doom->settings.key_crouch)
-		doom->you.is_crouching = 1;
-	if (keyb.keysym.scancode == doom->settings.z_up)
-		doom->keys.z_up = 0;
-	if (keyb.keysym.scancode == doom->settings.z_down)
-		doom->keys.z_down = 0;
+		doom->you.is_crouching = 0;
 	if (keyb.keysym.scancode == SDL_SCANCODE_F9)
 	{
 		SDL_SetRelativeMouseMode(!doom->mouse_focused);
@@ -81,5 +105,31 @@ int				key_up(t_doom *doom, SDL_Event event)
 	}
 	if (keyb.keysym.scancode == SDL_SCANCODE_TAB && doom->editor.anim_finished)
 		switch_to_editor(doom);
+//	key_up2(doom, &keyb);
+	return (1);
+}
+
+int		mouse_down(t_doom *doom, SDL_Event event)
+{
+	int		channel;
+
+	if (event.button.button == SDL_BUTTON_LEFT && doom->you.is_shooting == 0)
+	{
+		if (Mix_Playing(1) == 0)
+		{
+			Mix_PlayChannel(1, doom->scores.shot, 0);
+			Mix_FadeOutChannel(channel, 680);
+			doom->you.is_shooting = 1;
+		}
+		else
+			doom->you.is_shooting = 0;
+	}
+	return (1);
+}
+
+int		mouse_up(t_doom *doom, SDL_Event event)
+{
+	if (event.button.button == SDL_BUTTON_LEFT)
+		doom->you.is_shooting = 0;
 	return (1);
 }

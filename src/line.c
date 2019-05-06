@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   line.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 13:13:25 by hdussert          #+#    #+#             */
-/*   Updated: 2019/05/03 02:35:30 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/04 18:21:11 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-static void				dx_dom(t_doom *doom, t_line *l)
+static void	dx_dom(t_doom *doom, t_line *l)
 {
 	double		stack;
 	int			i;
@@ -37,7 +37,7 @@ static void				dx_dom(t_doom *doom, t_line *l)
 	}
 }
 
-static void				dy_dom(t_doom *doom, t_line *l)
+static void	dy_dom(t_doom *doom, t_line *l)
 {
 	double		stack;
 	int			i;
@@ -62,7 +62,7 @@ static void				dy_dom(t_doom *doom, t_line *l)
 	}
 }
 
-void					line(t_doom *doom, t_vec *start, t_vec *end, int color)
+void		line(t_doom *doom, t_vec *start, t_vec *end, int color)
 {
 	t_line line;
 
