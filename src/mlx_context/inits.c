@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 23:44:05 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 11:32:19 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/06 11:57:45 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	init_block_types(t_doom *doom)
 	lstcontainer_add(doom->block_types
 		, make_block_type(doom, "Wall", 0xFF848484, block_wall));
 	lstcontainer_add(doom->block_types
-		, make_block_type(doom, "Small Wall", 0xFFb78c73, block_small_wall));
+		, make_block_type(doom, "Sprite Block", 0xFFb78c73, block_sprite));
 	lstcontainer_add(doom->block_types
 		, make_block_type(doom, "Spawn Point", 0xFFC13CC1, block_spawn));
 	lstcontainer_add(doom->block_types
