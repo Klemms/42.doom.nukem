@@ -1,65 +1,5 @@
 #include "doom.h"
 
-Uint32            calc_gradient(Uint32 color1, Uint32 color2, double stage)
-{
-        Uint32             color;
-        Uint32             r;
-        Uint32             g;
-        Uint32             b;
-
-        r = (Uint32)((((color1 >> 16) & 0xFF) + ((color2 >> 16) & 0xFF)) * stage) << 16;
-        g = (Uint32)((((color1 >> 8) & 0xFF) + ((color2 >> 8) & 0xFF)) * stage) << 8;
-        b = (Uint32)((color1 & 0xFF) + (color2 & 0xFF)) * stage;
-        color = r | g | b;
-        return (color);
-}
-
-void  swap(double *a, double *b)
-{
-  double  *tmp;
-
-  *tmp = *a;
-  *a = *b;
-  *b = *tmp;
-}
-
-//sort algorithm
-void combSort(int* order, double* dist, int amount)
-{
-  int i;
-  int j;
-  double tmp;
-  int gap = amount;
-  int swapped = 0;
-  while (gap > 1 || swapped)
-  {
-    //shrink factor 1.3
-    gap = (gap * 10) / 13;
-    if (gap == 9 || gap == 10) gap = 11;
-    if (gap < 1) gap = 1;
-    swapped = 0;
-
-    i = -1;
-    while (++i < amount - gap)
-    {
-      j = i + gap;
-      if (dist[i] < dist[j])
-      {
-
-        tmp = dist[i];
-        dist[i] = dist[j];
-        dist[j] = tmp;
-        tmp = order[i];
-        order[i] = order[j];
-        order[j] = tmp;
-        //swap(&dist[i], &dist[j]);
-        //swap((double *)&order[i], (double *)&order[j]);
-        swapped = 1;
-      }
-    }
-  }
-}
-
 void              sprite_flat_draw(t_raycasting *rc, double **z_buffer, SDL_Surface *texture_sprite, Uint32 **canvas)
 {
   int stripe;
@@ -111,9 +51,41 @@ void    sprite_wall_draw(t_raycasting *rc, double **z_buffer, Uint32 **canvas)
       color = ((Uint32 *)rc->texture->pixels)[rc->texture->w * rc->tex.y + rc->tex.x];
       //make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
       if(rc->side == 1) color = (color >> 1) & 8355711;
-      (*canvas)[y * WIN_W + rc->x] = color;//calc_gradient((*canvas)[y * WIN_W + rc->x], color + 0x000066, 0.5);
+      (*canvas)[y * WIN_W + rc->x] = calc_gradient((*canvas)[y * WIN_W + rc->x], color + 0x000066, 0.5);
     }
   }
+}
+
+void    sprite_door_init(t_raycasting *rc, t_player *p)
+{
+  if (rc->side == 0) // HERE
+    rc->perp_wall_dist = (rc->map.x + (rc->step.x / 2.0) - p->pos.x + (1 - (rc->step.x)) / 2) / rc->ray_dir.x;
+  else
+    rc->perp_wall_dist = (rc->map.y + (rc->step.y / 2.0) - p->pos.y + (1 - (rc->step.y)) / 2) / rc->ray_dir.y;
+  rc->lineHeight = (int)(WIN_H / rc->perp_wall_dist);
+  rc->draw_start = -rc->lineHeight / 2 + WIN_H * rc->p_z;
+  rc->draw_end = rc->lineHeight / 2 + WIN_H * rc->p_z;
+  if(rc->draw_start < 0)
+    rc->draw_start = 0;
+  if(rc->draw_end >= WIN_H)
+    rc->draw_end = WIN_H - 1;
+  if (rc->draw_end < rc->draw_start)
+  {
+    rc->draw_start = 0;
+    rc->draw_end = WIN_H - 1;
+  }
+  //int texNum = doom->map.m[rc->map.x][rc->map.y] - 1; //1 subtracted from it so that texture 0 can be used!
+  if (rc->side == 0)
+    rc->wall_x = p->pos.y + rc->perp_wall_dist * rc->ray_dir.y;
+  else 
+    rc->wall_x = p->pos.x + rc->perp_wall_dist * rc->ray_dir.x;
+  rc->wall_x -= floor((rc->wall_x));
+  rc->tex.x = (int)(rc->wall_x * (double)(rc->texture->w));
+  rc->tex.x = rc->tex.x % rc->texture->w;
+  if(rc->side == 0 && rc->ray_dir.x > 0)
+    rc->tex.x = rc->texture->w - rc->tex.x - 1;
+  if(rc->side == 1 && rc->ray_dir.y < 0)
+    rc->tex.x = rc->texture->w - rc->tex.x - 1;
 }
 
 void    sprite_door_draw(t_raycasting *rc, double **z_buffer, Uint32 **canvas)
@@ -124,6 +96,7 @@ void    sprite_door_draw(t_raycasting *rc, double **z_buffer, Uint32 **canvas)
 
   if (rc->perp_wall_dist > 0 && rc->perp_wall_dist < (*z_buffer)[rc->x])
   {
+    (*z_buffer)[rc->x] = rc->perp_wall_dist;
     y = rc->draw_start - 1;
     while (++y < rc->draw_end)
     {
@@ -174,10 +147,6 @@ int    sprite_rayhit(t_raycasting *rc, t_player *p, t_nmap *nmap, int block_type
 void    draw_sprites(t_doom *doom, t_raycasting *rc, t_player *p, double **z_buffer, Uint32 **canvas)
 {
   //SPRITE CASTING
-  
-  //t_list_thin_blocks  thin_blocks;
-  //t_thin_block *b;
-
   int numSprites_wall = 10;
   int spriteOrder_wall[10];
   double spriteDistance_wall[10];
@@ -218,14 +187,29 @@ void    draw_sprites(t_doom *doom, t_raycasting *rc, t_player *p, double **z_buf
     rc->x = end;
     while (++rc->x < WIN_W)
     {
+      /*
       wfc_init(rc, p);
       if (sprite_rayhit(&doom->raycasting, &doom->you, doom->nmap, block_small_wall))
       {
         wfc_init(rc, p);
-        while (sprite_rayhit(&doom->raycasting, &doom->you, doom->nmap) && rc->x < WIN_W)
+        while (sprite_rayhit(&doom->raycasting, &doom->you, doom->nmap, block_small_wall) && rc->x < WIN_W)
         {
           wfc_wall_init(rc, p);//, sprite_wall, spriteOrder, i);
           sprite_wall_draw(rc, z_buffer, canvas);
+          rc->x++;
+          wfc_init(rc, p);
+          end = rc->x - 1;
+        }
+        break ;
+      }*/
+      wfc_init(rc, p);
+      if (sprite_rayhit(&doom->raycasting, &doom->you, doom->nmap, block_small_wall))
+      {
+        wfc_init(rc, p);
+        while (sprite_rayhit(&doom->raycasting, &doom->you, doom->nmap, block_small_wall) && rc->x < WIN_W)
+        {
+          sprite_door_init(rc, p);//, sprite_wall, spriteOrder, i);
+          sprite_door_draw(rc, z_buffer, canvas);
           rc->x++;
           wfc_init(rc, p);
           end = rc->x - 1;

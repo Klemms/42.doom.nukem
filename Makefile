@@ -60,6 +60,7 @@ SRC := doom.c \
 	move.c \
 	editor/renderers/bottom_select_render.c \
 	lov/raycasting.c \
+	lov/raycasting_utils.c \
 	lov/wfc_init.c \
 	lov/wfc_draw.c \
 	lov/sprite_init.c \

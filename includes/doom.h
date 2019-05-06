@@ -471,7 +471,9 @@ void  				wfc_ceiling_draw(t_raycasting *rc, t_player *p, Uint32 **canvas);
 void    			draw_sprites(t_doom *doom, t_raycasting *rc, t_player *p, double **z_buffer, Uint32 **canvas); //soz
 void    			sprite_flat_init(t_raycasting *rc, t_player *p, int i, SDL_Surface *texture_sprite, t_vec *sprite, int *spriteOrder);
 void              	sprite_flat_draw(t_raycasting *rc, double **z_buffer, SDL_Surface *texture_sprite, Uint32 **canvas);
-
+Uint32            	calc_gradient(Uint32 color1, Uint32 color2, double stage);
+void  				swap(double *a, double *b);
+void 				combSort(int* order, double* dist, int amount);
 
 void				new_player(t_doom *doom, t_player *player, t_nmap *nmap);
 int					draw(t_doom *w);
