@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 08:44:57 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 10:57:36 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/06 12:00:12 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void		select_block_type(t_doom *d, t_block_type *type)
 	d->editor.foc.b_w_texture = 2;
 	d->editor.foc.b_e_texture = 3;
 	d->editor.foc.b_light = 0;
-	d->editor.foc.b_collides = type->block_type == block_wall || type->block_type == block_small_wall ? 1 : 0;
+	d->editor.foc.b_collides = type->block_type == block_wall || type->block_type == block_sprite ? 1 : 0;
 	update_interactions(d);
 }
 

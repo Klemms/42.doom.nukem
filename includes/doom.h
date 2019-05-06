@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 10:57:42 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/06 12:03:04 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,16 @@ enum			e_block_types
 {
 	block_air = 0,
 	block_wall = 1,
-	block_small_wall = 2,
+	block_sprite = 2,
 	block_spawn = 3,
 	block_end = 4
+};
+
+enum			e_sprite_type
+{
+	sprite_key = 0,
+	sprite_ammo = 1,
+	sprite_health = 2
 };
 
 typedef struct	s_map_block
@@ -95,6 +102,7 @@ typedef struct	s_map_block
 	int			collides;
 	int			x;
 	int			y;
+	int			state;
 }				t_mblock;
 
 typedef struct	s_nmap
@@ -223,8 +231,8 @@ typedef struct	s_quadrant_renderer
 	int				y_start;
 	int				pos_x;
 	int				pos_y;
-	t_el_button		*orient_n;
-	t_el_button		*orient_s;
+	t_el_button		*orient_hor;
+	t_el_button		*orient_ver;
 	t_el_button		*orient_w;
 	t_el_button		*orient_e;
 	t_el_wh_jauge	*s_height;
@@ -298,7 +306,10 @@ typedef struct	s_editor
 typedef struct		s_sprite
 {
 	t_vec	pos;
-	t_xy	size;
+	int		texture;
+	int		alpha;
+	int		base_x;
+	int		base_y;
 	int		collides;
 	int		obtainable;
 	int		type;
@@ -600,7 +611,6 @@ int					is_left_clicking();
 void				switch_tool(t_doom *doom, int to_tool);
 
 t_nmap				*convert_map(t_doom *doom, t_map *map, t_lstcontainer *texs);
-int					char_to_blocktype(char block);
 t_block_type		*make_block_type(t_doom *doom, char *bn, Uint32 bc, int bt);
 t_block_type		*block_type(t_doom *d, int bt);
 

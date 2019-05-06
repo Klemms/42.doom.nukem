@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 10:12:00 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/05/05 18:43:16 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/06 12:00:01 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,22 +140,22 @@ void	collision_sprites(t_doom *doom, t_sprite *sprite, t_xy dest)
 		doom->you.velocity.y = 0;
 	else if (doom->you.velocity.y == 0)
 		doom->you.velocity.x = 0;
-	else if (doom->you.pos.x < sprite->pos.x + sprite->size.x + COL
-	&& doom->you.pos.x > sprite->pos.x - sprite->size.x - COL)
+	else if (doom->you.pos.x < sprite->pos.x + 0.2 + COL
+	&& doom->you.pos.x > sprite->pos.x - 0.2 - COL)
 		doom->you.velocity.y = 0;
-	else if (doom->you.pos.y < sprite->pos.y + sprite->size.y + COL
-	&& doom->you.pos.y > sprite->pos.y - sprite->size.y - COL)
+	else if (doom->you.pos.y < sprite->pos.y + 0.2 + COL
+	&& doom->you.pos.y > sprite->pos.y - 0.2 - COL)
 		doom->you.velocity.x = 0;
 	else
 	{
 		if (doom->you.velocity.x < 0)
-			pt.x = sprite->pos.x + sprite->size.x + COL;
+			pt.x = sprite->pos.x + 0.2 + COL;
 		else
-			pt.x = sprite->pos.x - sprite->size.x - COL;
+			pt.x = sprite->pos.x - 0.2 - COL;
 		if (doom->you.velocity.y < 0)
-			pt.y = sprite->pos.y + sprite->size.y + COL;
+			pt.y = sprite->pos.y + 0.2 + COL;
 		else
-			pt.y = sprite->pos.y - sprite->size.y - COL;
+			pt.y = sprite->pos.y - 0.2 - COL;
 		moving_diagonal(doom, dest, pt);
 	}
 }
@@ -169,8 +169,6 @@ void	moving(t_doom *doom)
 		exit_program(doom, ERROR_MEMORY);
 	sprite->pos.x = 3.5;
 	sprite->pos.y = 3.5;
-	sprite->size.x = 0.2;
-	sprite->size.y = 0.2;
 	sprite->collides = 1;
 //	doom->textures = lstcontainer_new();
 //	lstcontainer_add(doom->textures, FOIDSHFOSDFSD);
@@ -186,10 +184,10 @@ void	moving(t_doom *doom)
 		{
 			dest.x = doom->you.pos.x + doom->you.velocity.x;
 			dest.y = doom->you.pos.y + doom->you.velocity.y;
-			if (dest.x < sprite->pos.x + sprite->size.x + COL
-			&& dest.x > sprite->pos.x - sprite->size.x - COL
-			&& dest.y < sprite->pos.y + sprite->size.y + COL
-			&& dest.y > sprite->pos.y - sprite->size.y - COL)
+			if (dest.x < sprite->pos.x + 0.2 + COL
+			&& dest.x > sprite->pos.x - 0.2 - COL
+			&& dest.y < sprite->pos.y + 0.2 + COL
+			&& dest.y > sprite->pos.y - 0.2 - COL)
 				collision_sprites(doom, sprite, dest);
 		}
 		sprite = NULL;
