@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   blocks.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 08:44:57 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 12:08:57 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/06 15:50:28 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void		copy_block(t_mblock *dest, t_mblock *src, int free2, int cpcrds)
 	dest->collides = src->collides;
 	if (cpcrds)
 	{
-	dest->x = src->x;
-	dest->y = src->y;
+		dest->x = src->x;
+		dest->y = src->y;
 	}
 	if (free2)
 		free(src);
@@ -64,10 +64,14 @@ void		update_interactions(t_doom *d)
 	t_editor *e;
 
 	e = &d->editor;
-	e->rbr_quadrant.orient_hor->background_color = e->foc.b_orientation == 0 ? e->select_color : e->base_color;
-	e->rbr_quadrant.orient_ver->background_color = e->foc.b_orientation == 1 ? e->select_color : e->base_color;
-	e->rbr_quadrant.orient_w->background_color = e->foc.b_orientation == 2 ? e->select_color : e->base_color;
-	e->rbr_quadrant.orient_e->background_color = e->foc.b_orientation == 3 ? e->select_color : e->base_color;
+	e->rbr_quadrant.orient_hor->background_color =
+		e->foc.b_orientation == 0 ? e->select_color : e->base_color;
+	e->rbr_quadrant.orient_ver->background_color =
+		e->foc.b_orientation == 1 ? e->select_color : e->base_color;
+	e->rbr_quadrant.orient_w->background_color =
+		e->foc.b_orientation == 2 ? e->select_color : e->base_color;
+	e->rbr_quadrant.orient_e->background_color =
+		e->foc.b_orientation == 3 ? e->select_color : e->base_color;
 	e->rbr_quadrant.has_celng->checked = e->foc.b_has_ceiling;
 	wjauge_set(d, e->rbr_quadrant.s_height, e->foc.b_height, 1);
 	wjauge_set(d, e->rbr_quadrant.sc_height, e->foc.b_ceiling_height, 1);
@@ -92,7 +96,8 @@ void		select_block_type(t_doom *d, t_block_type *type)
 	d->editor.foc.b_w_texture = 2;
 	d->editor.foc.b_e_texture = 3;
 	d->editor.foc.b_light = 0;
-	d->editor.foc.b_collides = type->block_type == block_wall || type->block_type == block_sprite ? 1 : 0;
+	d->editor.foc.b_collides = type->block_type == block_wall
+							|| type->block_type == block_sprite ? 1 : 0;
 	update_interactions(d);
 }
 

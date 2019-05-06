@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 05:06:45 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/03 09:43:05 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/06 15:56:56 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	fade_surface(t_doom *doom)
 
 	new_w = doom->editor.anim_w / 2;
 	new_h = doom->editor.anim_h / 2;
-	r = make_rect(WIN_W / 2 - new_w, WIN_H / 2 - new_h, doom->editor.anim_w, doom->editor.anim_h);
+	r = make_rect(WIN_W / 2 - new_w, WIN_H / 2 - new_h, doom->editor.anim_w,
+														doom->editor.anim_h);
 	SDL_SetSurfaceAlphaMod(doom->editor.ed_surface, doom->editor.anim_alpha);
 	SDL_BlitScaled(doom->editor.ed_surface, NULL, doom->surface, &r);
 	doom->editor.anim_w *= 0.9;

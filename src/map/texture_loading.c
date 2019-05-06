@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 00:24:22 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 07:29:50 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/06 15:36:29 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void		init_textures(t_doom *doom)
 		if (!tmp_texture->surface)
 		{
 			if (!(tmp_texture->surface = IMG_Load(tmp_texture->texture_name)))
-				exit_program(doom, ERROR_INVALID_TEXTURES);;
+				exit_program(doom, ERROR_INVALID_TEXTURES);
 			tmp_s = tmp_texture->surface;
 			tmp_texture->surface = SDL_ConvertSurfaceFormat(
 				tmp_texture->surface, doom->surface->format->format, 0);

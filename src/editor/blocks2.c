@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   blocks2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 09:57:18 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 12:00:21 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/06 15:49:21 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ t_mblock	*new_block(t_doom *d, int block_type, int x, int y)
 	b->e_texture = 3;
 	b->light = 0xFFFFFFFF;
 	b->has_ceiling = 1;
-	b->collides = b->block_type == block_wall || b->block_type == block_sprite ? 1 : 0;
+	b->collides = b->block_type == block_wall
+				|| b->block_type == block_sprite ? 1 : 0;
 	b->x = x;
 	b->y = y;
 	return (b);

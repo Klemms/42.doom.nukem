@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checkbox.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 03:48:04 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/03 08:28:11 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/06 15:31:21 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_el_checkbox	*create_checkbox(t_doom *d, SDL_Rect pos, int checked)
 	return (ck);
 }
 
-void		checkbox_render(t_doom *d, SDL_Surface *s, t_el_checkbox *ck)
+void			checkbox_render(t_doom *d, SDL_Surface *s, t_el_checkbox *ck)
 {
 	draw_rect(s, ck->pos, ck->disabled ? ck->disabled_c : ck->background, 1);
 	if (ck->checked)

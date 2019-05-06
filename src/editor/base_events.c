@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   base_events.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 04:16:03 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/05 01:22:24 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/06 15:51:12 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 int		ed_mouse_motion(t_doom *doom, SDL_Event sdl_event)
 {
 	SDL_MouseMotionEvent	motion;
-	int					m_x;
-	int					m_y;
+	int						m_x;
+	int						m_y;
 
 	SDL_GetMouseState(&m_x, &m_y);
 	motion = sdl_event.motion;
@@ -73,7 +73,8 @@ int		key_event(t_doom *doom, SDL_Event sdl_event)
 {
 	if (sdl_event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
 		exit_program(doom, 0);
-	if (sdl_event.key.keysym.scancode == SDL_SCANCODE_TAB && doom->editor.anim_finished)
+	if (sdl_event.key.keysym.scancode == SDL_SCANCODE_TAB
+		&& doom->editor.anim_finished)
 		switch_to_game(doom);
 	if (sdl_event.key.keysym.scancode == SDL_SCANCODE_1)
 		switch_tool(doom, tool_none);

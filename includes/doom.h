@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 12:12:39 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/06 15:21:32 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -373,12 +373,12 @@ typedef struct		s_key
 	int		shadow;
 }					t_key;
 
-typedef struct		s_scores
+typedef struct		s_musics
 {
 	Mix_Music	*bgm;
 	Mix_Chunk	*walk;
 	Mix_Chunk	*shot;
-}					t_scores;
+}					t_musics;
 
 
 typedef struct		s_texture
@@ -455,7 +455,7 @@ typedef struct		s_doom
 	t_nmap			*nmap;
 	int				m_x; // Mouse X // Both Updated each frame
 	int				m_y; // Mouse Y
-	t_scores		scores;
+	t_musics			musics;
 	t_lstcontainer		*block_types;
 }					t_doom;
 
@@ -539,6 +539,8 @@ void				game_loop(t_doom *doom, t_settings *sett);
 void				render_game(t_doom *doom);
 void				update_velocity(t_doom *doom, t_player *player);
 void				moving(t_doom *doom);
+void				moving_diagonal(t_doom *doom, t_xy *dest, t_xy pt);
+void				check_sprite(t_doom *doom, t_sprite *sprite, t_xy *dest);
 
 void				init_editor(t_doom *doom);
 void				loop_editor(t_doom *doom);
@@ -622,7 +624,7 @@ void				copy_block(t_mblock *dest, t_mblock *src, int free2, int cpcrds);
 void				update_interactions(t_doom *d);
 void				set_to_default_mblock(t_mblock *dest, int x, int y);
 
-void				init_scores(t_doom *doom);
+void				init_musics(t_doom *doom);
 
 int					validate_map(t_doom *d, t_nmap *m);
 void				ed_save_file(t_doom *d, t_el_button *b, SDL_MouseButtonEvent ev);

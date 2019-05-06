@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   editor_util.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 02:55:07 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/02 05:42:12 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/06 15:48:43 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-Uint32	color_to_uint(SDL_Color color)
+Uint32		color_to_uint(SDL_Color color)
 {
 	return (Uint32)((color.r << 16) + (color.g << 8) + (color.b << 0));
 }
 
-int		mouse_in(int m_x, int m_y, SDL_Rect rect)
+int			mouse_in(int m_x, int m_y, SDL_Rect rect)
 {
 	if (m_x >= rect.x && m_x < rect.x + rect.w)
 		if (m_y >= rect.y && m_y < rect.y + rect.h)
@@ -25,12 +25,12 @@ int		mouse_in(int m_x, int m_y, SDL_Rect rect)
 	return (0);
 }
 
-int			is_left_clicking()
+int			is_left_clicking(void)
 {
 	return (SDL_GetMouseState(NULL, NULL) == SDL_BUTTON_LMASK);
 }
 
-SDL_Rect	mouse_pos()
+SDL_Rect	mouse_pos(void)
 {
 	int	x;
 	int	y;

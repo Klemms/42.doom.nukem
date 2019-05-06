@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   inits.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 23:44:05 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 12:14:23 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/06 15:24:11 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,22 +43,23 @@ void	init_sdl(t_doom *doom)
 		exit_program(doom, ERROR_SDL_RENDERER_INIT);
 }
 
-void	init_scores(t_doom *doom)
+void	init_musics(t_doom *doom)
 {
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024)
 	== -1)
 		exit_program(doom, ERROR_SDL_AUDIO_INIT);
 	Mix_AllocateChannels(10);
 	Mix_VolumeMusic(MIX_MAX_VOLUME / 200);
-	if ((doom->scores.bgm = Mix_LoadMUS("musics/test.mp3")) == NULL)
+	if ((doom->musics.bgm = Mix_LoadMUS("musics/test.mp3")) == NULL)
 		exit_program(doom, ERROR_INVALID_MUSIC);
-	if ((doom->scores.walk = Mix_LoadWAV("musics/marche.wav")) == NULL)
+	if ((doom->musics.walk = Mix_LoadWAV("musics/marche.wav")) == NULL)
 		exit_program(doom, ERROR_INVALID_MUSIC);
-	if ((doom->scores.shot = Mix_LoadWAV("musics/tir.wav")) == NULL)
+	if ((doom->musics.shot = Mix_LoadWAV("musics/tir.wav")) == NULL)
 		exit_program(doom, ERROR_INVALID_MUSIC);
-	Mix_PlayMusic(doom->scores.bgm, -1);
-	Mix_VolumeChunk(doom->scores.walk, MIX_MAX_VOLUME / 2);
-	Mix_VolumeChunk(doom->scores.shot, MIX_MAX_VOLUME / 2);
+	Mix_VolumeMusic(MIX_MAX_VOLUME / 200);
+	Mix_VolumeChunk(doom->musics.walk, MIX_MAX_VOLUME / 2);
+	Mix_VolumeChunk(doom->musics.shot, MIX_MAX_VOLUME / 2);
+	Mix_PlayMusic(doom->musics.bgm, -1);
 }
 
 void	init_block_types(t_doom *doom)
@@ -90,5 +91,5 @@ void	init_doom(t_doom *doom)
 	doom->fps_counter->ui->pos_x = 8;
 	doom->fps_counter->ui->pos_y = 8;
 	init_textures(doom);
-	init_scores(doom);
+	init_musics(doom);
 }
