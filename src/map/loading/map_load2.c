@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 07:25:25 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 07:15:20 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/06 10:56:36 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void		read_blockline(t_doom *d, t_nmap *m, int y, char *l)
 		{
 			block = ft_strsubuntilchar(l, 1, ']', 0);
 			l = ft_strsubuntil(l, ft_getnextchar(l + 1, '['), ft_strlen(l), 1);
-			copy_block(&m->map[y][x], read_block(d, block), 1);
+			copy_block(&m->map[y][x], read_block(d, block), 1, 0);
 			m->map[y][x].x = x;
 			m->map[y][x].y = y;
 			x++;

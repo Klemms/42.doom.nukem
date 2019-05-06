@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/29 13:20:21 by hdussert          #+#    #+#             */
-/*   Updated: 2019/05/06 06:04:08 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/06 11:02:38 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,14 @@ int			main(int argc, char *argv[])
 	ft_bzero(&doom, sizeof(t_doom));
 	if (argc == 1)
 		exit_program(&doom, ERROR_USAGE);
+
+	/*t_list	*tmp = list_files("./textures/")->firstelement;
+
+	while (tmp)
+	{
+		printf("%s\n", tmp->content);
+		tmp = tmp->next;
+	}*/
 
 	doom.block_types = lstcontainer_new();
 	lstcontainer_add(doom.block_types, make_block_type(&doom, "Air", 0xFFFFFEDD, block_air));

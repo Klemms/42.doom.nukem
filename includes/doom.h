@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 07:20:15 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/06 10:57:42 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -583,8 +583,9 @@ t_block_type		*block_type(t_doom *d, int bt);
 
 void				select_block_type(t_doom *d, t_block_type *type);
 void				copy_block_type(t_doom *d, t_block_type *type, t_mblock *blk);
-void				copy_block(t_mblock *m1, t_mblock *m2, int free2);
+void				copy_block(t_mblock *dest, t_mblock *src, int free2, int cpcrds);
 void				update_interactions(t_doom *d);
+void				set_to_default_mblock(t_mblock *dest, int x, int y);
 
 void				init_scores(t_doom *doom);
 
@@ -610,5 +611,10 @@ void				teleport_player(t_player *player, double x, double y, double z);
 unsigned int		checksum(void *data, size_t size, unsigned int seed);
 
 void				draw_minimap(t_doom *d);
+
+t_lstcontainer		*list_files(char *folder_path);
+
+void				expand_map(t_doom *d, t_nmap *m, t_mblock *b);
+t_mblock			*new_block(t_doom *d, int block_type, int x, int y);
 
 #endif
