@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 11:57:34 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 06:51:00 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 09:07:20 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ void	read_texture(t_doom *d, t_nmap *m, char *l)
 
 	if (l[0] == '[')
 	{
-		size_x = ft_atoi(l + 1);
+		size_x = ft_atoi(l + 1, 0);
 		l = ft_strsub(l, mgnc(l, ','), ft_strlen(l) - mgnc(l, ','), 1);
-		size_y = ft_atoi(l);
+		size_y = ft_atoi(l, 0);
 		l = ft_strsub(l, mgnc(l, ','), ft_strlen(l) - mgnc(l, ','), 1);
 		sz = 0;
 		s = SDL_CreateRGBSurfaceWithFormat(0, size_x, size_y, 32,
@@ -37,7 +37,7 @@ void	read_texture(t_doom *d, t_nmap *m, char *l)
 		gnc = 0;
 		while (sz < size_x * size_y)
 		{
-			((Uint32 *)s->pixels)[sz] = ft_atoi(l + gnc);
+			((Uint32 *)s->pixels)[sz] = ft_atoi(l + gnc, 0);
 			gnc += mgnc(l + gnc, ',');
 			sz++;
 		}

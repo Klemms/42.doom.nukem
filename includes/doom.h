@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 06:24:40 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 08:36:44 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,11 @@ enum			e_block_types
 {
 	block_air = 0,
 	block_wall = 1,
-	block_sprite = 2,
+	block_door = 2,
 	block_spawn = 3,
 	block_end = 4,
-	block_copy = 5
+	block_copy = 5,
+	block_window = 6
 };
 
 enum			e_sprite_type
@@ -108,13 +109,14 @@ typedef struct	s_map_block
 
 typedef struct	s_nmap
 {
-	char		*map_name;
-	t_mblock	**map;
-	int			size_x;
-	int			size_y;
-	SDL_Color	skybox_color;
+	char			*map_name;
+	t_mblock		**map;
+	int				size_x;
+	int				size_y;
+	SDL_Color		skybox_color;
 	t_lstcontainer	*textures;
 	t_lstcontainer	*sprites;
+	int				spritecount;
 }				t_nmap;
 
 typedef struct	s_draw_wall
@@ -313,7 +315,7 @@ typedef struct		s_sprite
 	t_vec	pos;
 	int		texture;
 	int		texture_back;
-	int		alpha;
+	int		render_mode;
 	int		base_x;
 	int		base_y;
 	int		collides;
@@ -629,12 +631,14 @@ int					write_map(t_nmap *m, char *path);
 int					read_map(t_doom *d, char *path);
 void				write_intdl(int fd, int i, int comma, int endl);
 void				wrt_textures(t_nmap *m, int fd);
+void				wrt_sprites(t_nmap *m, int fd);
 void				read_blockline(t_doom *d, t_nmap *m, int y, char *l);
 t_nmap				*load_map(t_doom *d, char *path);
 void				read_texture(t_doom *d, t_nmap *m, char *l);
 void				lm_1(t_doom *d, int *state, t_nmap *m, char *line);
 void				lm_2(int *y, int *state, t_nmap *m, char *line);
 void				lm_3(int *y, int *state, t_nmap *m, char *line);
+void				read_sprites(t_doom *d, t_nmap *m, char *l);
 
 void				teleport_player(t_player *player, double x, double y, double z);
 
@@ -647,5 +651,7 @@ t_lstcontainer		*list_files(char *folder_path);
 void				expand_map(t_doom *d, t_nmap *m, t_mblock *b);
 t_mblock			*new_block(t_doom *d, int block_type, int x, int y);
 int					add_texture(t_doom *d, char *texture_name);
+
+int					mgnc(char *str, char c);
 
 #endif

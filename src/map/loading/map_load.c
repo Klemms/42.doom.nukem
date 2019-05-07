@@ -6,11 +6,32 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 05:56:10 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 05:10:15 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 09:30:51 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
+
+void	load_map_3(t_doom *d, char *line, t_nmap *m, int *state)
+{
+	if (*state == 4)
+	{
+		m->sprites = lstcontainer_new();
+		if (ft_isnum(line[0]))
+			m->spritecount = ft_atoi(line, 0);
+		else
+			exit_program(d, ERROR_INVALID_MAP);
+		*state = *state + 1;
+		free(line);
+	}
+	else if (*state == 5)
+	{
+		read_sprites(d, m, line);
+		m->spritecount--;
+		if (m->spritecount < 0)
+			*state = *state + 1;
+	}
+}
 
 void	load_map_2(t_doom *d, int fd, t_nmap *m, int *y)
 {
@@ -32,10 +53,11 @@ void	load_map_2(t_doom *d, int fd, t_nmap *m, int *y)
 		else if (state == 3)
 		{
 			read_texture(d, m, line);
-			*y = *y - 1;
-			if (*y < 0)
-				break ;
+			if ((*y = *y - 1) <= 0)
+				state++;
 		}
+		else
+			load_map_3(d, line, m, &state);
 	}
 }
 
