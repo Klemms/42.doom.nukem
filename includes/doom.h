@@ -577,6 +577,7 @@ typedef struct		s_norme2
 
 void				init_block_types(t_doom *doom);
 void				init_sprite_types(t_doom *doom);
+void				init_doom(t_doom *doom);
 void				init_window(t_doom *w);
 void				init_sdl(t_doom *w);
 int					is_valid(t_doom *w, int fd);
@@ -638,10 +639,8 @@ void				game_loop(t_doom *doom, t_settings *sett);
 void				render_game(t_doom *doom);
 void				update_velocity(t_doom *doom, t_player *player);
 void				moving(t_doom *doom);
-void				moving2(t_doom *d);
-t_xy				pt_angle(t_doom *doom);
 void				moving_diagonal(t_doom *doom, t_xy *dest, t_xy pt);
-int					check_sprite(t_doom *doom, t_list *sprites, t_sprite *sprite, t_xy *dest);
+void				check_sprite(t_doom *doom, t_list *sprites, t_sprite *sprite, t_xy *dest);
 void				moving_sprite(t_doom *doom);
 
 void				press_button(t_doom *doom);

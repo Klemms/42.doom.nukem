@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 23:44:05 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 23:46:48 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/07 20:12:56 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,18 @@ void	init_block_types(t_doom *doom)
 	lstcontainer_add(doom->block_types
 		, make_block_type(doom, "Button", 0xFF5cf9d7, block_button));
 	init_sprite_types(doom);
+}
+
+void	init_doom(t_doom *doom)
+{
+	init_sdl(doom);
+	init_ids(doom);
+	init_fonts(doom);
+	init_events(doom);
+	doom->surface = SDL_GetWindowSurface(doom->win);
+	doom->s_pixels = doom->surface->pixels;
+	doom->fps_counter = create_text(doom, "- fps", FONT_RIFFIC, 20);
+	doom->fps_counter->ui->pos_x = 8;
+	doom->fps_counter->ui->pos_y = 8;
+	init_musics(doom);
 }

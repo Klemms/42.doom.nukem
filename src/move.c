@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 10:12:00 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/05/07 23:38:50 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/07 19:57:04 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,30 +57,43 @@ t_xy	pt_angle(t_doom *doom)
 	return (pt);
 }
 
-t_list	*next_supp(t_doom *doom, t_list *sprites, t_list *tmp, int supp)
+void	moving2(t_doom *d)
 {
-	if (supp == 0)
-		return (sprites->next);
-	else if (tmp)
-		return (tmp->next);
-	else
-		return (doom->nmap->sprites->firstelement);
+	t_xy	dest;
+
+	dest.x = d->you.pos.x + d->you.velocity.x;
+	dest.y = d->you.pos.y + d->you.velocity.y;
+	if (d->nmap->map[(int)(d->you.pos.y - COL)][(int)(dest.x + COL)].collides
+	|| d->nmap->map[(int)(d->you.pos.y + COL)][(int)(dest.x - COL)].collides
+	|| d->nmap->map[(int)(d->you.pos.y + COL)][(int)(dest.x + COL)].collides
+	|| d->nmap->map[(int)(d->you.pos.y - COL)][(int)(dest.x - COL)].collides)
+		d->you.velocity.x = 0;
+	if (d->nmap->map[(int)(dest.y + COL)][(int)(d->you.pos.x - COL)].collides
+	|| d->nmap->map[(int)(dest.y - COL)][(int)(d->you.pos.x + COL)].collides
+	|| d->nmap->map[(int)(dest.y + COL)][(int)(d->you.pos.x + COL)].collides
+	|| d->nmap->map[(int)(dest.y - COL)][(int)(d->you.pos.x - COL)].collides)
+		d->you.velocity.y = 0;
+	if (d->you.velocity.x != 0 && d->you.velocity.y != 0)
+		if (d->nmap->map[(int)(dest.y + COL)][(int)(dest.x + COL)].collides
+		|| d->nmap->map[(int)(dest.y - COL)][(int)(dest.x - COL)].collides
+		|| d->nmap->map[(int)(dest.y - COL)][(int)(dest.x + COL)].collides
+		|| d->nmap->map[(int)(dest.y + COL)][(int)(dest.x - COL)].collides)
+			moving_diagonal(d, &dest, pt_angle(d));
 }
 
 void	moving(t_doom *doom)
 {
 	t_xy		dest;
 	t_list		*sprites;
-	t_list		*tmp;
 	t_sprite	*sprite;
-	int			supp;
 
 	sprites = doom->nmap->sprites->firstelement;
+	if (doom->you.moving)
+		if (Mix_Playing(0) == 0)
+			Mix_PlayChannel(0, doom->musics.walk, 0);
 	moving2(doom);
 	while ((doom->you.velocity.x != 0 || doom->you.velocity.y != 0) && sprites)
 	{
-		supp = 0;
-		tmp = sprites->prev;
 		sprite = sprites->content;
 		dest.x = doom->you.pos.x + doom->you.velocity.x;
 		dest.y = doom->you.pos.y + doom->you.velocity.y;
@@ -89,7 +102,7 @@ void	moving(t_doom *doom)
 		&& dest.y < sprite->pos.y + 0.2 + COL
 		&& dest.y > sprite->pos.y - 0.2 - COL)
 			check_sprite(doom, sprites, sprite, &dest);
-		sprites = next_supp(doom, sprites, tmp, supp);
+		sprites = sprites->next;
 	}
 	doom->you.pos.x += doom->you.velocity.x;
 	doom->you.pos.y += doom->you.velocity.y;
