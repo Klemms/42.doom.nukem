@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 09:49:48 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 16:35:06 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,6 +227,13 @@ typedef struct	s_block_type
 	int			block_type;
 }				t_block_type;
 
+typedef struct	s_sprite_type
+{
+	char		*sprite_name;
+	Uint32		sprite_color;
+	int			sprite_type;
+}				t_sprite_type;
+
 typedef struct	s_quadrant_renderer
 {
 	int				zoom_level;
@@ -245,6 +252,8 @@ typedef struct	s_quadrant_renderer
 	t_el_wh_jauge	*b_w;
 	t_el_wh_jauge	*b_h;
 	t_el_checkbox	*has_celng;
+	t_el_checkbox	*sp_collides;
+	t_el_checkbox	*sp_obtainable;
 }				t_quadrant_renderer;
 
 typedef struct	s_ed_focus
@@ -265,6 +274,15 @@ typedef struct	s_ed_focus
 	int			b_light;
 	int			b_collides;
 }				t_ed_focus;
+
+typedef struct	s_ed_focuss
+{
+	int		b_texture;
+	int		b_texture_back;
+	int		b_collides;
+	int		b_obtainable;
+	int		b_type;
+}				t_ed_focuss;
 
 typedef struct	s_editor
 {
@@ -292,14 +310,17 @@ typedef struct	s_editor
 	Uint8				anim_alpha;
 	t_el_button			*tool_block;
 	t_el_button			*tool_none;
+	t_el_button			*tool_sprite;
 	int					hand_tool;
 	t_block_type		*selected_block;
+	t_sprite_type		*selected_sprite;
 	t_el_text			*current_tool;
 	t_el_text			*str_tool;
 	int					c_focus;
 	int					x_focus;
 	int					y_focus;
 	t_ed_focus			foc;
+	t_ed_focuss			foc_s;
 	SDL_Color			base_color;
 	SDL_Color			select_color;
 	t_el_button			*validate;
@@ -452,7 +473,8 @@ typedef struct		s_doom
 	int				m_x; // Mouse X // Both Updated each frame
 	int				m_y; // Mouse Y
 	t_scores		scores;
-	t_lstcontainer		*block_types;
+	t_lstcontainer	*block_types;
+	t_lstcontainer	*sprite_types;
 }					t_doom;
 
 typedef struct		s_rtxt
@@ -488,6 +510,7 @@ typedef struct		s_validate
 }					t_validate;
 
 void				init_block_types(t_doom *doom);
+void				init_sprite_types(t_doom *doom);
 void				init_doom(t_doom *doom);
 void				init_window(t_doom *w);
 void				init_sdl(t_doom *w);
@@ -593,8 +616,13 @@ void				editor_rbr_mrender(t_doom *doom);
 int					rbr_wheel(t_doom *d, SDL_Event event);
 int					rbr_click(t_doom *d, SDL_Event event);
 
+void				editor_rbrs_mrender(t_doom *d);
+int					rbrs_click(t_doom *d, SDL_Event event);
+void				ed_sprite_list(t_doom *d);
+
 void				editor_bsr_brender(t_doom *doom);
 void				editor_bsr_mrender(t_doom *doom);
+t_sprite_type		*get_sprite_type(t_doom *d, int type);
 
 void				switch_to_game(t_doom *doom);
 void				switch_to_editor(t_doom *doom);
@@ -608,14 +636,18 @@ int					is_left_clicking();
 int					is_right_clicking();
 
 void				switch_tool(t_doom *doom, int to_tool, t_block_type *block);
+void				switch_tool_sprite(t_doom *doom, int to_tool, t_sprite_type *sp);
 
 t_block_type		*make_block_type(t_doom *doom, char *bn, Uint32 bc, int bt);
 t_block_type		*block_type(t_doom *d, int bt);
+t_sprite_type		*make_sprite_type(t_doom *doom, char *bn, Uint32 bc, int bt);
 
 void				select_block_type(t_doom *d, t_block_type *type);
 void				copy_block_type(t_doom *d, t_block_type *type, t_mblock *blk);
 void				copy_block(t_mblock *dest, t_mblock *src, int free2, int cpcrds);
 void				update_interactions(t_doom *d);
+void				update_interactions_sprite(t_doom *d);
+void				select_sprite_type(t_doom *d, t_sprite_type *type);
 void				set_to_default_mblock(t_mblock *dest, int x, int y);
 void				apply_block_settings(t_doom *d, t_mblock *dest);
 void				apply_block_texture(t_doom *d, int texture_id);
@@ -655,5 +687,9 @@ t_mblock			*new_block(t_doom *d, int block_type, int x, int y);
 int					add_texture(t_doom *d, char *texture_name);
 
 int					mgnc(char *str, char c);
+
+void				render_sprites(t_doom *d);
+void				add_sprite(t_doom *d, int x, int y);
+void				remove_sprite(t_doom *d, t_list *s);
 
 #endif

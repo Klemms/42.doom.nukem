@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 00:26:56 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/05 11:52:47 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/07 10:12:18 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,10 @@ void	new_player(t_doom *doom, t_player *player, t_nmap *nmap)
 	player->rov = 40;
 	player->hud.health = 100;
 	player->hud.ammo = 10;
-	printf("Player pos %f %f %f\n", player->pos.x, player->pos.y, player->pos.z);
 }
 
 void	teleport_player(t_player *player, double x, double y, double z)
 {
-	printf("Teleporting player from %f %f %f to %f %f %f\n", player->pos.x, player->pos.y, player->pos.z, x, y, z);
-	fflush(stdout);
 	player->pos.x = x;
 	player->pos.y = y;
 	player->pos.z = z;
