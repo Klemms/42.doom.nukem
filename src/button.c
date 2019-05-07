@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 19:46:06 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/05/07 19:55:11 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/07 20:33:17 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	check_event_id(t_doom *doom, int pos_x, int pos_y)
 	int j;
 	int id;
 
+	doom->you.hud.key -= 1;
 	doom->nmap->map[pos_y][pos_x].state = 1;
 	id = doom->nmap->map[pos_y][pos_x].event_id;
 	i = -1;
@@ -66,6 +67,6 @@ void	press_button(t_doom *doom)
 	}
 	if (doom->nmap->map[pos_y][pos_x].block_type == block_button
 	&& doom->nmap->map[pos_y][pos_x].orientation == orientation
-	&& !doom->nmap->map[pos_y][pos_x].state)
+	&& !doom->nmap->map[pos_y][pos_x].state && doom->you.hud.key > 0)
 		check_event_id(doom, pos_x, pos_y);
 }

@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 15:04:07 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/05/07 20:21:14 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/07 20:31:44 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	check_sprite(t_doom *doom, t_list *sprites, t_sprite *sprite, t_xy *dest)
 	{
 		del = 1;
 		if (sprite->type == sprite_key)
-			doom->you.hud.key = 1;
+			doom->you.hud.key += 1;
 		else if (sprite->type == sprite_ammo)
 			doom->you.hud.ammo += 10;
 		else if (sprite->type == sprite_health)
