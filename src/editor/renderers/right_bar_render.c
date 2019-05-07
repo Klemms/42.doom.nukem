@@ -71,8 +71,8 @@ void	editor_rbr_mrender(t_doom *d)
 		button_render(d, e->rbr, e->rbr_quadrant.orient_hor);
 		e->rbr_quadrant.orient_ver->background_color = e->foc.b_orientation == 1 ? e->select_color : e->base_color;
 		button_render(d, e->rbr, e->rbr_quadrant.orient_ver);
-		instant_text(d, e->rbr, "Block height", make_rect(10, 155, 20, 0));
-		wjauge_render(d, e->rbr, e->rbr_quadrant.s_height);
+		instant_text(d, e->rbr, "Event ID", make_rect(10, 155, 20, 0));
+		wjauge_render(d, e->rbr, e->rbr_quadrant.ev_id);
 		instant_text(d, e->rbr, "Ceiling height", make_rect(10, 230, 20, 0));
 		wjauge_render(d, e->rbr, e->rbr_quadrant.sc_height);
 		instant_text(d, e->rbr, "Has ceiling", make_rect(10, 310, 20, 0));
@@ -116,11 +116,11 @@ int		rbr_wheel(t_doom *d, SDL_Event event)
 
 	wheel = event.wheel;
 	qr = &d->editor.rbr_quadrant;
-	rc = make_rect(qr->pos_x + qr->s_height->pos.x, qr->pos_y + qr->s_height->pos.y, qr->s_height->pos.w, qr->s_height->pos.h);
+	rc = make_rect(qr->pos_x + qr->ev_id->pos.x, qr->pos_y + qr->ev_id->pos.y, qr->ev_id->pos.w, qr->ev_id->pos.h);
 	if (mouse_in(d->m_x, d->m_y, rc))
 	{
-		wjauge_affect(d, qr->s_height, wheel.y > 0 ? 1 : -1, 1);
-		d->editor.foc.b_height = qr->s_height->value;
+		wjauge_affect(d, qr->ev_id, wheel.y > 0 ? 1 : -1, 1);
+		d->editor.foc.b_event_id = qr->ev_id->value;
 	}
 	rc = make_rect(qr->pos_x + qr->sc_height->pos.x, qr->pos_y + qr->sc_height->pos.y, qr->sc_height->pos.w, qr->sc_height->pos.h);
 	if (mouse_in(d->m_x, d->m_y, rc))

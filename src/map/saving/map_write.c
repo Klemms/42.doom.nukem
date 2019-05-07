@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 03:32:55 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 13:43:54 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 18:48:14 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	wrt_mapdata(int fd, t_nmap *m, int x, int y)
 	write_intdl(fd, m->map[y][x].orientation, 1, 0);
 	write_intdl(fd, m->map[y][x].x_size, 1, 0);
 	write_intdl(fd, m->map[y][x].y_size, 1, 0);
-	write_intdl(fd, m->map[y][x].height, 1, 0);
+	write_intdl(fd, m->map[y][x].event_id, 1, 0);
 	write_intdl(fd, m->map[y][x].ceiling_height, 1, 0);
 	write_intdl(fd, m->map[y][x].has_ceiling, 1, 0);
 	write_intdl(fd, m->map[y][x].ceilng_tex, 1, 0);

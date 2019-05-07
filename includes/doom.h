@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 18:25:01 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 18:50:02 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ enum			e_sprite_type
 	sprite_ammo = 1,
 	sprite_health = 2,
 	sprite_bullet = 3,
-	sprite_dummy = 0
+	sprite_dummy = 4
 };
 
 enum			e_render_modes
@@ -105,7 +105,7 @@ typedef struct	s_map_block
 	int			orientation;
 	int			x_size;
 	int			y_size;
-	int			height;
+	int			event_id;
 	int			ceiling_height;
 	int			has_ceiling;
 	int			ceilng_tex;
@@ -119,7 +119,6 @@ typedef struct	s_map_block
 	int			x;
 	int			y;
 	int			state;
-	int			event_id;
 }				t_mblock;
 
 typedef struct	s_nmap
@@ -261,7 +260,7 @@ typedef struct	s_quadrant_renderer
 	t_el_button		*texture_s;
 	t_el_button		*texture_w;
 	t_el_button		*texture_e;
-	t_el_wh_jauge	*s_height;
+	t_el_wh_jauge	*ev_id;
 	t_el_wh_jauge	*sc_height;
 	t_el_wh_jauge	*b_w;
 	t_el_wh_jauge	*b_h;
@@ -276,7 +275,7 @@ typedef struct	s_ed_focus
 	int			b_orientation;
 	int			b_x_size;
 	int			b_y_size;
-	int			b_height;
+	int			b_event_id;
 	int			b_ceiling_height;
 	int			b_has_ceiling;
 	int			b_ceilng_tex;
