@@ -118,7 +118,7 @@ void    draw_sprites(t_doom *doom, t_raycasting *rc, t_player *p, double **z_buf
     lsprite->spritesDist[i] = ((p->pos.x - rc->cur_sprite->pos.x) * (p->pos.x - rc->cur_sprite->pos.x) + (p->pos.y - rc->cur_sprite->pos.y) * (p->pos.y - rc->cur_sprite->pos.y)); //sqrt not taken, unneeded
     tmp = tmp->next;
   }
-  combSort(lsprite->spritesOrder, lsprite->spritesDist, lsprite->numbSprites);
+  combsort(lsprite->spritesOrder, lsprite->spritesDist, lsprite->numbSprites);
   i = -1;
   tmp = doom->nmap->sprites->firstelement;
   while (++i < lsprite->numbSprites)
@@ -132,7 +132,7 @@ void    draw_sprites(t_doom *doom, t_raycasting *rc, t_player *p, double **z_buf
       sprite_cast_wall(rc, p, doom->nmap, z_buffer, canvas);
     else if (rc->cur_sprite->render_mode == rend_flat)
     {
-      sprite_flat_init(rc, p, i, rc->cur_sprite, lsprite->spritesOrder);
+      sprite_flat_init(rc, p, rc->cur_sprite);
       sprite_flat_draw(rc, z_buffer, canvas);
     }
   }

@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 21:37:14 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 23:40:55 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,10 @@
 # define N_3_PI_4 -M_PI + M_PI_4
 # define N_PI_4 -M_PI_4
 # define P_3_PI_4 M_PI - M_PI_4
+
+#define uDiv 1
+#define vDiv 1
+#define vMove 0.0
 
 # define COL 0.1
 
@@ -553,6 +557,24 @@ typedef struct		s_validate
 	int				end_points;
 }					t_validate;
 
+typedef struct		s_norme1
+{
+	int				gap;
+	double			tmp;
+	int				swapped;
+}					t_norme1;
+
+typedef struct		s_norme2
+{
+	double			weight;
+	double			currentFloorX;
+	double			currentFloorY;
+	double			distWall;
+	double			distPlayer;
+	double			currentDist;
+	int				y;
+}					t_norme2;
+
 void				init_block_types(t_doom *doom);
 void				init_sprite_types(t_doom *doom);
 void				init_doom(t_doom *doom);
@@ -578,13 +600,13 @@ void  				wfc_fc_init(t_raycasting *rc);
 void  				wfc_floor_draw(t_raycasting *rc, t_player *p, Uint32 **canvas);
 void  				wfc_ceiling_draw(t_raycasting *rc, t_player *p, Uint32 **canvas);
 void    			draw_sprites(t_doom *doom, t_raycasting *rc, t_player *p, double **z_buffer, Uint32 **canvas, t_l_sprite *lsprite); //soz
-void    			sprite_flat_init(t_raycasting *rc, t_player *p, int i, t_sprite *sprite, int *spriteOrder);
+void    			sprite_flat_init(t_raycasting *rc, t_player *p, t_sprite *sprite);
 void              	sprite_flat_draw(t_raycasting *rc, double **z_buffer, Uint32 **canvas);
 void    			sprite_door_init(t_raycasting *rc, t_player *p);
 
 Uint32            	calc_gradient(Uint32 color1, Uint32 color2, double stage);
 void  				swap(double *a, double *b);
-void 				combSort(int* order, double* dist, int amount);
+void 				combsort(int* order, double* dist, int amount);
 
 void				new_player(t_doom *doom, t_player *player, t_nmap *nmap);
 int					draw(t_doom *w);
