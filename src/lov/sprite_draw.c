@@ -11,19 +11,12 @@ void              sprite_flat_draw(t_raycasting *rc, double **z_buffer, Uint32 *
   while (++stripe < rc->draw_end_x)
   {
     rc->tex_x = (int)((stripe - (-((int)rc->sprite_width >> 1) + rc->sprite_screen_x)) * rc->texture->w / rc->sprite_width);
-    //the conditions in the if are:
-    //1) it's in front of camera plane so you don't see things behind you
-    //2) it's on the screen (left)
-    //3) it's on the screen (right)
-    //4) ZBuffer, with perpendicular distance
     if (rc->transform.y > 0 && stripe > 0 && stripe < WIN_W && rc->transform.y < (*z_buffer)[stripe])
     {
-      //(*z_buffer)[stripe] = rc->transform.y;
       y = rc->draw_start_y - 1;
-      while (++y < rc->draw_end_y) //for every pixel of the current stripe
+      while (++y < rc->draw_end_y) 
       {
-        d = ((int)((y - rc->v_move_screen) - (WIN_H * rc->p_z)) << 8) + ((int)rc->sprite_height << 7); //256 and 128 factors to avoid floats
-        //d = (y - (WIN_H * rc->p_z)) * 256) + rc->lineHeight * 128; 
+        d = ((int)((y - rc->v_move_screen) - (WIN_H * rc->p_z)) << 8) + ((int)rc->sprite_height << 7);
         rc->tex_y = ((d * rc->texture->h) / rc->sprite_height) >> 8; // this 64 whas HEIGHT the other WIDTH
         color = ((Uint32*)rc->texture->pixels)[rc->texture->w * rc->tex_y + rc->tex_x]; //get current color from the texture
         if((color & 0x00FFFFFF) != 0)
@@ -56,7 +49,7 @@ int    sprite_rayhit(t_raycasting *rc, t_player *p, t_nmap *nmap)
     }
     rc->dist_hit++;
 
-    if (nmap->map[rc->map.y][rc->map.x].collides)
+    if (nmap->map[rc->map.y][rc->map.x].collides || nmap->map[rc->map.y][rc->map.x].block_type == block_door)
     {
       if (nmap->map[rc->map.y][rc->map.x].block_type == block_window || nmap->map[rc->map.y][rc->map.x].block_type == block_door)
         return (1);
@@ -76,10 +69,10 @@ void    sprite_door_draw(t_raycasting *rc, double **z_buffer, Uint32 **canvas, t
 	(void)nmap;
   if (rc->perp_wall_dist > 0 && rc->perp_wall_dist < (*z_buffer)[rc->x])
   {
-    y = rc->draw_start - 1 + rc->lineHeight * stage;
-    while (++y < rc->draw_end)
+    y = rc->draw_start - 1;
+    while (++y < rc->draw_end - rc->lineHeight * stage)
     {
-      d = ((int)((y - rc->lineHeight * stage) - (WIN_H * rc->p_z)) << 8) + ((int)rc->lineHeight << 7); //256 and 128 factors to avoid floats
+      d = ((int)((y + rc->lineHeight * stage) - (WIN_H * rc->p_z)) << 8) + ((int)rc->lineHeight << 7); //256 and 128 factors to avoid floats
       // TODO: avoid the division to speed this up
       rc->tex.y = ((d * rc->texture->h) / rc->lineHeight) >> 8;
       rc->tex.y = rc->tex.y % rc->texture->h;
@@ -131,17 +124,9 @@ void    draw_sprites(t_doom *doom, t_raycasting *rc, t_player *p, double **z_buf
   while (++i < lsprite->numbSprites)
   {
     rc->cur_sprite = ft_lstget(doom->lsprite.spritesOrder[i], tmp)->content;//tmp->content;
-    /*
-    if (rc->cur_sprite->animated == 1)
-    {
+    // Animation
+    if (doom->nmap->map[(int)rc->cur_sprite->pos.y][(int)rc->cur_sprite->pos.x].state == 1)
       if (rc->cur_sprite->stage < 1) rc->cur_sprite->stage += 0.01;
-      else rc->cur_sprite->animated = 2;
-    }
-    else if (rc->cur_sprite->animated == 2)
-    {
-      if (rc->cur_sprite->stage > 0) rc->cur_sprite->stage -= 0.01;
-      else rc->cur_sprite->animated = 1;
-    }*/
     rc->texture = get_surface(doom, rc->cur_sprite->texture);
     if (rc->cur_sprite->render_mode == rend_door || rc->cur_sprite->render_mode == rend_window)
       sprite_cast_wall(rc, p, doom->nmap, z_buffer, canvas);
@@ -150,6 +135,5 @@ void    draw_sprites(t_doom *doom, t_raycasting *rc, t_player *p, double **z_buf
       sprite_flat_init(rc, p, i, rc->cur_sprite, lsprite->spritesOrder);
       sprite_flat_draw(rc, z_buffer, canvas);
     }
-    //tmp = tmp->next;
   }
 }
