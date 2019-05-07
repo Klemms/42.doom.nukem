@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 23:38:15 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 20:45:31 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 23:06:55 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,12 @@ void	exit_program2(t_doom *doom, int code)
 	else if (code == ERROR_USAGE)
 		quit(doom, "Usage : ./doom <map name> OR ./doom editor <map name>",
 					code);
+	else if (code == ERROR_SDL_AFTER_INIT || code == ERROR_SDL_BEFORE_INIT)
+		quit(doom, "Memory error.", code);
+	else if (code == ERROR_DEAD)
+		quit(doom, "You died. RIP in Peace", code);
+	else if (code == ERROR_FINISH)
+		quit(doom, "You finished this level !", code);
 	else
 		quit(doom, "Exiting Le Doom", code);
 }
@@ -57,10 +63,10 @@ void	exit_program(t_doom *doom, int code)
 		quit(doom, "An error occured.", code);
 	else if (code == ERROR_MEMORY)
 		quit(doom, "A memory error occured.", code);
-	else if (code == ERROR_MLX_INIT)
-		quit(doom, "Couldn't initalize MLX.", code);
-	else if (code == ERROR_MLX_WINDOW_INIT)
-		quit(doom, "Couldn't initialize MLX window.", code);
+	else if (code == ERROR_SDL_INIT)
+		quit(doom, "Couldn't initalize SDL.", code);
+	else if (code == ERROR_SDL_WINDOW_INIT)
+		quit(doom, "Couldn't initialize SDL window.", code);
 	else if (code == ERROR_SDL_AUDIO_INIT)
 		quit(doom, "Couldn't initialize SDL audio.", code);
 	else if (code == ERROR_NOT_ENOUGH_ARGS)
