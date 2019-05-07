@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 17:45:39 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/05/07 19:44:52 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/08 00:10:02 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,31 +82,28 @@ void	key_up2(t_doom *doom, SDL_KeyboardEvent *keyb)
 
 int		key_up(t_doom *doom, SDL_Event event)
 {
-	SDL_KeyboardEvent keyb;
-
-	keyb = event.key;
-	if (keyb.keysym.scancode == doom->settings.key_forward)
+	if (event.key.keysym.scancode == doom->settings.key_forward)
 		doom->keys.up = 0;
-	if (keyb.keysym.scancode == doom->settings.key_backward)
+	if (event.key.keysym.scancode == doom->settings.key_backward)
 		doom->keys.down = 0;
-	if (keyb.keysym.scancode == doom->settings.key_left)
+	if (event.key.keysym.scancode == doom->settings.key_left)
 		doom->keys.left = 0;
-	if (keyb.keysym.scancode == doom->settings.key_right)
+	if (event.key.keysym.scancode == doom->settings.key_right)
 		doom->keys.right = 0;
-	if (keyb.keysym.scancode == doom->settings.key_sprint)
+	if (event.key.keysym.scancode == doom->settings.key_sprint)
 		doom->you.is_sprinting = 0;
-	if (keyb.keysym.scancode == doom->settings.key_crouch)
+	if (event.key.keysym.scancode == doom->settings.key_crouch)
 		doom->you.is_crouching = 0;
-	if (keyb.keysym.scancode == doom->settings.key_button)
+	if (event.key.keysym.scancode == doom->settings.key_button)
 		press_button(doom);
-	if (keyb.keysym.scancode == SDL_SCANCODE_F9)
+	if (event.key.keysym.scancode == SDL_SCANCODE_F9)
 	{
 		SDL_SetRelativeMouseMode(!doom->mouse_focused);
 		SDL_WarpMouseInWindow(doom->win, WIN_W / 2, WIN_H / 2);
 		doom->mouse_focused = !doom->mouse_focused;
 	}
-	if (keyb.keysym.scancode == SDL_SCANCODE_TAB && doom->editor.anim_finished)
+	if (event.key.keysym.scancode == SDL_SCANCODE_TAB
+		&& doom->editor.anim_finished)
 		switch_to_editor(doom);
-//	key_up2(doom, &keyb);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 03:48:04 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 22:50:46 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/08 00:11:34 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void		text_prepare(t_doom *doom, t_el_text *text, int mk_size, int cent)
 {
 	(void)doom;
 	if (!text)
-		return;
+		return ;
 	SDL_FreeSurface(text->surface);
 	text->surface = TTF_RenderUTF8_Blended(
 		text->font,
@@ -87,7 +87,7 @@ void		text_prepare(t_doom *doom, t_el_text *text, int mk_size, int cent)
 void		text_render(t_doom *doom, SDL_Surface *surface, t_el_text *text)
 {
 	if (!text)
-		return;
+		return ;
 	(void)doom;
 	SDL_BlitSurface(text->surface, NULL, surface, &text->rect);
 }

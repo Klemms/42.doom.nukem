@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 05:50:34 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 22:48:26 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/08 00:11:14 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ t_el_wh_jauge	*create_wjauge(t_doom *d, SDL_Rect rc, SDL_Rect mmvs)
 	jg->background = make_rgb(190, 190, 190, 255);
 	jg->border = d->editor.base_color;
 	jg->color = d->editor.select_color;
-	jg->is_focused = 0;
 	jg->unit = "%";
 	s = ft_strjoin(ft_itoa(jg->value), jg->unit, 1);
 	if ((jg->txt = create_text(d, s, FONT_RIFFIC, 20)))
