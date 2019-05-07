@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
+#    By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 22:39:07 by cababou           #+#    #+#              #
-#    Updated: 2019/05/07 08:24:09 by cababou          ###   ########.fr        #
+#    Updated: 2019/05/07 10:18:58 by lde-batz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRC := doom.c \
 	errors/errors.c \
 	events/event_system.c \
 	events.c \
+	events_mouse.c \
 	free_structs.c \
 	game/game.c \
 	line.c \
@@ -55,6 +56,8 @@ SRC := doom.c \
 	editor/tools.c \
 	map/map_util.c \
 	move.c \
+	velocity.c \
+	moving_sprite.c \
 	editor/renderers/bottom_select_render.c \
 	lov/raycasting.c \
 	lov/raycasting_utils.c \
@@ -63,6 +66,7 @@ SRC := doom.c \
 	lov/sprite_init.c \
 	lov/sprite_draw.c \
 	editor/renderers/right_bar_render.c \
+	button.c\
 	ui/wjauge/wjauge.c \
 	ui/checkbox/checkbox.c \
 	editor/blocks.c \
@@ -77,8 +81,7 @@ SRC := doom.c \
 	map/loading/map_load3.c \
 	map/loading/map_load4.c \
 	map/loading/map_load5.c \
-	map/expand.c \
-	obj_event/shoot.c
+	map/expand.c 
 
 HEADERS := doom.h editor.h errors.h
 

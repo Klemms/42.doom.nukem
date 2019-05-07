@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 09:49:48 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 14:00:02 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@
 
 # define WIN_W 1920
 # define WIN_H 1080
+
+# define N_3_PI_4 -M_PI + M_PI_4
+# define N_PI_4 -M_PI_4
+# define P_3_PI_4 M_PI - M_PI_4
 
 # define COL 0.1
 
@@ -75,14 +79,16 @@ enum			e_block_types
 	block_spawn = 3,
 	block_end = 4,
 	block_copy = 5,
-	block_window = 6
+	block_window = 6,
+	block_button = 7
 };
 
 enum			e_sprite_type
 {
 	sprite_key = 0,
 	sprite_ammo = 1,
-	sprite_health = 2
+	sprite_health = 2,
+	sprite_bullet = 3
 };
 
 enum			e_render_modes
@@ -148,10 +154,7 @@ typedef struct	s_settings
 	int			key_right;
 	int			key_sprint;
 	int			key_crouch;
-	int			left_clicked;
-	int			right_clicked;
-	int			z_up;
-	int			z_down;
+	int			key_button;
 	int			render_textures;
 	int			enable_crt_floor;
 }				t_settings;
@@ -322,8 +325,8 @@ typedef struct	s_editor
 
 typedef struct		s_sprite
 {
-	t_vec	pos;
 	t_vec	vel;
+	t_vec	pos;
 	int		texture;
 	int		texture_back;
 	int		render_mode;
@@ -367,7 +370,6 @@ typedef struct		s_player
 	int				rov;
 	int				is_sprinting;
 	int				is_crouching;
-	int				is_shooting;
 	int				moving;
 	t_hud			hud;
 	int				is_walking;
@@ -384,12 +386,12 @@ typedef struct		s_key
 	int		shadow;
 }					t_key;
 
-typedef struct		s_scores
+typedef struct		s_musics
 {
 	Mix_Music	*bgm;
 	Mix_Chunk	*walk;
 	Mix_Chunk	*shot;
-}					t_scores;
+}					t_musics;
 
 
 typedef struct		s_texture
@@ -486,7 +488,7 @@ typedef struct		s_doom
 	t_nmap			*nmap;
 	int				m_x; // Mouse X // Both Updated each frame
 	int				m_y; // Mouse Y
-	t_scores		scores;
+	t_musics			musics;
 	t_lstcontainer	*block_types;
 	t_l_sprite		lsprite;
 }					t_doom;
@@ -551,8 +553,6 @@ void    			sprite_flat_init(t_raycasting *rc, t_player *p, int i, t_sprite *spri
 void              	sprite_flat_draw(t_raycasting *rc, double **z_buffer, Uint32 **canvas);
 void    			sprite_door_init(t_raycasting *rc, t_player *p);
 
-void				shoot(t_doom *doom, t_player *p);
-
 Uint32            	calc_gradient(Uint32 color1, Uint32 color2, double stage);
 void  				swap(double *a, double *b);
 void 				combSort(int* order, double* dist, int amount);
@@ -563,7 +563,6 @@ int					parsing(t_doom *w, char *file);
 int					key_down(t_doom *doom, SDL_Event event);
 int					key_up(t_doom *doom, SDL_Event event);
 int					mouse_down(t_doom *doom, SDL_Event event);
-int					mouse_up(t_doom *doom, SDL_Event event);
 void				line(t_doom *w, t_vec *start, t_vec *end, int color);
 int					loop(t_doom *w);
 Uint32				get_t_exact_pixel(t_texture *texture, int x, int y);
@@ -589,6 +588,13 @@ void				game_loop(t_doom *doom, t_settings *sett);
 void				render_game(t_doom *doom);
 void				update_velocity(t_doom *doom, t_player *player);
 void				moving(t_doom *doom);
+void				moving_diagonal(t_doom *doom, t_xy *dest, t_xy pt);
+void				check_sprite(t_doom *doom, t_list *sprites, t_sprite *sprite, t_xy *dest);
+void				moving_sprite(t_doom *doom);
+
+void				press_button(t_doom *doom);
+
+void				init_musics(t_doom *doom);
 
 void				init_editor(t_doom *doom);
 void				loop_editor(t_doom *doom);
@@ -673,8 +679,6 @@ void				update_interactions(t_doom *d);
 void				set_to_default_mblock(t_mblock *dest, int x, int y);
 void				apply_block_settings(t_doom *d, t_mblock *dest);
 void				apply_block_texture(t_doom *d, int texture_id);
-
-void				init_scores(t_doom *doom);
 
 int					validate_map(t_doom *d, t_nmap *m);
 void				ed_save_file(t_doom *d, t_el_button *b, SDL_MouseButtonEvent ev);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_fonts.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 04:58:41 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/30 16:16:27 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/06 15:29:10 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ TTF_Font	*make_font(t_doom *doom, char *font_path, int size)
 	return (font->font);
 }
 
-void	init_fonts(t_doom *doom)
+void		init_fonts(t_doom *doom)
 {
 	t_font	*font;
 
@@ -48,7 +48,7 @@ void	init_fonts(t_doom *doom)
 	make_font(doom, FONT_RIFFIC, 20);
 }
 
-void	destroy_fonts(t_doom *doom)
+void		destroy_fonts(t_doom *doom)
 {
 	t_list	*tmp;
 	t_font	*tmp_font;

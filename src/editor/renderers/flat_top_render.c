@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ftr.c                                  :+:      :+:    :+:   */
+/*   flat_top_render.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/01 03:33:20 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/03 02:29:58 by cababou          ###   ########.fr       */
+/*   Created: 2019/05/06 15:53:29 by lde-batz          #+#    #+#             */
+/*   Updated: 2019/05/06 15:54:46 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_block_type	*block_type(t_doom *d, int bt)
 	return (NULL);
 }
 
-void	editor_ftr_brender(t_doom *doom)
+void			editor_ftr_brender(t_doom *doom)
 {
 	t_editor	*e;
 
@@ -42,7 +42,7 @@ void	editor_ftr_brender(t_doom *doom)
 	SDL_BlitSurface(e->ftr, NULL, doom->editor.ed_surface, &e->ftr_rect);
 }
 
-void	editor_ftr_mrender(t_doom *doom)
+void			editor_ftr_mrender(t_doom *doom)
 {
 	t_quadrant_renderer	*q;
 	SDL_Rect			m_pos;
