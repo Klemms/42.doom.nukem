@@ -6,7 +6,7 @@
 #    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 22:39:07 by cababou           #+#    #+#              #
-#    Updated: 2019/05/06 12:01:05 by cababou          ###   ########.fr        #
+#    Updated: 2019/05/07 08:24:09 by cababou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ SRC := doom.c easter_eggs/hypercam.c editor/base_events.c \
 	map/loading/map_load2.c \
 	map/loading/map_load3.c \
 	map/loading/map_load4.c \
+	map/loading/map_load5.c \
 	map/expand.c
 
 HEADERS := doom.h editor.h errors.h

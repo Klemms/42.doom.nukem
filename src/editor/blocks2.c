@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 09:57:18 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 06:21:07 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 06:49:06 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ void		apply_block_settings(t_doom *d, t_mblock *dest)
 	dest->e_texture = d->editor.foc.b_e_texture;
 	dest->light = d->editor.foc.b_light;
 	dest->collides = d->editor.foc.b_block_type == block_wall
-		|| d->editor.foc.b_block_type == block_sprite ? 1 : 0;
+		|| d->editor.foc.b_block_type == block_door
+		|| d->editor.foc.b_block_type == block_window ? 1 : 0;
 }
 
 t_mblock	*new_block(t_doom *d, int block_type, int x, int y)
@@ -67,7 +68,9 @@ t_mblock	*new_block(t_doom *d, int block_type, int x, int y)
 	b->e_texture = 3;
 	b->light = 0xFFFFFFFF;
 	b->has_ceiling = 1;
-	b->collides = b->block_type == block_wall || b->block_type == block_sprite ? 1 : 0;
+	b->collides = b->block_type == block_wall
+		|| b->block_type == block_door
+		|| b->block_type == block_window ? 1 : 0;
 	b->x = x;
 	b->y = y;
 	return (b);

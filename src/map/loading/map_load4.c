@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 06:57:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 07:13:47 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 09:07:30 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		*get_mapheader(t_doom *d, char *l)
 	{
 		if (l[i] == ',' && num && nb < 6)
 		{
-			header[nb++] = ft_atoi(num);
+			header[nb++] = ft_atoi(num, 0);
 			free(num);
 			num = ft_strnew(0, 0);
 		}
@@ -69,7 +69,7 @@ void	lm_2(int *y, int *state, t_nmap *m, char *line)
 
 void	lm_3(int *y, int *state, t_nmap *m, char *line)
 {
-	*y = ft_atoi(line);
+	*y = ft_atoi(line, 0);
 	m->textures = lstcontainer_new();
 	free(line);
 	*state = *state + 1;
