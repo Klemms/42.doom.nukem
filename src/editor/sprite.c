@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprite.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bsiche <bsiche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/07 11:11:17 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 18:57:40 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 22:45:53 by bsiche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_sprite_type	*get_sprite_type(t_doom *d, int type)
 	return (d->sprite_types->firstelement->content);
 }
 
-void		remove_sprite(t_doom *d, t_list *s)
+void			remove_sprite(t_doom *d, t_list *s)
 {
 	lstcontainer_remove(d->nmap->sprites, s);
 	d->nmap->spritecount = lstcontainer_size(d->nmap->sprites);
@@ -38,7 +38,7 @@ void		remove_sprite(t_doom *d, t_list *s)
 	switch_tool(d, tool_none, NULL);
 }
 
-void		add_sprite(t_doom *d, int x, int y)
+void			add_sprite(t_doom *d, int x, int y)
 {
 	t_sprite	*s;
 
@@ -59,13 +59,15 @@ void		add_sprite(t_doom *d, int x, int y)
 	d->editor.selected_sprite = NULL;
 }
 
-void		update_interactions_sprite(t_doom *d)
+void			update_interactions_sprite(t_doom *d)
 {
 	t_editor *e;
 
 	e = &d->editor;
-	e->rbr_quadrant.orient_hor->background_color = e->foc.b_orientation == 0 ? e->select_color : e->base_color;
-	e->rbr_quadrant.orient_ver->background_color = e->foc.b_orientation == 1 ? e->select_color : e->base_color;
+	e->rbr_quadrant.orient_hor->background_color = e->foc.b_orientation
+	== 0 ? e->select_color : e->base_color;
+	e->rbr_quadrant.orient_ver->background_color = e->foc.b_orientation
+	== 1 ? e->select_color : e->base_color;
 	e->rbr_quadrant.has_celng->checked = e->foc.b_has_ceiling;
 	wjauge_set(d, e->rbr_quadrant.ev_id, e->foc.b_event_id, 1);
 	wjauge_set(d, e->rbr_quadrant.sc_height, e->foc.b_ceiling_height, 1);
@@ -73,7 +75,7 @@ void		update_interactions_sprite(t_doom *d)
 	wjauge_set(d, e->rbr_quadrant.b_h, e->foc.b_y_size, 1);
 }
 
-void		select_sprite_type(t_doom *d, t_sprite_type *type)
+void			select_sprite_type(t_doom *d, t_sprite_type *type)
 {
 	d->editor.selected_sprite = type;
 	d->editor.foc_s.b_type = type->sprite_type;

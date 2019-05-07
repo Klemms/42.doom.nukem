@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
+#    By: bsiche <bsiche@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 22:39:07 by cababou           #+#    #+#              #
 #    Updated: 2019/05/07 21:40:42 by cababou          ###   ########.fr        #
@@ -50,6 +50,9 @@ SRC := doom.c \
 	ui/ui_ids.c \
 	editor/editor_util.c \
 	editor/renderers/flat_top_render.c \
+	editor/renderers/block_text_render.c \
+	editor/renderers/rbr_wheel.c \
+	editor/renderers/rbs_click.c \
 	editor/switcher.c \
 	animation/fade.c \
 	editor/ui_clicks/ui_clicks.c \

@@ -755,6 +755,8 @@ int					mgnc(char *str, char c);
 void				render_sprites(t_doom *d);
 void				add_sprite(t_doom *d, int x, int y);
 void				remove_sprite(t_doom *d, t_list *s);
+void				render_blocks(t_doom *doom);
+void				render_textures(t_doom *doom, int start_y);
 
 void				blockwindowdoor_added(t_doom *d, t_mblock *b);
 void				blockwindowdoor_removed(t_doom *d, int type, int x, int y);

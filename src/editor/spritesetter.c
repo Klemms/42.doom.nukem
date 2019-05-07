@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   spritesetter.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bsiche <bsiche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/07 18:03:10 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 18:57:30 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 22:46:21 by bsiche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
-
 
 t_sprite	*make_sprite(t_doom *d, int spritetype, int x, int y)
 {
@@ -22,8 +21,8 @@ t_sprite	*make_sprite(t_doom *d, int spritetype, int x, int y)
 	s->base_x = x;
 	s->base_y = y;
 	s->type = spritetype;
-	s->pos.x = ((float)x) + 0.5;
-	s->pos.y = ((float)y) + 0.5;
+	s->pos.x = ((float)x);
+	s->pos.y = ((float)y);
 	return (s);
 }
 
@@ -44,7 +43,7 @@ t_sprite	*find_sprite(t_doom *d, int x, int y, int rm)
 	return (NULL);
 }
 
-void	blockwindowdoor_added(t_doom *d, t_mblock *b)
+void		blockwindowdoor_added(t_doom *d, t_mblock *b)
 {
 	t_sprite	*s;
 
@@ -73,7 +72,7 @@ void	blockwindowdoor_added(t_doom *d, t_mblock *b)
 	}
 }
 
-void	blockwindowdoor_removed(t_doom *d, int type, int x, int y)
+void		blockwindowdoor_removed(t_doom *d, int type, int x, int y)
 {
 	t_list			*tmp;
 	t_sprite		*tmp_sprite;
@@ -87,13 +86,13 @@ void	blockwindowdoor_removed(t_doom *d, int type, int x, int y)
 			if (type == block_door && tmp_sprite->render_mode == rend_door)
 			{
 				remove_sprite(d, tmp);
-				break;
+				break ;
 			}
 			else if (type == block_window
 				&& tmp_sprite->render_mode == rend_window)
 			{
 				remove_sprite(d, tmp);
-				break;
+				break ;
 			}
 		}
 		tmp = tmp->next;

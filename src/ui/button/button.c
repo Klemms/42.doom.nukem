@@ -59,7 +59,8 @@ void		button_render(t_doom *doom, SDL_Surface *surface,
 	}
 }
 
-void		button_render_texture(t_doom *d, SDL_Surface *s, t_el_button *b, SDL_Surface *b_text)
+void		button_render_texture(t_doom *d, SDL_Surface *s,
+	t_el_button *b, SDL_Surface *b_text)
 {
 	if (b->is_visible)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   editor_util.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bsiche <bsiche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 02:55:07 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 06:24:30 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 22:43:24 by bsiche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ int			is_left_clicking(void)
 	return (SDL_GetMouseState(NULL, NULL) == SDL_BUTTON_LMASK);
 }
 
-int			is_right_clicking()
+int			is_right_clicking(void)
 {
 	return (SDL_GetMouseState(NULL, NULL) == SDL_BUTTON_RMASK);
 }
 
-SDL_Rect	mouse_pos()
+SDL_Rect	mouse_pos(void)
 {
 	int	x;
 	int	y;
