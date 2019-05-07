@@ -367,6 +367,22 @@ typedef struct		s_wall_sight
 	double				next_perp;
 }					t_wall_sight;
 
+typedef struct 	s_l_sprite
+{
+	t_sprite *sprites;
+	int		numbSprites;
+	int       spritesOrder[numbSprites];
+	int       spritesDist[numbSprites];
+}				t_l_sprite;
+
+
+typedef struct    s_sprite
+{
+  t_vec   pos;
+  int     texture_id;
+  int     render_mode;
+}                 t_sprite;
+
 typedef struct		s_raycasting
 {
 	SDL_Surface	*texture;
@@ -401,6 +417,7 @@ typedef struct		s_raycasting
 	int			draw_end_y;
 	int			tex_x;
 	int			tex_y;
+	t_sprite	cur_sprite;
 }					t_raycasting;
 
 typedef struct		s_doom
@@ -471,6 +488,8 @@ void  				wfc_ceiling_draw(t_raycasting *rc, t_player *p, Uint32 **canvas);
 void    			draw_sprites(t_doom *doom, t_raycasting *rc, t_player *p, double **z_buffer, Uint32 **canvas); //soz
 void    			sprite_flat_init(t_raycasting *rc, t_player *p, int i, SDL_Surface *texture_sprite, t_vec *sprite, int *spriteOrder);
 void              	sprite_flat_draw(t_raycasting *rc, double **z_buffer, SDL_Surface *texture_sprite, Uint32 **canvas);
+void    			sprite_door_init(t_raycasting *rc, t_player *p);
+
 Uint32            	calc_gradient(Uint32 color1, Uint32 color2, double stage);
 void  				swap(double *a, double *b);
 void 				combSort(int* order, double* dist, int amount);

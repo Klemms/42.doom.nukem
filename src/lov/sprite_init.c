@@ -42,3 +42,35 @@ void    sprite_flat_init(t_raycasting *rc, t_player *p, int i, SDL_Surface *text
   if (rc->draw_end_x >= WIN_W)
     rc->draw_end_x = WIN_W - 1;
 }
+
+void    sprite_door_init(t_raycasting *rc, t_player *p)
+{
+  if (rc->side == 0) // HERE
+    rc->perp_wall_dist = (rc->map.x + (rc->step.x / 2.0) - p->pos.x + (1 - (rc->step.x)) / 2) / rc->ray_dir.x;
+  else
+    rc->perp_wall_dist = (rc->map.y + (rc->step.y / 2.0) - p->pos.y + (1 - (rc->step.y)) / 2) / rc->ray_dir.y;
+  rc->lineHeight = (int)(WIN_H / rc->perp_wall_dist);
+  rc->draw_start = -rc->lineHeight / 2 + WIN_H * rc->p_z;
+  rc->draw_end = rc->lineHeight / 2 + WIN_H * rc->p_z;
+  if(rc->draw_start < 0)
+    rc->draw_start = 0;
+  if(rc->draw_end >= WIN_H)
+    rc->draw_end = WIN_H - 1;
+  if (rc->draw_end < rc->draw_start)
+  {
+    rc->draw_start = 0;
+    rc->draw_end = WIN_H - 1;
+  }
+  //int texNum = doom->map.m[rc->map.x][rc->map.y] - 1; //1 subtracted from it so that texture 0 can be used!
+  if (rc->side == 0)
+    rc->wall_x = p->pos.y + rc->perp_wall_dist * rc->ray_dir.y;
+  else 
+    rc->wall_x = p->pos.x + rc->perp_wall_dist * rc->ray_dir.x;
+  rc->wall_x -= floor((rc->wall_x));
+  rc->tex.x = (int)(rc->wall_x * (double)(rc->texture->w));
+  rc->tex.x = rc->tex.x % rc->texture->w;
+  if(rc->side == 0 && rc->ray_dir.x > 0)
+    rc->tex.x = rc->texture->w - rc->tex.x - 1;
+  if(rc->side == 1 && rc->ray_dir.y < 0)
+    rc->tex.x = rc->texture->w - rc->tex.x - 1;
+}
