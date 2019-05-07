@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 19:46:06 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/05/08 00:18:29 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/08 00:23:03 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,12 @@ void	check_event_id(t_doom *doom, int pos_x, int pos_y)
 	}
 }
 
-void	check_event_id(t_doom *doom, int pos_x, int pos_y)
-{
-	doom->nmap->map[i][j].collides = 0;
-	doom->nmap->map[i][j].state = 1;
-}
-
 void	press_button2(t_doom *doom, int *pos_x, int *pos_y, int *orientation)
 {
 	if (doom->you.angle < N_PI_4)
 	{
-		pos_y -= 1;
-		orientation = 1;
+		*pos_y -= 1;
+		*orientation = 1;
 	}
 	else if (doom->you.angle < M_PI_4)
 	{
@@ -85,7 +79,7 @@ void	press_button(t_doom *doom)
 	&& doom->nmap->map[pos_y][pos_x].orientation == orientation
 	&& doom->nmap->map[pos_y][pos_x].event_id >= 100)
 	{
-		doom->nmap->map[i][j].collides = 0;
-		doom->nmap->map[i][j].state = 1;
+		doom->nmap->map[pos_y][pos_x].collides = 0;
+		doom->nmap->map[pos_y][pos_x].state = 1;
 	}
 }
