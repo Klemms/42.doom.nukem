@@ -89,11 +89,10 @@ void	make_doorwindows(t_doom *d, t_nmap *m)
 		while (x < m->size_x)
 		{
 			if (m->map[y][x].block_type == block_door
-				|| m->map[y][x].block_type == block_window)
+			|| m->map[y][x].block_type == block_window)
 			{
-
 				lstcontainer_add(m->sprites,
-					make_doorwindowsprite(d, &m->map[y][x]));
+				make_doorwindowsprite(d, &m->map[y][x]));
 			}
 			x++;
 		}

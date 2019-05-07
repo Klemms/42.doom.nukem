@@ -118,6 +118,7 @@ typedef struct	s_map_block
 	int			x;
 	int			y;
 	int			state;
+	int			event_id;
 }				t_mblock;
 
 typedef struct	s_nmap
@@ -324,8 +325,8 @@ typedef struct	s_editor
 
 typedef struct		s_sprite
 {
-	t_xy	pos;
-	t_xy	vel;
+	t_vec	vel;
+	t_vec	pos;
 	int		texture;
 	int		texture_back;
 	int		render_mode;
@@ -337,6 +338,7 @@ typedef struct		s_sprite
 	int     animated;
 	int		type;
 	int		dontsave;
+	int		texture_id;
 }					t_sprite;
 
 typedef struct		s_line
@@ -413,10 +415,9 @@ typedef struct		s_wall_sight
 
 typedef struct 	s_l_sprite
 {
-	t_sprite  *sprites;
 	int		  numbSprites;
-	int       spritesOrder[4];
-	double    spritesDist[4];
+	int       *spritesOrder;
+	double    *spritesDist;
 }				t_l_sprite;
 
 typedef struct		s_raycasting
@@ -453,7 +454,7 @@ typedef struct		s_raycasting
 	int			draw_end_y;
 	int			tex_x;
 	int			tex_y;
-	t_sprite	cur_sprite;
+	t_sprite	*cur_sprite;
 }					t_raycasting;
 
 typedef struct		s_doom
@@ -551,6 +552,8 @@ void    			draw_sprites(t_doom *doom, t_raycasting *rc, t_player *p, double **z_
 void    			sprite_flat_init(t_raycasting *rc, t_player *p, int i, t_sprite *sprite, int *spriteOrder);
 void              	sprite_flat_draw(t_raycasting *rc, double **z_buffer, Uint32 **canvas);
 void    			sprite_door_init(t_raycasting *rc, t_player *p);
+
+void				shoot(t_doom *doom, t_player *p);
 
 Uint32            	calc_gradient(Uint32 color1, Uint32 color2, double stage);
 void  				swap(double *a, double *b);
