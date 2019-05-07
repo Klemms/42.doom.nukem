@@ -6,11 +6,23 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 15:04:07 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/05/07 15:52:28 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/07 20:21:14 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
+
+void	check_damage(t_doom *doom)
+{
+	if (Mix_Playing(2) == 0)
+	{
+		Mix_PlayChannel(2, doom->musics.damage, 0);
+		if (doom->you.hud.health - 10 > 0)
+			doom->you.hud.health -= 10;
+		else
+			exit_program(doom, ERROR_DEAD);	
+	}
+}
 
 void	collision_sprites(t_doom *doom, t_sprite *sprite, t_xy *dest)
 {
@@ -57,8 +69,6 @@ void	check_sprite(t_doom *doom, t_list *sprites, t_sprite *sprite, t_xy *dest)
 		{
 			if (doom->you.hud.health == 100)
 				del = 0;
-			else if (doom->you.hud.health > 90)
-				doom->you.hud.health = 100;
 			else
 				doom->you.hud.health += 10;
 		}
@@ -68,6 +78,8 @@ void	check_sprite(t_doom *doom, t_list *sprites, t_sprite *sprite, t_xy *dest)
 			doom->lsprite.numbSprites--;
 		}
 	}
+	if (sprite->type == sprite_damage)
+		check_damage(doom);
 }
 
 int	check_wall(t_doom *doom, t_list *sprites, t_sprite *sprite, t_xy *dest)

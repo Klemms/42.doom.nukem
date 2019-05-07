@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   inits.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 23:44:05 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 19:02:38 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 20:12:56 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,12 @@ void	init_musics(t_doom *doom)
 		exit_program(doom, ERROR_INVALID_MUSIC);
 	if ((doom->musics.shot = Mix_LoadWAV("musics/tir.wav")) == NULL)
 		exit_program(doom, ERROR_INVALID_MUSIC);
+	if ((doom->musics.damage = Mix_LoadWAV("musics/damage.wav")) == NULL)
+		exit_program(doom, ERROR_INVALID_MUSIC);
 	Mix_VolumeMusic(MIX_MAX_VOLUME / 5);
 	Mix_VolumeChunk(doom->musics.walk, MIX_MAX_VOLUME / 2);
 	Mix_VolumeChunk(doom->musics.shot, MIX_MAX_VOLUME / 2);
+	Mix_VolumeChunk(doom->musics.damage, MIX_MAX_VOLUME / 2);
 	Mix_PlayMusic(doom->musics.bgm, -1);
 }
 

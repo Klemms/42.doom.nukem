@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 10:12:00 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/05/07 13:32:55 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/07 19:57:04 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ void	moving(t_doom *doom)
 	while ((doom->you.velocity.x != 0 || doom->you.velocity.y != 0) && sprites)
 	{
 		sprite = sprites->content;
-//		printf("pos: %f %f\n", sprite->pos.x, sprite->pos.y);
 		dest.x = doom->you.pos.x + doom->you.velocity.x;
 		dest.y = doom->you.pos.y + doom->you.velocity.y;
 		if (dest.x < sprite->pos.x + 0.2 + COL
@@ -107,7 +106,6 @@ void	moving(t_doom *doom)
 			check_sprite(doom, sprites, sprite, &dest);
 		sprites = sprites->next;
 	}
-//	printf("FIN!!!\n\n\n");
 	doom->you.pos.x += doom->you.velocity.x;
 	doom->you.pos.y += doom->you.velocity.y;
 }
