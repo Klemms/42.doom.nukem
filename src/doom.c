@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   doom.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/29 13:20:21 by hdussert          #+#    #+#             */
 /*   Updated: 2019/05/08 00:00:19 by cababou          ###   ########.fr       */
@@ -45,12 +45,7 @@ int		main(int argc, char *argv[])
 	ft_bzero(&doom, sizeof(t_doom));
 	if (argc == 1)
 		exit_program(&doom, ERROR_USAGE);
-	init_block_types(&doom);
-	init_base(&doom, argc, argv);
-	init_sdl(&doom);
-	init_ids(&doom);
-	init_fonts(&doom);
-	init_events(&doom);
+	init_doom(&doom, argc, argv);
 	doom.surface = SDL_GetWindowSurface(doom.win);
 	doom.s_pixels = doom.surface->pixels;
 	if ((doom.fps_counter = create_text(&doom, "- fps", FONT_RIFFIC, 20)))
