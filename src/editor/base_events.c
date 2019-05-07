@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 04:16:03 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/05 01:22:24 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 06:17:25 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ int		key_event(t_doom *doom, SDL_Event sdl_event)
 	if (sdl_event.key.keysym.scancode == SDL_SCANCODE_TAB && doom->editor.anim_finished)
 		switch_to_game(doom);
 	if (sdl_event.key.keysym.scancode == SDL_SCANCODE_1)
-		switch_tool(doom, tool_none);
+		switch_tool(doom, tool_none, NULL);
 	if (sdl_event.key.keysym.scancode == SDL_SCANCODE_2)
-		switch_tool(doom, tool_block);
+		switch_tool(doom, tool_block, NULL);
 	return (0);
 }

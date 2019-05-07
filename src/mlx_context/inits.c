@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 23:44:05 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 12:14:23 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 05:51:41 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	init_block_types(t_doom *doom)
 {
 	doom->block_types = lstcontainer_new();
 	lstcontainer_add(doom->block_types
-		, make_block_type(doom, "Apply Settings", 0xFF74a8fc, block_apply));
+		, make_block_type(doom, "Copy Settings", 0xFF7fc8e2, block_copy));
 	lstcontainer_add(doom->block_types
 		, make_block_type(doom, "Air", 0xFFFFFEDD, block_air));
 	lstcontainer_add(doom->block_types
@@ -89,6 +89,5 @@ void	init_doom(t_doom *doom)
 	doom->fps_counter = create_text(doom, "- fps", FONT_RIFFIC, 20);
 	doom->fps_counter->ui->pos_x = 8;
 	doom->fps_counter->ui->pos_y = 8;
-	init_textures(doom);
 	init_scores(doom);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture_loading.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 00:24:22 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 07:29:50 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 06:10:40 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,44 +35,42 @@ t_texture	*make_texture(t_doom *doom, SDL_Surface *surface, char *tn)
 		exit_program(doom, ERROR_SDL_AFTER_INIT);
 	texture->surface = surface;
 	texture->texture_name = tn;
+	texture->tex_pixels = texture->surface->w * texture->surface->h;
 	return (texture);
 }
 
-void		init_textures(t_doom *doom)
-{
-	t_list		*lst;
-	t_texture	*tmp_texture;
-	SDL_Surface	*tmp_s;
-
-	lst = doom->nmap->textures->firstelement;
-	while (lst)
-	{
-		tmp_texture = (t_texture *)lst->content;
-		if (!tmp_texture->surface)
-		{
-			if (!(tmp_texture->surface = IMG_Load(tmp_texture->texture_name)))
-				exit_program(doom, ERROR_INVALID_TEXTURES);;
-			tmp_s = tmp_texture->surface;
-			tmp_texture->surface = SDL_ConvertSurfaceFormat(
-				tmp_texture->surface, doom->surface->format->format, 0);
-			SDL_FreeSurface(tmp_s);
-			tmp_texture->tex_pixels = tmp_texture->surface->w
-				* tmp_texture->surface->h;
-		}
-		lst = lst->next;
-	}
-	doom->texture_amount = lstcontainer_size(doom->nmap->textures);
-}
-
-t_texture	*load_texture(char *path, t_doom *doom)
+t_texture	*load_texture(t_doom *d, char *path)
 {
 	t_texture	*texture;
 
 	if (!(texture = mmalloc(sizeof(t_texture))))
-		exit_program(doom, ERROR_SDL_AFTER_INIT);
+		exit_program(d, ERROR_SDL_AFTER_INIT);
 	texture->surface = IMG_Load(path);
-	texture->surface = SDL_ConvertSurfaceFormat(texture->surface,
-		SDL_PIXELFORMAT_ARGB32, 0);
-	texture->tex_pixels = texture->surface->w * texture->surface->h;
-	return (texture);
+	printf("IMG_Load: %s\n", IMG_GetError());
+	if (texture->surface)
+	{
+		texture->surface = SDL_ConvertSurfaceFormat(texture->surface,
+			SDL_PIXELFORMAT_ARGB32, 0);
+		texture->tex_pixels = texture->surface->w * texture->surface->h;
+		return (texture);
+	}
+	free(texture);
+	return (NULL);
+}
+
+int			add_texture(t_doom *d, char *tn)
+{
+	t_texture	*t;
+
+	t = load_texture(d, ft_strjoin("textures/", tn, 0));
+	if (t)
+	{
+		lstcontainer_add(d->nmap->textures, t);
+		return (d->nmap->textures->lastelement->index);
+	}
+	free(d->editor.state->text);
+	d->editor.state->text = ft_strdup("Couldn't load texture");
+	text_prepare(d, d->editor.state, 1, 1);
+	ft_putchar('\a');
+	return (0);
 }

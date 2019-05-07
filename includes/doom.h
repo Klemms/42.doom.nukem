@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 13:00:29 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 06:24:40 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ enum			e_block_types
 	block_sprite = 2,
 	block_spawn = 3,
 	block_end = 4,
-	block_apply = 5
+	block_copy = 5
 };
 
 enum			e_sprite_type
@@ -305,6 +305,7 @@ typedef struct	s_editor
 	t_el_text			*state;
 	int					is_clicking;
 	t_lstcontainer		*l_textures;
+	int					texture_edited;
 }				t_editor;
 
 typedef struct		s_sprite
@@ -354,16 +355,6 @@ typedef struct		s_player
 	t_hud			hud;
 	int				is_walking;
 }					t_player;
-
-typedef struct		s_map
-{
-	char	*map_name;
-	int		width;
-	int		height;
-	int		start_x;
-	int		start_y;
-	char	**m;
-}					t_map;
 
 typedef struct		s_key
 {
@@ -446,7 +437,6 @@ typedef struct		s_doom
 	int				average_fps;
 	t_editor		editor;
 	t_lstcontainer	*buttons;
-	t_map			old_map;
 	t_player		you;
 	t_key			keys;
 	int				temp_color;
@@ -502,7 +492,7 @@ int					is_valid(t_doom *w, int fd);
 
 void				init_textures(t_doom *doom);
 t_texture			*make_texture(t_doom *doom, SDL_Surface *surface, char *texture_name);
-t_texture			*load_texture(char *path, t_doom *doom);
+t_texture			*load_texture(t_doom *doom, char *path);
 SDL_Surface			*get_surface(t_doom *doom, int texture_id);
 
 //void				draw_wall(t_doom *w, double x, double column, int tex);
@@ -568,6 +558,7 @@ t_el_button			*create_button(t_doom *doom, char *string, SDL_Rect ps,
 						void (*ui_callback)(t_doom *doom, t_el_button *b, SDL_MouseButtonEvent event));
 void				button_prepare(t_doom *doom, t_el_button *button);
 void				button_render(t_doom *doom, SDL_Surface *surface, t_el_button *button);
+void				button_render_texture(t_doom *d, SDL_Surface *s, t_el_button *b, SDL_Surface *b_text);
 int					button_coords_contained(t_el_button *button, int x, int y);
 void				add_button_rcoords(t_el_button *but, int x, int y);
 int					button_click(t_doom *doom, SDL_Event sdl_event);
@@ -586,7 +577,6 @@ void				draw_rect(SDL_Surface *s, SDL_Rect rect, SDL_Color color, int fill_rect)
 void				draw_rect_u(SDL_Surface *s, SDL_Rect rect, Uint32 color, int fill_rect);
 
 void				turn(double angle, t_player *player);
-void				moove(double dist, t_player *player, t_map *map, double ang);
 
 void				ed_bt_edit_click(t_doom *doom, t_el_button *b, SDL_MouseButtonEvent ev);
 
@@ -612,10 +602,10 @@ Uint32				color_to_uint(SDL_Color color);
 int					mouse_in(int m_x, int m_y, SDL_Rect rect);
 SDL_Rect			mouse_pos();
 int					is_left_clicking();
+int					is_right_clicking();
 
-void				switch_tool(t_doom *doom, int to_tool);
+void				switch_tool(t_doom *doom, int to_tool, t_block_type *block);
 
-t_nmap				*convert_map(t_doom *doom, t_map *map, t_lstcontainer *texs);
 t_block_type		*make_block_type(t_doom *doom, char *bn, Uint32 bc, int bt);
 t_block_type		*block_type(t_doom *d, int bt);
 
@@ -624,6 +614,8 @@ void				copy_block_type(t_doom *d, t_block_type *type, t_mblock *blk);
 void				copy_block(t_mblock *dest, t_mblock *src, int free2, int cpcrds);
 void				update_interactions(t_doom *d);
 void				set_to_default_mblock(t_mblock *dest, int x, int y);
+void				apply_block_settings(t_doom *d, t_mblock *dest);
+void				apply_block_texture(t_doom *d, int texture_id);
 
 void				init_scores(t_doom *doom);
 
@@ -654,5 +646,6 @@ t_lstcontainer		*list_files(char *folder_path);
 
 void				expand_map(t_doom *d, t_nmap *m, t_mblock *b);
 t_mblock			*new_block(t_doom *d, int block_type, int x, int y);
+int					add_texture(t_doom *d, char *texture_name);
 
 #endif
