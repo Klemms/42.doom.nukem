@@ -115,6 +115,7 @@ void    draw_sprites(t_doom *doom, t_raycasting *rc, t_player *p, double **z_buf
   
   i = -1; 
   tmp = doom->nmap->sprites->firstelement;
+  printf("n: %d\n", lsprite->numbSprites);
   while (++i < lsprite->numbSprites)
   {
     rc->cur_sprite = tmp->content;
@@ -122,7 +123,6 @@ void    draw_sprites(t_doom *doom, t_raycasting *rc, t_player *p, double **z_buf
     lsprite->spritesDist[i] = ((p->pos.x - rc->cur_sprite->pos.x) * (p->pos.x - rc->cur_sprite->pos.x) + (p->pos.y - rc->cur_sprite->pos.y) * (p->pos.y - rc->cur_sprite->pos.y)); //sqrt not taken, unneeded
     tmp = tmp->next;
   }
-  printf("%d\n", lstcontainer_size(doom->nmap->sprites));
   combSort(lsprite->spritesOrder, lsprite->spritesDist, lsprite->numbSprites);
   i = -1;
   tmp = doom->nmap->sprites->firstelement;

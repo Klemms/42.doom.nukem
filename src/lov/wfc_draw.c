@@ -40,10 +40,6 @@ void    wfc_floor_draw(t_raycasting *rc, t_player *p, Uint32 **canvas)
     currentFloorY = weight * rc->floor.y + (1.0 - weight) * p->pos.y;
     rc->floor_tex.x = (int)(currentFloorX * rc->texture->w) % rc->texture->w;
     rc->floor_tex.y = (int)(currentFloorY * rc->texture->h) % rc->texture->h;
-    // int checkerBoardPattern = ((int)(currentFloorX + currentFloorY)) % 2;
-    // int floorTexture;
-    // if(checkerBoardPattern == 0) floorTexture = 3;
-    // else floorTexture = 4;
     (*canvas)[y * WIN_W + rc->x] = (((Uint32 *)rc->texture->pixels)[rc->texture->w * rc->floor_tex.y + rc->floor_tex.x] >> 1) & 8355711; //floor
   }
 }
@@ -94,8 +90,8 @@ void  draw_wfc(t_doom *doom, double **z_buffer)
 
   (*z_buffer)[doom->raycasting.x] = doom->raycasting.perp_wall_dist;
   wfc_fc_init(&doom->raycasting);
-  doom->raycasting.texture = get_surface(doom, doom->nmap->map[doom->raycasting.map.y][doom->raycasting.map.x].floor_tex);
+  doom->raycasting.texture = get_surface(doom, 0);
   wfc_floor_draw(&doom->raycasting, &doom->you, &doom->s_pixels);
-  doom->raycasting.texture = get_surface(doom, doom->nmap->map[doom->raycasting.map.y][doom->raycasting.map.x].ceilng_tex + 1);
+  doom->raycasting.texture = get_surface(doom, 1);
   wfc_ceiling_draw(&doom->raycasting, &doom->you, &doom->s_pixels);
 }
