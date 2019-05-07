@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 20:42:13 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 20:03:08 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -417,6 +417,7 @@ typedef struct		s_musics
 	Mix_Music	*bgm;
 	Mix_Chunk	*walk;
 	Mix_Chunk	*shot;
+	Mix_Chunk	*damage;
 }					t_musics;
 
 
