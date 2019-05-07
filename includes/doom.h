@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 09:49:48 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 13:34:57 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ enum			e_block_types
 	block_spawn = 3,
 	block_end = 4,
 	block_copy = 5,
-	block_window = 6
+	block_window = 6,
+	block_button = 7
 };
 
 enum			e_sprite_type
@@ -365,7 +366,6 @@ typedef struct		s_player
 	int				rov;
 	int				is_sprinting;
 	int				is_crouching;
-	int				is_shooting;
 	int				moving;
 	t_hud			hud;
 	int				is_walking;
@@ -560,7 +560,6 @@ int					parsing(t_doom *w, char *file);
 int					key_down(t_doom *doom, SDL_Event event);
 int					key_up(t_doom *doom, SDL_Event event);
 int					mouse_down(t_doom *doom, SDL_Event event);
-int					mouse_up(t_doom *doom, SDL_Event event);
 void				line(t_doom *w, t_vec *start, t_vec *end, int color);
 int					loop(t_doom *w);
 Uint32				get_t_exact_pixel(t_texture *texture, int x, int y);
@@ -587,7 +586,7 @@ void				render_game(t_doom *doom);
 void				update_velocity(t_doom *doom, t_player *player);
 void				moving(t_doom *doom);
 void				moving_diagonal(t_doom *doom, t_xy *dest, t_xy pt);
-void				check_sprite(t_doom *doom, t_sprite *sprite, t_xy *dest);
+void				check_sprite(t_doom *doom, t_list *sprites, t_sprite *sprite, t_xy *dest);
 
 void				press_button(t_doom *doom);
 

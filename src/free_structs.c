@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 20:33:22 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 05:08:31 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 10:17:05 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	megafree_1(t_doom *doom)
 {
-	Mix_FreeMusic(doom->scores.bgm);
-	Mix_FreeChunk(doom->scores.walk);
-	Mix_FreeChunk(doom->scores.shot);
+	Mix_FreeMusic(doom->musics.bgm);
+	Mix_FreeChunk(doom->musics.walk);
+	Mix_FreeChunk(doom->musics.shot);
 }

@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 23:44:05 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 06:53:23 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 11:31:55 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,13 @@ void	init_musics(t_doom *doom)
 	== -1)
 		exit_program(doom, ERROR_SDL_AUDIO_INIT);
 	Mix_AllocateChannels(10);
-	Mix_VolumeMusic(MIX_MAX_VOLUME / 200);
-	if ((doom->musics.bgm = Mix_LoadMUS("musics/test.mp3")) == NULL)
+	if ((doom->musics.bgm = Mix_LoadMUS("musics/bgm.mp3")) == NULL)
 		exit_program(doom, ERROR_INVALID_MUSIC);
 	if ((doom->musics.walk = Mix_LoadWAV("musics/marche.wav")) == NULL)
 		exit_program(doom, ERROR_INVALID_MUSIC);
 	if ((doom->musics.shot = Mix_LoadWAV("musics/tir.wav")) == NULL)
 		exit_program(doom, ERROR_INVALID_MUSIC);
-	Mix_VolumeMusic(MIX_MAX_VOLUME / 200);
+	Mix_VolumeMusic(MIX_MAX_VOLUME / 5);
 	Mix_VolumeChunk(doom->musics.walk, MIX_MAX_VOLUME / 2);
 	Mix_VolumeChunk(doom->musics.shot, MIX_MAX_VOLUME / 2);
 	Mix_PlayMusic(doom->musics.bgm, -1);

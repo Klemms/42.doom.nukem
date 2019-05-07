@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 10:12:00 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/05/06 19:54:19 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/07 13:32:55 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,33 +85,29 @@ void	moving2(t_doom *d)
 void	moving(t_doom *doom)
 {
 	t_xy		dest;
-	t_sprite	*sprite;
 	int			del;
+	t_list		*sprites;
+	t_sprite	*sprite;
 
-
-	printf("angle: %f, pos: %f %f\n", doom->you.angle, doom->you.pos.x, doom->you.pos.y);
-	if (!(sprite = (t_sprite*)mmalloc(sizeof(t_sprite))))
-		exit_program(doom, ERROR_MEMORY);
-	sprite->pos.x = 3.5;
-	sprite->pos.y = 3.5;
-	sprite->collides = 1;
-//	sprite->type = sprite_ammo;
-//	sprite->obtainable = 1;
+	sprites = doom->nmap->sprites->firstelement;
 	if (doom->you.moving)
 		if (Mix_Playing(0) == 0)
 			Mix_PlayChannel(0, doom->musics.walk, 0);
 	moving2(doom);
-	while ((doom->you.velocity.x != 0 || doom->you.velocity.y != 0) && sprite)
+	while ((doom->you.velocity.x != 0 || doom->you.velocity.y != 0) && sprites)
 	{
+		sprite = sprites->content;
+//		printf("pos: %f %f\n", sprite->pos.x, sprite->pos.y);
 		dest.x = doom->you.pos.x + doom->you.velocity.x;
 		dest.y = doom->you.pos.y + doom->you.velocity.y;
 		if (dest.x < sprite->pos.x + 0.2 + COL
 		&& dest.x > sprite->pos.x - 0.2 - COL
 		&& dest.y < sprite->pos.y + 0.2 + COL
 		&& dest.y > sprite->pos.y - 0.2 - COL)
-			check_sprite(doom, sprite, &dest);
-		sprite = NULL;
+			check_sprite(doom, sprites, sprite, &dest);
+		sprites = sprites->next;
 	}
+//	printf("FIN!!!\n\n\n");
 	doom->you.pos.x += doom->you.velocity.x;
 	doom->you.pos.y += doom->you.velocity.y;
 }

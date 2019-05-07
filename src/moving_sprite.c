@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 15:04:07 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/05/06 15:17:07 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/07 10:53:06 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	collision_sprites(t_doom *doom, t_sprite *sprite, t_xy *dest)
 	}
 }
 
-void	check_sprite(t_doom *doom, t_sprite *sprite, t_xy *dest)
+void	check_sprite(t_doom *doom, t_list *sprites, t_sprite *sprite, t_xy *dest)
 {
 	int	del;
 
@@ -62,5 +62,7 @@ void	check_sprite(t_doom *doom, t_sprite *sprite, t_xy *dest)
 			else
 				doom->you.hud.health += 10;
 		}
+		if (del)
+			lstcontainer_remove(doom->nmap->sprites, sprites);
 	}
 }
