@@ -6,11 +6,29 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/07 08:14:38 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 09:29:29 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 09:48:53 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
+
+int			spritecount(t_list *sprites)
+{
+	size_t		count;
+	t_list		*tmp;
+	t_sprite	*s;
+
+	tmp = sprites;
+	count = 0;
+	while (tmp)
+	{
+		s = tmp->content;
+		if (!s->dontsave)
+			count++;
+		tmp = tmp->next;
+	}
+	return (count);
+}
 
 t_sprite	*read_sprite(t_doom *d, char *l)
 {
