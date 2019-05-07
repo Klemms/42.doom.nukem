@@ -18,7 +18,7 @@ void              sprite_flat_draw(t_raycasting *rc, double **z_buffer, Uint32 *
     //4) ZBuffer, with perpendicular distance
     if (rc->transform.y > 0 && stripe > 0 && stripe < WIN_W && rc->transform.y < (*z_buffer)[stripe])
     {
-      //(*z_buffer)[stripe] = rc->transform.y;
+      (*z_buffer)[stripe] = rc->transform.y;
       y = rc->draw_start_y - 1;
       while (++y < rc->draw_end_y) //for every pixel of the current stripe
       {
@@ -28,7 +28,6 @@ void              sprite_flat_draw(t_raycasting *rc, double **z_buffer, Uint32 *
         color = ((Uint32*)rc->texture->pixels)[rc->texture->w * rc->tex_y + rc->tex_x]; //get current color from the texture
         if((color & 0x00FFFFFF) != 0)
           (*canvas)[y * WIN_W + stripe] = color;//calc_gradient(0xFFFFFF - (*canvas)[y * WIN_W + stripe], color, 0.35);// + color / 2; //paint pixel if it isn't black, black is the invisible color
-
       }
     }
   }
@@ -84,7 +83,7 @@ void    sprite_door_draw(t_raycasting *rc, double **z_buffer, Uint32 **canvas, t
       color = ((Uint32 *)rc->texture->pixels)[rc->texture->w * rc->tex.y + rc->tex.x];
       //make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
       if(rc->side == 1) color = (color >> 1) & 8355711;
-      if (rc->cur_sprite.render_mode == rend_window)
+      if (rc->cur_sprite->render_mode == rend_window)
         color = calc_gradient((*canvas)[y * WIN_W + rc->x], color + 0x222266, 0.5);
       (*canvas)[y * WIN_W + rc->x] = color;
     }
@@ -99,10 +98,10 @@ void sprite_cast_wall(t_raycasting *rc, t_player *p, t_nmap *nmap, double **z_bu
     wfc_init(rc, p);
     if (sprite_rayhit(rc, p, nmap))// && rc->perp_wall_dist < (*z_buffer)[rc->x])
     {
-      if (rc->cur_sprite.pos.x != rc->map.x || rc->cur_sprite.pos.y != rc->map.y)
+      if (rc->cur_sprite->pos.x != rc->map.x || rc->cur_sprite->pos.y != rc->map.y)
         continue ;
       sprite_door_init(rc, p);//, sprite_wall, spritesOrder, i);
-      sprite_door_draw(rc, z_buffer, canvas, nmap, rc->cur_sprite.stage);
+      sprite_door_draw(rc, z_buffer, canvas, nmap, rc->cur_sprite->stage);
       wfc_init(rc, p);
     }
   }
@@ -110,42 +109,44 @@ void sprite_cast_wall(t_raycasting *rc, t_player *p, t_nmap *nmap, double **z_bu
 
 void    draw_sprites(t_doom *doom, t_raycasting *rc, t_player *p, double **z_buffer, Uint32 **canvas, t_l_sprite *lsprite)
 {
+  t_list *tmp;
   //SPRITE CASTING
-  lsprite->numbSprites = 4;
-
   int i;
   
   i = -1; 
+  tmp = doom->nmap->sprites->firstelement;
   while (++i < lsprite->numbSprites)
   {
+    rc->cur_sprite = tmp->content;
     lsprite->spritesOrder[i] = i;
-    lsprite->spritesDist[i] = ((p->pos.x - lsprite->sprites[i].pos.x) * (p->pos.x - lsprite->sprites[i].pos.x) + (p->pos.y - lsprite->sprites[i].pos.y) * (p->pos.y - lsprite->sprites[i].pos.y)); //sqrt not taken, unneeded
+    lsprite->spritesDist[i] = ((p->pos.x - rc->cur_sprite->pos.x) * (p->pos.x - rc->cur_sprite->pos.x) + (p->pos.y - rc->cur_sprite->pos.y) * (p->pos.y - rc->cur_sprite->pos.y)); //sqrt not taken, unneeded
+    tmp = tmp->next;
   }
-
+  printf("%d\n", lstcontainer_size(doom->nmap->sprites));
   combSort(lsprite->spritesOrder, lsprite->spritesDist, lsprite->numbSprites);
   i = -1;
+  tmp = doom->nmap->sprites->firstelement;
   while (++i < lsprite->numbSprites)
   {
-    rc->cur_sprite = lsprite->sprites[lsprite->spritesOrder[i]];
-    if (rc->cur_sprite.animated == 1)
+    rc->cur_sprite = tmp->content;
+    if (rc->cur_sprite->animated == 1)
     {
-      if (rc->cur_sprite.stage < 1) lsprite->sprites[lsprite->spritesOrder[i]].stage += 0.01;
-      else lsprite->sprites[lsprite->spritesOrder[i]].animated = 2;
+      if (rc->cur_sprite->stage < 1) rc->cur_sprite->stage += 0.01;
+      else rc->cur_sprite->animated = 2;
     }
-    else if (rc->cur_sprite.animated == 2)
+    else if (rc->cur_sprite->animated == 2)
     {
-      if (rc->cur_sprite.stage > 0) lsprite->sprites[lsprite->spritesOrder[i]].stage -= 0.01;
-      else lsprite->sprites[lsprite->spritesOrder[i]].animated = 1;
+      if (rc->cur_sprite->stage > 0) rc->cur_sprite->stage -= 0.01;
+      else rc->cur_sprite->animated = 1;
     }
-    rc->texture = get_surface(doom, rc->cur_sprite.texture);
-    if (rc->cur_sprite.render_mode == rend_door || rc->cur_sprite.render_mode == rend_window)
-    {
+    rc->texture = get_surface(doom, rc->cur_sprite->texture);
+    if (rc->cur_sprite->render_mode == rend_door || rc->cur_sprite->render_mode == rend_window)
       sprite_cast_wall(rc, p, doom->nmap, z_buffer, canvas);
-    }
-    else if (rc->cur_sprite.render_mode == rend_flat)
+    else if (rc->cur_sprite->render_mode == rend_flat)
     {
-      sprite_flat_init(rc, p, i, lsprite->sprites, lsprite->spritesOrder);
+      sprite_flat_init(rc, p, i, rc->cur_sprite, lsprite->spritesOrder);
       sprite_flat_draw(rc, z_buffer, canvas);
     }
+    tmp = tmp->next;
   }
 }

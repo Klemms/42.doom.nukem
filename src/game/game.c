@@ -16,11 +16,6 @@ void	init_game(t_doom *doom)
 {
 
 	//t_sprite  sprites[] = 
-  doom->lsprite.sprites = malloc(sizeof(t_sprite) * 4);
-	doom->lsprite.sprites[0] = (t_sprite){ { 3,3 }, 0, 2, 1, 0.0 };
-	doom->lsprite.sprites[1] = (t_sprite){ { 4.3, 5.5 }, 1, 0, 0, 0.0 };
-	doom->lsprite.sprites[2] = (t_sprite){ { 6, 6 }, 1, 1, 1, 0.0 };
-	doom->lsprite.sprites[3] = (t_sprite){ { 9.4, 7 }, 2, 0, 0, 0.0 };
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	doom->mouse_focused = 1;
 	doom->game_init = 1;
@@ -33,7 +28,7 @@ void	init_game(t_doom *doom)
 	register_event(doom, SDL_MOUSEBUTTONUP, mouse_up);
 
 	new_player(doom, &doom->you, doom->nmap);
-	
+	doom->lsprite.numbSprites = 8;
 	doom->average_fps = 0;
 	setup_hypercam(doom);
 }
@@ -66,7 +61,7 @@ void	game_loop(t_doom *doom, t_settings *sett)
 	doom->you.speed = doom->you.is_sprinting ? 0.2 : 0.1;
 	update_velocity(doom, &doom->you);
 	moving(doom);
-	
+	shoot(doom, &doom->you);
 	if (doom->keys.z_up)
 		doom->you.pos.z += 0.02;
 	else if (doom->keys.z_down)
