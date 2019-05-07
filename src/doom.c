@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/29 13:20:21 by hdussert          #+#    #+#             */
-/*   Updated: 2019/05/06 11:02:38 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 23:48:08 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,17 @@ void	init_base(t_doom *doom, int argc, char **argv)
 		exit_program(doom, ERROR_SDL_AFTER_INIT);
 }
 
+void	init_doom(t_doom *doom, int argc, char *argv[])
+{
+	init_block_types(doom);
+	init_base(doom, argc, argv);
+	init_sdl(doom);
+	init_ids(doom);
+	init_fonts(doom);
+	init_events(doom);
+	init_musics(doom);
+}
+
 int		main(int argc, char *argv[])
 {
 	t_doom doom;
@@ -30,18 +41,12 @@ int		main(int argc, char *argv[])
 	ft_bzero(&doom, sizeof(t_doom));
 	if (argc == 1)
 		exit_program(&doom, ERROR_USAGE);
-	init_block_types(&doom);
-	init_base(&doom, argc, argv);
-	init_sdl(&doom);
-	init_ids(&doom);
-	init_fonts(&doom);
-	init_events(&doom);
+	init_doom(&doom, argc, argv);
 	doom.surface = SDL_GetWindowSurface(doom.win);
 	doom.s_pixels = doom.surface->pixels;
 	doom.fps_counter = create_text(&doom, "- fps", FONT_RIFFIC, 20);
 	doom.fps_counter->ui->pos_x = 8;
 	doom.fps_counter->ui->pos_y = 8;
-	init_scores(&doom);
 	doom.nmap = load_map(&doom, doom.game_mode == M_EDITOR ? argv[2] : argv[1]);
 	if (doom.game_mode == M_GAME)
 	{

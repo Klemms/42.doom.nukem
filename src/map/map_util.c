@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 00:44:00 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 07:15:26 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 10:46:31 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,14 @@ t_block_type	*make_block_type(t_doom *doom, char *bn, Uint32 bc, int bt)
 	return (block_type);
 }
 
-int				char_to_blocktype(char block)
+t_sprite_type	*make_sprite_type(t_doom *doom, char *bn, Uint32 bc, int bt)
 {
-	if (block == '.')
-		return (block_air);
-	else if (block == '#')
-		return (block_wall);
-	else if (block == 'T')
-		return (block_small_wall);
-	else if (block == 'C')
-		return (block_wall);
-	else
-		return (block_wall);
+	t_sprite_type	*sprite_type;
+
+	if (!(sprite_type = mmalloc(sizeof(t_sprite_type))))
+		exit_program(doom, ERROR_SDL_AFTER_INIT);
+	sprite_type->sprite_name = ft_strdup(bn);
+	sprite_type->sprite_color = bc;
+	sprite_type->sprite_type = bt;
+	return (sprite_type);
 }

@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 07:25:25 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 10:56:36 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 18:48:26 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,21 @@
 
 void		ml_setblocks(t_mblock *b, int i, char *l)
 {
-	b->block_type = i == 0 ? ft_atoi(l) : b->block_type;
-	b->orientation = i == 1 ? ft_atoi(l) : b->orientation;
-	b->x_size = i == 2 ? ft_atoi(l) : b->x_size;
-	b->y_size = i == 3 ? ft_atoi(l) : b->y_size;
-	b->height = i == 4 ? ft_atoi(l) : b->height;
-	b->ceiling_height = i == 5 ? ft_atoi(l) : b->ceiling_height;
-	b->has_ceiling = i == 6 ? ft_atoi(l) : b->has_ceiling;
-	b->ceilng_tex = i == 7 ? ft_atoi(l) : b->ceilng_tex;
-	b->floor_tex = i == 8 ? ft_atoi(l) : b->floor_tex;
-	b->n_texture = i == 9 ? ft_atoi(l) : b->n_texture;
-	b->s_texture = i == 10 ? ft_atoi(l) : b->s_texture;
-	b->w_texture = i == 11 ? ft_atoi(l) : b->w_texture;
-	b->e_texture = i == 12 ? ft_atoi(l) : b->e_texture;
-	b->light = i == 13 ? ft_atoi(l) : b->light;
-	b->collides = i == 14 ? ft_atoi(l) : b->collides;
+	b->block_type = i == 0 ? ft_atoi(l, 0) : b->block_type;
+	b->orientation = i == 1 ? ft_atoi(l, 0) : b->orientation;
+	b->x_size = i == 2 ? ft_atoi(l, 0) : b->x_size;
+	b->y_size = i == 3 ? ft_atoi(l, 0) : b->y_size;
+	b->event_id = i == 4 ? ft_atoi(l, 0) : b->event_id;
+	b->ceiling_height = i == 5 ? ft_atoi(l, 0) : b->ceiling_height;
+	b->has_ceiling = i == 6 ? ft_atoi(l, 0) : b->has_ceiling;
+	b->ceilng_tex = i == 7 ? ft_atoi(l, 0) : b->ceilng_tex;
+	b->floor_tex = i == 8 ? ft_atoi(l, 0) : b->floor_tex;
+	b->n_texture = i == 9 ? ft_atoi(l, 0) : b->n_texture;
+	b->s_texture = i == 10 ? ft_atoi(l, 0) : b->s_texture;
+	b->w_texture = i == 11 ? ft_atoi(l, 0) : b->w_texture;
+	b->e_texture = i == 12 ? ft_atoi(l, 0) : b->e_texture;
+	b->light = i == 13 ? ft_atoi(l, 0) : b->light;
+	b->collides = i == 14 ? ft_atoi(l, 0) : b->collides;
 }
 
 t_mblock	*read_block(t_doom *d, char *l)

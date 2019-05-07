@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 02:04:31 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/04 10:43:19 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 19:00:12 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,10 @@ void	init_editor(t_doom *doom)
 	register_event(doom, SDL_MOUSEBUTTONDOWN, ed_mouse_button);
 	register_event(doom, SDL_MOUSEBUTTONUP, ed_mouse_button);
 	register_event(doom, SDL_MOUSEBUTTONUP, rbr_click);
+	register_event(doom, SDL_MOUSEBUTTONUP, rbrs_click);
 	register_event(doom, SDL_MOUSEMOTION, ed_mouse_motion);
+
+	e->l_textures = list_files("./textures/");
 
 	e->ftr_rect = make_rect(e->in_x, e->in_y, e->in_width, e->in_height);
 	e->ftr = SDL_CreateRGBSurfaceWithFormat(0, e->in_width, e->in_height, 32, doom->surface->format->format);
@@ -77,6 +80,9 @@ void	init_editor(t_doom *doom)
 	e->tool_block = create_button(doom, "Block", make_rect(10, 195, 60, 60), ed_block_c);
 	e->tool_block->background_color = make_rgb(145, 145, 145, 255);
 	button_prepare(doom, e->tool_block);
+	e->tool_sprite = create_button(doom, "Sprite", make_rect(10, 265, 60, 60), ed_sprite_c);
+	e->tool_sprite->background_color = make_rgb(145, 145, 145, 255);
+	button_prepare(doom, e->tool_sprite);
 
 	e->validate = create_button(doom, "V", make_rect(WIN_W - 285, 10, 60, 60), ed_test_map);
 	e->validate->background_color = e->select_color;
@@ -98,26 +104,35 @@ void	init_editor(t_doom *doom)
 	e->str_tool->text_color = make_rgb(0, 0, 0, 255);
 	text_prepare(doom, e->str_tool, 1, 0);
 
-	e->rbr_quadrant.orient_n = create_button(doom, "N", make_rect(15, 80, 60, 60), ed_bt_edit_click);
-	e->rbr_quadrant.orient_n->background_color = make_rgb(145, 145, 145, 255);
-	add_button_rcoords(e->rbr_quadrant.orient_n, e->rbr_rect.x, e->rbr_rect.y);
-	button_prepare(doom, e->rbr_quadrant.orient_n);
-	e->rbr_quadrant.orient_s = create_button(doom, "S", make_rect(85, 80, 60, 60), ed_bt_edit_click);
-	e->rbr_quadrant.orient_s->background_color = make_rgb(145, 145, 145, 255);
-	add_button_rcoords(e->rbr_quadrant.orient_s, e->rbr_rect.x, e->rbr_rect.y);
-	button_prepare(doom, e->rbr_quadrant.orient_s);
-	e->rbr_quadrant.orient_w = create_button(doom, "W", make_rect(155, 80, 60, 60), ed_bt_edit_click);
-	e->rbr_quadrant.orient_w->background_color = make_rgb(145, 145, 145, 255);
-	add_button_rcoords(e->rbr_quadrant.orient_w, e->rbr_rect.x, e->rbr_rect.y);
-	button_prepare(doom, e->rbr_quadrant.orient_w);
-	e->rbr_quadrant.orient_e = create_button(doom, "E", make_rect(225, 80, 60, 60), ed_bt_edit_click);
-	e->rbr_quadrant.orient_e->background_color = make_rgb(145, 145, 145, 255);
-	add_button_rcoords(e->rbr_quadrant.orient_e, e->rbr_rect.x, e->rbr_rect.y);
-	button_prepare(doom, e->rbr_quadrant.orient_e);
+	e->rbr_quadrant.orient_hor = create_button(doom, "Hor.", make_rect(15, 80, 130, 60), ed_bt_edit_click);
+	e->rbr_quadrant.orient_hor->background_color = make_rgb(145, 145, 145, 255);
+	add_button_rcoords(e->rbr_quadrant.orient_hor, e->rbr_rect.x, e->rbr_rect.y);
+	button_prepare(doom, e->rbr_quadrant.orient_hor);
+	e->rbr_quadrant.orient_ver = create_button(doom, "Vert.", make_rect(155, 80, 130, 60), ed_bt_edit_click);
+	e->rbr_quadrant.orient_ver->background_color = make_rgb(145, 145, 145, 255);
+	add_button_rcoords(e->rbr_quadrant.orient_ver, e->rbr_rect.x, e->rbr_rect.y);
+	button_prepare(doom, e->rbr_quadrant.orient_ver);
 
-	e->rbr_quadrant.s_height = create_wjauge(doom, make_rect(15, 190, 270, 30), make_rect(0, 1000, 50, 10));
-	e->rbr_quadrant.s_height->unit = "%";
-	wjauge_prepare(doom, e->rbr_quadrant.s_height);
+	e->rbr_quadrant.texture_n = create_button(doom, "Texture N.", make_rect(85, 785, 130, 60), ed_bt_edit_click);
+	e->rbr_quadrant.texture_n->text->text_color = make_rgb(255, 255, 255, 255);
+	add_button_rcoords(e->rbr_quadrant.texture_n, e->rbr_rect.x, e->rbr_rect.y);
+	button_prepare(doom, e->rbr_quadrant.texture_n);
+	e->rbr_quadrant.texture_s = create_button(doom, "Texture S.", make_rect(85, 925, 130, 60), ed_bt_edit_click);
+	e->rbr_quadrant.texture_s->text->text_color = make_rgb(255, 255, 255, 255);
+	add_button_rcoords(e->rbr_quadrant.texture_s, e->rbr_rect.x, e->rbr_rect.y);
+	button_prepare(doom, e->rbr_quadrant.texture_s);
+	e->rbr_quadrant.texture_w = create_button(doom, "Texture W.", make_rect(15, 855, 130, 60), ed_bt_edit_click);
+	e->rbr_quadrant.texture_w->text->text_color = make_rgb(255, 255, 255, 255);
+	add_button_rcoords(e->rbr_quadrant.texture_w, e->rbr_rect.x, e->rbr_rect.y);
+	button_prepare(doom, e->rbr_quadrant.texture_w);
+	e->rbr_quadrant.texture_e = create_button(doom, "Texture E.", make_rect(155, 855, 130, 60), ed_bt_edit_click);
+	e->rbr_quadrant.texture_e->text->text_color = make_rgb(255, 255, 255, 255);
+	add_button_rcoords(e->rbr_quadrant.texture_e, e->rbr_rect.x, e->rbr_rect.y);
+	button_prepare(doom, e->rbr_quadrant.texture_e);
+
+	e->rbr_quadrant.ev_id = create_wjauge(doom, make_rect(15, 190, 270, 30), make_rect(0, 1000, 50, 1));
+	e->rbr_quadrant.ev_id->unit = "";
+	wjauge_prepare(doom, e->rbr_quadrant.ev_id);
 	e->rbr_quadrant.sc_height = create_wjauge(doom, make_rect(15, 265, 270, 30), make_rect(0, 1000, 50, 10));
 	e->rbr_quadrant.sc_height->unit = "%";
 	wjauge_prepare(doom, e->rbr_quadrant.sc_height);
@@ -136,7 +151,10 @@ void	init_editor(t_doom *doom)
 
 	e->rbr_quadrant.has_celng = create_checkbox(doom, make_rect(256, 310, 29, 29), 0);
 
-	switch_tool(doom, tool_none);
+	e->rbr_quadrant.sp_collides = create_checkbox(doom, make_rect(256, 50, 29, 29), 0);
+	e->rbr_quadrant.sp_obtainable = create_checkbox(doom, make_rect(256, 90, 29, 29), 0);
+
+	switch_tool(doom, tool_none, NULL);
 
 	doom->average_fps = 0;
 
@@ -173,6 +191,7 @@ void	render_editor(t_doom *doom)
 
 	button_render(doom, e->ed_surface, e->tool_none);
 	button_render(doom, e->ed_surface, e->tool_block);
+	button_render(doom, e->ed_surface, e->tool_sprite);
 	button_render(doom, e->ed_surface, e->validate);
 	button_render(doom, e->ed_surface, e->save);
 	text_render(doom, e->ed_surface, e->current_tool);

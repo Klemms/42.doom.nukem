@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hypercam.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 03:54:08 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/04 01:46:19 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/06 15:56:28 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	setup_hypercam(t_doom *doom)
 {
-	doom->easter_egg = create_text(doom, "Unregistered HyperCam 2", FONT_SYS, 18);
+	doom->easter_egg = create_text(doom, "Unregistered HyperCam 2",
+										FONT_SYS, 18);
 	doom->easter_egg->ui->pos_x = WIN_W
 		- doom->easter_egg->u_w - 4;
 	doom->easter_egg->ui->pos_y = 3;
@@ -24,7 +25,7 @@ void	setup_hypercam(t_doom *doom)
 
 void	render_hypercam(t_doom *doom, SDL_Surface *surface)
 {
-	draw_rect(surface, 
+	draw_rect(surface,
 		make_rect(WIN_W - doom->easter_egg->u_w - 8,
 			0, doom->easter_egg->u_w + 8, doom->easter_egg->u_h + 5),
 		make_rgb(255, 255, 255, 255), 1);

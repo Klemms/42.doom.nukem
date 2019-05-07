@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 09:23:38 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 11:10:27 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 20:54:19 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ void	copy_old_map(t_doom *d, t_mblock **old, t_nmap *m, SDL_Rect sz)
 	if (!(m->map = mmalloc(sizeof(t_mblock *) * m->size_y)))
 		exit_program(d, ERROR_SDL_AFTER_INIT);
 	y = 0;
-	while (y < sz.y)
+	while (y < (size_t)sz.y)
 	{
 		if (!(m->map[y] = mmalloc(sizeof(t_mblock) * m->size_x)))
 			exit_program(d, ERROR_SDL_AFTER_INIT);
 		x = 0;
-		while (x < sz.x)
+		while (x < (size_t)sz.x)
 		{
 			copy_block(&m->map[y][x], &old[y][x], 0, 1);
 			x++;
@@ -36,7 +36,6 @@ void	copy_old_map(t_doom *d, t_mblock **old, t_nmap *m, SDL_Rect sz)
 
 void	free_old_map(t_mblock **old, size_t y_size)
 {
-	size_t		x;
 	size_t		y;
 
 	y = 0;
@@ -55,17 +54,17 @@ void	expand_map2(t_doom *d, t_nmap *m, SDL_Rect old_sz, t_mblock *b)
 	size_t		y;
 
 	y = 0;
-	while (y < m->size_y)
+	while (y < (size_t)m->size_y)
 	{
-		if (y > old_sz.y - 1
+		if (y > (size_t)old_sz.y - 1
 			&& !(m->map[y] = mmalloc(sizeof(t_mblock) * m->size_x)))
 			exit_program(d, ERROR_SDL_AFTER_INIT);
 		x = 0;
-		while (x < m->size_x)
+		while (x < (size_t)m->size_x)
 		{
-			if (x >= old_sz.x || y >= old_sz.y)
+			if (x >= (size_t)old_sz.x || y >= (size_t)old_sz.y)
 			{
-				if (b->x == x && b->y == y)
+				if ((size_t)b->x == x && (size_t)b->y == y)
 					copy_block(&m->map[y][x], b, 0, 1);
 				else
 					set_to_default_mblock(&m->map[y][x], x, y);

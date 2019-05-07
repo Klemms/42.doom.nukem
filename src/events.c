@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 17:45:39 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/05/05 15:39:36 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/07 23:40:16 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,6 @@ void	turn(double angle, t_player *player)
 	double		old_dir_x;
 	double		old_plane_x;
 
-	player->angle = atan2(player->dir.y, player->dir.x);
-	player->anglecos = cos(player->angle);
-	player->anglesin = sin(player->angle);
 	old_dir_x = player->dir.x;
 	player->dir.x = player->dir.x * cos(angle) - player->dir.y * sin(angle);
 	player->dir.y = old_dir_x * sin(angle) + player->dir.y * cos(angle);
@@ -44,6 +41,9 @@ void	turn(double angle, t_player *player)
 	player->plane.x = player->plane.x * cos(angle)
 		- player->plane.y * sin(angle);
 	player->plane.y = old_plane_x * sin(angle) + player->plane.y * cos(angle);
+	player->angle = atan2(player->dir.y, player->dir.x);
+	player->anglecos = cos(player->angle);
+	player->anglesin = sin(player->angle);
 }
 
 int		key_down(t_doom *doom, SDL_Event event)
@@ -97,39 +97,8 @@ int		key_up(t_doom *doom, SDL_Event event)
 		doom->you.is_sprinting = 0;
 	if (keyb.keysym.scancode == doom->settings.key_crouch)
 		doom->you.is_crouching = 0;
-	if (keyb.keysym.scancode == SDL_SCANCODE_F9)
-	{
-		SDL_SetRelativeMouseMode(!doom->mouse_focused);
-		SDL_WarpMouseInWindow(doom->win, WIN_W / 2, WIN_H / 2);
-		doom->mouse_focused = !doom->mouse_focused;
-	}
-	if (keyb.keysym.scancode == SDL_SCANCODE_TAB && doom->editor.anim_finished)
-		switch_to_editor(doom);
-//	key_up2(doom, &keyb);
-	return (1);
-}
-
-int		mouse_down(t_doom *doom, SDL_Event event)
-{
-	int		channel;
-
-	if (event.button.button == SDL_BUTTON_LEFT && doom->you.is_shooting == 0)
-	{
-		if (Mix_Playing(1) == 0)
-		{
-			Mix_PlayChannel(1, doom->scores.shot, 0);
-			Mix_FadeOutChannel(channel, 680);
-			doom->you.is_shooting = 1;
-		}
-		else
-			doom->you.is_shooting = 0;
-	}
-	return (1);
-}
-
-int		mouse_up(t_doom *doom, SDL_Event event)
-{
-	if (event.button.button == SDL_BUTTON_LEFT)
-		doom->you.is_shooting = 0;
+	if (keyb.keysym.scancode == doom->settings.key_button)
+		press_button(doom);
+	key_up2(doom, &keyb);
 	return (1);
 }

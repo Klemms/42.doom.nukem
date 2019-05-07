@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 03:32:55 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 10:16:49 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 20:52:20 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	wrt_mapdata(int fd, t_nmap *m, int x, int y)
 	write_intdl(fd, m->map[y][x].orientation, 1, 0);
 	write_intdl(fd, m->map[y][x].x_size, 1, 0);
 	write_intdl(fd, m->map[y][x].y_size, 1, 0);
-	write_intdl(fd, m->map[y][x].height, 1, 0);
+	write_intdl(fd, m->map[y][x].event_id, 1, 0);
 	write_intdl(fd, m->map[y][x].ceiling_height, 1, 0);
 	write_intdl(fd, m->map[y][x].has_ceiling, 1, 0);
 	write_intdl(fd, m->map[y][x].ceilng_tex, 1, 0);
@@ -62,7 +62,6 @@ void	wrt_mapdata(int fd, t_nmap *m, int x, int y)
 int		write_map(t_nmap *m, char *path)
 {
 	int		fd;
-	size_t	sizewrt;
 	size_t	x;
 	size_t	y;
 
@@ -71,10 +70,10 @@ int		write_map(t_nmap *m, char *path)
 		return (1);
 	wrt_mapheader(fd, m);
 	y = 0;
-	while (y < m->size_y)
+	while (y < (size_t)m->size_y)
 	{
 		x = 0;
-		while (x < m->size_x)
+		while (x < (size_t)m->size_x)
 		{
 			wrt_mapdata(fd, m, x, y);
 			x++;
@@ -82,6 +81,7 @@ int		write_map(t_nmap *m, char *path)
 		y++;
 	}
 	wrt_textures(m, fd);
+	wrt_sprites(m, fd);
 	chmod(path, S_IRWXU);
 	close(fd);
 	return (0);
