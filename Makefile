@@ -69,9 +69,10 @@ SRC := doom.c \
 	lov/wfc_init.c \
 	lov/wfc_draw.c \
 	lov/sprite_init.c \
+	lov/sprite_init3.c \
 	lov/sprite_draw.c \
 	editor/renderers/right_bar_render.c \
-	button.c\
+	button.c \
 	ui/wjauge/wjauge.c \
 	ui/checkbox/checkbox.c \
 	editor/blocks.c \
