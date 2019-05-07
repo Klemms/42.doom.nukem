@@ -136,4 +136,8 @@ void	editor_bsr_mrender(t_doom *doom)
 	{
 		render_textures(doom, render_existing_textures(doom));
 	}
+	else if (doom->editor.hand_tool == tool_sprite)
+	{
+		render_sprites(doom);
+	}
 }

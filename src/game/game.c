@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 18:15:46 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 13:34:41 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/07 16:50:41 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	init_game(t_doom *doom)
 	register_event(doom, SDL_MOUSEMOTION, mouse_movement);
 	register_event(doom, SDL_MOUSEBUTTONDOWN, mouse_down);
 	new_player(doom, &doom->you, doom->nmap);
-	doom->lsprite.numbSprites = 81;
+	doom->lsprite.numbSprites = doom->nmap->spritecount;
 	doom->average_fps = 0;
 	setup_hypercam(doom);
 }

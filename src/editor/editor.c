@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 02:04:31 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 06:17:32 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 11:38:01 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	init_editor(t_doom *doom)
 	register_event(doom, SDL_MOUSEBUTTONDOWN, ed_mouse_button);
 	register_event(doom, SDL_MOUSEBUTTONUP, ed_mouse_button);
 	register_event(doom, SDL_MOUSEBUTTONUP, rbr_click);
+	register_event(doom, SDL_MOUSEBUTTONUP, rbrs_click);
 	register_event(doom, SDL_MOUSEMOTION, ed_mouse_motion);
 
 	e->l_textures = list_files("./textures/");
@@ -79,6 +80,9 @@ void	init_editor(t_doom *doom)
 	e->tool_block = create_button(doom, "Block", make_rect(10, 195, 60, 60), ed_block_c);
 	e->tool_block->background_color = make_rgb(145, 145, 145, 255);
 	button_prepare(doom, e->tool_block);
+	e->tool_sprite = create_button(doom, "Sprite", make_rect(10, 265, 60, 60), ed_sprite_c);
+	e->tool_sprite->background_color = make_rgb(145, 145, 145, 255);
+	button_prepare(doom, e->tool_sprite);
 
 	e->validate = create_button(doom, "V", make_rect(WIN_W - 285, 10, 60, 60), ed_test_map);
 	e->validate->background_color = e->select_color;
@@ -147,6 +151,9 @@ void	init_editor(t_doom *doom)
 
 	e->rbr_quadrant.has_celng = create_checkbox(doom, make_rect(256, 310, 29, 29), 0);
 
+	e->rbr_quadrant.sp_collides = create_checkbox(doom, make_rect(256, 50, 29, 29), 0);
+	e->rbr_quadrant.sp_obtainable = create_checkbox(doom, make_rect(256, 90, 29, 29), 0);
+
 	switch_tool(doom, tool_none, NULL);
 
 	doom->average_fps = 0;
@@ -184,6 +191,7 @@ void	render_editor(t_doom *doom)
 
 	button_render(doom, e->ed_surface, e->tool_none);
 	button_render(doom, e->ed_surface, e->tool_block);
+	button_render(doom, e->ed_surface, e->tool_sprite);
 	button_render(doom, e->ed_surface, e->validate);
 	button_render(doom, e->ed_surface, e->save);
 	text_render(doom, e->ed_surface, e->current_tool);
