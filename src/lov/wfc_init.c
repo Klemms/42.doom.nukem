@@ -3,6 +3,8 @@
 void    wfc_rayhit(t_raycasting *rc, t_player *p, t_nmap *nmap)
 {
   int hit;
+
+  (void)p;
   hit = 0;
   rc->dist_hit = 0;
   while (hit == 0)

@@ -6,7 +6,7 @@
 #    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 22:39:07 by cababou           #+#    #+#              #
-#    Updated: 2019/05/07 19:31:22 by cababou          ###   ########.fr        #
+#    Updated: 2019/05/07 20:44:29 by cababou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -108,7 +108,7 @@ LIB := -L libft/ -lft
 
 INC := -I includes -I $(FRAMEWORKSDIR)/SDL2
 
-FLAG := -g
+FLAG := -Wall -Wextra -Werror
 
 FRAMEWORKSDIR := $(PWD)/frameworks
 SDL := -F $(FRAMEWORKSDIR) -framework SDL2 -framework SDL2_ttf -framework SDL2_image -framework SDL2_mixer -Wl,-rpath $(FRAMEWORKSDIR)

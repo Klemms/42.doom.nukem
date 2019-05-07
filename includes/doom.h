@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 20:10:04 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 20:42:13 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -760,5 +760,7 @@ void				blockwindowdoor_removed(t_doom *d, int type, int x, int y);
 
 void				init_hud(t_doom *d);
 void				render_hud(t_doom *d);
+
+t_sprite			*make_doorwindowsprite(t_doom *d, t_mblock *b);
 
 #endif

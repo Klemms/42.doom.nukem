@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_fonts.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 04:58:41 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 15:29:10 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/07 20:47:33 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ TTF_Font	*make_font(t_doom *doom, char *font_path, int size)
 
 void		init_fonts(t_doom *doom)
 {
-	t_font	*font;
-
 	if (!(doom->texts = lstcontainer_new()))
 		exit_program(doom, ERROR_SDL_AFTER_INIT);
 	if (!(doom->fonts = lstcontainer_new()))

@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 11:57:34 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 09:07:20 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 20:53:06 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	read_texture(t_doom *d, t_nmap *m, char *l)
 		s = SDL_CreateRGBSurfaceWithFormat(0, size_x, size_y, 32,
 			d->surface->format->format);
 		gnc = 0;
-		while (sz < size_x * size_y)
+		while (sz < (size_t)size_x * (size_t)size_y)
 		{
 			((Uint32 *)s->pixels)[sz] = ft_atoi(l + gnc, 0);
 			gnc += mgnc(l + gnc, ',');

@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 18:15:46 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 19:32:44 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 20:46:16 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	render_game(t_doom *doom)
 
 void	game_loop(t_doom *doom, t_settings *sett)
 {
+	(void)sett;
 	while (SDL_PollEvent(&doom->last_event))
 		distribute_events(doom, doom->last_event);
 	render_game(doom);

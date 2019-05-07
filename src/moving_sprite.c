@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   moving_sprite.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 15:04:07 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/05/07 15:52:28 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/07 20:48:49 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int	check_other_sprites(t_doom *doom, t_list *sprites, t_sprite *sprite, t_xy *d
 	t_list		*o_sprites;
 	t_sprite	*o_sprite;
 	
+	(void)sprite;
 	o_sprites = doom->nmap->sprites->firstelement;
 	while (o_sprites)
 	{

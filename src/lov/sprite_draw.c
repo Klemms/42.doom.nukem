@@ -36,6 +36,8 @@ void              sprite_flat_draw(t_raycasting *rc, double **z_buffer, Uint32 *
 int    sprite_rayhit(t_raycasting *rc, t_player *p, t_nmap *nmap)
 {
   int hit;
+
+  (void)p;
   hit = 0;
   rc->dist_hit = 0;
   while (hit == 0 && rc->dist_hit < 40)
@@ -71,6 +73,7 @@ void    sprite_door_draw(t_raycasting *rc, double **z_buffer, Uint32 **canvas, t
   Uint32  color;
   int     y;
 
+	(void)nmap;
   if (rc->perp_wall_dist > 0 && rc->perp_wall_dist < (*z_buffer)[rc->x])
   {
     y = rc->draw_start - 1 + rc->lineHeight * stage;

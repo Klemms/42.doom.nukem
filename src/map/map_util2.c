@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 00:20:37 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 07:27:37 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 20:52:02 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ t_mblock	*get_spawn_point(t_nmap *nmap)
 	size_t	y;
 
 	y = 0;
-	while (y < nmap->size_y)
+	while (y < (size_t)nmap->size_y)
 	{
 		x = 0;
-		while (x < nmap->size_x)
+		while (x < (size_t)nmap->size_x)
 		{
 			if (nmap->map[y][x].block_type == block_spawn)
 				return (&nmap->map[y][x]);

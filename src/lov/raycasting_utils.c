@@ -9,11 +9,11 @@ Uint32            calc_gradient(Uint32 color1, Uint32 color2, double stage)
 
 void  swap(double *a, double *b)
 {
-  double  *tmp;
+  double  tmp;
 
-  *tmp = *a;
+  tmp = *a;
   *a = *b;
-  *b = *tmp;
+  *b = tmp;
 }
 
 void combSort(int* order, double* dist, int amount)
