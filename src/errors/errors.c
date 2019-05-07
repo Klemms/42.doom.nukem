@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 23:38:15 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/05 11:26:00 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/06 15:43:38 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,23 @@ int		quit_window(t_doom *doom, SDL_Event ev)
 {
 	exit_program(doom, 0);
 	return (0);
+}
+
+void	exit_program2(t_doom *doom, int code)
+{
+	if (code == ERROR_INVALID_TEXTURES)
+		quit(doom, "Invalid or missing texture(s). XPM files only", code);
+	else if (code == ERROR_MAP_MISSING_TEXTURES)
+		quit(doom, "This map is missing textures.", code);
+	else if (code == ERROR_READING_FILE)
+		quit(doom, "There was an error while reading your map.", code);
+	else if (code == ERROR_EDITOR_NEED_MAP)
+		quit(doom, "Please add a map to edit ./doom editor <map>", code);
+	else if (code == ERROR_USAGE)
+		quit(doom, "Usage : ./doom <map name> OR ./doom editor <map name>",
+					code);
+	else
+		quit(doom, "Exiting Le Doom", code);
 }
 
 void	exit_program(t_doom *doom, int code)
@@ -51,16 +68,6 @@ void	exit_program(t_doom *doom, int code)
 		quit(doom, "Wrong map format or missing map.", code);
 	else if (code == ERROR_INVALID_MUSIC)
 		quit(doom, "Invalid or missing music(s)", code);
-	else if (code == ERROR_INVALID_TEXTURES)
-		quit(doom, "Invalid or missing texture(s). XPM files only", code);
-	else if (code == ERROR_MAP_MISSING_TEXTURES)
-		quit(doom, "This map is missing textures.", code);
-	else if (code == ERROR_READING_FILE)
-		quit(doom, "There was an error while reading your map.", code);
-	else if (code == ERROR_EDITOR_NEED_MAP)
-		quit(doom, "Please add a map to edit ./doom editor <map>", code);
-	else if (code == ERROR_USAGE)
-		quit(doom, "Usage : ./doom <map name> OR ./doom editor <map name>", code);
 	else
-		quit(doom, "Exiting Le Doom", code);
+		exit_program2(doom, code);
 }

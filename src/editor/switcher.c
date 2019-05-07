@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   switcher.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 04:50:07 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 10:54:17 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/06 15:46:53 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
+
+void	switch_to_game2(t_doom *doom, int result)
+{
+	free(doom->editor.state->text);
+	doom->editor.state->text = ft_strdup(map_reason_to_txt(result));
+	if (result > 0)
+		ft_putchar('\a');
+	text_prepare(doom, doom->editor.state, 1, 1);
+}
 
 void	switch_to_game(t_doom *doom)
 {
@@ -21,14 +30,7 @@ void	switch_to_game(t_doom *doom)
 	{
 		result = validate_map(doom, doom->nmap);
 		if (result > 0)
-		{
-			free(doom->editor.state->text);
-			doom->editor.state->text = ft_strdup(map_reason_to_txt(result));
-			if (result > 0)
-				ft_putchar('\a');
-			text_prepare(doom, doom->editor.state, 1, 1);
-			return ;
-		}
+			return (switch_to_game2(doom, result));
 		doom->game_mode = M_GAME;
 		doom->editor.anim_w = WIN_W;
 		doom->editor.anim_h = WIN_H;

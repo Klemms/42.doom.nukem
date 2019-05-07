@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   blocks.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 08:44:57 by cababou           #+#    #+#             */
 /*   Updated: 2019/05/07 04:56:22 by cababou          ###   ########.fr       */
@@ -52,8 +52,8 @@ void		copy_block(t_mblock *dest, t_mblock *src, int free2, int cpcrds)
 	dest->collides = src->collides;
 	if (cpcrds)
 	{
-	dest->x = src->x;
-	dest->y = src->y;
+		dest->x = src->x;
+		dest->y = src->y;
 	}
 	if (free2)
 		free(src);

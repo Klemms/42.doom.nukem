@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wjauge.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 05:50:34 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/04 01:47:47 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/06 15:34:06 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ t_el_wh_jauge	*create_wjauge(t_doom *d, SDL_Rect rc, SDL_Rect mmvs)
 {
 	t_el_wh_jauge	*jg;
 	char			*s;
-
 
 	if (!(jg = mmalloc(sizeof(t_el_wh_jauge))))
 		exit_program(d, ERROR_SDL_AFTER_INIT);
@@ -41,7 +40,7 @@ t_el_wh_jauge	*create_wjauge(t_doom *d, SDL_Rect rc, SDL_Rect mmvs)
 	return (jg);
 }
 
-void		wjauge_prepare(t_doom *d, t_el_wh_jauge *jg)
+void			wjauge_prepare(t_doom *d, t_el_wh_jauge *jg)
 {
 	free(jg->txt->text);
 	jg->txt->text = ft_strjoin(ft_itoa(jg->value), jg->unit, 1);
@@ -51,21 +50,24 @@ void		wjauge_prepare(t_doom *d, t_el_wh_jauge *jg)
 	text_prepare(d, jg->txt, 1, 0);
 }
 
-void		wjauge_render(t_doom *d, SDL_Surface *s, t_el_wh_jauge *jg)
+void			wjauge_render(t_doom *d, SDL_Surface *s, t_el_wh_jauge *jg)
 {
-	draw_rect(s, make_rect(jg->pos.x, jg->pos.y, jg->pos.w, jg->pos.h), jg->background, 1);
+	draw_rect(s, make_rect(jg->pos.x, jg->pos.y, jg->pos.w, jg->pos.h),
+															jg->background, 1);
 	draw_rect(s, make_rect(jg->pos.x, jg->pos.y, (float)(jg->value - jg->min)
 		/ (jg->max - jg->min) * jg->pos.w, jg->pos.h), jg->color, 1);
-	draw_rect(s, make_rect(jg->pos.x, jg->pos.y, jg->pos.w, jg->pos.h), jg->border, 0);
+	draw_rect(s, make_rect(jg->pos.x, jg->pos.y, jg->pos.w, jg->pos.h),
+															jg->border, 0);
 	text_render(d, s, jg->txt);
 }
 
-void		wjauge_affect(t_doom *d, t_el_wh_jauge *jg, int change, int prepare)
+void			wjauge_affect(t_doom *d, t_el_wh_jauge *jg, int change,
+															int prepare)
 {
 	wjauge_set(d, jg, jg->value + change * jg->step, prepare);
 }
 
-void		wjauge_set(t_doom *d, t_el_wh_jauge *jg, int value, int prepare)
+void			wjauge_set(t_doom *d, t_el_wh_jauge *jg, int value, int prepare)
 {
 	jg->value = value;
 	if (jg->value > jg->max)

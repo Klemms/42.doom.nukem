@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   blocks2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 09:57:18 by cababou           #+#    #+#             */
 /*   Updated: 2019/05/07 06:49:06 by cababou          ###   ########.fr       */

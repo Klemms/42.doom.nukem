@@ -41,7 +41,7 @@ int		main(int argc, char *argv[])
 	doom.fps_counter = create_text(&doom, "- fps", FONT_RIFFIC, 20);
 	doom.fps_counter->ui->pos_x = 8;
 	doom.fps_counter->ui->pos_y = 8;
-	init_scores(&doom);
+	init_musics(&doom);
 	doom.nmap = load_map(&doom, doom.game_mode == M_EDITOR ? argv[2] : argv[1]);
 	if (doom.game_mode == M_GAME)
 	{

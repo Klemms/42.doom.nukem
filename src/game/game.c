@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 18:15:46 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 11:12:01 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 13:34:41 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,13 @@ void	init_game(t_doom *doom)
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	doom->mouse_focused = 1;
 	doom->game_init = 1;
-	
 	register_event(doom, SDL_KEYDOWN, key_down);
 	register_event(doom, SDL_KEYUP, key_up);
 	register_event(doom, SDL_QUIT, quit_window);
 	register_event(doom, SDL_MOUSEMOTION, mouse_movement);
 	register_event(doom, SDL_MOUSEBUTTONDOWN, mouse_down);
-	register_event(doom, SDL_MOUSEBUTTONUP, mouse_up);
-
 	new_player(doom, &doom->you, doom->nmap);
-	doom->lsprite.numbSprites = 8;
+	doom->lsprite.numbSprites = 81;
 	doom->average_fps = 0;
 	setup_hypercam(doom);
 }
@@ -36,11 +33,10 @@ void	init_game(t_doom *doom)
 void	render_game(t_doom *doom)
 {
 	SDL_SetRenderDrawColor(doom->rend,
-		0, 
-		0, 
+		0,
+		0,
 		0, 0xFF);
-    SDL_RenderClear(doom->rend);
-
+	SDL_RenderClear(doom->rend);
 	//calc_lov(doom);
 	draw_screen(doom);
 	//draw_minimap(doom);
@@ -57,16 +53,12 @@ void	game_loop(t_doom *doom, t_settings *sett)
 		distribute_events(doom, doom->last_event);
 	render_game(doom);
 	if (!doom->mouse_focused)
-		draw_rect(doom->surface, make_rect(0, 0, WIN_W, WIN_H), make_rgb(255, 0, 0, 255), 0);
+		draw_rect(doom->surface, make_rect(0, 0, WIN_W, WIN_H),
+								make_rgb(255, 0, 0, 255), 0);
 	doom->you.speed = doom->you.is_sprinting ? 0.2 : 0.1;
 	update_velocity(doom, &doom->you);
 	moving(doom);
-	shoot(doom, &doom->you);
-	if (doom->keys.z_up)
-		doom->you.pos.z += 0.02;
-	else if (doom->keys.z_down)
-		doom->you.pos.z -= 0.02;
-	
+	moving_sprite(doom);
 }
 
 void	loop_game(t_doom *doom)
