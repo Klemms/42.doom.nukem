@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   blocks.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bsiche <bsiche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 08:44:57 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 18:47:47 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 22:43:05 by bsiche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,10 @@ void		update_interactions(t_doom *d)
 	t_editor *e;
 
 	e = &d->editor;
-	e->rbr_quadrant.orient_hor->background_color = e->foc.b_orientation == 0 ? e->select_color : e->base_color;
-	e->rbr_quadrant.orient_ver->background_color = e->foc.b_orientation == 1 ? e->select_color : e->base_color;
+	e->rbr_quadrant.orient_hor->background_color = e->foc.b_orientation
+	== 0 ? e->select_color : e->base_color;
+	e->rbr_quadrant.orient_ver->background_color = e->foc.b_orientation
+	== 1 ? e->select_color : e->base_color;
 	e->rbr_quadrant.has_celng->checked = e->foc.b_has_ceiling;
 	wjauge_set(d, e->rbr_quadrant.ev_id, e->foc.b_event_id, 1);
 	wjauge_set(d, e->rbr_quadrant.sc_height, e->foc.b_ceiling_height, 1);
