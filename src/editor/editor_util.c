@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 02:55:07 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 15:48:43 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/07 06:24:30 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,12 @@ int			is_left_clicking(void)
 	return (SDL_GetMouseState(NULL, NULL) == SDL_BUTTON_LMASK);
 }
 
-SDL_Rect	mouse_pos(void)
+int			is_right_clicking()
+{
+	return (SDL_GetMouseState(NULL, NULL) == SDL_BUTTON_RMASK);
+}
+
+SDL_Rect	mouse_pos()
 {
 	int	x;
 	int	y;

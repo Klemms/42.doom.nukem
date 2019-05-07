@@ -6,11 +6,42 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 03:39:41 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 07:26:55 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 07:59:24 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
+
+void	wrt_sprite(t_sprite *s, int fd)
+{
+	write_intdl(fd, s->texture, 1, 0);
+	write_intdl(fd, s->texture_back, 1, 0);
+	write_intdl(fd, s->render_mode, 1, 0);
+	write_intdl(fd, s->base_x, 1, 0);
+	write_intdl(fd, s->base_y, 1, 0);
+	write_intdl(fd, s->collides, 1, 0);
+	write_intdl(fd, -1, 1, 0);
+	write_intdl(fd, -1, 1, 0);
+	write_intdl(fd, -1, 1, 0);
+	write_intdl(fd, -1, 0, 0);
+}
+
+void	wrt_sprites(t_nmap *m, int fd)
+{
+	t_list		*tmp;
+	t_sprite	*tmp_sprite;
+
+	tmp = m->sprites->firstelement;
+	write_intdl(fd, lstcontainer_size(m->sprites), 0, 1);
+	while (tmp)
+	{
+		tmp_sprite = (t_sprite *)tmp_sprite;
+		ft_putchar_fd('[', fd);
+		wrt_sprite(tmp_sprite, fd);
+		ft_putendl_fd("]", fd);
+		tmp = tmp->next;
+	}
+}
 
 void	wrt_textures(t_nmap *m, int fd)
 {

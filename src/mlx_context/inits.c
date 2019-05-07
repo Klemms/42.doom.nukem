@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 23:44:05 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 19:46:38 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/07 06:53:23 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,17 +65,19 @@ void	init_block_types(t_doom *doom)
 {
 	doom->block_types = lstcontainer_new();
 	lstcontainer_add(doom->block_types
-		, make_block_type(doom, "Apply Settings", 0xFF74a8fc, block_apply));
+		, make_block_type(doom, "Copy Settings", 0xFF7fc8e2, block_copy));
 	lstcontainer_add(doom->block_types
 		, make_block_type(doom, "Air", 0xFFFFFEDD, block_air));
 	lstcontainer_add(doom->block_types
 		, make_block_type(doom, "Wall", 0xFF848484, block_wall));
 	lstcontainer_add(doom->block_types
-		, make_block_type(doom, "Sprite Block", 0xFFb78c73, block_sprite));
-	lstcontainer_add(doom->block_types
 		, make_block_type(doom, "Spawn Point", 0xFFC13CC1, block_spawn));
 	lstcontainer_add(doom->block_types
 		, make_block_type(doom, "End Point", 0xFFF44262, block_end));
+	lstcontainer_add(doom->block_types
+		, make_block_type(doom, "Door", 0xFFb7af6f, block_door));
+	lstcontainer_add(doom->block_types
+		, make_block_type(doom, "Window", 0xFFace5d9, block_window));
 }
 
 void	init_doom(t_doom *doom)
@@ -89,6 +91,5 @@ void	init_doom(t_doom *doom)
 	doom->fps_counter = create_text(doom, "- fps", FONT_RIFFIC, 20);
 	doom->fps_counter->ui->pos_x = 8;
 	doom->fps_counter->ui->pos_y = 8;
-	init_textures(doom);
 	init_musics(doom);
 }

@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 02:04:31 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 15:30:59 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/07 05:44:58 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,14 @@ void		button_render(t_doom *doom, SDL_Surface *surface,
 		draw_rect(surface, button->rect, button->is_disabled ?
 			button->background_color_disabled : button->background_color, 1);
 		text_render(doom, surface, button->text);
+	}
+}
+
+void		button_render_texture(t_doom *d, SDL_Surface *s, t_el_button *b, SDL_Surface *b_text)
+{
+	if (b->is_visible)
+	{
+		SDL_BlitScaled(b_text, NULL, s, &b->rect);
+		text_render(d, s, b->text);
 	}
 }

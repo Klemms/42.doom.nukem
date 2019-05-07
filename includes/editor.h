@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 01:32:17 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 16:00:56 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/06 12:51:55 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 enum	e_tools
 {
 	tool_none = 0,
-	tool_block
+	tool_block = 1,
+	tool_textures = 2
 };
 
 int		quit_event(t_doom *doom, SDL_Event sdl_event);

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 16:15:59 by cababou           #+#    #+#             */
-/*   Updated: 2017/12/02 16:22:28 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 09:05:33 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_atoi(const char *str)
+int		ft_atoi(char *str, int freeit)
 {
 	size_t i;
 	size_t nb;
@@ -35,5 +35,7 @@ int		ft_atoi(const char *str)
 		nb = nb * 10 + (str[i] - '0');
 		i++;
 	}
+	if (freeit)
+		free(str);
 	return (nb * finalmult);
 }

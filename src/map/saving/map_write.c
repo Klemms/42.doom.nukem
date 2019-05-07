@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 03:32:55 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 10:16:49 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 09:28:56 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int		write_map(t_nmap *m, char *path)
 		y++;
 	}
 	wrt_textures(m, fd);
+	wrt_sprites(m, fd);
 	chmod(path, S_IRWXU);
 	close(fd);
 	return (0);
