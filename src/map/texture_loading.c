@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 00:24:22 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 06:39:23 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 07:45:54 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,21 @@ t_texture	*make_texture(t_doom *doom, SDL_Surface *surface, char *tn)
 t_texture	*load_texture(t_doom *d, char *path)
 {
 	t_texture	*texture;
+	SDL_Surface	*free_s;
 
 	if (!(texture = mmalloc(sizeof(t_texture))))
 		exit_program(d, ERROR_SDL_AFTER_INIT);
-	texture->surface = IMG_Load(path);
-	printf("IMG_Load: %s\n", IMG_GetError());
-	if (texture->surface)
+	free_s = IMG_Load(path);
+	free(path);
+	if (free_s)
 	{
-		texture->surface = SDL_ConvertSurfaceFormat(texture->surface,
+		texture->surface = SDL_ConvertSurfaceFormat(free_s,
 			d->surface->format->format, 0);
+		SDL_FreeSurface(free_s);
 		texture->tex_pixels = texture->surface->w * texture->surface->h;
 		return (texture);
 	}
+	SDL_FreeSurface(free_s);
 	free(texture);
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 03:32:55 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 05:08:58 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 09:28:56 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,9 @@ int		write_map(t_nmap *m, char *path)
 	size_t	x;
 	size_t	y;
 
-	ft_putendl(path);
 	fd = open(path, O_WRONLY | O_CREAT | O_TRUNC | O_NOFOLLOW);
 	if (fd < 0)
 		return (1);
-	ft_putendl("test");
 	wrt_mapheader(fd, m);
 	y = 0;
 	while (y < m->size_y)
@@ -84,6 +82,7 @@ int		write_map(t_nmap *m, char *path)
 		y++;
 	}
 	wrt_textures(m, fd);
+	wrt_sprites(m, fd);
 	chmod(path, S_IRWXU);
 	close(fd);
 	return (0);
