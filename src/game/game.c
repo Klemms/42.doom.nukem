@@ -14,6 +14,13 @@
 
 void	init_game(t_doom *doom)
 {
+
+	//t_sprite  sprites[] = 
+  doom->lsprite.sprites = malloc(sizeof(t_sprite) * 4);
+	doom->lsprite.sprites[0] = (t_sprite){ { 3,3 }, 0, 2, 1, 0.0 };
+	doom->lsprite.sprites[1] = (t_sprite){ { 4.3, 5.5 }, 1, 0, 0, 0.0 };
+	doom->lsprite.sprites[2] = (t_sprite){ { 6, 6 }, 1, 1, 1, 0.0 };
+	doom->lsprite.sprites[3] = (t_sprite){ { 9.4, 7 }, 2, 0, 0, 0.0 };
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	doom->mouse_focused = 1;
 	doom->game_init = 1;
@@ -59,29 +66,6 @@ void	game_loop(t_doom *doom, t_settings *sett)
 	doom->you.speed = doom->you.is_sprinting ? 0.2 : 0.1;
 	update_velocity(doom, &doom->you);
 	moving(doom);
-
-	/*if (doom->keys.up == 1)
-	{
-		if (doom->keys.right == 1)
-			moove(doom->you.speed, &doom->you, doom->nmap, -M_PI_4);
-		else if (doom->keys.left == 1)
-			moove(doom->you.speed, &doom->you, doom->nmap, M_PI_4);
-		else
-			moove(doom->you.speed, &doom->you, doom->nmap, 0);
-	}
-	else if (doom->keys.down == 1)
-	{
-		if (doom->keys.right == 1)
-			moove(-doom->you.speed, &doom->you, doom->nmap, -M_PI_4);
-		else if (doom->keys.left == 1)
-			moove(-doom->you.speed, &doom->you, doom->nmap, M_PI_4);
-		else
-			moove(-doom->you.speed, &doom->you, &doom->nmap, 0);
-	}
-	else if (doom->keys.right == 1)
-		moove(doom->you.speed, &doom->you, doom->nmap, -M_PI_2);
-	else if (doom->keys.left == 1)
-		moove(doom->you.speed, &doom->you, doom->nmap, M_PI_2);*/
 	
 	if (doom->keys.z_up)
 		doom->you.pos.z += 0.02;

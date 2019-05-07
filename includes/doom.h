@@ -85,6 +85,13 @@ enum			e_sprite_type
 	sprite_health = 2
 };
 
+enum			e_render_modes
+{
+	rend_flat = 0,
+	rend_door = 1,
+	rend_window = 2
+};
+
 typedef struct	s_map_block
 {
 	int			block_type;
@@ -396,6 +403,23 @@ typedef struct		s_wall_sight
 	double				next_perp;
 }					t_wall_sight;
 
+typedef struct    s_sprite
+{
+  t_vec   pos;
+  int     texture_id;
+  int     render_mode;
+  int	  animated;
+  double  stage;
+}                 t_sprite;
+
+typedef struct 	s_l_sprite
+{
+	t_sprite *sprites;
+	int		  numbSprites;
+	int       spritesOrder[4];
+	double    spritesDist[4];
+}				t_l_sprite;
+
 typedef struct		s_raycasting
 {
 	SDL_Surface	*texture;
@@ -406,7 +430,7 @@ typedef struct		s_raycasting
 	t_vec_int	map;
 	t_vec		side_dist;
 	t_vec		delta_dist;
-	t_vec_int	step;
+	t_vec_int   step;
 	int			side;
 	int			dist_hit; // nb of boxes crossed by ray before hitting
 	double		perp_wall_dist;
@@ -417,6 +441,20 @@ typedef struct		s_raycasting
 	t_vec		floor;
 	t_vec_int	floor_tex;
 	double		wall_x;
+	// SPRITES
+	int			v_move_screen;
+	t_vec		rel_sprite_pos;
+	t_vec		transform;
+	int			sprite_screen_x;
+	int 		sprite_height;
+	int 		sprite_width;
+	int			draw_start_x;
+	int			draw_end_x;
+	int			draw_start_y;
+	int			draw_end_y;
+	int			tex_x;
+	int			tex_y;
+	t_sprite	cur_sprite;
 }					t_raycasting;
 
 typedef struct		s_doom
@@ -451,7 +489,8 @@ typedef struct		s_doom
 	int				m_x; // Mouse X // Both Updated each frame
 	int				m_y; // Mouse Y
 	t_scores		scores;
-	t_lstcontainer		*block_types;
+	t_lstcontainer	*block_types;
+	t_l_sprite		lsprite;
 }					t_doom;
 
 typedef struct		s_rtxt
@@ -501,6 +540,22 @@ SDL_Surface			*get_surface(t_doom *doom, int texture_id);
 //void				draw_floor(t_doom *doom, double x, int column);
 
 void    			draw_screen(t_doom *doom);
+void 				draw_wfc(t_doom *doom, double **z_buffer);
+void  				wfc_init(t_raycasting *rc, t_player *p);
+void  				wfc_rayhit(t_raycasting *rc, t_player *p, t_nmap *nmap);
+void  				wfc_wall_init(t_raycasting *rc, t_player *p);
+void  				wfc_wall_draw(t_raycasting *rc, Uint32 **canvas);
+void  				wfc_fc_init(t_raycasting *rc);
+void  				wfc_floor_draw(t_raycasting *rc, t_player *p, Uint32 **canvas);
+void  				wfc_ceiling_draw(t_raycasting *rc, t_player *p, Uint32 **canvas);
+void    			draw_sprites(t_doom *doom, t_raycasting *rc, t_player *p, double **z_buffer, Uint32 **canvas, t_l_sprite *lsprite); //soz
+void    			sprite_flat_init(t_raycasting *rc, t_player *p, int i, t_sprite *sprite, int *spriteOrder);
+void              	sprite_flat_draw(t_raycasting *rc, double **z_buffer, Uint32 **canvas);
+void    			sprite_door_init(t_raycasting *rc, t_player *p);
+
+Uint32            	calc_gradient(Uint32 color1, Uint32 color2, double stage);
+void  				swap(double *a, double *b);
+void 				combSort(int* order, double* dist, int amount);
 
 void				new_player(t_doom *doom, t_player *player, t_nmap *nmap);
 int					draw(t_doom *w);
