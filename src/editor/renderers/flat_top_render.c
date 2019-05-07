@@ -60,10 +60,6 @@ void			editor_ftr_mrender(t_doom *doom)
 		{
 			r = make_rect(q->x_start + x * q->zoom_level, q->y_start + y * q->zoom_level, q->zoom_level, q->zoom_level);
 			draw_rect_u(doom->editor.ftr, r, block_type(doom, doom->nmap->map[y][x].block_type)->block_color, 1);
-			/*if (mouse_in(m_pos.x - q->pos_x, m_pos.y - q->pos_y, r))
-			{
-				//draw_rect_u(doom->editor.ftr, r, 0xFF000000, 0);
-			}*/
 			x++;
 		}
 		y++;
@@ -72,13 +68,23 @@ void			editor_ftr_mrender(t_doom *doom)
 	doom->editor.y_focus = -1;
 	x = (int)((m_pos.x - q->pos_x - q->x_start) / q->zoom_level);
 	y = (int)((m_pos.y - q->pos_y - q->y_start) / q->zoom_level);
-	if (m_pos.x - q->pos_x - q->x_start >= 0 && m_pos.y - q->pos_y - q->y_start >= 0)
+	if (m_pos.x - q->pos_x - q->x_start >= 0 && m_pos.y - q->pos_y - q->y_start >= 0
+		&& mouse_in(doom->m_x, doom->m_y, doom->editor.ftr_rect))
 	{
+		doom->editor.x_focus = x;
+		doom->editor.y_focus = y;
+		if (doom->editor.selected_sprite)
+		{
+			r = make_rect(q->x_start + x * q->zoom_level + q->zoom_level / 4, q->y_start + y * q->zoom_level + q->zoom_level / 4, q->zoom_level / 2, q->zoom_level / 2);
+			
+			draw_rect_u(doom->editor.ftr, r, doom->editor.selected_block ?
+				doom->editor.selected_block->block_color : 0xFFFF0000, 0);
+			if (is_left_clicking())
+				add_sprite(doom, x, y);
+		}
 		r = make_rect(q->x_start + x * q->zoom_level, q->y_start + y * q->zoom_level, q->zoom_level, q->zoom_level);
 		draw_rect_u(doom->editor.ftr, r, doom->editor.selected_block ?
 			doom->editor.selected_block->block_color : 0xFFFF0000, 0);
-		doom->editor.x_focus = x;
-		doom->editor.y_focus = y;
 	}
 }
 

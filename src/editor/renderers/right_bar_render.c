@@ -48,7 +48,12 @@ void	editor_rbr_brender(t_doom *d)
 	e = &d->editor;
 	draw_rect_u(e->rbr, make_rect(0, 0, e->rbr_rect.w,
 		e->rbr_rect.h), 0xFFd4d5d8, 1);
-	editor_rbr_mrender(d);
+	if (d->editor.hand_tool == tool_sprite)
+		editor_rbrs_mrender(d);
+	if (d->editor.hand_tool == tool_block)
+		editor_rbr_mrender(d);
+	if (d->editor.hand_tool == tool_sprite && !d->editor.selected_sprite)
+		ed_sprite_list(d);
 	SDL_BlitSurface(e->rbr, NULL, d->editor.ed_surface, &e->rbr_rect);
 }
 
@@ -91,7 +96,7 @@ int		rbr_click(t_doom *d, SDL_Event event)
 
 	ms = event.button;
 	qr = &d->editor.rbr_quadrant;
-	if (ms.button == SDL_BUTTON_LEFT)
+	if (ms.button == SDL_BUTTON_LEFT && d->editor.selected_block)
 	{
 		rc = make_rect(qr->pos_x + qr->has_celng->pos.x, qr->pos_y + qr->has_celng->pos.y, qr->has_celng->pos.w, qr->has_celng->pos.h);
 		if (mouse_in(d->m_x, d->m_y, rc))

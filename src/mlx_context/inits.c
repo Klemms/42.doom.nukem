@@ -77,6 +77,7 @@ void	init_block_types(t_doom *doom)
 		, make_block_type(doom, "Door", 0xFFb7af6f, block_door));
 	lstcontainer_add(doom->block_types
 		, make_block_type(doom, "Window", 0xFFace5d9, block_window));
+	init_sprite_types(doom);
 }
 
 void	init_doom(t_doom *doom)

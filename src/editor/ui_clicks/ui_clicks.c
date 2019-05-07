@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 23:07:12 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 06:17:47 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 10:19:59 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,13 @@ void	ed_block_c(t_doom *doom, t_el_button *b, SDL_MouseButtonEvent ev)
 	if (ev.button == SDL_BUTTON_LEFT)
 	{
 		switch_tool(doom, tool_block, NULL);
+	}
+}
+
+void	ed_sprite_c(t_doom *doom, t_el_button *b, SDL_MouseButtonEvent ev)
+{
+	if (ev.button == SDL_BUTTON_LEFT)
+	{
+		switch_tool(doom, tool_sprite, NULL);
 	}
 }

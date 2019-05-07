@@ -6,15 +6,28 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 09:57:18 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 06:49:06 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 11:48:32 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 #include "editor.h"
 
+void		apply_sprite_texture(t_doom *d, int texture_id)
+{
+	if (d->editor.texture_edited == 0)
+		d->editor.foc_s.b_texture = texture_id;
+	if (d->editor.texture_edited == 1)
+		d->editor.foc_s.b_texture_back = texture_id;
+	switch_tool_sprite(d, tool_sprite, d->editor.selected_sprite);
+}
+
 void		apply_block_texture(t_doom *d, int texture_id)
 {
+	if (d->editor.selected_sprite)
+		apply_sprite_texture(d, texture_id);
+	if (d->editor.selected_sprite)
+		return ;
 	if (d->editor.texture_edited == 0)
 		d->editor.foc.b_n_texture = texture_id;
 	else if (d->editor.texture_edited == 1)
