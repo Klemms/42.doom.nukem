@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 00:24:22 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 06:10:40 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 06:39:23 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_texture	*load_texture(t_doom *d, char *path)
 	if (texture->surface)
 	{
 		texture->surface = SDL_ConvertSurfaceFormat(texture->surface,
-			SDL_PIXELFORMAT_ARGB32, 0);
+			d->surface->format->format, 0);
 		texture->tex_pixels = texture->surface->w * texture->surface->h;
 		return (texture);
 	}
