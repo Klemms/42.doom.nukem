@@ -6,11 +6,45 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 09:57:18 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 10:02:08 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 06:21:07 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
+#include "editor.h"
+
+void		apply_block_texture(t_doom *d, int texture_id)
+{
+	if (d->editor.texture_edited == 0)
+		d->editor.foc.b_n_texture = texture_id;
+	else if (d->editor.texture_edited == 1)
+		d->editor.foc.b_s_texture = texture_id;
+	else if (d->editor.texture_edited == 2)
+		d->editor.foc.b_w_texture = texture_id;
+	else if (d->editor.texture_edited == 3)
+		d->editor.foc.b_e_texture = texture_id;
+	switch_tool(d, tool_block, d->editor.selected_block);
+}
+
+void		apply_block_settings(t_doom *d, t_mblock *dest)
+{
+	dest->block_type = d->editor.foc.b_block_type;
+	dest->orientation = d->editor.foc.b_orientation;
+	dest->x_size = d->editor.foc.b_x_size;
+	dest->y_size = d->editor.foc.b_y_size;
+	dest->height = d->editor.foc.b_height;
+	dest->ceiling_height = d->editor.foc.b_ceiling_height;
+	dest->has_ceiling = d->editor.foc.b_has_ceiling;
+	dest->ceilng_tex = d->editor.foc.b_ceilng_tex;
+	dest->floor_tex = d->editor.foc.b_floor_tex;
+	dest->n_texture = d->editor.foc.b_n_texture;
+	dest->s_texture = d->editor.foc.b_s_texture;
+	dest->w_texture = d->editor.foc.b_w_texture;
+	dest->e_texture = d->editor.foc.b_e_texture;
+	dest->light = d->editor.foc.b_light;
+	dest->collides = d->editor.foc.b_block_type == block_wall
+		|| d->editor.foc.b_block_type == block_sprite ? 1 : 0;
+}
 
 t_mblock	*new_block(t_doom *d, int block_type, int x, int y)
 {
@@ -33,7 +67,7 @@ t_mblock	*new_block(t_doom *d, int block_type, int x, int y)
 	b->e_texture = 3;
 	b->light = 0xFFFFFFFF;
 	b->has_ceiling = 1;
-	b->collides = b->block_type == block_wall || b->block_type == block_small_wall ? 1 : 0;
+	b->collides = b->block_type == block_wall || b->block_type == block_sprite ? 1 : 0;
 	b->x = x;
 	b->y = y;
 	return (b);
