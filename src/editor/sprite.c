@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/07 11:11:17 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 16:34:57 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 16:52:37 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void		add_sprite(t_doom *d, int x, int y)
 	s->texture_back = d->editor.foc_s.b_texture_back;
 	s->type = d->editor.foc_s.b_type;
 	lstcontainer_add(d->nmap->sprites, s);
+	d->nmap->spritecount = lstcontainer_size(d->nmap->sprites);
+	d->lsprite.numbSprites = d->nmap->spritecount;
 	d->editor.selected_sprite = NULL;
 }
 

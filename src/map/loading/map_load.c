@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_load.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 05:56:10 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 15:10:44 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 16:58:32 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,11 +109,8 @@ void	correct_pos(t_doom *d, t_nmap *m)
 	while (tmp)
 	{
 		sp = tmp->content;
-		sp->pos.x = ((float)sp->base_x) / 100.0;
-		sp->pos.y = ((float)sp->base_y) / 100.0;
-		sp->obtainable = 1;
-		sp->collides = 0;
-		sp->type = sprite_ammo;
+		sp->pos.x = ((float)sp->base_x) + 0.5;
+		sp->pos.y = ((float)sp->base_y) + 0.5;
 		tmp = tmp->next;
 	}
 }
@@ -138,6 +135,7 @@ t_nmap	*load_map(t_doom *d, char *path)
 		line = NULL;
 	}
 	correct_pos(d, m);
+	m->spritecount = lstcontainer_size(m->sprites);
 	make_doorwindows(d, m);
 	return (m);
 }
