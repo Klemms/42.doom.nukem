@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/07 08:14:38 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 09:48:53 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 15:11:31 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,10 @@ int			spritecount(t_list *sprites)
 	return (count);
 }
 
-t_sprite	*read_sprite(t_doom *d, char *l)
+void	read_sprite(t_doom *d, char *l, t_sprite *sprite)
 {
-	t_sprite	*sprite;
 	size_t		i;
 
-	if (!(sprite = mmalloc(sizeof(t_sprite))))
-		exit_program(d, ERROR_SDL_AFTER_INIT);
 	i = 0;
 	sprite->texture = ft_atoi(
 		ft_strsubuntil(l + i, 0, mgnc(l + i, ','), 0), 1);
@@ -55,15 +52,24 @@ t_sprite	*read_sprite(t_doom *d, char *l)
 	i += mgnc(l + i, ',');
 	sprite->collides = ft_atoi(
 		ft_strsubuntil(l + i, 0, mgnc(l + i, ','), 0), 1);
-	free(l);
-	return (sprite);
+	i += mgnc(l + i, ',');
+	sprite->type = ft_atoi(
+		ft_strsubuntil(l + i, 0, mgnc(l + i, ','), 0), 1);
+	i += mgnc(l + i, ',');
+	sprite->obtainable = ft_atoi(
+		ft_strsubuntil(l + i, 0, mgnc(l + i, ','), 0), 1);
+	//free(l);
 }
 
 void		read_sprites(t_doom *d, t_nmap *m, char *l)
 {
+	t_sprite	*sprite;
+
 	if (l[0] == '[')
 	{
-		lstcontainer_add(m->sprites,
-			read_sprite(d, ft_strsubuntil(l, 1, ft_strlen(l) - 1, 1)));
+		if (!(sprite = mmalloc(sizeof(t_sprite))))
+			exit_program(d, ERROR_SDL_AFTER_INIT);
+		read_sprite(d, ft_strsubuntil(l, 1, ft_strlen(l) - 1, 1), sprite);
+		lstcontainer_add(m->sprites, sprite);
 	}
 }

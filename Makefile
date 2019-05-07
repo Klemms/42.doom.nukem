@@ -6,7 +6,7 @@
 #    By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 22:39:07 by cababou           #+#    #+#              #
-#    Updated: 2019/05/07 10:18:58 by lde-batz         ###   ########.fr        #
+#    Updated: 2019/05/07 11:21:50 by cababou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,7 +81,11 @@ SRC := doom.c \
 	map/loading/map_load3.c \
 	map/loading/map_load4.c \
 	map/loading/map_load5.c \
-	map/expand.c 
+	map/expand.c \
+	editor/renderers/right_bar_render_sprite.c \
+	mlx_context/inits2.c \
+	editor/renderers/bottom_select_render2.c \
+	editor/sprite.c
 
 HEADERS := doom.h editor.h errors.h
 

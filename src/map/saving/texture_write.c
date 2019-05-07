@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 03:39:41 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 09:49:37 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 14:44:55 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	wrt_sprite(t_sprite *s, int fd)
 	write_intdl(fd, s->base_x, 1, 0);
 	write_intdl(fd, s->base_y, 1, 0);
 	write_intdl(fd, s->collides, 1, 0);
-	write_intdl(fd, -1, 1, 0);
-	write_intdl(fd, -1, 1, 0);
+	write_intdl(fd, s->type, 1, 0);
+	write_intdl(fd, s->obtainable, 1, 0);
 	write_intdl(fd, -1, 1, 0);
 	write_intdl(fd, -1, 0, 0);
 }
@@ -35,10 +35,13 @@ void	wrt_sprites(t_nmap *m, int fd)
 	write_intdl(fd, spritecount(m->sprites->firstelement), 0, 1);
 	while (tmp)
 	{
-		tmp_sprite = (t_sprite *)tmp_sprite;
-		ft_putchar_fd('[', fd);
-		wrt_sprite(tmp_sprite, fd);
-		ft_putendl_fd("]", fd);
+		tmp_sprite = tmp->content;
+		if (!tmp_sprite->dontsave)
+		{
+			ft_putchar_fd('[', fd);
+			wrt_sprite(tmp_sprite, fd);
+			ft_putendl_fd("]", fd);
+		}
 		tmp = tmp->next;
 	}
 }
