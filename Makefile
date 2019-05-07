@@ -6,7 +6,7 @@
 #    By: bsiche <bsiche@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 22:39:07 by cababou           #+#    #+#              #
-#    Updated: 2019/05/07 21:21:27 by bsiche           ###   ########.fr        #
+#    Updated: 2019/05/07 22:40:49 by bsiche           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,8 @@ SRC := doom.c \
 	editor/editor_util.c \
 	editor/renderers/flat_top_render.c \
 	editor/renderers/block_text_render.c \
+	editor/renderers/rbr_wheel.c \
+	editor/renderers/rbs_click.c \
 	editor/switcher.c \
 	animation/fade.c \
 	editor/ui_clicks/ui_clicks.c \
