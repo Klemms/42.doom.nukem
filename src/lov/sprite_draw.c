@@ -34,7 +34,7 @@ void              sprite_flat_draw(t_raycasting *rc, double **z_buffer, Uint32 *
   }
 }
 
-int    sprite_rayhit(t_raycasting *rc, t_player *p, t_nmap *nmap, int block_type)
+int    sprite_rayhit(t_raycasting *rc, t_player *p, t_nmap *nmap)
 {
   int hit;
   hit = 0;
@@ -57,7 +57,7 @@ int    sprite_rayhit(t_raycasting *rc, t_player *p, t_nmap *nmap, int block_type
 
     if (nmap->map[rc->map.y][rc->map.x].collides)
     {
-      if (nmap->map[rc->map.y][rc->map.x].block_type == block_small_wall)
+      if (nmap->map[rc->map.y][rc->map.x].block_type == block_window || nmap->map[rc->map.y][rc->map.x].block_type == block_door)
         return (1);
       else
         return (0);
@@ -97,7 +97,7 @@ void sprite_cast_wall(t_raycasting *rc, t_player *p, t_nmap *nmap, double **z_bu
   while (++rc->x < WIN_W)
   {
     wfc_init(rc, p);
-    if (sprite_rayhit(rc, p, nmap, block_small_wall))// && rc->perp_wall_dist < (*z_buffer)[rc->x])
+    if (sprite_rayhit(rc, p, nmap))// && rc->perp_wall_dist < (*z_buffer)[rc->x])
     {
       if (rc->cur_sprite.pos.x != rc->map.x || rc->cur_sprite.pos.y != rc->map.y)
         continue ;
@@ -137,7 +137,7 @@ void    draw_sprites(t_doom *doom, t_raycasting *rc, t_player *p, double **z_buf
       if (rc->cur_sprite.stage > 0) lsprite->sprites[lsprite->spritesOrder[i]].stage -= 0.01;
       else lsprite->sprites[lsprite->spritesOrder[i]].animated = 1;
     }
-    rc->texture = get_surface(doom, rc->cur_sprite.texture_id);
+    rc->texture = get_surface(doom, rc->cur_sprite.texture);
     if (rc->cur_sprite.render_mode == rend_door || rc->cur_sprite.render_mode == rend_window)
     {
       sprite_cast_wall(rc, p, doom->nmap, z_buffer, canvas);
