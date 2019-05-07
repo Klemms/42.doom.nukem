@@ -103,7 +103,7 @@ void		draw_sprites(t_doom *doom, t_raycasting *rc, t_player *p,
 	int		i;
 
 	draw_sprites2(doom, &doom->you, &doom->raycasting);
-	combSort(doom->lsprite.spritesOrder,
+	combsort(doom->lsprite.spritesOrder,
 		doom->lsprite.spritesDist, doom->lsprite.numbSprites);
 	i = -1;
 	tmp = doom->nmap->sprites->firstelement;
@@ -119,8 +119,7 @@ void		draw_sprites(t_doom *doom, t_raycasting *rc, t_player *p,
 			sprite_cast_wall(doom, rc, p, z_buffer);
 		else if (rc->cur_sprite->render_mode == rend_flat)
 		{
-			sprite_flat_init(rc, p, i, rc->cur_sprite,
-				doom->lsprite.spritesOrder);
+			sprite_flat_init(rc, p, rc->cur_sprite);
 			sprite_flat_draw(rc, z_buffer, &doom->s_pixels);
 		}
 	}

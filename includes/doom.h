@@ -600,7 +600,7 @@ void  				wfc_fc_init(t_raycasting *rc);
 void  				wfc_floor_draw(t_raycasting *rc, t_player *p, Uint32 **canvas);
 void  				wfc_ceiling_draw(t_raycasting *rc, t_player *p, Uint32 **canvas);
 void    			draw_sprites(t_doom *doom, t_raycasting *rc, t_player *p, double **z_buffer); //soz
-void    			sprite_flat_init(t_raycasting *rc, t_player *p, int i, t_sprite *sprite, int *spriteOrder);
+void    			sprite_flat_init(t_raycasting *rc, t_player *p, t_sprite *sprite);
 void              	sprite_flat_draw(t_raycasting *rc, double **z_buffer, Uint32 **canvas);
 void    			sprite_door_init(t_raycasting *rc, t_player *p);
 int					sprite_rayhit(t_raycasting *rc, t_player *p, t_nmap *nmap);
