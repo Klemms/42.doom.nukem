@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 03:39:41 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 14:44:55 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 20:52:37 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,10 @@ void	wrt_textures(t_nmap *m, int fd)
 		ft_putchar_fd('[', fd);
 		write_intdl(fd, tmp_texture->surface->w, 1, 0);
 		write_intdl(fd, tmp_texture->surface->h, 1, 0);
-		while (i < tmp_texture->tex_pixels)
+		while (i < (size_t)tmp_texture->tex_pixels)
 		{
 			write_intdl(fd, ((Uint32 *)tmp_texture->surface->pixels)[i],
-				i < tmp_texture->tex_pixels - 1, 0);
+				i < (size_t)tmp_texture->tex_pixels - 1, 0);
 			i++;
 		}
 		ft_putendl_fd("]", fd);

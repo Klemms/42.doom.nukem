@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 10:12:00 by lde-batz          #+#    #+#             */
 /*   Updated: 2019/05/07 19:57:04 by lde-batz         ###   ########.fr       */
@@ -60,7 +60,6 @@ t_xy	pt_angle(t_doom *doom)
 void	moving2(t_doom *d)
 {
 	t_xy	dest;
-	float	side;
 
 	dest.x = d->you.pos.x + d->you.velocity.x;
 	dest.y = d->you.pos.y + d->you.velocity.y;
@@ -85,7 +84,6 @@ void	moving2(t_doom *d)
 void	moving(t_doom *doom)
 {
 	t_xy		dest;
-	int			del;
 	t_list		*sprites;
 	t_sprite	*sprite;
 

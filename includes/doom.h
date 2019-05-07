@@ -762,4 +762,6 @@ void				blockwindowdoor_removed(t_doom *d, int type, int x, int y);
 void				init_hud(t_doom *d);
 void				render_hud(t_doom *d);
 
+t_sprite			*make_doorwindowsprite(t_doom *d, t_mblock *b);
+
 #endif

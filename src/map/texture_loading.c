@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 00:24:22 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 16:46:43 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 20:46:46 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ Uint32		get_t_exact_pixel(t_texture *texture, int x, int y)
 
 SDL_Surface	*get_surface(t_doom *doom, int texture_id)
 {
-	if (texture_id > doom->nmap->textures->lastelement->index)
+	if ((size_t)texture_id > doom->nmap->textures->lastelement->index)
 		return (NULL);
 	return (((t_texture *)ft_lstget_fromelement(texture_id,
 				doom->nmap->textures->firstelement)->content)->surface);

@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 00:02:20 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 05:09:23 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 20:51:39 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	ed_save_file(t_doom *d, t_el_button *b, SDL_MouseButtonEvent ev)
 {
+	(void)ev;
 	b->is_disabled = 1;
 	ft_putendl("Saving file...");
 	ft_putendl(d->nmap->map_name);
@@ -40,6 +41,7 @@ int		validate_map(t_doom *d, t_nmap *m)
 	t_validate	validate;
 	int			status;
 
+	(void)d;
 	validate.spawn_points = 0;
 	validate.end_points = 0;
 	validate.y = 0;

@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/07 15:59:11 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 16:35:00 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 20:28:40 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ed_sprite_list(t_doom *d)
 		r = make_rect(10, y, 280, 23);
 		draw_rect_u(d->editor.rbr, r, 0xFFAAAAAA, 1);
 		instant_text(d, d->editor.rbr, ft_strdup(type->sprite_name),
-				make_rect(15, y + 2, 15, 0));
+				make_rect(15, y + 2, 15, 1));
 		r = make_rect(d->editor.rbr_quadrant.pos_x + 10, d->editor.rbr_quadrant.pos_y + y, 280, 23);
 		if (mouse_in(d->m_x, d->m_y, r))
 		{

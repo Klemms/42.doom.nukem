@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 06:57:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 09:07:30 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 20:53:18 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	lm_1(t_doom *d, int *state, t_nmap *m, char *line)
 
 void	lm_2(int *y, int *state, t_nmap *m, char *line)
 {
+	(void)line;
 	*y = *y + 1;
 	if (*y == m->size_y)
 		*state = *state + 1;

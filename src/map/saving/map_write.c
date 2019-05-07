@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 03:32:55 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 18:48:14 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 20:52:20 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	wrt_mapdata(int fd, t_nmap *m, int x, int y)
 int		write_map(t_nmap *m, char *path)
 {
 	int		fd;
-	size_t	sizewrt;
 	size_t	x;
 	size_t	y;
 
@@ -71,10 +70,10 @@ int		write_map(t_nmap *m, char *path)
 		return (1);
 	wrt_mapheader(fd, m);
 	y = 0;
-	while (y < m->size_y)
+	while (y < (size_t)m->size_y)
 	{
 		x = 0;
-		while (x < m->size_x)
+		while (x < (size_t)m->size_x)
 		{
 			wrt_mapdata(fd, m, x, y);
 			x++;

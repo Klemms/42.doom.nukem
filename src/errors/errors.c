@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 23:38:15 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 15:43:38 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/07 20:45:31 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	quit(t_doom *doom, char *message, int code)
 
 int		quit_window(t_doom *doom, SDL_Event ev)
 {
+	(void)ev;
 	exit_program(doom, 0);
 	return (0);
 }
