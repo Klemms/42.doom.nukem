@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   blocks2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bsiche <bsiche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 09:57:18 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 21:55:20 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 23:49:36 by bsiche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,15 @@ void		apply_block_settings(t_doom *d, t_mblock *dest)
 	blockwindowdoor_added(d, dest);
 }
 
+void		init_bloc(t_mblock *b)
+{
+	b->floor_tex = 0;
+	b->n_texture = 0;
+	b->s_texture = 0;
+	b->w_texture = 0;
+	b->e_texture = 0;
+}
+
 t_mblock	*new_block(t_doom *d, int block_type, int x, int y)
 {
 	t_mblock	*b;
@@ -80,11 +89,7 @@ t_mblock	*new_block(t_doom *d, int block_type, int x, int y)
 	b->ceiling_height = 100;
 	b->has_ceiling = 1;
 	b->ceilng_tex = 0;
-	b->floor_tex = 0;
-	b->n_texture = 0;
-	b->s_texture = 0;
-	b->w_texture = 0;
-	b->e_texture = 0;
+	init_bloc(b);
 	b->light = 0xFFFFFFFF;
 	b->has_ceiling = 1;
 	b->collides = b->block_type == block_wall
