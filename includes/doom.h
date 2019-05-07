@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 16:35:06 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 18:25:01 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ enum			e_sprite_type
 	sprite_key = 0,
 	sprite_ammo = 1,
 	sprite_health = 2,
-	sprite_bullet = 3
+	sprite_bullet = 3,
+	sprite_dummy = 0
 };
 
 enum			e_render_modes
@@ -749,5 +750,8 @@ int					mgnc(char *str, char c);
 void				render_sprites(t_doom *d);
 void				add_sprite(t_doom *d, int x, int y);
 void				remove_sprite(t_doom *d, t_list *s);
+
+void				blockwindowdoor_added(t_doom *d, t_mblock *b);
+void				blockwindowdoor_removed(t_doom *d, int type, int x, int y);
 
 #endif
