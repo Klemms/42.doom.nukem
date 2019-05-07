@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/07 11:11:17 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 16:52:37 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 18:57:40 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ t_sprite_type	*get_sprite_type(t_doom *d, int type)
 void		remove_sprite(t_doom *d, t_list *s)
 {
 	lstcontainer_remove(d->nmap->sprites, s);
+	d->nmap->spritecount = lstcontainer_size(d->nmap->sprites);
+	d->lsprite.numbSprites = d->nmap->spritecount;
 	d->editor.selected_sprite = NULL;
 	switch_tool(d, tool_none, NULL);
 }
@@ -65,7 +67,7 @@ void		update_interactions_sprite(t_doom *d)
 	e->rbr_quadrant.orient_hor->background_color = e->foc.b_orientation == 0 ? e->select_color : e->base_color;
 	e->rbr_quadrant.orient_ver->background_color = e->foc.b_orientation == 1 ? e->select_color : e->base_color;
 	e->rbr_quadrant.has_celng->checked = e->foc.b_has_ceiling;
-	wjauge_set(d, e->rbr_quadrant.s_height, e->foc.b_height, 1);
+	wjauge_set(d, e->rbr_quadrant.ev_id, e->foc.b_event_id, 1);
 	wjauge_set(d, e->rbr_quadrant.sc_height, e->foc.b_ceiling_height, 1);
 	wjauge_set(d, e->rbr_quadrant.b_w, e->foc.b_x_size, 1);
 	wjauge_set(d, e->rbr_quadrant.b_h, e->foc.b_y_size, 1);

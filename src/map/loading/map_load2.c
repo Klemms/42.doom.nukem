@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 07:25:25 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 09:06:50 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 18:48:26 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void		ml_setblocks(t_mblock *b, int i, char *l)
 	b->orientation = i == 1 ? ft_atoi(l, 0) : b->orientation;
 	b->x_size = i == 2 ? ft_atoi(l, 0) : b->x_size;
 	b->y_size = i == 3 ? ft_atoi(l, 0) : b->y_size;
-	b->height = i == 4 ? ft_atoi(l, 0) : b->height;
+	b->event_id = i == 4 ? ft_atoi(l, 0) : b->event_id;
 	b->ceiling_height = i == 5 ? ft_atoi(l, 0) : b->ceiling_height;
 	b->has_ceiling = i == 6 ? ft_atoi(l, 0) : b->has_ceiling;
 	b->ceilng_tex = i == 7 ? ft_atoi(l, 0) : b->ceilng_tex;

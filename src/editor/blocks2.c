@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 09:57:18 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 18:43:00 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 18:48:07 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void		apply_block_settings(t_doom *d, t_mblock *dest)
 	dest->orientation = d->editor.foc.b_orientation;
 	dest->x_size = d->editor.foc.b_x_size;
 	dest->y_size = d->editor.foc.b_y_size;
-	dest->height = d->editor.foc.b_height;
+	dest->event_id = d->editor.foc.b_event_id;
 	dest->ceiling_height = d->editor.foc.b_ceiling_height;
 	dest->has_ceiling = d->editor.foc.b_has_ceiling;
 	dest->ceilng_tex = d->editor.foc.b_ceilng_tex;
@@ -75,7 +75,7 @@ t_mblock	*new_block(t_doom *d, int block_type, int x, int y)
 	b->orientation = 0;
 	b->x_size = 100;
 	b->y_size = 100;
-	b->height = 100;
+	b->event_id = 0;
 	b->ceiling_height = 100;
 	b->has_ceiling = 1;
 	b->ceilng_tex = 1;
