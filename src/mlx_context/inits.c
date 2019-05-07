@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   inits.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 23:44:05 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 11:31:55 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/07 19:02:38 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ void	init_block_types(t_doom *doom)
 		, make_block_type(doom, "Door", 0xFFb7af6f, block_door));
 	lstcontainer_add(doom->block_types
 		, make_block_type(doom, "Window", 0xFFace5d9, block_window));
+	lstcontainer_add(doom->block_types
+		, make_block_type(doom, "Button", 0xFF5cf9d7, block_button));
 	init_sprite_types(doom);
 }
 

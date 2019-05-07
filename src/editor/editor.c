@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 02:04:31 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 18:45:24 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 19:00:12 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ void	init_editor(t_doom *doom)
 	add_button_rcoords(e->rbr_quadrant.texture_e, e->rbr_rect.x, e->rbr_rect.y);
 	button_prepare(doom, e->rbr_quadrant.texture_e);
 
-	e->rbr_quadrant.ev_id = create_wjauge(doom, make_rect(15, 190, 270, 30), make_rect(0, 1000, 50, 10));
+	e->rbr_quadrant.ev_id = create_wjauge(doom, make_rect(15, 190, 270, 30), make_rect(0, 1000, 50, 1));
 	e->rbr_quadrant.ev_id->unit = "";
 	wjauge_prepare(doom, e->rbr_quadrant.ev_id);
 	e->rbr_quadrant.sc_height = create_wjauge(doom, make_rect(15, 265, 270, 30), make_rect(0, 1000, 50, 10));

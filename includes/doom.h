@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 18:50:02 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 19:06:15 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ enum			e_sprite_type
 	sprite_ammo = 1,
 	sprite_health = 2,
 	sprite_bullet = 3,
-	sprite_dummy = 4
+	sprite_dummy = 4,
+	sprite_damage = 5
 };
 
 enum			e_render_modes
