@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 18:15:46 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 16:50:41 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 19:32:44 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	init_game(t_doom *doom)
 {
-
-	//t_sprite  sprites[] = 
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	doom->mouse_focused = 1;
 	doom->game_init = 1;
@@ -28,6 +26,7 @@ void	init_game(t_doom *doom)
 	doom->lsprite.numbSprites = doom->nmap->spritecount;
 	doom->average_fps = 0;
 	setup_hypercam(doom);
+	init_hud(doom);
 }
 
 void	render_game(t_doom *doom)
@@ -45,6 +44,7 @@ void	render_game(t_doom *doom)
 	text_prepare(doom, doom->fps_counter, 1, 0);
 	text_render(doom, doom->surface, doom->fps_counter);
 	render_hypercam(doom, doom->surface);
+	render_hud(doom);
 }
 
 void	game_loop(t_doom *doom, t_settings *sett)

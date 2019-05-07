@@ -115,7 +115,6 @@ void    draw_sprites(t_doom *doom, t_raycasting *rc, t_player *p, double **z_buf
   
   i = -1; 
   tmp = doom->nmap->sprites->firstelement;
-  printf("n: %d\n", lsprite->numbSprites);
   while (++i < lsprite->numbSprites)
   {
     rc->cur_sprite = tmp->content;
