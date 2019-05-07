@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 16:35:06 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 19:06:15 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,9 @@ enum			e_sprite_type
 	sprite_key = 0,
 	sprite_ammo = 1,
 	sprite_health = 2,
-	sprite_bullet = 3
+	sprite_bullet = 3,
+	sprite_dummy = 4,
+	sprite_damage = 5
 };
 
 enum			e_render_modes
@@ -104,7 +106,7 @@ typedef struct	s_map_block
 	int			orientation;
 	int			x_size;
 	int			y_size;
-	int			height;
+	int			event_id;
 	int			ceiling_height;
 	int			has_ceiling;
 	int			ceilng_tex;
@@ -118,7 +120,6 @@ typedef struct	s_map_block
 	int			x;
 	int			y;
 	int			state;
-	int			event_id;
 }				t_mblock;
 
 typedef struct	s_nmap
@@ -260,7 +261,7 @@ typedef struct	s_quadrant_renderer
 	t_el_button		*texture_s;
 	t_el_button		*texture_w;
 	t_el_button		*texture_e;
-	t_el_wh_jauge	*s_height;
+	t_el_wh_jauge	*ev_id;
 	t_el_wh_jauge	*sc_height;
 	t_el_wh_jauge	*b_w;
 	t_el_wh_jauge	*b_h;
@@ -275,7 +276,7 @@ typedef struct	s_ed_focus
 	int			b_orientation;
 	int			b_x_size;
 	int			b_y_size;
-	int			b_height;
+	int			b_event_id;
 	int			b_ceiling_height;
 	int			b_has_ceiling;
 	int			b_ceilng_tex;
@@ -749,5 +750,8 @@ int					mgnc(char *str, char c);
 void				render_sprites(t_doom *d);
 void				add_sprite(t_doom *d, int x, int y);
 void				remove_sprite(t_doom *d, t_list *s);
+
+void				blockwindowdoor_added(t_doom *d, t_mblock *b);
+void				blockwindowdoor_removed(t_doom *d, int type, int x, int y);
 
 #endif

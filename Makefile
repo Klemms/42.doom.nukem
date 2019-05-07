@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+         #
+#    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 22:39:07 by cababou           #+#    #+#              #
-#    Updated: 2019/05/07 11:21:50 by cababou          ###   ########.fr        #
+#    Updated: 2019/05/07 18:24:20 by cababou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -85,7 +85,8 @@ SRC := doom.c \
 	editor/renderers/right_bar_render_sprite.c \
 	mlx_context/inits2.c \
 	editor/renderers/bottom_select_render2.c \
-	editor/sprite.c
+	editor/sprite.c \
+	editor/spritesetter.c
 
 HEADERS := doom.h editor.h errors.h
 

@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 05:56:10 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 16:58:32 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 18:02:32 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,7 @@ t_sprite	*make_doorwindowsprite(t_doom *d, t_mblock *b)
 	sprite->pos.y = b->y;
 	sprite->texture = b->n_texture;
 	sprite->texture_back = b->s_texture;
-	/*sprite->render_mode = b->block_type
-		== block_door ? rend_door : rend_window;*/
+	sprite->render_mode = b->block_type == block_door ? rend_door : rend_window;
 	return (sprite);
 }
 

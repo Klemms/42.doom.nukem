@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   blocks.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 08:44:57 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 04:56:22 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 18:47:47 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void		set_to_default_mblock(t_mblock *dest, int x, int y)
 	dest->orientation = 0;
 	dest->x_size = 100;
 	dest->y_size = 100;
-	dest->height = 100;
+	dest->event_id = 0;
 	dest->ceiling_height = 100;
 	dest->has_ceiling = 1;
 	dest->ceilng_tex = 2;
@@ -39,7 +39,7 @@ void		copy_block(t_mblock *dest, t_mblock *src, int free2, int cpcrds)
 	dest->orientation = src->orientation;
 	dest->x_size = src->x_size;
 	dest->y_size = src->y_size;
-	dest->height = src->height;
+	dest->event_id = src->event_id;
 	dest->ceiling_height = src->ceiling_height;
 	dest->has_ceiling = src->has_ceiling;
 	dest->ceilng_tex = src->ceilng_tex;
@@ -67,7 +67,7 @@ void		update_interactions(t_doom *d)
 	e->rbr_quadrant.orient_hor->background_color = e->foc.b_orientation == 0 ? e->select_color : e->base_color;
 	e->rbr_quadrant.orient_ver->background_color = e->foc.b_orientation == 1 ? e->select_color : e->base_color;
 	e->rbr_quadrant.has_celng->checked = e->foc.b_has_ceiling;
-	wjauge_set(d, e->rbr_quadrant.s_height, e->foc.b_height, 1);
+	wjauge_set(d, e->rbr_quadrant.ev_id, e->foc.b_event_id, 1);
 	wjauge_set(d, e->rbr_quadrant.sc_height, e->foc.b_ceiling_height, 1);
 	wjauge_set(d, e->rbr_quadrant.b_w, e->foc.b_x_size, 1);
 	wjauge_set(d, e->rbr_quadrant.b_h, e->foc.b_y_size, 1);
@@ -87,7 +87,7 @@ void		copy_block_type(t_doom *d, t_block_type *type, t_mblock *blk)
 	d->editor.foc.b_orientation = blk->orientation;
 	d->editor.foc.b_x_size = blk->x_size;
 	d->editor.foc.b_y_size = blk->y_size;
-	d->editor.foc.b_height = blk->height;
+	d->editor.foc.b_event_id = blk->event_id;
 	d->editor.foc.b_ceiling_height = blk->ceiling_height;
 	d->editor.foc.b_has_ceiling = blk->has_ceiling;
 	d->editor.foc.b_ceilng_tex = blk->ceilng_tex;
