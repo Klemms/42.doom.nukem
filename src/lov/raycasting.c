@@ -15,8 +15,6 @@
 void    draw_screen(t_doom *doom)
 {
   doom->raycasting.x = -1;
-  doom->raycasting.texture = get_surface(doom, 2);
-
   double    **z_buffer;
   z_buffer = malloc(sizeof(double *));
   *z_buffer = malloc(sizeof(double) * WIN_W);

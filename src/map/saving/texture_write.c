@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 03:39:41 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 07:59:24 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 09:49:37 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	wrt_sprites(t_nmap *m, int fd)
 	t_sprite	*tmp_sprite;
 
 	tmp = m->sprites->firstelement;
-	write_intdl(fd, lstcontainer_size(m->sprites), 0, 1);
+	write_intdl(fd, spritecount(m->sprites->firstelement), 0, 1);
 	while (tmp)
 	{
 		tmp_sprite = (t_sprite *)tmp_sprite;

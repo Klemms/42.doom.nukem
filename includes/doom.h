@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 08:36:44 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 09:49:48 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -327,7 +327,10 @@ typedef struct		s_sprite
 	int		base_y;
 	int		collides;
 	int		obtainable;
+	double	stage;
+	int     animated;
 	int		type;
+	int		dontsave;
 }					t_sprite;
 
 typedef struct		s_line
@@ -403,18 +406,9 @@ typedef struct		s_wall_sight
 	double				next_perp;
 }					t_wall_sight;
 
-typedef struct    s_sprite
-{
-  t_vec   pos;
-  int     texture_id;
-  int     render_mode;
-  int	  animated;
-  double  stage;
-}                 t_sprite;
-
 typedef struct 	s_l_sprite
 {
-	t_sprite *sprites;
+	t_sprite  *sprites;
 	int		  numbSprites;
 	int       spritesOrder[4];
 	double    spritesDist[4];
@@ -694,6 +688,7 @@ void				lm_1(t_doom *d, int *state, t_nmap *m, char *line);
 void				lm_2(int *y, int *state, t_nmap *m, char *line);
 void				lm_3(int *y, int *state, t_nmap *m, char *line);
 void				read_sprites(t_doom *d, t_nmap *m, char *l);
+int					spritecount(t_list *sprites);
 
 void				teleport_player(t_player *player, double x, double y, double z);
 
