@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   button.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bsiche <bsiche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 02:04:31 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 05:44:58 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 21:02:03 by bsiche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ void		button_render(t_doom *doom, SDL_Surface *surface,
 	}
 }
 
-void		button_render_texture(t_doom *d, SDL_Surface *s, t_el_button *b, SDL_Surface *b_text)
+void		button_render_texture(t_doom *d, SDL_Surface *s,
+	t_el_button *b, SDL_Surface *b_text)
 {
 	if (b->is_visible)
 	{

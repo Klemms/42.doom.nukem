@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bsiche <bsiche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 20:03:08 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/07 21:18:47 by bsiche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -755,6 +755,8 @@ int					mgnc(char *str, char c);
 void				render_sprites(t_doom *d);
 void				add_sprite(t_doom *d, int x, int y);
 void				remove_sprite(t_doom *d, t_list *s);
+void				render_blocks(t_doom *doom);
+void				render_textures(t_doom *doom, int start_y);
 
 void				blockwindowdoor_added(t_doom *d, t_mblock *b);
 void				blockwindowdoor_removed(t_doom *d, int type, int x, int y);

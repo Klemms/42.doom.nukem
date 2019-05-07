@@ -21,7 +21,6 @@ void	ed_bt_edit_click(t_doom *d, t_el_button *b, SDL_MouseButtonEvent ev)
 			d->editor.foc.b_orientation = 0;
 		if (b->ui->id == d->editor.rbr_quadrant.orient_ver->ui->id)
 			d->editor.foc.b_orientation = 1;
-		// TODO: TEXTURE CLICK
 		if (b->ui->id == d->editor.rbr_quadrant.texture_n->ui->id)
 			d->editor.texture_edited = 0;
 		if (b->ui->id == d->editor.rbr_quadrant.texture_n->ui->id)
