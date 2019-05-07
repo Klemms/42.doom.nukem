@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 18:15:46 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/08 00:10:09 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/08 01:43:13 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,13 @@ void	render_game(t_doom *doom)
 	render_hud(doom);
 }
 
+void	check_end(t_doom *doom)
+{
+	if (doom->nmap->map[(int)(doom->you.pos.y)]
+	[(int)(doom->you.pos.x)].block_type == block_end)
+		exit_program(doom, ERROR_FINISH);
+}
+
 void	game_loop(t_doom *doom, t_settings *sett)
 {
 	(void)sett;
@@ -61,6 +68,7 @@ void	game_loop(t_doom *doom, t_settings *sett)
 	doom->you.speed = doom->you.is_sprinting ? 0.2 : 0.1;
 	update_velocity(doom, &doom->you);
 	moving(doom);
+	check_end(doom);
 	moving_sprite(doom);
 }
 
