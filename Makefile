@@ -36,8 +36,6 @@ SRC := doom.c \
 	line.c \
 	map/texture_loading.c \
 	mlx_context/inits.c \
-	parsing.c \
-	parsing_norme.c \
 	editor/map/load_map.c \
 	player.c \
 	shapes/rect.c \
@@ -55,7 +53,6 @@ SRC := doom.c \
 	animation/fade.c \
 	editor/ui_clicks/ui_clicks.c \
 	editor/tools.c \
-	map/converter.c \
 	map/map_util.c \
 	move.c \
 	editor/renderers/bottom_select_render.c \

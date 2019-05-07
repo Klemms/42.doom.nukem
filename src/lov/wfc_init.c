@@ -20,7 +20,7 @@ void    wfc_rayhit(t_raycasting *rc, t_player *p, t_nmap *nmap)
       rc->side = 1;
     }
     rc->dist_hit++;
-    if (nmap->map[rc->map.y][rc->map.x].collides && nmap->map[rc->map.y][rc->map.x].block_type != block_small_wall)
+    if (nmap->map[rc->map.y][rc->map.x].collides && nmap->map[rc->map.y][rc->map.x].block_type != block_door && nmap->map[rc->map.y][rc->map.x].block_type != block_window)
       hit = 1;
   }
 }
