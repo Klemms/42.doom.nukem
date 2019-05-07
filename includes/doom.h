@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 08:36:44 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 09:49:48 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -331,6 +331,7 @@ typedef struct		s_sprite
 	int		collides;
 	int		obtainable;
 	int		type;
+	int		dontsave;
 }					t_sprite;
 
 typedef struct		s_line
@@ -701,6 +702,7 @@ void				lm_1(t_doom *d, int *state, t_nmap *m, char *line);
 void				lm_2(int *y, int *state, t_nmap *m, char *line);
 void				lm_3(int *y, int *state, t_nmap *m, char *line);
 void				read_sprites(t_doom *d, t_nmap *m, char *l);
+int					spritecount(t_list *sprites);
 
 void				teleport_player(t_player *player, double x, double y, double z);
 
