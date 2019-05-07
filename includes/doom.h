@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 20:03:08 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/07 23:46:54 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -555,7 +555,6 @@ typedef struct		s_validate
 
 void				init_block_types(t_doom *doom);
 void				init_sprite_types(t_doom *doom);
-void				init_doom(t_doom *doom);
 void				init_window(t_doom *w);
 void				init_sdl(t_doom *w);
 int					is_valid(t_doom *w, int fd);
@@ -617,8 +616,10 @@ void				game_loop(t_doom *doom, t_settings *sett);
 void				render_game(t_doom *doom);
 void				update_velocity(t_doom *doom, t_player *player);
 void				moving(t_doom *doom);
+void				moving2(t_doom *d);
+t_xy				pt_angle(t_doom *doom);
 void				moving_diagonal(t_doom *doom, t_xy *dest, t_xy pt);
-void				check_sprite(t_doom *doom, t_list *sprites, t_sprite *sprite, t_xy *dest);
+int					check_sprite(t_doom *doom, t_list *sprites, t_sprite *sprite, t_xy *dest);
 void				moving_sprite(t_doom *doom);
 
 void				press_button(t_doom *doom);

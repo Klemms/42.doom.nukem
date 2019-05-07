@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
+#    By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 22:39:07 by cababou           #+#    #+#              #
-#    Updated: 2019/05/07 20:44:29 by cababou          ###   ########.fr        #
+#    Updated: 2019/05/07 23:21:34 by lde-batz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,6 +56,7 @@ SRC := doom.c \
 	editor/tools.c \
 	map/map_util.c \
 	move.c \
+	move2.c \
 	velocity.c \
 	moving_sprite.c \
 	editor/renderers/bottom_select_render.c \
