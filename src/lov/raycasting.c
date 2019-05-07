@@ -22,7 +22,7 @@ void    draw_screen(t_doom *doom)
   draw_wfc(doom, z_buffer);
   doom->lsprite.spritesOrder = malloc(sizeof(int) * doom->lsprite.numbSprites);
   doom->lsprite.spritesDist = malloc(sizeof(double) * doom->lsprite.numbSprites);
-  draw_sprites(doom, &doom->raycasting, &doom->you, z_buffer, &doom->s_pixels, &doom->lsprite);
+  draw_sprites(doom, &doom->raycasting, &doom->you, z_buffer);
   free(*z_buffer);
   free(z_buffer);
   free(doom->lsprite.spritesOrder);

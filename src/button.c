@@ -45,7 +45,7 @@ void	press_button(t_doom *doom)
 
 	pos_x = (int)doom->you.pos.x;
 	pos_y = (int)doom->you.pos.y;
-	if (doom->you.angle < N_3_PI_4 && doom->you.angle >= P_3_PI_4)
+	if (doom->you.angle < N_3_PI_4 || doom->you.angle >= P_3_PI_4)
 	{
 		pos_x -= 1;
 		orientation = 0;

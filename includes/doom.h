@@ -515,7 +515,7 @@ typedef struct		s_doom
 	t_nmap			*nmap;
 	int				m_x; // Mouse X // Both Updated each frame
 	int				m_y; // Mouse Y
-	t_musics			musics;
+	t_musics		musics;
 	t_lstcontainer	*block_types;
 	t_l_sprite		lsprite;
 	t_lstcontainer	*sprite_types;
@@ -577,11 +577,11 @@ void  				wfc_wall_draw(t_raycasting *rc, Uint32 **canvas);
 void  				wfc_fc_init(t_raycasting *rc);
 void  				wfc_floor_draw(t_raycasting *rc, t_player *p, Uint32 **canvas);
 void  				wfc_ceiling_draw(t_raycasting *rc, t_player *p, Uint32 **canvas);
-void    			draw_sprites(t_doom *doom, t_raycasting *rc, t_player *p, double **z_buffer, Uint32 **canvas, t_l_sprite *lsprite); //soz
+void    			draw_sprites(t_doom *doom, t_raycasting *rc, t_player *p, double **z_buffer); //soz
 void    			sprite_flat_init(t_raycasting *rc, t_player *p, int i, t_sprite *sprite, int *spriteOrder);
 void              	sprite_flat_draw(t_raycasting *rc, double **z_buffer, Uint32 **canvas);
 void    			sprite_door_init(t_raycasting *rc, t_player *p);
-
+int					sprite_rayhit(t_raycasting *rc, t_player *p, t_nmap *nmap);
 Uint32            	calc_gradient(Uint32 color1, Uint32 color2, double stage);
 void  				swap(double *a, double *b);
 void 				combSort(int* order, double* dist, int amount);
