@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 03:48:04 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 20:47:57 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 22:50:46 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,17 @@ void		instant_text(t_doom *d, SDL_Surface *s, char *st, SDL_Rect poscols)
 	int			h;
 	SDL_Rect	rect;
 
-	f = make_font(d, FONT_RIFFIC, poscols.w);
-	su = TTF_RenderUTF8_Blended(
-		f,
-		st,
-		d->tmp_color);
-	TTF_SizeUTF8(f, st, &w, &h);
-	rect = make_rect(poscols.x, poscols.y, w, h);
-	SDL_BlitSurface(su, NULL, s, &rect);
-	SDL_FreeSurface(su);
+	if ((f = make_font(d, FONT_RIFFIC, poscols.w)))
+	{
+		su = TTF_RenderUTF8_Blended(
+			f,
+			st,
+			d->tmp_color);
+		TTF_SizeUTF8(f, st, &w, &h);
+		rect = make_rect(poscols.x, poscols.y, w, h);
+		SDL_BlitSurface(su, NULL, s, &rect);
+		SDL_FreeSurface(su);
+	}
 	if (poscols.h)
 		free(st);
 }
@@ -47,7 +49,12 @@ t_el_text	*create_text(t_doom *doom, char *string, char *font_path, int size)
 	text->text_color.g = 255;
 	text->text_color.b = 255;
 	text->text_color.a = 255;
-	text->font = make_font(doom, font_path, size);
+	if (!(text->font = make_font(doom, font_path, size)))
+	{
+		free(text->ui);
+		free(text);
+		return (NULL);
+	}
 	text->text = ft_strdup(string);
 	text_size(text);
 	text->ui->width = text->u_w;
@@ -58,6 +65,8 @@ t_el_text	*create_text(t_doom *doom, char *string, char *font_path, int size)
 void		text_prepare(t_doom *doom, t_el_text *text, int mk_size, int cent)
 {
 	(void)doom;
+	if (!text)
+		return;
 	SDL_FreeSurface(text->surface);
 	text->surface = TTF_RenderUTF8_Blended(
 		text->font,
@@ -77,6 +86,8 @@ void		text_prepare(t_doom *doom, t_el_text *text, int mk_size, int cent)
 
 void		text_render(t_doom *doom, SDL_Surface *surface, t_el_text *text)
 {
+	if (!text)
+		return;
 	(void)doom;
 	SDL_BlitSurface(text->surface, NULL, surface, &text->rect);
 }

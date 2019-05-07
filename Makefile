@@ -6,7 +6,7 @@
 #    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 22:39:07 by cababou           #+#    #+#              #
-#    Updated: 2019/05/07 20:44:29 by cababou          ###   ########.fr        #
+#    Updated: 2019/05/07 21:40:42 by cababou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -87,7 +87,8 @@ SRC := doom.c \
 	editor/renderers/bottom_select_render2.c \
 	editor/sprite.c \
 	editor/spritesetter.c \
-	hud/hud.c
+	hud/hud.c \
+	map/loading/make_map.c
 
 HEADERS := doom.h editor.h errors.h
 
@@ -108,7 +109,7 @@ LIB := -L libft/ -lft
 
 INC := -I includes -I $(FRAMEWORKSDIR)/SDL2
 
-FLAG := -Wall -Wextra -Werror
+FLAG := -Wall -Wextra -Werror -g
 
 FRAMEWORKSDIR := $(PWD)/frameworks
 SDL := -F $(FRAMEWORKSDIR) -framework SDL2 -framework SDL2_ttf -framework SDL2_image -framework SDL2_mixer -Wl,-rpath $(FRAMEWORKSDIR)

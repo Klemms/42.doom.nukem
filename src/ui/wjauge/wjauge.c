@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wjauge.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 05:50:34 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/06 15:34:06 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/07 22:48:26 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,28 @@ t_el_wh_jauge	*create_wjauge(t_doom *d, SDL_Rect rc, SDL_Rect mmvs)
 	jg->is_focused = 0;
 	jg->unit = "%";
 	s = ft_strjoin(ft_itoa(jg->value), jg->unit, 1);
-	jg->txt = create_text(d, s, FONT_RIFFIC, 20);
+	if ((jg->txt = create_text(d, s, FONT_RIFFIC, 20)))
+	{
+		jg->txt->text_color = make_rgb(0, 0, 0, 255);
+		jg->txt->ui->pos_x = jg->pos.x + jg->pos.w / 2 - jg->txt->u_w / 2;
+		jg->txt->ui->pos_y = jg->pos.y + jg->pos.h / 2 - jg->txt->u_h / 2;
+		text_prepare(d, jg->txt, 1, 0);
+	}
 	free(s);
-	jg->txt->text_color = make_rgb(0, 0, 0, 255);
-	jg->txt->ui->pos_x = jg->pos.x + jg->pos.w / 2 - jg->txt->u_w / 2;
-	jg->txt->ui->pos_y = jg->pos.y + jg->pos.h / 2 - jg->txt->u_h / 2;
-	text_prepare(d, jg->txt, 1, 0);
 	return (jg);
 }
 
 void			wjauge_prepare(t_doom *d, t_el_wh_jauge *jg)
 {
-	free(jg->txt->text);
-	jg->txt->text = ft_strjoin(ft_itoa(jg->value), jg->unit, 1);
-	text_prepare(d, jg->txt, 1, 0);
-	jg->txt->ui->pos_x = jg->pos.x + jg->pos.w / 2 - jg->txt->u_w / 2;
-	jg->txt->ui->pos_y = jg->pos.y + jg->pos.h / 2 - jg->txt->u_h / 2;
-	text_prepare(d, jg->txt, 1, 0);
+	if (jg->txt)
+	{
+		free(jg->txt->text);
+		jg->txt->text = ft_strjoin(ft_itoa(jg->value), jg->unit, 1);
+		text_prepare(d, jg->txt, 1, 0);
+		jg->txt->ui->pos_x = jg->pos.x + jg->pos.w / 2 - jg->txt->u_w / 2;
+		jg->txt->ui->pos_y = jg->pos.y + jg->pos.h / 2 - jg->txt->u_h / 2;
+		text_prepare(d, jg->txt, 1, 0);
+	}
 }
 
 void			wjauge_render(t_doom *d, SDL_Surface *s, t_el_wh_jauge *jg)
@@ -58,7 +63,8 @@ void			wjauge_render(t_doom *d, SDL_Surface *s, t_el_wh_jauge *jg)
 		/ (jg->max - jg->min) * jg->pos.w, jg->pos.h), jg->color, 1);
 	draw_rect(s, make_rect(jg->pos.x, jg->pos.y, jg->pos.w, jg->pos.h),
 															jg->border, 0);
-	text_render(d, s, jg->txt);
+	if (jg->txt)
+		text_render(d, s, jg->txt);
 }
 
 void			wjauge_affect(t_doom *d, t_el_wh_jauge *jg, int change,

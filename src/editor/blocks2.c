@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 09:57:18 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 18:48:07 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 21:55:20 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ void		apply_block_settings(t_doom *d, t_mblock *dest)
 	dest->light = d->editor.foc.b_light;
 	dest->collides = d->editor.foc.b_block_type == block_wall
 		|| d->editor.foc.b_block_type == block_door
-		|| d->editor.foc.b_block_type == block_window ? 1 : 0;
+		|| d->editor.foc.b_block_type == block_window
+		|| d->editor.foc.b_block_type == block_button ? 1 : 0;
 	blockwindowdoor_removed(d, oldt, dest->x, dest->y);
 	blockwindowdoor_added(d, dest);
 }
@@ -78,17 +79,18 @@ t_mblock	*new_block(t_doom *d, int block_type, int x, int y)
 	b->event_id = 0;
 	b->ceiling_height = 100;
 	b->has_ceiling = 1;
-	b->ceilng_tex = 1;
-	b->floor_tex = 2;
+	b->ceilng_tex = 0;
+	b->floor_tex = 0;
 	b->n_texture = 0;
-	b->s_texture = 1;
-	b->w_texture = 2;
-	b->e_texture = 3;
+	b->s_texture = 0;
+	b->w_texture = 0;
+	b->e_texture = 0;
 	b->light = 0xFFFFFFFF;
 	b->has_ceiling = 1;
 	b->collides = b->block_type == block_wall
 		|| b->block_type == block_door
-		|| b->block_type == block_window ? 1 : 0;
+		|| b->block_type == block_window
+		|| b->block_type == block_button ? 1 : 0;
 	b->x = x;
 	b->y = y;
 	return (b);

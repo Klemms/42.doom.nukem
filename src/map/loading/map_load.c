@@ -6,11 +6,12 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 05:56:10 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 20:52:55 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 21:40:04 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
+#include <errno.h>
 
 void		load_map_3(t_doom *d, char *line, t_nmap *m, int *state)
 {
@@ -111,7 +112,7 @@ t_nmap		*load_map(t_doom *d, char *path)
 		exit_program(d, ERROR_INVALID_MAP);
 	m->map_name = ft_strdup(path);
 	if ((fd = open(path, O_RDONLY | O_NOCTTY | O_NOFOLLOW)) < 0)
-		exit_program(d, ERROR_INVALID_MAP);
+		make_map(d, m);
 	y = 0;
 	load_map_2(d, fd, m, &y);
 	while (get_next_line(fd, &line) > 0)

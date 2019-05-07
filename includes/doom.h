@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 20:03:08 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/07 21:37:14 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -763,5 +763,6 @@ void				init_hud(t_doom *d);
 void				render_hud(t_doom *d);
 
 t_sprite			*make_doorwindowsprite(t_doom *d, t_mblock *b);
+void				make_map(t_doom *d, t_nmap *m);
 
 #endif
