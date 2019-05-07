@@ -6,7 +6,7 @@
 #    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 22:39:07 by cababou           #+#    #+#              #
-#    Updated: 2019/05/04 03:17:33 by cababou          ###   ########.fr        #
+#    Updated: 2019/05/06 12:01:05 by cababou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,9 +69,17 @@ SRC := doom.c \
 	ui/wjauge/wjauge.c \
 	ui/checkbox/checkbox.c \
 	editor/blocks.c \
+	editor/blocks2.c \
 	map/save.c \
-	map/save_2.c \
-	map/save_3.c
+	map/map_util2.c \
+	map/minimap.c \
+	map/saving/map_write.c \
+	map/saving/texture_write.c \
+	map/loading/map_load.c \
+	map/loading/map_load2.c \
+	map/loading/map_load3.c \
+	map/loading/map_load4.c \
+	map/expand.c
 
 HEADERS := doom.h editor.h errors.h
 
@@ -106,7 +114,7 @@ $(NAME) : $(OBJP)
 			@gcc $(SDL) $(FLAG) $(OBJP) $(INC) $(LIB) -o $(NAME)
 			@echo "$(CLEAR_LINE)$(COL_BLUE)[$(NAME)] $(COL_YELLOW)Finished compilation. Output file : $(COL_VIOLET)$(PWD)/$(NAME)$(COL_END)"
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c $(HEADERSP)
+$(OBJDIR)/%.o: $(SRCDIR)/%.c $(HEADERSP) libft/libft.a
 			@mkdir -p $(ONLYDIR)
 			@gcc -c $(FLAG) -F $(FRAMEWORKSDIR) $(INC) $< -o $@
 			@echo "$(CLEAR_LINE)$(COL_BLUE)[$(NAME)] $(COL_YELLOW)Compiling file [$(COL_VIOLET)$<$(COL_YELLOW)]. ($(CURRENT_FILES) / $(TOTAL_FILES))$(COL_END)$(BEGIN_LINE)"

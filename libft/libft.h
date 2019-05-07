@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/26 17:21:05 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/04 06:13:24 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/06 02:12:37 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void				*ft_memalloc(size_t size);
 
 void				ft_memdel(void **ap);
 
-char				*ft_strnew(size_t size);
+char				*ft_strnew(size_t size, int bzero);
 
 void				ft_strdel(char **as);
 
@@ -94,19 +94,19 @@ int					ft_strequ(char const *s1, char const *s2);
 
 int					ft_strnequ(char const *s1, char const *s2, size_t n);
 
-char				*ft_strsub(char const *s, size_t t, size_t l, size_t f);
+char				*ft_strsub(char *s, size_t start, size_t len, size_t free);
 
 char				*ft_strjoin(char const *s1, char const *s2, size_t freelv);
 
 char				*ft_strrev(char *s1, int free_input);
 
-char				*ft_strtrim(char const *s);
+char				*ft_strtrim(char *s);
 
 void				ft_putchar(char c);
 
 void				ft_putstr(char const *s);
 
-char				**ft_strsplit(char const *s, char c);
+char				**ft_strsplit(char *s, char c);
 
 void				free_strsplit(char **array);
 
@@ -128,7 +128,7 @@ void				ft_putendl_fd(char const *s, int fd);
 
 void				ft_putnbr_fd(int n, int fd);
 
-char				*ft_strsubuntilchar(char const *s, size_t start, char end);
+char				*ft_strsubuntilchar(char *s, size_t start, char end, int f);
 
 typedef struct		s_list
 {
@@ -138,7 +138,7 @@ typedef struct		s_list
 	struct s_list	*next;
 }					t_list;
 
-t_list				*ft_lstnew(void const *content);
+t_list				*ft_lstnew(void *content);
 
 t_list				*ft_lstgetfirst(t_list *lst);
 
@@ -206,5 +206,13 @@ void				*ft_memjoin(void *m1, void *m2, size_t s1, size_t s2);
 void				*mmalloc(size_t size);
 
 void				ffree(void *ptr);
+
+int					ft_isnum(char c);
+
+char				*ft_charjoin(char const *s1, char c2, size_t free_level);
+
+int					ft_getnextchar(char *str, char c);
+
+char				*ft_strsubuntil(char *s, size_t start, size_t end, int f);
 
 #endif

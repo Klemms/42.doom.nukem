@@ -5,113 +5,119 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/04 13:50:57 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/05 12:29:55 by cababou          ###   ########.fr       */
+/*   Created: 2019/05/06 03:19:27 by cababou           #+#    #+#             */
+/*   Updated: 2019/05/06 06:35:02 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-t_list	*get_element_by_fd(t_lstcontainer *files, int fd)
+t_list	*get_file(t_lstcontainer *fds, int fd)
 {
-	t_list	*item;
-	t_file	*file;
+	t_list	*tmp;
+	t_file	*tmp_file;
 
-	item = files->firstelement;
-	while (item)
+	tmp = fds->firstelement;
+	while (tmp)
 	{
-		file = (t_file *)item->content;
-		if (file->file_descriptor == fd)
-			return (item);
-		item = item->next;
+		tmp_file = (t_file *)tmp->content;
+		if (tmp_file->fd == fd)
+			return (tmp);
+		tmp = tmp->next;
 	}
-	if ((file = mmalloc(sizeof(t_file *))) == NULL)
+	if (!(tmp_file = mmalloc(sizeof(t_file))))
 		return (NULL);
-	file->content = ft_strnew(0);
-	file->file_descriptor = fd;
-	file->end = 0;
-	files->add(files, file);
-	return (ft_lstgetlast(files->firstelement));
+	tmp_file->fd = fd;
+	tmp_file->state = 1;
+	tmp_file->line = ft_strnew(0, 0);
+	lstcontainer_add(fds, tmp_file);
+	return (fds->lastelement);
 }
 
-int		has_line(t_file *file)
+void	cat_lines(t_file *file, t_lstcontainer *lines, size_t sz)
 {
-	size_t	i;
-	int		content_size;
+	t_list	*tmp;
+	char	*s;
+	size_t	m_sz;
 
-	i = 0;
-	content_size = ft_strlen(file->content);
-	while (file->content[i])
+	s = ft_strnew(ft_strlen(file->line) + sz, 0);
+	ft_strcpy(s, file->line);
+	m_sz = ft_strlen(file->line);
+	tmp = lines->firstelement;
+	while (tmp)
 	{
-		if (file->content[i] == '\n')
-			return (i);
-		i++;
+		ft_strcpy(s + m_sz, tmp->content);
+		m_sz += ft_strlen(tmp->content);
+		tmp = tmp->next;
 	}
-	return (file->end == 1 && content_size != 0 ? content_size : -1);
+	ft_lstdel(lines->firstelement, 1);
+	free(file->line);
+	file->line = NULL;
+	file->line = s;
 }
 
-void	read_until_next_line(t_file *current_file)
+void	c_read(t_file *file)
 {
-	int		read_size;
-	char	*buffer;
+	char			*buff;
+	t_lstcontainer	*lines;
+	size_t			sz;
+	int				rd;
 
-	buffer = ft_strnew(BUFF_SIZE);
-	while (has_line(current_file) < 0
-	&& (read_size = read(current_file->file_descriptor, buffer, BUFF_SIZE)) > 0)
+	buff = ft_strnew(BUFF_SIZE, 0);
+	lines = lstcontainer_new();
+	sz = 0;
+	while ((rd = read(file->fd, buff, BUFF_SIZE)) > 0)
 	{
-		buffer[read_size] = '\0';
-		current_file->content = ft_strjoin(current_file->content, buffer, 1);
+		buff[rd] = '\0';
+		lstcontainer_add(lines, ft_strdup(buff));
+		sz += rd;
+		if (ft_getnextchar(buff, '\n') != -1)
+			break ;
 	}
-	ffree(buffer);
-	if (read_size == 0)
-		current_file->end = 1;
-	if (read_size == -1)
-		current_file->end = -1;
+	file->state = rd;
+	cat_lines(file, lines, sz);
+	free(lines);
+	free(buff);
 }
 
-char	*get_line(t_file *current_file)
+char	*next_line(t_file *file)
 {
-	int		l_position;
-	char	*return_string;
+	char	*s;
+	int		sz;
 
-	if ((l_position = has_line(current_file)) >= 0)
-	{
-		return_string = ft_strsub(current_file->content, 0, l_position, 0);
-		current_file->content = ft_strsub(current_file->content, l_position + 1,
-						ft_strlen(current_file->content) - l_position, 1);
-		return (return_string);
-	}
-	else
-	{
-		read_until_next_line(current_file);
-		if (current_file->end == 0
-			|| (current_file->end == 1
-			&& ft_strlen(current_file->content) != 0))
-			return (get_line(current_file));
-	}
-	return (NULL);
+	if (!file->line)
+		return (NULL);
+	sz = ft_getnextchar(file->line, '\n') - 1;
+	s = ft_strsubuntil(file->line, 0, sz, 0);
+	file->line = ft_strsubuntil(file->line, sz + 1, ft_strlen(file->line), 1);
+	return (s);
 }
 
-int		get_next_line(const int fd, char **line)
+int		get_next_line(int fd, char **line)
 {
-	static t_lstcontainer	*files;
-	t_list					*current_element;
-	char					*read_line;
+	static t_lstcontainer	*fds = NULL;
+	t_list					*lfile;
+	t_file					*file;
 
-	if (files == NULL)
-		files = lstcontainer_new();
-	if (fd < 0)
+	fds = fds == NULL ? lstcontainer_new() : fds;
+	if (fd < 0 || !(lfile = get_file(fds, fd)))
 		return (-1);
-	current_element = get_element_by_fd(files, fd);
-	read_line = get_line((t_file *)current_element->content);
-	if (read_line == NULL)
-		if (((t_file *)current_element->content)->end == -1
-			|| ((t_file *)current_element->content)->end == 1)
-		{
-			ffree(((t_file *)current_element->content)->content);
-			files->remove(files, current_element);
-			return (((t_file *)current_element->content)->end == -1 ? -1 : 0);
-		}
-	*line = read_line;
+	file = lfile->content;
+	if (file->line && ft_getnextchar(file->line, '\n') == -1
+		&& file->state > 0)
+		c_read(file);
+	if (file->state < 0)
+	{
+		free(file->line);
+		lstcontainer_remove(fds, lfile);
+		return (-1);
+	}
+	*line = next_line(file);
+	if (file->state == 0)
+	{
+		free(file->line);
+		lstcontainer_remove(fds, lfile);
+		return (0);
+	}
 	return (1);
 }

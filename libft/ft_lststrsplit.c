@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/01 01:57:32 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/05 12:29:24 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/06 02:15:24 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char			*char_to_str(char c)
 {
 	char	*str;
 
-	if ((str = ft_strnew(1)) == NULL)
+	if ((str = ft_strnew(1, 0)) == NULL)
 		return (NULL);
 	str[0] = c;
 	return (str);
@@ -25,7 +25,7 @@ char			*char_to_str(char c)
 int				init_func0(char *str, t_lstcontainer **l, char **t, size_t *i)
 {
 	if (str == NULL || ((*l) = lstcontainer_new()) == NULL
-		|| ((*t) = ft_strnew(0)) == NULL)
+		|| ((*t) = ft_strnew(0, 0)) == NULL)
 		return (0);
 	(*i) = 0;
 	return (1);
@@ -49,7 +49,7 @@ t_lstcontainer	*ft_strsplit_lst(char *str, char c1, char c2, char c3)
 		else if (tmp[0])
 		{
 			lstcontainer_add(list, tmp);
-			if ((tmp = ft_strnew(0)) == NULL)
+			if ((tmp = ft_strnew(0, 0)) == NULL)
 				return (NULL);
 		}
 		if (!str[i])

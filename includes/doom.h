@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/04 10:36:44 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 06:24:40 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,15 @@
 /* Vector-like structs */
 typedef struct 		s_xy
 {
-	double 	x;
-	double	y;
+	float	x;
+	float	y;
 }					t_xy;
 
 typedef struct		s_vec
 {
-	double	x;
-	double	y;
-	double	z;
+	float	x;
+	float	y;
+	float	z;
 }					t_vec;
 
 typedef struct		s_vec_int
@@ -71,9 +71,17 @@ enum			e_block_types
 {
 	block_air = 0,
 	block_wall = 1,
-	block_small_wall = 2,
+	block_sprite = 2,
 	block_spawn = 3,
-	block_end = 4
+	block_end = 4,
+	block_copy = 5
+};
+
+enum			e_sprite_type
+{
+	sprite_key = 0,
+	sprite_ammo = 1,
+	sprite_health = 2
 };
 
 enum			e_render_modes
@@ -102,16 +110,18 @@ typedef struct	s_map_block
 	int			collides;
 	int			x;
 	int			y;
+	int			state;
 }				t_mblock;
 
 typedef struct	s_nmap
 {
-	char			*map_name;
-	t_mblock		**map;
-	int				size_x;
-	int				size_y;
-	SDL_Color		skybox_color;
+	char		*map_name;
+	t_mblock	**map;
+	int			size_x;
+	int			size_y;
+	SDL_Color	skybox_color;
 	t_lstcontainer	*textures;
+	t_lstcontainer	*sprites;
 }				t_nmap;
 
 typedef struct	s_draw_wall
@@ -229,10 +239,12 @@ typedef struct	s_quadrant_renderer
 	int				y_start;
 	int				pos_x;
 	int				pos_y;
-	t_el_button		*orient_n;
-	t_el_button		*orient_s;
-	t_el_button		*orient_w;
-	t_el_button		*orient_e;
+	t_el_button		*orient_hor;
+	t_el_button		*orient_ver;
+	t_el_button		*texture_n;
+	t_el_button		*texture_s;
+	t_el_button		*texture_w;
+	t_el_button		*texture_e;
 	t_el_wh_jauge	*s_height;
 	t_el_wh_jauge	*sc_height;
 	t_el_wh_jauge	*b_w;
@@ -298,8 +310,23 @@ typedef struct	s_editor
 	t_el_button			*validate;
 	t_el_button			*save;
 	t_el_text			*state;
+	int					is_clicking;
+	t_lstcontainer		*l_textures;
+	int					texture_edited;
 }				t_editor;
 
+typedef struct		s_sprite
+{
+	t_vec	pos;
+	int		texture;
+	int		texture_back;
+	int		alpha;
+	int		base_x;
+	int		base_y;
+	int		collides;
+	int		obtainable;
+	int		type;
+}					t_sprite;
 
 typedef struct		s_line
 {
@@ -309,32 +336,32 @@ typedef struct		s_line
 	int		color;
 }					t_line;
 
+typedef struct		s_hud
+{
+	int	health;
+	int	ammo;
+	int	key;
+}					t_hud;
+
 typedef struct		s_player
 {
 	t_vec			pos;
 	t_vec			velocity;
 	t_vec			dir;
 	t_vec			plane;
-	double			angle;
+	float			angle;
 	double			anglecos;
 	double			anglesin;
-	double			pitch;
-	double			speed;
+	float			pitch;
+	float			speed;
 	int				rov;
 	int				is_sprinting;
 	int				is_crouching;
+	int				is_shooting;
 	int				moving;
+	t_hud			hud;
+	int				is_walking;
 }					t_player;
-
-typedef struct		s_map
-{
-	char	*map_name;
-	int		width;
-	int		height;
-	int		start_x;
-	int		start_y;
-	char	**m;
-}					t_map;
 
 typedef struct		s_key
 {
@@ -448,12 +475,10 @@ typedef struct		s_doom
 	int				average_fps;
 	t_editor		editor;
 	t_lstcontainer	*buttons;
-	t_map			old_map;
 	t_player		you;
 	t_key			keys;
 	int				temp_color;
 	SDL_Color		tmp_color;
-	t_lstcontainer	*textures;
 	int				texture_amount;
 	t_raycasting	raycasting;
 	int				mouse_focused;
@@ -466,6 +491,23 @@ typedef struct		s_doom
 	t_l_sprite		lsprite;
 }					t_doom;
 
+typedef struct		s_rtxt
+{
+	int				j;
+	int				max;
+	t_texture		*txt;
+	SDL_Surface		*s;
+	int				w;
+	int				h;
+	int				k;
+}					t_rtxt;
+
+typedef struct		s_rtx
+{
+	int				sz;
+	void			*data;
+}					t_rtx;
+
 typedef struct		s_registered_event
 {
 	Uint32			type;
@@ -473,13 +515,23 @@ typedef struct		s_registered_event
 	int				(*handler)(t_doom *doom, SDL_Event ev);
 }					t_registered_event;
 
+typedef struct		s_validate
+{
+	int				x;
+	int				y;
+	int				spawn_points;
+	int				end_points;
+}					t_validate;
+
+void				init_block_types(t_doom *doom);
+void				init_doom(t_doom *doom);
 void				init_window(t_doom *w);
 void				init_sdl(t_doom *w);
 int					is_valid(t_doom *w, int fd);
 
 void				init_textures(t_doom *doom);
 t_texture			*make_texture(t_doom *doom, SDL_Surface *surface, char *texture_name);
-t_texture			*load_texture(char *path, t_doom *doom);
+t_texture			*load_texture(t_doom *doom, char *path);
 SDL_Surface			*get_surface(t_doom *doom, int texture_id);
 
 //void				draw_wall(t_doom *w, double x, double column, int tex);
@@ -508,6 +560,8 @@ int					draw(t_doom *w);
 int					parsing(t_doom *w, char *file);
 int					key_down(t_doom *doom, SDL_Event event);
 int					key_up(t_doom *doom, SDL_Event event);
+int					mouse_down(t_doom *doom, SDL_Event event);
+int					mouse_up(t_doom *doom, SDL_Event event);
 void				line(t_doom *w, t_vec *start, t_vec *end, int color);
 int					loop(t_doom *w);
 Uint32				get_t_exact_pixel(t_texture *texture, int x, int y);
@@ -559,6 +613,7 @@ t_el_button			*create_button(t_doom *doom, char *string, SDL_Rect ps,
 						void (*ui_callback)(t_doom *doom, t_el_button *b, SDL_MouseButtonEvent event));
 void				button_prepare(t_doom *doom, t_el_button *button);
 void				button_render(t_doom *doom, SDL_Surface *surface, t_el_button *button);
+void				button_render_texture(t_doom *d, SDL_Surface *s, t_el_button *b, SDL_Surface *b_text);
 int					button_coords_contained(t_el_button *button, int x, int y);
 void				add_button_rcoords(t_el_button *but, int x, int y);
 int					button_click(t_doom *doom, SDL_Event sdl_event);
@@ -576,8 +631,7 @@ SDL_Rect			make_rect(int x, int y, int width, int height);
 void				draw_rect(SDL_Surface *s, SDL_Rect rect, SDL_Color color, int fill_rect);
 void				draw_rect_u(SDL_Surface *s, SDL_Rect rect, Uint32 color, int fill_rect);
 
-void				turn(double angle, t_player *player, t_doom *doom);
-void				moove(double dist, t_player *player, t_map *map, double ang);
+void				turn(double angle, t_player *player);
 
 void				ed_bt_edit_click(t_doom *doom, t_el_button *b, SDL_MouseButtonEvent ev);
 
@@ -603,31 +657,50 @@ Uint32				color_to_uint(SDL_Color color);
 int					mouse_in(int m_x, int m_y, SDL_Rect rect);
 SDL_Rect			mouse_pos();
 int					is_left_clicking();
+int					is_right_clicking();
 
-void				switch_tool(t_doom *doom, int to_tool);
+void				switch_tool(t_doom *doom, int to_tool, t_block_type *block);
 
-t_nmap				*convert_map(t_doom *doom, t_map *map, t_lstcontainer *texs);
-int					char_to_blocktype(char block);
 t_block_type		*make_block_type(t_doom *doom, char *bn, Uint32 bc, int bt);
 t_block_type		*block_type(t_doom *d, int bt);
 
 void				select_block_type(t_doom *d, t_block_type *type);
 void				copy_block_type(t_doom *d, t_block_type *type, t_mblock *blk);
+void				copy_block(t_mblock *dest, t_mblock *src, int free2, int cpcrds);
 void				update_interactions(t_doom *d);
+void				set_to_default_mblock(t_mblock *dest, int x, int y);
+void				apply_block_settings(t_doom *d, t_mblock *dest);
+void				apply_block_texture(t_doom *d, int texture_id);
 
 void				init_scores(t_doom *doom);
 
-int					validate_map(t_nmap	*m);
+int					validate_map(t_doom *d, t_nmap *m);
 void				ed_save_file(t_doom *d, t_el_button *b, SDL_MouseButtonEvent ev);
 void				ed_test_map(t_doom *d, t_el_button *b, SDL_MouseButtonEvent ev);
 char				*map_reason_to_txt(int reason);
 int					player_valid_tile(t_player *pl, t_nmap *nmap);
 t_mblock			*get_spawn_point(t_nmap *nmap);
 int					write_map(t_nmap *m, char *path);
-int					read_map(char *path);
+int					read_map(t_doom *d, char *path);
+void				write_intdl(int fd, int i, int comma, int endl);
+void				wrt_textures(t_nmap *m, int fd);
+void				read_blockline(t_doom *d, t_nmap *m, int y, char *l);
+t_nmap				*load_map(t_doom *d, char *path);
+void				read_texture(t_doom *d, t_nmap *m, char *l);
+void				lm_1(t_doom *d, int *state, t_nmap *m, char *line);
+void				lm_2(int *y, int *state, t_nmap *m, char *line);
+void				lm_3(int *y, int *state, t_nmap *m, char *line);
 
 void				teleport_player(t_player *player, double x, double y, double z);
 
 unsigned int		checksum(void *data, size_t size, unsigned int seed);
+
+void				draw_minimap(t_doom *d);
+
+t_lstcontainer		*list_files(char *folder_path);
+
+void				expand_map(t_doom *d, t_nmap *m, t_mblock *b);
+t_mblock			*new_block(t_doom *d, int block_type, int x, int y);
+int					add_texture(t_doom *d, char *texture_name);
 
 #endif

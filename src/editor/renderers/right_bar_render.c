@@ -13,60 +13,73 @@
 #include "doom.h"
 #include "editor.h"
 
-void	ed_bt_edit_click(t_doom *doom, t_el_button *b, SDL_MouseButtonEvent ev)
+void	ed_bt_edit_click(t_doom *d, t_el_button *b, SDL_MouseButtonEvent ev)
 {
 	if (ev.button == SDL_BUTTON_LEFT)
 	{
-		if (b->ui->id == doom->editor.rbr_quadrant.orient_n->ui->id)
-			doom->editor.foc.b_orientation = 0;
-		if (b->ui->id == doom->editor.rbr_quadrant.orient_s->ui->id)
-			doom->editor.foc.b_orientation = 1;
-		if (b->ui->id == doom->editor.rbr_quadrant.orient_w->ui->id)
-			doom->editor.foc.b_orientation = 2;
-		if (b->ui->id == doom->editor.rbr_quadrant.orient_e->ui->id)
-			doom->editor.foc.b_orientation = 3;
+		if (b->ui->id == d->editor.rbr_quadrant.orient_hor->ui->id)
+			d->editor.foc.b_orientation = 0;
+		if (b->ui->id == d->editor.rbr_quadrant.orient_ver->ui->id)
+			d->editor.foc.b_orientation = 1;
+		// TODO: TEXTURE CLICK
+		if (b->ui->id == d->editor.rbr_quadrant.texture_n->ui->id)
+			d->editor.texture_edited = 0;
+		if (b->ui->id == d->editor.rbr_quadrant.texture_n->ui->id)
+			switch_tool(d, tool_textures, NULL);
+		if (b->ui->id == d->editor.rbr_quadrant.texture_s->ui->id)
+			d->editor.texture_edited = 1;
+		if (b->ui->id == d->editor.rbr_quadrant.texture_s->ui->id)
+			switch_tool(d, tool_textures, NULL);
+		if (b->ui->id == d->editor.rbr_quadrant.texture_w->ui->id)
+			d->editor.texture_edited = 2;
+		if (b->ui->id == d->editor.rbr_quadrant.texture_w->ui->id)
+			switch_tool(d, tool_textures, NULL);
+		if (b->ui->id == d->editor.rbr_quadrant.texture_e->ui->id)
+			d->editor.texture_edited = 3;
+		if (b->ui->id == d->editor.rbr_quadrant.texture_e->ui->id)
+			switch_tool(d, tool_textures, NULL);
 	}
 }
 
-void	editor_rbr_brender(t_doom *doom)
+void	editor_rbr_brender(t_doom *d)
 {
 	t_editor	*e;
 
-	e = &doom->editor;
+	e = &d->editor;
 	draw_rect_u(e->rbr, make_rect(0, 0, e->rbr_rect.w,
 		e->rbr_rect.h), 0xFFd4d5d8, 1);
-	editor_rbr_mrender(doom);
-	SDL_BlitSurface(e->rbr, NULL, doom->editor.ed_surface, &e->rbr_rect);
+	editor_rbr_mrender(d);
+	SDL_BlitSurface(e->rbr, NULL, d->editor.ed_surface, &e->rbr_rect);
 }
 
-void	editor_rbr_mrender(t_doom *doom)
+void	editor_rbr_mrender(t_doom *d)
 {
 	t_editor	*e;
 
-	e = &doom->editor;
-	if (e->selected_block)
+	e = &d->editor;
+	if (e->selected_block && e->selected_block->block_type != block_copy)
 	{
-		doom->temp_color = 0xFF000000;
-		instant_text(doom, e->rbr, ft_strjoin("Block : ", e->selected_block->block_name, 0), make_rect(10, 10, 22, 1));
-		instant_text(doom, e->rbr, "Block orientation", make_rect(10, 45, 20, 0));
-		e->rbr_quadrant.orient_n->background_color = e->foc.b_orientation == 0 ? e->select_color : e->base_color;
-		button_render(doom, e->rbr, e->rbr_quadrant.orient_n);
-		e->rbr_quadrant.orient_s->background_color = e->foc.b_orientation == 1 ? e->select_color : e->base_color;
-		button_render(doom, e->rbr, e->rbr_quadrant.orient_s);
-		e->rbr_quadrant.orient_w->background_color = e->foc.b_orientation == 2 ? e->select_color : e->base_color;
-		button_render(doom, e->rbr, e->rbr_quadrant.orient_w);
-		e->rbr_quadrant.orient_e->background_color = e->foc.b_orientation == 3 ? e->select_color : e->base_color;
-		button_render(doom, e->rbr, e->rbr_quadrant.orient_e);
-		instant_text(doom, e->rbr, "Block height", make_rect(10, 155, 20, 0));
-		wjauge_render(doom, e->rbr, e->rbr_quadrant.s_height);
-		instant_text(doom, e->rbr, "Ceiling height", make_rect(10, 230, 20, 0));
-		wjauge_render(doom, e->rbr, e->rbr_quadrant.sc_height);
-		instant_text(doom, e->rbr, "Has ceiling", make_rect(10, 310, 20, 0));
-		checkbox_render(doom, e->rbr, e->rbr_quadrant.has_celng);
-		instant_text(doom, e->rbr, "Block x-size", make_rect(10, 345, 20, 0));
-		wjauge_render(doom, e->rbr, e->rbr_quadrant.b_w);
-		instant_text(doom, e->rbr, "Block y-size", make_rect(10, 420, 20, 0));
-		wjauge_render(doom, e->rbr, e->rbr_quadrant.b_h);
+		d->tmp_color = make_rgb(0, 0, 0, 255);
+		instant_text(d, e->rbr, ft_strjoin("Block : ", e->selected_block->block_name, 0), make_rect(10, 10, 22, 1));
+		instant_text(d, e->rbr, "Block orientation", make_rect(10, 45, 20, 0));
+		e->rbr_quadrant.orient_hor->background_color = e->foc.b_orientation == 0 ? e->select_color : e->base_color;
+		button_render(d, e->rbr, e->rbr_quadrant.orient_hor);
+		e->rbr_quadrant.orient_ver->background_color = e->foc.b_orientation == 1 ? e->select_color : e->base_color;
+		button_render(d, e->rbr, e->rbr_quadrant.orient_ver);
+		instant_text(d, e->rbr, "Block height", make_rect(10, 155, 20, 0));
+		wjauge_render(d, e->rbr, e->rbr_quadrant.s_height);
+		instant_text(d, e->rbr, "Ceiling height", make_rect(10, 230, 20, 0));
+		wjauge_render(d, e->rbr, e->rbr_quadrant.sc_height);
+		instant_text(d, e->rbr, "Has ceiling", make_rect(10, 310, 20, 0));
+		checkbox_render(d, e->rbr, e->rbr_quadrant.has_celng);
+		instant_text(d, e->rbr, "Block x-size", make_rect(10, 345, 20, 0));
+		wjauge_render(d, e->rbr, e->rbr_quadrant.b_w);
+		instant_text(d, e->rbr, "Block y-size", make_rect(10, 420, 20, 0));
+		wjauge_render(d, e->rbr, e->rbr_quadrant.b_h);
+		button_render_texture(d, e->rbr, e->rbr_quadrant.texture_n, get_surface(d, e->foc.b_n_texture));
+		button_render_texture(d, e->rbr, e->rbr_quadrant.texture_s, get_surface(d, e->foc.b_s_texture));
+		button_render_texture(d, e->rbr, e->rbr_quadrant.texture_w, get_surface(d, e->foc.b_w_texture));
+		button_render_texture(d, e->rbr, e->rbr_quadrant.texture_e, get_surface(d, e->foc.b_e_texture));
 	}
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 18:15:46 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/04 10:50:22 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/06 11:12:01 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	init_game(t_doom *doom)
 	register_event(doom, SDL_KEYUP, key_up);
 	register_event(doom, SDL_QUIT, quit_window);
 	register_event(doom, SDL_MOUSEMOTION, mouse_movement);
+	register_event(doom, SDL_MOUSEBUTTONDOWN, mouse_down);
+	register_event(doom, SDL_MOUSEBUTTONUP, mouse_up);
 
 	new_player(doom, &doom->you, doom->nmap);
 	
@@ -39,43 +41,19 @@ void	init_game(t_doom *doom)
 void	render_game(t_doom *doom)
 {
 	SDL_SetRenderDrawColor(doom->rend,
-		doom->nmap->skybox_color.r, 
-		doom->nmap->skybox_color.g, 
-		doom->nmap->skybox_color.b, 0xFF);
+		0, 
+		0, 
+		0, 0xFF);
     SDL_RenderClear(doom->rend);
 
 	//calc_lov(doom);
 	draw_screen(doom);
+	//draw_minimap(doom);
 	free(doom->fps_counter->text);
 	doom->fps_counter->text = ft_strjoin(ft_itoa(doom->average_fps), " fps", 1);
 	text_prepare(doom, doom->fps_counter, 1, 0);
 	text_render(doom, doom->surface, doom->fps_counter);
 	render_hypercam(doom, doom->surface);
-
-
-	t_quadrant_renderer	*q;
-	int					x;
-	int					y;
-	SDL_Rect			r;
-
-	q = &doom->editor.ftr_quadrant;
-	y = 0;
-	while (y < doom->nmap->size_y)
-	{
-		x = 0;
-		while (x < doom->nmap->size_x)
-		{
-			r = make_rect(100 + x * 15, 100 + y * 15, 15, 15);
-			draw_rect_u(doom->surface, r, block_type(doom, doom->nmap->map[y][x].block_type)->block_color, 1);
-			/*if (mouse_in(m_pos.x - q->pos_x, m_pos.y - q->pos_y, r))
-			{
-				//draw_rect_u(doom->editor.ftr, r, 0xFF000000, 0);
-			}*/
-			x++;
-		}
-		y++;
-	}	
-	draw_rect_u(doom->surface, make_rect(100 + doom->you.pos.x * 15, 100 + doom->you.pos.y * 15, 5, 5), 0xFFFF0000, 1);
 }
 
 void	game_loop(t_doom *doom, t_settings *sett)

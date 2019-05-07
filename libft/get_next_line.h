@@ -5,26 +5,26 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/12 17:40:44 by cababou           #+#    #+#             */
-/*   Updated: 2019/01/22 23:34:21 by cababou          ###   ########.fr       */
+/*   Created: 2019/05/06 03:21:32 by cababou           #+#    #+#             */
+/*   Updated: 2019/05/06 05:23:49 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# define BUFF_SIZE 4096
+# define BUFF_SIZE 20
 
 # include "libft.h"
 # include <unistd.h>
 
 typedef struct		s_file
 {
-	char			*content;
-	int				file_descriptor;
-	int				end;
+	char			*line;
+	int				fd;
+	int				state;
 }					t_file;
 
-int					get_next_line(const int fd, char **line);
+int					n_gnl(int fd, char **line);
 
 #endif

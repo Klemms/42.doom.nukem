@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 00:26:56 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/04 10:40:46 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/05 11:52:47 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	new_player(t_doom *doom, t_player *player, t_nmap *nmap)
 	player->dir.x = -1;
 	player->plane.y = 0.66;
 	player->rov = 40;
+	player->hud.health = 100;
+	player->hud.ammo = 10;
 	printf("Player pos %f %f %f\n", player->pos.x, player->pos.y, player->pos.z);
 }
 

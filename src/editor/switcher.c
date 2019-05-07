@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 04:50:07 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/04 10:40:05 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/06 10:54:17 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	switch_to_game(t_doom *doom)
 
 	if (doom->game_mode == M_EDITOR)
 	{
-		result = validate_map(doom->nmap);
+		result = validate_map(doom, doom->nmap);
 		if (result > 0)
 		{
 			free(doom->editor.state->text);
