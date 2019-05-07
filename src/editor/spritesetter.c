@@ -22,8 +22,8 @@ t_sprite	*make_sprite(t_doom *d, int spritetype, int x, int y)
 	s->base_x = x;
 	s->base_y = y;
 	s->type = spritetype;
-	s->pos.x = ((float)x) + 0.5;
-	s->pos.y = ((float)y) + 0.5;
+	s->pos.x = ((float)x);
+	s->pos.y = ((float)y);
 	return (s);
 }
 
