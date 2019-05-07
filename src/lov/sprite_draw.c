@@ -18,7 +18,7 @@ void              sprite_flat_draw(t_raycasting *rc, double **z_buffer, Uint32 *
     //4) ZBuffer, with perpendicular distance
     if (rc->transform.y > 0 && stripe > 0 && stripe < WIN_W && rc->transform.y < (*z_buffer)[stripe])
     {
-      (*z_buffer)[stripe] = rc->transform.y;
+      //(*z_buffer)[stripe] = rc->transform.y;
       y = rc->draw_start_y - 1;
       while (++y < rc->draw_end_y) //for every pixel of the current stripe
       {
@@ -87,7 +87,7 @@ void    sprite_door_draw(t_raycasting *rc, double **z_buffer, Uint32 **canvas, t
       //make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
       if(rc->side == 1) color = (color >> 1) & 8355711;
       if (rc->cur_sprite->render_mode == rend_window)
-        color = calc_gradient((*canvas)[y * WIN_W + rc->x], color + 0x222266, 0.5);
+        color = calc_gradient((*canvas)[y * WIN_W + rc->x], color, 0.5);
       (*canvas)[y * WIN_W + rc->x] = color;
     }
   }
@@ -130,7 +130,8 @@ void    draw_sprites(t_doom *doom, t_raycasting *rc, t_player *p, double **z_buf
   tmp = doom->nmap->sprites->firstelement;
   while (++i < lsprite->numbSprites)
   {
-    rc->cur_sprite = tmp->content;
+    rc->cur_sprite = ft_lstget(doom->lsprite.spritesOrder[i], tmp)->content;//tmp->content;
+    /*
     if (rc->cur_sprite->animated == 1)
     {
       if (rc->cur_sprite->stage < 1) rc->cur_sprite->stage += 0.01;
@@ -140,7 +141,7 @@ void    draw_sprites(t_doom *doom, t_raycasting *rc, t_player *p, double **z_buf
     {
       if (rc->cur_sprite->stage > 0) rc->cur_sprite->stage -= 0.01;
       else rc->cur_sprite->animated = 1;
-    }
+    }*/
     rc->texture = get_surface(doom, rc->cur_sprite->texture);
     if (rc->cur_sprite->render_mode == rend_door || rc->cur_sprite->render_mode == rend_window)
       sprite_cast_wall(rc, p, doom->nmap, z_buffer, canvas);
@@ -149,6 +150,6 @@ void    draw_sprites(t_doom *doom, t_raycasting *rc, t_player *p, double **z_buf
       sprite_flat_init(rc, p, i, rc->cur_sprite, lsprite->spritesOrder);
       sprite_flat_draw(rc, z_buffer, canvas);
     }
-    tmp = tmp->next;
+    //tmp = tmp->next;
   }
 }
