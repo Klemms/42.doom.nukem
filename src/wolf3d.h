@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/04/05 14:35:01 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 23:57:11 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ typedef struct		s_sight
 	int				rov;
 	int				side;
 	int				tex;
-	t_wall_sight	saw_that[40]; // Must be sized[you->rov]
+	t_wall_sight	saw_that[40];
 	int				queue_cpt;
 }					t_sight;
 
