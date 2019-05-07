@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   button.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 19:46:06 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/05/07 20:33:17 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/08 00:08:18 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,27 @@ void	check_event_id(t_doom *doom, int pos_x, int pos_y)
 		j = -1;
 		while (++j < doom->nmap->size_x)
 		{
-			if (doom->nmap->map[i][j].event_id == id 
+			if (doom->nmap->map[i][j].event_id == id
 			&& doom->nmap->map[i][j].block_type == block_door)
 			{
 				doom->nmap->map[i][j].collides = 0;
 				doom->nmap->map[i][j].state = 1;
 			}
 		}
+	}
+}
+
+void	press_button2(t_doom *doom, int *pos_x, int *pos_y, int *orientation)
+{
+	if (doom->you.angle < M_PI_4)
+	{
+		*pos_x += 1;
+		*orientation = 0;
+	}
+	else
+	{
+		*pos_y += 1;
+		*orientation = 1;
 	}
 }
 
@@ -55,16 +69,8 @@ void	press_button(t_doom *doom)
 		pos_y -= 1;
 		orientation = 1;
 	}
-	else if (doom->you.angle < M_PI_4)
-	{
-		pos_x += 1;
-		orientation = 0;
-	}
 	else
-	{
-		pos_y += 1;
-		orientation = 1;
-	}
+		press_button2(doom, &pos_x, &pos_y, &orientation);
 	if (doom->nmap->map[pos_y][pos_x].block_type == block_button
 	&& doom->nmap->map[pos_y][pos_x].orientation == orientation
 	&& !doom->nmap->map[pos_y][pos_x].state && doom->you.hud.key > 0)

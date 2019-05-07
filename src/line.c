@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   line.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 13:13:25 by hdussert          #+#    #+#             */
-/*   Updated: 2019/05/04 18:21:11 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/08 00:09:51 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static void	dx_dom(t_doom *doom, t_line *l)
 		|| (l->inc.y > 0 && l->cur.y >= WIN_H))
 			break ;
 		doom->s_pixels[(int)l->cur.y * WIN_W + (int)l->cur.x] = l->color;
-		//pixel_put(doom, round(l->cur.x), round(l->cur.y), l->color);
 	}
 }
 
@@ -58,7 +57,6 @@ static void	dy_dom(t_doom *doom, t_line *l)
 		|| (l->inc.y > 0 && l->cur.y >= WIN_H))
 			break ;
 		doom->s_pixels[(int)l->cur.y * WIN_W + (int)l->cur.x] = l->color;
-		//pixel_put(doom, round(l->cur.x), round(l->cur.y), l->color);
 	}
 }
 
