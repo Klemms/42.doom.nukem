@@ -10,8 +10,8 @@ void    sprite_flat_init(t_raycasting *rc, t_player *p, int i, t_sprite *sprite,
   double invDet;
 
   //translate sprite position to relative to camera
-  rc->rel_sprite_pos.x = sprite[spriteOrder[i]].pos.x - p->pos.x;
-  rc->rel_sprite_pos.y = sprite[spriteOrder[i]].pos.y - p->pos.y;
+  rc->rel_sprite_pos.x = sprite->pos.x - p->pos.x;
+  rc->rel_sprite_pos.y = sprite->pos.y - p->pos.y;
 
   //transform sprite with the inverse camera matrix
   // [ p->plane.x   p->dir.x ] -1                                       [ p->dir.y      -p->dir.x ]

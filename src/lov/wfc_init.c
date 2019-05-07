@@ -27,7 +27,7 @@ void    wfc_rayhit(t_raycasting *rc, t_player *p, t_nmap *nmap)
 
 void    wfc_init(t_raycasting *rc, t_player *p)
 {
-  rc->p_z = p->pos.z;
+  rc->p_z = p->pitch;
   rc->camera_x = 2 * rc->x / (double)(WIN_W) - 1;
   rc->ray_dir.x = p->dir.x + p->plane.x * rc->camera_x;
   rc->ray_dir.y = p->dir.y + p->plane.y * rc->camera_x;

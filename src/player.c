@@ -24,12 +24,10 @@ void	new_player(t_doom *doom, t_player *player, t_nmap *nmap)
 	player->rov = 40;
 	player->hud.health = 100;
 	player->hud.ammo = 10;
-	printf("Player pos %f %f %f\n", player->pos.x, player->pos.y, player->pos.z);
 }
 
 void	teleport_player(t_player *player, double x, double y, double z)
 {
-	printf("Teleporting player from %f %f %f to %f %f %f\n", player->pos.x, player->pos.y, player->pos.z, x, y, z);
 	fflush(stdout);
 	player->pos.x = x;
 	player->pos.y = y;
