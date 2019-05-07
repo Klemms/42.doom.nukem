@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 13:34:57 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/07 14:00:02 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ enum			e_sprite_type
 {
 	sprite_key = 0,
 	sprite_ammo = 1,
-	sprite_health = 2
+	sprite_health = 2,
+	sprite_bullet = 3
 };
 
 enum			e_render_modes
@@ -323,7 +324,8 @@ typedef struct	s_editor
 
 typedef struct		s_sprite
 {
-	t_vec	pos;
+	t_xy	pos;
+	t_xy	vel;
 	int		texture;
 	int		texture_back;
 	int		render_mode;

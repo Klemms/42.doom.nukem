@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 17:45:39 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/05/06 19:45:11 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/07 13:57:48 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,6 @@ void	turn(double angle, t_player *player)
 	double		old_dir_x;
 	double		old_plane_x;
 
-	player->angle = atan2(player->dir.y, player->dir.x);
-	player->anglecos = cos(player->angle);
-	player->anglesin = sin(player->angle);
 	old_dir_x = player->dir.x;
 	player->dir.x = player->dir.x * cos(angle) - player->dir.y * sin(angle);
 	player->dir.y = old_dir_x * sin(angle) + player->dir.y * cos(angle);
@@ -44,6 +41,9 @@ void	turn(double angle, t_player *player)
 	player->plane.x = player->plane.x * cos(angle)
 		- player->plane.y * sin(angle);
 	player->plane.y = old_plane_x * sin(angle) + player->plane.y * cos(angle);
+	player->angle = atan2(player->dir.y, player->dir.x);
+	player->anglecos = cos(player->angle);
+	player->anglesin = sin(player->angle);
 }
 
 int		key_down(t_doom *doom, SDL_Event event)

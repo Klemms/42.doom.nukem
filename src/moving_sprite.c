@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 15:04:07 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/05/07 10:53:06 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/07 15:52:28 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,87 @@ void	check_sprite(t_doom *doom, t_list *sprites, t_sprite *sprite, t_xy *dest)
 		}
 		if (del)
 			lstcontainer_remove(doom->nmap->sprites, sprites);
+	}
+}
+
+int	check_wall(t_doom *doom, t_list *sprites, t_sprite *sprite, t_xy *dest)
+{
+	if (doom->nmap->map[(int)(sprite->pos.y - COL)][(int)(dest->x + COL)].collides
+	|| doom->nmap->map[(int)(sprite->pos.y + COL)][(int)(dest->x - COL)].collides
+	|| doom->nmap->map[(int)(sprite->pos.y + COL)][(int)(dest->x + COL)].collides
+	|| doom->nmap->map[(int)(sprite->pos.y - COL)][(int)(dest->x - COL)].collides)
+		lstcontainer_remove(doom->nmap->sprites, sprites);
+	else if (doom->nmap->map[(int)(dest->y + COL)][(int)(sprite->pos.x - COL)].collides
+	|| doom->nmap->map[(int)(dest->y - COL)][(int)(sprite->pos.x + COL)].collides
+	|| doom->nmap->map[(int)(dest->y + COL)][(int)(sprite->pos.x + COL)].collides
+	|| doom->nmap->map[(int)(dest->y - COL)][(int)(sprite->pos.x - COL)].collides)
+		lstcontainer_remove(doom->nmap->sprites, sprites);
+	else if (doom->nmap->map[(int)(dest->y + COL)][(int)(dest->x + COL)].collides
+	|| doom->nmap->map[(int)(dest->y - COL)][(int)(dest->x - COL)].collides
+	|| doom->nmap->map[(int)(dest->y - COL)][(int)(dest->x + COL)].collides
+	|| doom->nmap->map[(int)(dest->y + COL)][(int)(dest->x - COL)].collides)
+		lstcontainer_remove(doom->nmap->sprites, sprites);
+	else
+		return (1);
+	return (0);
+}
+
+int	check_other_sprites(t_doom *doom, t_list *sprites, t_sprite *sprite, t_xy *dest)
+{
+	t_list		*o_sprites;
+	t_sprite	*o_sprite;
+	
+	o_sprites = doom->nmap->sprites->firstelement;
+	while (o_sprites)
+	{
+		o_sprite = o_sprites->content;
+		if (o_sprite->collides
+		&& dest->x < o_sprite->pos.x + 0.2 + COL
+		&& dest->x > o_sprite->pos.x - 0.2 - COL
+		&& dest->y < o_sprite->pos.y + 0.2 + COL
+		&& dest->y > o_sprite->pos.y - 0.2 - COL)
+		{
+			lstcontainer_remove(doom->nmap->sprites, sprites);
+			return (0);
+		}
+		o_sprites = o_sprites->next;
+	}
+	return (1);
+}
+
+void	moving_sprite(t_doom *doom)
+{
+	t_list		*sprites;
+	t_sprite	*sprite;
+	t_xy		dest;
+	t_list		*tmp;
+	int			sup;
+
+	sprites = doom->nmap->sprites->firstelement;
+	while (sprites)
+	{
+		sprite = sprites->content;
+		tmp = sprites->prev;
+		sup = 0;
+		if (sprite->vel.x != 0 || sprite->vel.y != 0)
+		{
+			dest.x = sprite->pos.x + sprite->vel.x;
+			dest.y = sprite->pos.y + sprite->vel.y;
+			if (check_wall(doom, sprites, sprite, &dest)
+			&& check_other_sprites(doom, sprites, sprite, &dest))
+			{
+				sprite->pos.x = dest.x;
+				sprite->pos.y = dest.y;
+			}
+			else
+				sup = 1;
+			
+		}
+		if (sup == 0)
+			sprites = sprites->next;
+		else if (tmp)
+			sprites = tmp->next;
+		else
+			sprites = doom->nmap->sprites->firstelement;
 	}
 }
