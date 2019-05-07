@@ -327,6 +327,8 @@ typedef struct		s_sprite
 	int		base_y;
 	int		collides;
 	int		obtainable;
+	double	stage;
+	int     animated;
 	int		type;
 }					t_sprite;
 
@@ -403,18 +405,9 @@ typedef struct		s_wall_sight
 	double				next_perp;
 }					t_wall_sight;
 
-typedef struct    s_sprite
-{
-  t_vec   pos;
-  int     texture_id;
-  int     render_mode;
-  int	  animated;
-  double  stage;
-}                 t_sprite;
-
 typedef struct 	s_l_sprite
 {
-	t_sprite *sprites;
+	t_sprite  *sprites;
 	int		  numbSprites;
 	int       spritesOrder[4];
 	double    spritesDist[4];

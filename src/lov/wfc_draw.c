@@ -75,7 +75,13 @@ void  draw_wfc(t_doom *doom, double **z_buffer)
 {
   wfc_init(&doom->raycasting, &doom->you);
   wfc_rayhit(&doom->raycasting, &doom->you, doom->nmap);
-
+  if (side == 0)
+  {
+    if (doom->raycasting.step.x < 0)
+      doom->raycasting.texture = get_surface(doom, doom->nmap.map[doom->raycasting.map.y][doom->raycasting.map.x].texture);
+    else
+      doom->raycasting.texture = get_surface(doom, doom->nmap.map[doom->raycasting.map.y][doom->raycasting.map.x].texture);
+  }
   wfc_wall_init(&doom->raycasting, &doom->you);
   wfc_wall_draw(&doom->raycasting, &doom->s_pixels);
 
