@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
+#    By: bsiche <bsiche@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 22:39:07 by cababou           #+#    #+#              #
-#    Updated: 2019/05/07 23:52:25 by cababou          ###   ########.fr        #
+#    Updated: 2019/05/08 01:04:27 by bsiche           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,6 +63,7 @@ SRC := doom.c \
 	move.c \
 	velocity.c \
 	moving_sprite.c \
+	moving_sprite2.c \
 	editor/renderers/bottom_select_render.c \
 	lov/raycasting.c \
 	lov/raycasting_utils.c \

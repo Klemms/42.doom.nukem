@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bsiche <bsiche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 23:40:55 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/08 01:07:14 by bsiche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -641,6 +641,9 @@ void				update_velocity(t_doom *doom, t_player *player);
 void				moving(t_doom *doom);
 void				moving_diagonal(t_doom *doom, t_xy *dest, t_xy pt);
 void				check_sprite(t_doom *doom, t_list *sprites, t_sprite *sprite, t_xy *dest);
+int					check_wall(t_doom *doom, t_list *sprites, t_sprite *s, t_xy *d);
+void				collision_sprites(t_doom *doom, t_sprite *sprite, t_xy *dest);
+void				check_damage(t_doom *doom);
 void				moving_sprite(t_doom *doom);
 
 void				press_button(t_doom *doom);
