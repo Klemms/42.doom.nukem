@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 05:56:10 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 21:40:04 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/08 01:31:32 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ t_nmap		*load_map(t_doom *d, char *path)
 		line = NULL;
 	}
 	correct_pos(d, m);
-	m->spritecount = lstcontainer_size(m->sprites);
 	make_doorwindows(d, m);
+	m->spritecount = lstcontainer_size(m->sprites);
 	return (m);
 }
