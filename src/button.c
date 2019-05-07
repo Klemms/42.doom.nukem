@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 19:46:06 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/05/08 00:08:18 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/08 00:23:03 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,12 @@ void	check_event_id(t_doom *doom, int pos_x, int pos_y)
 
 void	press_button2(t_doom *doom, int *pos_x, int *pos_y, int *orientation)
 {
-	if (doom->you.angle < M_PI_4)
+	if (doom->you.angle < N_PI_4)
+	{
+		*pos_y -= 1;
+		*orientation = 1;
+	}
+	else if (doom->you.angle < M_PI_4)
 	{
 		*pos_x += 1;
 		*orientation = 0;
@@ -64,15 +69,17 @@ void	press_button(t_doom *doom)
 		pos_x -= 1;
 		orientation = 0;
 	}
-	else if (doom->you.angle < N_PI_4)
-	{
-		pos_y -= 1;
-		orientation = 1;
-	}
 	else
 		press_button2(doom, &pos_x, &pos_y, &orientation);
 	if (doom->nmap->map[pos_y][pos_x].block_type == block_button
 	&& doom->nmap->map[pos_y][pos_x].orientation == orientation
 	&& !doom->nmap->map[pos_y][pos_x].state && doom->you.hud.key > 0)
 		check_event_id(doom, pos_x, pos_y);
+	else if (doom->nmap->map[pos_y][pos_x].block_type == block_door
+	&& doom->nmap->map[pos_y][pos_x].orientation == orientation
+	&& doom->nmap->map[pos_y][pos_x].event_id >= 100)
+	{
+		doom->nmap->map[pos_y][pos_x].collides = 0;
+		doom->nmap->map[pos_y][pos_x].state = 1;
+	}
 }
