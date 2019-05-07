@@ -32,7 +32,7 @@ void	wrt_sprites(t_nmap *m, int fd)
 	t_sprite	*tmp_sprite;
 
 	tmp = m->sprites->firstelement;
-	write_intdl(fd, spritecount(m->sprites), 0, 1);
+	write_intdl(fd, spritecount(m->sprites->firstelement), 0, 1);
 	while (tmp)
 	{
 		tmp_sprite = (t_sprite *)tmp_sprite;
