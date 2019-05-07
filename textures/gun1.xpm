@@ -3,7 +3,7 @@ static char *rsz1copy[] = {
 /* columns rows colors chars-per-pixel */
 "480 480 128 2 ",
 "   c #000000",
-".  c gray4",
+".  c #444444",
 "X  c #071015",
 "o  c #091116",
 "O  c #0C151A",

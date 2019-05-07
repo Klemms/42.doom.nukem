@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 19:06:15 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 20:10:04 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -373,9 +373,13 @@ typedef struct		s_line
 
 typedef struct		s_hud
 {
-	int	health;
-	int	ammo;
-	int	key;
+	int				health;
+	int				ammo;
+	int				key;
+	SDL_Surface		*gun_1;
+	SDL_Surface		*gun_3;
+	SDL_Surface		*key_h;
+	SDL_Surface		*ammo_tt;
 }					t_hud;
 
 typedef struct		s_player
@@ -753,5 +757,8 @@ void				remove_sprite(t_doom *d, t_list *s);
 
 void				blockwindowdoor_added(t_doom *d, t_mblock *b);
 void				blockwindowdoor_removed(t_doom *d, int type, int x, int y);
+
+void				init_hud(t_doom *d);
+void				render_hud(t_doom *d);
 
 #endif
