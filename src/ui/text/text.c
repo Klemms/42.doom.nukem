@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 03:48:04 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/04 01:48:35 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 20:47:57 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,12 @@ t_el_text	*create_text(t_doom *doom, char *string, char *font_path, int size)
 
 void		text_prepare(t_doom *doom, t_el_text *text, int mk_size, int cent)
 {
+	(void)doom;
 	SDL_FreeSurface(text->surface);
 	text->surface = TTF_RenderUTF8_Blended(
 		text->font,
 		text->text,
 		text->text_color);
-	/*text->texture = SDL_CreateTextureFromSurface(doom->rend, surface);
-	SDL_FreeSurface(surface);*/
 	if (mk_size)
 	{
 		text_size(text);
@@ -78,6 +77,6 @@ void		text_prepare(t_doom *doom, t_el_text *text, int mk_size, int cent)
 
 void		text_render(t_doom *doom, SDL_Surface *surface, t_el_text *text)
 {
+	(void)doom;
 	SDL_BlitSurface(text->surface, NULL, surface, &text->rect);
-	//SDL_RenderCopy(doom->rend, text->texture, NULL, &text->rect);
 }

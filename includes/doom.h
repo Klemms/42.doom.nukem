@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 18:50:02 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 20:03:08 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ enum			e_sprite_type
 	sprite_ammo = 1,
 	sprite_health = 2,
 	sprite_bullet = 3,
-	sprite_dummy = 4
+	sprite_dummy = 4,
+	sprite_damage = 5
 };
 
 enum			e_render_modes
@@ -372,9 +373,13 @@ typedef struct		s_line
 
 typedef struct		s_hud
 {
-	int	health;
-	int	ammo;
-	int	key;
+	int				health;
+	int				ammo;
+	int				key;
+	SDL_Surface		*gun_1;
+	SDL_Surface		*gun_3;
+	SDL_Surface		*key_h;
+	SDL_Surface		*ammo_tt;
 }					t_hud;
 
 typedef struct		s_player
@@ -412,6 +417,7 @@ typedef struct		s_musics
 	Mix_Music	*bgm;
 	Mix_Chunk	*walk;
 	Mix_Chunk	*shot;
+	Mix_Chunk	*damage;
 }					t_musics;
 
 
@@ -752,5 +758,10 @@ void				remove_sprite(t_doom *d, t_list *s);
 
 void				blockwindowdoor_added(t_doom *d, t_mblock *b);
 void				blockwindowdoor_removed(t_doom *d, int type, int x, int y);
+
+void				init_hud(t_doom *d);
+void				render_hud(t_doom *d);
+
+t_sprite			*make_doorwindowsprite(t_doom *d, t_mblock *b);
 
 #endif

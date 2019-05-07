@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 00:26:56 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 10:12:18 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 20:47:00 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	new_player(t_doom *doom, t_player *player, t_nmap *nmap)
 {
+	(void)doom;
 	ft_bzero(player, sizeof(t_player));
 	player->pos.x = get_spawn_point(nmap)->x + 0.5;
 	player->pos.y = get_spawn_point(nmap)->y + 0.5;

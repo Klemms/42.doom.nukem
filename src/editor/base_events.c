@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   base_events.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 04:16:03 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 06:17:25 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 20:45:20 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int		zoom_event(t_doom *doom, SDL_Event sdl_event)
 
 int		quit_event(t_doom *doom, SDL_Event sdl_event)
 {
+	(void)sdl_event;
 	exit_program(doom, 0);
 	return (0);
 }

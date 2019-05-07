@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   moving_sprite.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 15:04:07 by lde-batz          #+#    #+#             */
-/*   Updated: 2019/05/07 15:52:28 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/07 20:31:44 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
+
+void	check_damage(t_doom *doom)
+{
+	if (Mix_Playing(2) == 0)
+	{
+		Mix_PlayChannel(2, doom->musics.damage, 0);
+		if (doom->you.hud.health - 10 > 0)
+			doom->you.hud.health -= 10;
+		else
+			exit_program(doom, ERROR_DEAD);	
+	}
+}
 
 void	collision_sprites(t_doom *doom, t_sprite *sprite, t_xy *dest)
 {
@@ -50,15 +62,13 @@ void	check_sprite(t_doom *doom, t_list *sprites, t_sprite *sprite, t_xy *dest)
 	{
 		del = 1;
 		if (sprite->type == sprite_key)
-			doom->you.hud.key = 1;
+			doom->you.hud.key += 1;
 		else if (sprite->type == sprite_ammo)
 			doom->you.hud.ammo += 10;
 		else if (sprite->type == sprite_health)
 		{
 			if (doom->you.hud.health == 100)
 				del = 0;
-			else if (doom->you.hud.health > 90)
-				doom->you.hud.health = 100;
 			else
 				doom->you.hud.health += 10;
 		}
@@ -68,6 +78,8 @@ void	check_sprite(t_doom *doom, t_list *sprites, t_sprite *sprite, t_xy *dest)
 			doom->lsprite.numbSprites--;
 		}
 	}
+	if (sprite->type == sprite_damage)
+		check_damage(doom);
 }
 
 int	check_wall(t_doom *doom, t_list *sprites, t_sprite *sprite, t_xy *dest)
@@ -97,6 +109,7 @@ int	check_other_sprites(t_doom *doom, t_list *sprites, t_sprite *sprite, t_xy *d
 	t_list		*o_sprites;
 	t_sprite	*o_sprite;
 	
+	(void)sprite;
 	o_sprites = doom->nmap->sprites->firstelement;
 	while (o_sprites)
 	{

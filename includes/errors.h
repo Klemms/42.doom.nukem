@@ -6,7 +6,7 @@
 /*   By: lde-batz <lde-batz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/14 03:03:58 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/05 16:08:25 by lde-batz         ###   ########.fr       */
+/*   Updated: 2019/05/07 20:16:57 by lde-batz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@
 # define ERROR_USAGE 115
 # define ERROR_SDL_AUDIO_INIT 116
 # define ERROR_INVALID_MUSIC 117
+# define ERROR_DEAD 118
 
 #endif

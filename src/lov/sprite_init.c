@@ -9,6 +9,8 @@ void    sprite_flat_init(t_raycasting *rc, t_player *p, int i, t_sprite *sprite,
 
   double invDet;
 
+	(void)spriteOrder;
+	(void)i;
   //translate sprite position to relative to camera
   rc->rel_sprite_pos.x = sprite->pos.x - p->pos.x;
   rc->rel_sprite_pos.y = sprite->pos.y - p->pos.y;

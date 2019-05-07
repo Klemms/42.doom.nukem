@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/07 10:44:52 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 16:21:40 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 19:06:53 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,6 @@ void	init_sprite_types(t_doom *doom)
 		, make_sprite_type(doom, "Health", 0xFFf46842, sprite_health));
 	lstcontainer_add(doom->sprite_types
 		, make_sprite_type(doom, "Key", 0xFF6e5d9b, sprite_key));
+	lstcontainer_add(doom->sprite_types
+		, make_sprite_type(doom, "Damage", 0xFF581791, sprite_damage));
 }
