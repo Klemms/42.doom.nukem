@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bsiche <bsiche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 23:15:27 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 22:50:07 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 23:51:43 by bsiche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void	switch_tool_sprite(t_doom *doom, int to_tool, t_sprite_type *sp)
 	doom->editor.selected_block = NULL;
 	doom->editor.hand_tool = to_tool > 0 && to_tool <= 3 ? to_tool : 0;
 	free(doom->editor.current_tool->text);
-	doom->editor.current_tool->text
-		= ft_strjoin("Current tool : ", tool_name(to_tool), 0);
+	doom->editor.current_tool->text =
+	ft_strjoin("Current tool : ", tool_name(to_tool), 0);
 	if (doom->editor.current_tool)
 	{
 		text_prepare(doom, doom->editor.current_tool, 1, 0);
@@ -61,8 +61,19 @@ void	switch_tool(t_doom *doom, int to_tool, t_block_type *block)
 	{
 		free(doom->editor.current_tool->text);
 		doom->editor.current_tool->text = ft_strjoin("Current tool : ",
-														tool_name(to_tool), 0);
+		tool_name(to_tool), 0);
 		text_prepare(doom, doom->editor.current_tool, 1, 0);
 	}
 	tool_button_color(doom, to_tool);
+}
+
+void	sdl_edit_update(t_doom *doom, t_settings *sett)
+{
+	Uint32		time;
+
+	SDL_UpdateWindowSurface(doom->win);
+	time = (SDL_GetTicks() - doom->last_frame);
+	SDL_Delay(time > sett->framerate ? 0 : sett->framerate - time);
+	time = (SDL_GetTicks() - doom->last_frame);
+	doom->average_fps = (1000 / time);
 }

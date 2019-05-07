@@ -49,6 +49,8 @@ SRC := doom.c \
 	ui/ui_el/ui.c \
 	ui/ui_ids.c \
 	editor/editor_util.c \
+	editor/editor_init.c \
+	editor/editor_init2.c \
 	editor/renderers/flat_top_render.c \
 	editor/renderers/block_text_render.c \
 	editor/renderers/rbr_wheel.c \
