@@ -19,11 +19,13 @@ void	shooting(t_doom *doom)
 	if (!(new = (t_sprite*)mmalloc(sizeof(t_sprite))))
 		exit_program(doom, ERROR_MEMORY);
 	new->type = sprite_bullet;
-	new->vel.x = doom->you.dir.x * 2;
-	new->vel.y = doom->you.dir.y * 2;
+	new->vel.x = doom->you.dir.x * 0.1;
+	new->vel.y = doom->you.dir.y * 0.1;
+	new->vel.z = doom->you.pitch - 0.5;
 	new->pos.x = doom->you.pos.x + new->vel.x;
 	new->pos.y = doom->you.pos.y + new->vel.y;
 	lstcontainer_add(doom->nmap->sprites, new);
+	doom->lsprite.numbSprites++;
 }
 
 int		mouse_down(t_doom *doom, SDL_Event event)

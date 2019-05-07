@@ -25,7 +25,7 @@ void	init_game(t_doom *doom)
 	register_event(doom, SDL_MOUSEMOTION, mouse_movement);
 	register_event(doom, SDL_MOUSEBUTTONDOWN, mouse_down);
 	new_player(doom, &doom->you, doom->nmap);
-	doom->lsprite.numbSprites = 8;
+	doom->lsprite.numbSprites = 81;
 	doom->average_fps = 0;
 	setup_hypercam(doom);
 }
@@ -58,8 +58,7 @@ void	game_loop(t_doom *doom, t_settings *sett)
 	doom->you.speed = doom->you.is_sprinting ? 0.2 : 0.1;
 	update_velocity(doom, &doom->you);
 	moving(doom);
-	shoot(doom, &doom->you);
-//	update_sprite(doom);
+	moving_sprite(doom);
 }
 
 void	loop_game(t_doom *doom)

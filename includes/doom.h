@@ -553,8 +553,6 @@ void    			sprite_flat_init(t_raycasting *rc, t_player *p, int i, t_sprite *spri
 void              	sprite_flat_draw(t_raycasting *rc, double **z_buffer, Uint32 **canvas);
 void    			sprite_door_init(t_raycasting *rc, t_player *p);
 
-void				shoot(t_doom *doom, t_player *p);
-
 Uint32            	calc_gradient(Uint32 color1, Uint32 color2, double stage);
 void  				swap(double *a, double *b);
 void 				combSort(int* order, double* dist, int amount);
@@ -592,6 +590,7 @@ void				update_velocity(t_doom *doom, t_player *player);
 void				moving(t_doom *doom);
 void				moving_diagonal(t_doom *doom, t_xy *dest, t_xy pt);
 void				check_sprite(t_doom *doom, t_list *sprites, t_sprite *sprite, t_xy *dest);
+void				moving_sprite(t_doom *doom);
 
 void				press_button(t_doom *doom);
 

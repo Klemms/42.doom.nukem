@@ -81,8 +81,7 @@ SRC := doom.c \
 	map/loading/map_load3.c \
 	map/loading/map_load4.c \
 	map/loading/map_load5.c \
-	map/expand.c \
-	obj_event/shoot.c
+	map/expand.c 
 
 HEADERS := doom.h editor.h errors.h
 

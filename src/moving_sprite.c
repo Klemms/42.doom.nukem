@@ -63,7 +63,10 @@ void	check_sprite(t_doom *doom, t_list *sprites, t_sprite *sprite, t_xy *dest)
 				doom->you.hud.health += 10;
 		}
 		if (del)
+		{
 			lstcontainer_remove(doom->nmap->sprites, sprites);
+			doom->lsprite.numbSprites--;
+		}
 	}
 }
 
@@ -126,7 +129,7 @@ void	moving_sprite(t_doom *doom)
 		sprite = sprites->content;
 		tmp = sprites->prev;
 		sup = 0;
-		if (sprite->vel.x != 0 || sprite->vel.y != 0)
+		if (sprite->vel.x != 0 || sprite->vel.y != 0 || sprite->vel.z != 0)
 		{
 			dest.x = sprite->pos.x + sprite->vel.x;
 			dest.y = sprite->pos.y + sprite->vel.y;
@@ -135,9 +138,13 @@ void	moving_sprite(t_doom *doom)
 			{
 				sprite->pos.x = dest.x;
 				sprite->pos.y = dest.y;
+				sprite->pos.z += sprite->vel.z;
 			}
 			else
+			{
 				sup = 1;
+				doom->lsprite.numbSprites--;
+			}
 			
 		}
 		if (sup == 0)
