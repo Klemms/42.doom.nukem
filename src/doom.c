@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/29 13:20:21 by hdussert          #+#    #+#             */
-/*   Updated: 2019/05/07 14:03:13 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 22:42:48 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,11 @@ int		main(int argc, char *argv[])
 	init_events(&doom);
 	doom.surface = SDL_GetWindowSurface(doom.win);
 	doom.s_pixels = doom.surface->pixels;
-	doom.fps_counter = create_text(&doom, "- fps", FONT_RIFFIC, 20);
-	doom.fps_counter->ui->pos_x = 8;
-	doom.fps_counter->ui->pos_y = 8;
+	if ((doom.fps_counter = create_text(&doom, "- fps", FONT_RIFFIC, 20)))
+	{
+		doom.fps_counter->ui->pos_x = 8;
+		doom.fps_counter->ui->pos_y = 8;
+	}
 	init_musics(&doom);
 	doom.nmap = load_map(&doom, doom.game_mode == M_EDITOR ? argv[2] : argv[1]);
 	if (doom.game_mode == M_GAME)

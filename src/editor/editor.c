@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 02:04:31 by cababou           #+#    #+#             */
-/*   Updated: 2019/05/07 19:00:12 by cababou          ###   ########.fr       */
+/*   Updated: 2019/05/07 22:51:11 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,16 +93,20 @@ void	init_editor(t_doom *doom)
 	e->save->background_color_disabled = make_rgb(145, 145, 145, 255);
 	button_prepare(doom, e->save);
 
-	e->current_tool = create_text(doom, "Current tool : none", FONT_RIFFIC, 30);
-	e->current_tool->ui->pos_x = 90;
-	e->current_tool->ui->pos_y = 20;
-	text_prepare(doom, e->current_tool, 1, 0);
+	if ((e->current_tool = create_text(doom, "Current tool : none", FONT_RIFFIC, 30)))
+	{
+		e->current_tool->ui->pos_x = 90;
+		e->current_tool->ui->pos_y = 20;
+		text_prepare(doom, e->current_tool, 1, 0);
+	}
 
-	e->str_tool = create_text(doom, "Tools", FONT_RIFFIC, 20);
-	e->str_tool->ui->pos_x = 10;
-	e->str_tool->ui->pos_y = 90;
-	e->str_tool->text_color = make_rgb(0, 0, 0, 255);
-	text_prepare(doom, e->str_tool, 1, 0);
+	if ((e->str_tool = create_text(doom, "Tools", FONT_RIFFIC, 20)))
+	{
+		e->str_tool->ui->pos_x = 10;
+		e->str_tool->ui->pos_y = 90;
+		e->str_tool->text_color = make_rgb(0, 0, 0, 255);
+		text_prepare(doom, e->str_tool, 1, 0);
+	}
 
 	e->rbr_quadrant.orient_hor = create_button(doom, "Hor.", make_rect(15, 80, 130, 60), ed_bt_edit_click);
 	e->rbr_quadrant.orient_hor->background_color = make_rgb(145, 145, 145, 255);
@@ -114,19 +118,23 @@ void	init_editor(t_doom *doom)
 	button_prepare(doom, e->rbr_quadrant.orient_ver);
 
 	e->rbr_quadrant.texture_n = create_button(doom, "Texture N.", make_rect(85, 785, 130, 60), ed_bt_edit_click);
-	e->rbr_quadrant.texture_n->text->text_color = make_rgb(255, 255, 255, 255);
+	if (e->rbr_quadrant.texture_n->text)
+		e->rbr_quadrant.texture_n->text->text_color = make_rgb(255, 255, 255, 255);
 	add_button_rcoords(e->rbr_quadrant.texture_n, e->rbr_rect.x, e->rbr_rect.y);
 	button_prepare(doom, e->rbr_quadrant.texture_n);
 	e->rbr_quadrant.texture_s = create_button(doom, "Texture S.", make_rect(85, 925, 130, 60), ed_bt_edit_click);
-	e->rbr_quadrant.texture_s->text->text_color = make_rgb(255, 255, 255, 255);
+	if (e->rbr_quadrant.texture_s->text)
+		e->rbr_quadrant.texture_s->text->text_color = make_rgb(255, 255, 255, 255);
 	add_button_rcoords(e->rbr_quadrant.texture_s, e->rbr_rect.x, e->rbr_rect.y);
 	button_prepare(doom, e->rbr_quadrant.texture_s);
 	e->rbr_quadrant.texture_w = create_button(doom, "Texture W.", make_rect(15, 855, 130, 60), ed_bt_edit_click);
-	e->rbr_quadrant.texture_w->text->text_color = make_rgb(255, 255, 255, 255);
+	if (e->rbr_quadrant.texture_w->text)
+		e->rbr_quadrant.texture_w->text->text_color = make_rgb(255, 255, 255, 255);
 	add_button_rcoords(e->rbr_quadrant.texture_w, e->rbr_rect.x, e->rbr_rect.y);
 	button_prepare(doom, e->rbr_quadrant.texture_w);
 	e->rbr_quadrant.texture_e = create_button(doom, "Texture E.", make_rect(155, 855, 130, 60), ed_bt_edit_click);
-	e->rbr_quadrant.texture_e->text->text_color = make_rgb(255, 255, 255, 255);
+	if (e->rbr_quadrant.texture_e->text)
+		e->rbr_quadrant.texture_e->text->text_color = make_rgb(255, 255, 255, 255);
 	add_button_rcoords(e->rbr_quadrant.texture_e, e->rbr_rect.x, e->rbr_rect.y);
 	button_prepare(doom, e->rbr_quadrant.texture_e);
 
@@ -143,11 +151,13 @@ void	init_editor(t_doom *doom)
 	e->rbr_quadrant.b_h->unit = "%";
 	wjauge_prepare(doom, e->rbr_quadrant.b_h);
 
-	e->state = create_text(doom, "...", FONT_SYS, 18);
-	e->state->ui->pos_x = WIN_W - 500;
-	e->state->ui->pos_y = 52;
-	e->state->text_color = make_rgb(238, 239, 172, 255);
-	text_prepare(doom, e->state, 1, 1);
+	if ((e->state = create_text(doom, "...", FONT_SYS, 18)))
+	{
+		e->state->ui->pos_x = WIN_W - 500;
+		e->state->ui->pos_y = 52;
+		e->state->text_color = make_rgb(238, 239, 172, 255);
+		text_prepare(doom, e->state, 1, 1);
+	}
 
 	e->rbr_quadrant.has_celng = create_checkbox(doom, make_rect(256, 310, 29, 29), 0);
 
@@ -202,10 +212,13 @@ void	render_editor(t_doom *doom)
 	instant_text(doom, e->ed_surface, "Last status :", make_rect(WIN_W - 700, 5, 18, 0));
 	text_render(doom, e->ed_surface, e->state);
 
-	free(doom->fps_counter->text);
-	doom->fps_counter->text = ft_strjoin(ft_itoa(doom->average_fps), " fps", 1);
-	text_prepare(doom, doom->fps_counter, 1, 0);
-	text_render(doom, e->ed_surface, doom->fps_counter);
+	if (doom->fps_counter)
+	{
+		free(doom->fps_counter->text);
+		doom->fps_counter->text = ft_strjoin(ft_itoa(doom->average_fps), " fps", 1);
+		text_prepare(doom, doom->fps_counter, 1, 0);
+		text_render(doom, e->ed_surface, doom->fps_counter);
+	}
 }
 
 void	loop_editor(t_doom *doom)
