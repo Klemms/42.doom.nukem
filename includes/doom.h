@@ -76,6 +76,13 @@ enum			e_block_types
 	block_end = 4
 };
 
+enum			e_render_modes
+{
+	rend_flat = 0,
+	rend_door = 1,
+	rend_window = 2
+};
+
 typedef struct	s_map_block
 {
 	int			block_type;
@@ -367,21 +374,22 @@ typedef struct		s_wall_sight
 	double				next_perp;
 }					t_wall_sight;
 
-typedef struct 	s_l_sprite
-{
-	t_sprite *sprites;
-	int		numbSprites;
-	int       spritesOrder[numbSprites];
-	int       spritesDist[numbSprites];
-}				t_l_sprite;
-
-
 typedef struct    s_sprite
 {
   t_vec   pos;
   int     texture_id;
   int     render_mode;
+  int	  animated;
+  double  stage;
 }                 t_sprite;
+
+typedef struct 	s_l_sprite
+{
+	t_sprite *sprites;
+	int		  numbSprites;
+	int       spritesOrder[4];
+	double    spritesDist[4];
+}				t_l_sprite;
 
 typedef struct		s_raycasting
 {
@@ -454,7 +462,8 @@ typedef struct		s_doom
 	int				m_x; // Mouse X // Both Updated each frame
 	int				m_y; // Mouse Y
 	t_scores		scores;
-	t_lstcontainer		*block_types;
+	t_lstcontainer	*block_types;
+	t_l_sprite		lsprite;
 }					t_doom;
 
 typedef struct		s_registered_event
@@ -485,9 +494,9 @@ void  				wfc_wall_draw(t_raycasting *rc, Uint32 **canvas);
 void  				wfc_fc_init(t_raycasting *rc);
 void  				wfc_floor_draw(t_raycasting *rc, t_player *p, Uint32 **canvas);
 void  				wfc_ceiling_draw(t_raycasting *rc, t_player *p, Uint32 **canvas);
-void    			draw_sprites(t_doom *doom, t_raycasting *rc, t_player *p, double **z_buffer, Uint32 **canvas); //soz
-void    			sprite_flat_init(t_raycasting *rc, t_player *p, int i, SDL_Surface *texture_sprite, t_vec *sprite, int *spriteOrder);
-void              	sprite_flat_draw(t_raycasting *rc, double **z_buffer, SDL_Surface *texture_sprite, Uint32 **canvas);
+void    			draw_sprites(t_doom *doom, t_raycasting *rc, t_player *p, double **z_buffer, Uint32 **canvas, t_l_sprite *lsprite); //soz
+void    			sprite_flat_init(t_raycasting *rc, t_player *p, int i, t_sprite *sprite, int *spriteOrder);
+void              	sprite_flat_draw(t_raycasting *rc, double **z_buffer, Uint32 **canvas);
 void    			sprite_door_init(t_raycasting *rc, t_player *p);
 
 Uint32            	calc_gradient(Uint32 color1, Uint32 color2, double stage);

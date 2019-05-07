@@ -22,7 +22,7 @@ void    draw_screen(t_doom *doom)
   *z_buffer = malloc(sizeof(double) * WIN_W);
   while (++doom->raycasting.x < WIN_W)
   draw_wfc(doom, z_buffer);
-  draw_sprites(doom, &doom->raycasting, &doom->you, z_buffer, &doom->s_pixels);
+  draw_sprites(doom, &doom->raycasting, &doom->you, z_buffer, &doom->s_pixels, &doom->lsprite);
   free(*z_buffer);
   free(z_buffer);
 }

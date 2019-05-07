@@ -9,9 +9,9 @@ void    wfc_wall_draw(t_raycasting *rc, Uint32 **canvas)
   y = rc->draw_start - 1;
   while (++y < rc->draw_end)
   {
-    d = (y - (WIN_H * rc->p_z)) * 256 + rc->lineHeight * 128; //256 and 128 factors to avoid floats
+    d = ((int)(y - (WIN_H * rc->p_z)) << 8) + ((int)rc->lineHeight << 7); //256 and 128 factors to avoid floats
     // TODO: avoid the division to speed this up
-    rc->tex.y = ((d * rc->texture->h) / rc->lineHeight) / 256;
+    rc->tex.y = ((d * rc->texture->h) / rc->lineHeight) >> 8;
     rc->tex.y = rc->tex.y % rc->texture->h;
     color = ((Uint32 *)rc->texture->pixels)[rc->texture->w * rc->tex.y + rc->tex.x];
     //make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
